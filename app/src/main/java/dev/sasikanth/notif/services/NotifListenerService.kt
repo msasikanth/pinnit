@@ -6,11 +6,13 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.text.TextUtils
 import androidx.core.app.NotificationCompat
+import dev.sasikanth.notif.data.source.NotifRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
 class NotifListenerService : NotificationListenerService(), CoroutineScope {
@@ -33,6 +35,8 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             }
         }
     }
+
+    private val notifRepository: NotifRepository by inject()
 
     private val job = Job()
     private val allowedApps = mutableSetOf<String>()

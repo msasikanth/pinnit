@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "notif_item")
+@Entity(tableName = "notifs")
 data class NotifItem(
     @PrimaryKey(autoGenerate = true)
     val _id: Long,
