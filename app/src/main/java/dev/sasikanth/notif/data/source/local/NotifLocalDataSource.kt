@@ -12,7 +12,7 @@ class NotifLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    fun getNotifs():LiveData<List<NotifItem>> {
+    fun getNotifs(): LiveData<List<NotifItem>> {
         return notifDao.getNotifications()
     }
 
