@@ -1,7 +1,7 @@
 package dev.sasikanth.notif
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import dev.sasikanth.notif.databinding.ActivityMainBinding
 

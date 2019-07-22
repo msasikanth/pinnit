@@ -12,12 +12,8 @@ class NotifLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun getNotifs(): Result<LiveData<List<NotifItem>>> = withContext(ioDispatcher) {
-        return@withContext try {
-            Result.Success(notifDao.getNotifications())
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
+    fun getNotifs():LiveData<List<NotifItem>> {
+        return notifDao.getNotifications()
     }
 
     suspend fun getNotif(id: Long): Result<NotifItem> = withContext(ioDispatcher) {
@@ -28,6 +24,15 @@ class NotifLocalDataSource(
             } else {
                 Result.Error(NullPointerException("Notification is not found"))
             }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun getNotifsByPackageName(packageName: String): Result<List<NotifItem>> = withContext(ioDispatcher) {
+        return@withContext try {
+            val notifs = notifDao.getNotificationsByPackageName(packageName)
+            Result.Success(notifs)
         } catch (e: Exception) {
             Result.Error(e)
         }

@@ -18,13 +18,20 @@ data class NotifItem(
     val title: String,
     @ColumnInfo(name = "text")
     val text: String,
+    @ColumnInfo(name = "messages")
+    val messages: List<Message>,
     @ColumnInfo(name = "package_name")
     val packageName: String,
+    @ColumnInfo(name = "app_label")
+    val appLabel: String,
     @ColumnInfo(name = "posted_on")
     val postedOn: Long,
+    @ColumnInfo(name = "template")
+    val template: TemplateStyle,
     @ColumnInfo(name = "is_pinned")
     val isPinned: Boolean
 ) {
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -40,8 +47,11 @@ data class NotifItem(
         } else if (other.iconBytes != null) return false
         if (title != other.title) return false
         if (text != other.text) return false
+        if (messages != other.messages) return false
         if (packageName != other.packageName) return false
+        if (appLabel != other.appLabel) return false
         if (postedOn != other.postedOn) return false
+        if (template != other.template) return false
         if (isPinned != other.isPinned) return false
 
         return true
@@ -54,8 +64,11 @@ data class NotifItem(
         result = 31 * result + (iconBytes?.contentHashCode() ?: 0)
         result = 31 * result + title.hashCode()
         result = 31 * result + text.hashCode()
+        result = 31 * result + messages.hashCode()
         result = 31 * result + packageName.hashCode()
+        result = 31 * result + appLabel.hashCode()
         result = 31 * result + postedOn.hashCode()
+        result = 31 * result + template.hashCode()
         result = 31 * result + isPinned.hashCode()
         return result
     }

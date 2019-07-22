@@ -9,8 +9,12 @@ class NotifRepository(
     private val notifDataSource: NotifLocalDataSource
 ) {
 
-    suspend fun getNotifs(): Result<LiveData<List<NotifItem>>> {
+    fun getNotifs(): LiveData<List<NotifItem>> {
         return notifDataSource.getNotifs()
+    }
+
+    suspend fun getNotifsByPackageName(packageName: String): Result<List<NotifItem>> {
+        return notifDataSource.getNotifsByPackageName(packageName)
     }
 
     suspend fun getNotif(id: Long): Result<NotifItem> {

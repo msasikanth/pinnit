@@ -1,10 +1,12 @@
 package dev.sasikanth.notif.di
 
 import androidx.room.Room
+import dev.sasikanth.notif.MainViewModel
 import dev.sasikanth.notif.data.source.NotifRepository
 import dev.sasikanth.notif.data.source.local.NotifDatabase
 import dev.sasikanth.notif.data.source.local.NotifLocalDataSource
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val notifModules = module {
@@ -17,5 +19,9 @@ val notifModules = module {
         NotifRepository(
             NotifLocalDataSource(get<NotifDatabase>().notifDao())
         )
+    }
+
+    viewModel {
+        MainViewModel(get())
     }
 }

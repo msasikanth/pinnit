@@ -17,6 +17,9 @@ interface NotifDao {
     @Query("SELECT * FROM notifs WHERE _id == :id ORDER BY posted_on DESC LIMIT 1")
     suspend fun getNotificationById(id: Long): NotifItem?
 
+    @Query("SELECT * FROM notifs WHERE package_name == :packageName ORDER BY posted_on DESC")
+    suspend fun getNotificationsByPackageName(packageName: String): List<NotifItem>
+
     @Query("SELECT * FROM notifs WHERE notif_key == :key ORDER BY posted_on DESC LIMIT 1")
     suspend fun getNotificationByKey(key: String): NotifItem
 

@@ -1,11 +1,14 @@
 package dev.sasikanth.notif.services
 
 import android.app.Notification
+import android.content.pm.PackageManager
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.text.TextUtils
 import androidx.core.app.NotificationCompat
+import dev.sasikanth.notif.data.NotifItem
+import dev.sasikanth.notif.data.TemplateStyle
 import dev.sasikanth.notif.data.source.NotifRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 class NotifListenerService : NotificationListenerService(), CoroutineScope {
@@ -39,7 +43,9 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     private val notifRepository: NotifRepository by inject()
 
     private val job = Job()
-    private val allowedApps = mutableSetOf<String>()
+    private val allowedApps = mutableSetOf<String>(
+        "org.thunderdog.challegram"
+    )
 
     init {
         instance = this
@@ -77,6 +83,36 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                 if (!shouldBeFilteredOut) {
                     // Notification shouldn't be filtered out
                     withContext(Dispatchers.IO) {
+                        val packageManager = applicationContext.packageManager
+                        val appInfo = packageManager.getApplicationInfo(
+                            statusBarNotification.packageName, PackageManager.GET_META_DATA
+                        )
+
+                        val appLabel = packageManager.getApplicationLabel(appInfo).toString()
+
+                        val title = statusBarNotification.notification.extras.getCharSequence(
+                            NotificationCompat.EXTRA_TITLE
+                        )?.toString().orEmpty()
+                        val text = statusBarNotification.notification.extras.getCharSequence(
+                            NotificationCompat.EXTRA_TEXT
+                        )?.toString().orEmpty()
+
+                        notifRepository.saveNotif(
+                            NotifItem(
+                                0,
+                                statusBarNotification.key,
+                                statusBarNotification.id,
+                                null,
+                                title,
+                                text,
+                                emptyList(),
+                                packageName,
+                                appLabel,
+                                statusBarNotification.postTime,
+                                TemplateStyle.DefaultStyle,
+                                false
+                            )
+                        )
                     }
                 }
             }
@@ -107,6 +143,10 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
+        if (sbn.isGroup) {
+            return true
+        }
+
         val template = notification.extras.getString(NotificationCompat.EXTRA_TEMPLATE)
         if (template == Notification.MediaStyle::class.java.name) {
             return true
@@ -123,6 +163,10 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
         // ignoring those notifications.
         // TODO: Perfect it in future to deal with other apps as well
         if (sbn.packageName == "org.thunderdog.challegram") {
+            Timber.i("NotificationSBN: $sbn")
+            Timber.i("Notification: $notification")
+            Timber.i("NotificationExtras: ${notification.extras}")
+
             if (notification.flags == 0x28) {
                 return true
             }
