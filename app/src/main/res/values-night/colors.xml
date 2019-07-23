@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0D0D0D</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <color name="colorSecondary">#CE7EBA</color>
+    <color name="colorSecondaryVariant">#FFFFFF</color>
+
+    <color name="colorTerciary">#661F54</color>
+    <color name="colorOnTerciary">#FFFFFF</color>
+
+    <color name="colorSurface">#1A1A1A</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+
+    <color name="cardBackground">#261321</color>
+    <color name="colorDivider">#66999999</color>
+</resources>

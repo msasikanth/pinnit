@@ -2,4 +2,5 @@
 <resources>
     <attr name="colorTerciary" format="color" />
     <attr name="colorOnTerciary" format="color" />
+    <attr name="colorDivider" format="color" />
 </resources>

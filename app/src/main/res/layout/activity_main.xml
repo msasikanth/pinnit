@@ -86,6 +86,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="@string/create"
+                    android:textColor="?attr/colorOnTerciary"
                     app:backgroundTint="?attr/colorTerciary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/notif_action_options"

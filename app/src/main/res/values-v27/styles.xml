@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="NotifTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="NotifTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
@@ -13,5 +13,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorDivider">@color/colorDivider</item>
+        <item name="elevationOverlayEnabled">false</item>
     </style>
 </resources>
