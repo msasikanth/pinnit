@@ -43,8 +43,8 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     private val notifRepository: NotifRepository by inject()
 
     private val job = Job()
-    private val allowedApps = mutableSetOf<String>(
-        "org.thunderdog.challegram"
+    private val allowedApps = mutableSetOf(
+        "com.readdle.spark"
     )
 
     init {
@@ -68,11 +68,13 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     override fun onListenerConnected() {
         super.onListenerConnected()
         isListenerConnected = true
+        Timber.i("Listener Connected")
     }
 
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
         isListenerConnected = false
+        Timber.i("Listener Disconnected")
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
@@ -128,6 +130,15 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     private suspend fun shouldBeFilteredOut(sbn: StatusBarNotification): Boolean {
         val notification = sbn.notification
 
+        // TelegramX receives an acknowledgement notification if it's opened in another app,
+        // ignoring those notifications.
+        // TODO: Perfect it in future to deal with other apps as well
+        if (sbn.packageName == "org.thunderdog.challegram") {
+            if (notification.flags == 0x28) {
+                return true
+            }
+        }
+
         // Checking if the notification package name is present in allowed apps list
         if (!allowedApps.contains(sbn.packageName)) {
             return true
@@ -143,10 +154,6 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
-        if (sbn.isGroup) {
-            return true
-        }
-
         val template = notification.extras.getString(NotificationCompat.EXTRA_TEMPLATE)
         if (template == Notification.MediaStyle::class.java.name) {
             return true
@@ -157,19 +164,6 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             }
         ) {
             return true
-        }
-
-        // TelegramX receives an acknowledgement notification if it's opened in another app,
-        // ignoring those notifications.
-        // TODO: Perfect it in future to deal with other apps as well
-        if (sbn.packageName == "org.thunderdog.challegram") {
-            Timber.i("NotificationSBN: $sbn")
-            Timber.i("Notification: $notification")
-            Timber.i("NotificationExtras: ${notification.extras}")
-
-            if (notification.flags == 0x28) {
-                return true
-            }
         }
 
         val title = notification.extras.getCharSequence(Notification.EXTRA_TITLE)

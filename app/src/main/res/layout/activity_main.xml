@@ -16,29 +16,36 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentInsetEnd="16dp"
             app:liftOnScroll="true">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/app_bar_label"
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/NotifTheme.Headline6"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:text="@string/history"
-                android:textAlignment="center"/>
+                app:contentInsetEnd="16dp"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/app_bar_label"
+                    style="@style/NotifTheme.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/history"
+                    android:textAlignment="center" />
+
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <fragment
             android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:navGraph="@navigation/nav_graph" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:layout_width="match_parent"
