@@ -1,7 +1,12 @@
 package dev.sasikanth.notif.services
 
 import android.app.Notification
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -17,6 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import kotlin.coroutines.CoroutineContext
 
 class NotifListenerService : NotificationListenerService(), CoroutineScope {
@@ -104,11 +110,11 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                                 0,
                                 statusBarNotification.key,
                                 statusBarNotification.id,
-                                null,
+                                bitmapToByteArray(statusBarNotification, appInfo),
                                 title,
                                 text,
                                 emptyList(),
-                                packageName,
+                                statusBarNotification.packageName,
                                 appLabel,
                                 statusBarNotification.postTime,
                                 TemplateStyle.DefaultStyle,
@@ -119,6 +125,41 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                 }
             }
         }
+    }
+
+    private fun bitmapToByteArray(
+        sbn: StatusBarNotification,
+        appInfo: ApplicationInfo
+    ): ByteArray? {
+        val largeIcon = sbn.notification.getLargeIcon()
+        var iconBytes: ByteArray? = null
+        try {
+            val drawable = if (largeIcon != null) {
+                largeIcon.loadDrawable(applicationContext)
+            } else {
+                packageManager.getApplicationIcon(appInfo)
+            }
+            val bitmap = createBitmap(drawable)
+            ByteArrayOutputStream().use {
+                bitmap.compress(CompressFormat.PNG, 0, it)
+                iconBytes = it.toByteArray()
+            }
+        } catch (e: Exception) {
+            iconBytes = null
+        }
+        return iconBytes
+    }
+
+    private fun createBitmap(drawable: Drawable): Bitmap {
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
     }
 
     /**

@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="mainViewModel"
+            type="dev.sasikanth.notif.MainViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -79,20 +82,23 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/notif_action_create"
+                    android:id="@+id/notif_action_button"
                     style="@style/NotifTheme.Button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="@string/create"
+                    android:onClick="@{() -> mainViewModel.deleteUnPinnedNotifs()}"
                     android:textColor="?attr/colorOnTerciary"
                     app:backgroundTint="?attr/colorTerciary"
+                    app:cornerRadius="2dp"
+                    app:elevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/notif_action_options"
                     app:layout_constraintStart_toEndOf="@id/notif_action_search"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:rippleColor="?attr/colorOnTerciary" />
+                    app:rippleColor="?attr/colorOnTerciary"
+                    tools:text="@string/create" />
 
                 <ImageView
                     android:id="@+id/notif_action_options"
@@ -108,7 +114,7 @@
                     android:src="@drawable/ic_drawer"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/notif_action_create"
+                    app:layout_constraintStart_toEndOf="@id/notif_action_button"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

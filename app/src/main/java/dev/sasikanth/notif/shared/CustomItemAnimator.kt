@@ -24,7 +24,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
         notifItemViewHolder: NotifItemViewHolder,
         info: NotifItemInfo
     ): ItemHolderInfo {
-        info.isPinned = (notifItemViewHolder.getPinnedContent().tag as? Boolean) ?: false
+        info.isPinned = notifItemViewHolder.isPinned()
         return info
     }
 

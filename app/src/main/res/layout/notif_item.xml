@@ -18,24 +18,33 @@
         android:id="@+id/notif_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="@{() -> notifAdapterListener.onNotifItemClick(notifItem)}"
         android:onLongClick="@{() -> notifAdapterListener.pinNotifItem(notifItem)}"
-        app:cardBackgroundColor="@color/cardBackground"
-        app:cardCornerRadius="2dp"
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:rippleColor="@android:color/transparent">
+
+        <View
+            android:id="@+id/notif_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cardBackground" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/notif_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:elevation="1dp"
+            android:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notif_original_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
                 android:paddingStart="16dp"
                 android:paddingTop="0dp"
                 android:paddingEnd="0dp"
@@ -51,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8sp"
                     android:layout_marginEnd="56dp"
+                    android:textColor="?attr/colorOnSurface"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -65,6 +75,7 @@
                     android:contentDescription="@null"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/notif_info"
+                    app:notifIcon="@{notifItem}"
                     tools:src="@mipmap/ic_launcher" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -141,6 +152,7 @@
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/reveal_notif_info"
+                        app:notifIcon="@{notifItem}"
                         tools:src="@mipmap/ic_launcher" />
 
                     <androidx.appcompat.widget.AppCompatTextView

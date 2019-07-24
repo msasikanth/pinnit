@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +26,11 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is NotifItemViewHolder) {
-            holder.bind(notifItem = getItem(position), notifAdapterListener = notifAdapterListener)
+            holder.bind(
+                notifItem = getItem(position),
+                notifAdapterListener = notifAdapterListener,
+                lastItem = position == currentList.lastIndex
+            )
         }
     }
 
@@ -61,11 +66,25 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
             }
         }
 
-        fun bind(notifItem: NotifItem, notifAdapterListener: NotifAdapterListener) {
+        fun bind(
+            notifItem: NotifItem,
+            notifAdapterListener: NotifAdapterListener,
+            lastItem: Boolean
+        ) {
             binding.notifItem = notifItem
             binding.notifAdapterListener = notifAdapterListener
             binding.notifPinnedContent.tag = notifItem.isPinned
             binding.executePendingBindings()
+
+            if (lastItem) {
+                binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    bottomMargin = 4.px
+                }
+            } else {
+                binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    bottomMargin = 0
+                }
+            }
 
             if (notifItem.isPinned) {
                 binding.notifPinnedContent.isVisible = true
@@ -76,6 +95,18 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
                 binding.notifOriginalContent.isVisible = true
                 binding.notifPin.setImageResource(R.drawable.ic_notif_pin)
             }
+        }
+
+        fun notifItem(): NotifItem? {
+            return binding.notifItem
+        }
+
+        fun isPinned(): Boolean {
+            return binding.notifItem?.isPinned ?: false
+        }
+
+        fun getNotifContentView(): ConstraintLayout {
+            return binding.notifContent
         }
 
         fun getPinnedContent(): CircularRevealFrameLayout {
@@ -102,7 +133,14 @@ object NotifDiffCallback : DiffUtil.ItemCallback<NotifItem>() {
     }
 }
 
-class NotifAdapterListener(private val pinNote: (notifId: Long, isPinned: Boolean) -> Unit) {
+class NotifAdapterListener(
+    private val pinNote: (notifId: Long, isPinned: Boolean) -> Unit,
+    private val onNotifClick: (notifItem: NotifItem) -> Unit
+) {
+    fun onNotifItemClick(notifItem: NotifItem) {
+        onNotifClick(notifItem)
+    }
+
     fun pinNotifItem(notifItem: NotifItem): Boolean {
         pinNote(notifItem._id, !notifItem.isPinned)
         return true

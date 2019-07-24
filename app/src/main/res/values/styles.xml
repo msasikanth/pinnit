@@ -13,6 +13,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorDivider">@color/colorDivider</item>
         <item name="elevationOverlayEnabled">false</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
 </resources>

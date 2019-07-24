@@ -20,4 +20,16 @@ class MainViewModel(private val notifRepository: NotifRepository) : ViewModel() 
             }
         }
     }
+
+    fun deleteUnPinnedNotifs() {
+        viewModelScope.launch {
+            notifRepository.deleteUnPinnedNotifs()
+        }
+    }
+
+    fun deleteNotif(notifId: Long) {
+        viewModelScope.launch {
+            notifRepository.deleteNotif(notifId)
+        }
+    }
 }
