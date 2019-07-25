@@ -24,6 +24,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
         notifItemViewHolder: NotifItemViewHolder,
         info: NotifItemInfo
     ): ItemHolderInfo {
+        info.id = notifItemViewHolder.notifItem()?._id ?: 0L
         info.isPinned = notifItemViewHolder.isPinned()
         return info
     }
@@ -69,7 +70,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
             val oldPinStatus = preInfo.isPinned
             val newPinStatus = postInfo.isPinned
 
-            if (oldPinStatus == newPinStatus) {
+            if (oldPinStatus == newPinStatus || preInfo.id != postInfo.id) {
                 super.animateChange(oldHolder, newHolder, preInfo, postInfo)
             }
 
@@ -115,6 +116,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
                                 getOriginalContent().isGone = true
                                 getPinnedContent().isGone = false
                                 getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
+                                dispatchAnimationFinished(this)
                             }
                         }
                     )
@@ -133,6 +135,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
                                 getOriginalContent().isGone = false
                                 getPinnedContent().isGone = true
                                 getNotifPinView().setImageResource(R.drawable.ic_notif_pin)
+                                dispatchAnimationFinished(this)
                             }
                         }
                     )
@@ -150,6 +153,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
     }
 
     class NotifItemInfo : ItemHolderInfo() {
+        var id: Long = 0L
         var isPinned: Boolean = false
     }
 }

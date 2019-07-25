@@ -12,6 +12,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.text.TextUtils
 import androidx.core.app.NotificationCompat
+import dev.sasikanth.notif.data.Message
 import dev.sasikanth.notif.data.NotifItem
 import dev.sasikanth.notif.data.TemplateStyle
 import dev.sasikanth.notif.data.source.NotifRepository
@@ -86,6 +87,8 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
         sbn?.let { statusBarNotification ->
+            val notification = statusBarNotification.notification
+
             launch {
                 val shouldBeFilteredOut = shouldBeFilteredOut(statusBarNotification)
                 if (!shouldBeFilteredOut) {
@@ -98,26 +101,93 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
 
                         val appLabel = packageManager.getApplicationLabel(appInfo).toString()
 
-                        val title = statusBarNotification.notification.extras.getCharSequence(
+                        var title = notification.extras.getCharSequence(
                             NotificationCompat.EXTRA_TITLE
                         )?.toString().orEmpty()
-                        val text = statusBarNotification.notification.extras.getCharSequence(
+                        var text = notification.extras.getCharSequence(
                             NotificationCompat.EXTRA_TEXT
                         )?.toString().orEmpty()
+
+                        val messages = mutableListOf<Message>()
+                        val iconBytes = getIconBytes(notification, appInfo)
+                        val template = notification.extras.getString(Notification.EXTRA_TEMPLATE)
+
+                        val templateStyle =
+                            when {
+                                template == Notification.BigTextStyle::class.java.name -> TemplateStyle.BigTextStyle
+                                template == Notification.BigPictureStyle::class.java.name -> TemplateStyle.BigPictureStyle
+                                template == Notification.InboxStyle::class.java.name -> TemplateStyle.InboxStyle
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    template == Notification.DecoratedCustomViewStyle::class.java.name
+                                } else {
+                                    false
+                                } -> TemplateStyle.DecoratedViewStyle
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    template == Notification.MessagingStyle::class.java.name
+                                } else {
+                                    false
+                                } -> TemplateStyle.MessagingStyle
+                                else -> TemplateStyle.DefaultStyle
+                            }
+
+                        when (templateStyle) {
+                            TemplateStyle.BigTextStyle -> {
+                                title =
+                                    notification.extras.getCharSequence(Notification.EXTRA_TITLE_BIG)?.toString()
+                                        ?: title
+
+                                text =
+                                    notification.extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
+                                        ?: text
+                            }
+                            TemplateStyle.BigPictureStyle -> {
+                                // TODO: Save image and add uri to db
+                            }
+                            TemplateStyle.InboxStyle -> {
+                                val extraLines =
+                                    notification.extras.getCharSequenceArray(Notification.EXTRA_TEXT_LINES)
+                                text = extraLines?.joinToString(separator = "\n") ?: text
+                            }
+                            TemplateStyle.MessagingStyle -> {
+                                val conversationTitle =
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        notification.extras.getCharSequence(Notification.EXTRA_CONVERSATION_TITLE)
+                                            ?.toString()
+                                    } else {
+                                        null
+                                    }
+                                title = conversationTitle ?: title
+
+                                val messagingStyle = NotificationCompat.MessagingStyle
+                                    .extractMessagingStyleFromNotification(notification)
+                                val extractedMessages = messagingStyle?.messages?.map {
+                                    Message(
+                                        it.person?.name?.toString().orEmpty(),
+                                        it.text.toString(),
+                                        it.timestamp
+                                    )
+                                }
+                                messages.clear()
+                                messages.addAll(extractedMessages.orEmpty())
+                            }
+                            else -> {
+                                // TODO: Add else branch for template checking
+                            }
+                        }
 
                         notifRepository.saveNotif(
                             NotifItem(
                                 0,
                                 statusBarNotification.key,
                                 statusBarNotification.id,
-                                bitmapToByteArray(statusBarNotification, appInfo),
+                                iconBytes,
                                 title,
                                 text,
-                                emptyList(),
+                                messages,
                                 statusBarNotification.packageName,
                                 appLabel,
                                 statusBarNotification.postTime,
-                                TemplateStyle.DefaultStyle,
+                                templateStyle,
                                 false
                             )
                         )
@@ -127,11 +197,11 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
         }
     }
 
-    private fun bitmapToByteArray(
-        sbn: StatusBarNotification,
+    private fun getIconBytes(
+        notification: Notification,
         appInfo: ApplicationInfo
     ): ByteArray? {
-        val largeIcon = sbn.notification.getLargeIcon()
+        val largeIcon = notification.getLargeIcon()
         var iconBytes: ByteArray? = null
         try {
             val drawable = if (largeIcon != null) {

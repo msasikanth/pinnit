@@ -29,6 +29,7 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
             holder.bind(
                 notifItem = getItem(position),
                 notifAdapterListener = notifAdapterListener,
+                firstItem = position == 0,
                 lastItem = position == currentList.lastIndex
             )
         }
@@ -69,6 +70,7 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
         fun bind(
             notifItem: NotifItem,
             notifAdapterListener: NotifAdapterListener,
+            firstItem: Boolean,
             lastItem: Boolean
         ) {
             binding.notifItem = notifItem
@@ -76,13 +78,14 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
             binding.notifPinnedContent.tag = notifItem.isPinned
             binding.executePendingBindings()
 
-            if (lastItem) {
-                binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            when {
+                firstItem -> binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    topMargin = 4.px
                     bottomMargin = 4.px
                 }
-            } else {
-                binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    bottomMargin = 0
+                else -> binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    topMargin = 0
+                    bottomMargin = 4.px
                 }
             }
 
