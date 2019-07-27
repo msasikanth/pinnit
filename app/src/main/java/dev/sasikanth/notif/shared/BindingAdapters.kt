@@ -1,12 +1,12 @@
 package dev.sasikanth.notif.shared
 
+import android.graphics.BitmapFactory
 import android.text.format.DateUtils
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dev.sasikanth.notif.data.NotifItem
+import dev.sasikanth.notif.data.TemplateStyle
 
 @BindingAdapter("notifInfo")
 fun AppCompatTextView.setNotifInfo(notifItem: NotifItem?) {
@@ -23,13 +23,10 @@ fun AppCompatTextView.setNotifInfo(notifItem: NotifItem?) {
 @BindingAdapter("notifIcon")
 fun ImageView.setNotifIcon(notifItem: NotifItem?) {
     notifItem?.let {
-        Glide.with(this)
-            .load(it.iconBytes)
-            .centerCrop()
-            .circleCrop()
-            .dontAnimate()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(this)
+        val iconBytes = it.iconBytes
+        if (iconBytes != null) {
+            setImageBitmap(BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size))
+        }
     }
 }
 
@@ -42,7 +39,23 @@ fun AppCompatTextView.setNotifTitle(notifItem: NotifItem?) {
 
 @BindingAdapter("notifText")
 fun AppCompatTextView.setNotifText(notifItem: NotifItem?) {
-    notifItem?.let {
-        text = it.text
+    notifItem?.let { notif ->
+        if (notif.template == TemplateStyle.MessagingStyle) {
+            val messagesBuilder = StringBuilder()
+            val lastMessages = notif.messages.takeLast(5).sortedBy { it.timestamp }
+
+            lastMessages.forEachIndexed { index, message ->
+                val messageText = "${message.senderName}: ${message.message}"
+                if (index == lastMessages.lastIndex) {
+                    messagesBuilder.append(messageText)
+                } else {
+                    messagesBuilder.appendln(messageText)
+                }
+            }
+
+            text = messagesBuilder.toString()
+        } else {
+            text = notif.text
+        }
     }
 }

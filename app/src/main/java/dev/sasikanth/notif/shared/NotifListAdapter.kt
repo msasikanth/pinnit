@@ -6,12 +6,11 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.circularreveal.CircularRevealFrameLayout
 import dev.sasikanth.notif.R
 import dev.sasikanth.notif.data.NotifItem
@@ -28,9 +27,7 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
         if (holder is NotifItemViewHolder) {
             holder.bind(
                 notifItem = getItem(position),
-                notifAdapterListener = notifAdapterListener,
-                firstItem = position == 0,
-                lastItem = position == currentList.lastIndex
+                notifAdapterListener = notifAdapterListener
             )
         }
     }
@@ -50,7 +47,7 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
         val touchCoordinates = floatArrayOf(0f, 0f)
 
         init {
-            binding.notifCard.setOnTouchListener { _, motionEvent ->
+            itemView.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
                     touchCoordinates[0] = motionEvent.x
                     touchCoordinates[1] = motionEvent.y
@@ -69,32 +66,19 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
 
         fun bind(
             notifItem: NotifItem,
-            notifAdapterListener: NotifAdapterListener,
-            firstItem: Boolean,
-            lastItem: Boolean
+            notifAdapterListener: NotifAdapterListener
         ) {
             binding.notifItem = notifItem
             binding.notifAdapterListener = notifAdapterListener
             binding.notifPinnedContent.tag = notifItem.isPinned
             binding.executePendingBindings()
 
-            when {
-                firstItem -> binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = 4.px
-                    bottomMargin = 4.px
-                }
-                else -> binding.notifContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = 0
-                    bottomMargin = 4.px
-                }
-            }
-
             if (notifItem.isPinned) {
                 binding.notifPinnedContent.isVisible = true
-                binding.notifOriginalContent.isGone = true
+                binding.notifOriginalContent.isVisible = false
                 binding.notifPin.setImageResource(R.drawable.ic_notif_pinned)
             } else {
-                binding.notifPinnedContent.isGone = true
+                binding.notifPinnedContent.isVisible = false
                 binding.notifOriginalContent.isVisible = true
                 binding.notifPin.setImageResource(R.drawable.ic_notif_pin)
             }
@@ -108,8 +92,8 @@ class NotifListAdapter(private val notifAdapterListener: NotifAdapterListener) :
             return binding.notifItem?.isPinned ?: false
         }
 
-        fun getNotifContentView(): ConstraintLayout {
-            return binding.notifContent
+        fun getNotifCard(): MaterialCardView {
+            return binding.notifCard
         }
 
         fun getPinnedContent(): CircularRevealFrameLayout {

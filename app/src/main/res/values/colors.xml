@@ -12,6 +12,7 @@
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#000000</color>
 
-    <color name="cardBackground">#F5E9F1</color>
+    <color name="notifCardBackground">#FFFFFF</color>
+    <color name="notifCardBackgroundOverlay">#F5E9F1</color>
     <color name="colorDivider">#66999999</color>
 </resources>

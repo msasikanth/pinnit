@@ -1,11 +1,16 @@
 package dev.sasikanth.notif.shared
 
+import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.ColorDrawable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import dev.sasikanth.notif.R
 import dev.sasikanth.notif.data.NotifItem
 
 class ItemTouchHelperCallback(
+    private val context: Context,
     private val onItemSwiped: (notifItem: NotifItem?) -> Unit
 ) : ItemTouchHelper.SimpleCallback(
     0,
@@ -40,43 +45,6 @@ class ItemTouchHelperCallback(
         }
     }
 
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        if (viewHolder != null && viewHolder is NotifListAdapter.NotifItemViewHolder) {
-            val foregroundView = viewHolder.getNotifContentView()
-            ItemTouchHelper.Callback.getDefaultUIUtil().onSelected(foregroundView)
-        }
-    }
-
-    override fun onChildDrawOver(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder?,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
-    ) {
-        if (viewHolder != null && viewHolder is NotifListAdapter.NotifItemViewHolder) {
-            val foregroundView = viewHolder.getNotifContentView()
-            ItemTouchHelper.Callback.getDefaultUIUtil().onDrawOver(
-                c,
-                recyclerView,
-                foregroundView,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
-            )
-        }
-    }
-
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        if (viewHolder is NotifListAdapter.NotifItemViewHolder) {
-            val foregroundView = viewHolder.getNotifContentView()
-            ItemTouchHelper.Callback.getDefaultUIUtil().clearView(foregroundView)
-        }
-    }
-
     override fun onChildDraw(
         c: Canvas,
         recyclerView: RecyclerView,
@@ -86,17 +54,20 @@ class ItemTouchHelperCallback(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        if (viewHolder is NotifListAdapter.NotifItemViewHolder) {
-            val foregroundView = viewHolder.getNotifContentView()
-            ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(
-                c,
-                recyclerView,
-                foregroundView,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
+        val colorDrawable =
+            ColorDrawable(ContextCompat.getColor(context, R.color.notifCardBackgroundOverlay))
+        val itemView = viewHolder.itemView
+        if (dX > 0) {
+            colorDrawable.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+        } else {
+            colorDrawable.setBounds(
+                itemView.right + dX.toInt(),
+                itemView.top,
+                itemView.right,
+                itemView.bottom
             )
         }
+        colorDrawable.draw(c)
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 }

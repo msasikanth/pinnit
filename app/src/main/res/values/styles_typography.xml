@@ -75,6 +75,15 @@
     </style>
     <!-- Button -->
 
+    <!-- Text Button -->
+    <style name="NotifTheme.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">@style/Notif.TextBase.Button</item>
+        <item name="lineHeight">24sp</item>
+        <item name="firstBaselineToTopHeight">16sp</item>
+        <item name="lastBaselineToBottomHeight">4sp</item>
+    </style>
+    <!-- Text Button -->
+
     <!-- Subtitle 01 -->
     <style name="Notif.TextBase.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/archivo_semibold</item>

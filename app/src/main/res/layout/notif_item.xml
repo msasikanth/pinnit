@@ -14,149 +14,69 @@
             type="dev.sasikanth.notif.shared.NotifAdapterListener" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/notif_card"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
         android:onClick="@{() -> notifAdapterListener.onNotifItemClick(notifItem)}"
         android:onLongClick="@{() -> notifAdapterListener.pinNotifItem(notifItem)}"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="0dp"
         app:rippleColor="@android:color/transparent">
 
-        <View
-            android:id="@+id/notif_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardBackground" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/notif_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notif_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:elevation="1dp"
-            android:visibility="visible">
+            app:cardCornerRadius="0dp"
+            app:cardElevation="1dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/notif_original_content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:paddingStart="16dp"
-                android:paddingTop="0dp"
-                android:paddingEnd="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/notif_info"
-                    style="@style/NotifTheme.Overline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8sp"
-                    android:layout_marginEnd="56dp"
-                    android:textColor="?attr/colorOnSurface"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:notifInfo="@{notifItem}"
-                    tools:text="NOTIF • 69 MINUTES AGO" />
-
-                <ImageView
-                    android:id="@+id/notif_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:contentDescription="@null"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/notif_info"
-                    app:notifIcon="@{notifItem}"
-                    tools:src="@mipmap/ic_launcher" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/notif_title"
-                    style="@style/NotifTheme.Subtitle1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4sp"
-                    android:layout_marginEnd="56dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="?attr/colorSecondary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/notif_icon"
-                    app:layout_constraintTop_toBottomOf="@id/notif_info"
-                    app:notifTitle="@{notifItem}"
-                    tools:text="Notif Title" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/notif_message"
-                    style="@style/NotifTheme.Body2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16sp"
-                    android:ellipsize="end"
-                    android:maxLines="5"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/notif_icon"
-                    app:layout_constraintTop_toBottomOf="@id/notif_title"
-                    app:notifText="@{notifItem}"
-                    tools:text="Notif Title" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.circularreveal.CircularRevealFrameLayout
-                android:id="@+id/notif_pinned_content"
+                android:id="@+id/notif_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorTerciary"
-                android:paddingStart="16dp"
-                android:paddingEnd="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:elevation="1dp"
+                android:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:id="@+id/notif_original_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/notifCardBackground"
+                    android:paddingStart="16dp"
+                    android:paddingTop="0dp"
+                    android:paddingEnd="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/reveal_notif_info"
+                        android:id="@+id/notif_info"
                         style="@style/NotifTheme.Overline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8sp"
                         android:layout_marginEnd="56dp"
-                        android:textColor="?attr/colorSecondaryVariant"
+                        android:textColor="?attr/colorOnSurface"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:notifInfo="@{notifItem}"
                         tools:text="NOTIF • 69 MINUTES AGO" />
 
                     <ImageView
-                        android:id="@+id/reveal_notif_icon"
+                        android:id="@+id/notif_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/reveal_notif_info"
+                        app:layout_constraintTop_toBottomOf="@id/notif_info"
                         app:notifIcon="@{notifItem}"
                         tools:src="@mipmap/ic_launcher" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/reveal_notif_title"
+                        android:id="@+id/notif_title"
                         style="@style/NotifTheme.Subtitle1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -165,49 +85,161 @@
                         android:layout_marginEnd="56dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textColor="?attr/colorOnTerciary"
+                        android:textColor="?attr/colorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/reveal_notif_icon"
-                        app:layout_constraintTop_toBottomOf="@id/reveal_notif_info"
+                        app:layout_constraintStart_toEndOf="@id/notif_icon"
+                        app:layout_constraintTop_toBottomOf="@id/notif_info"
                         app:notifTitle="@{notifItem}"
                         tools:text="Notif Title" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/reveal_notif_message"
+                        android:id="@+id/notif_message"
                         style="@style/NotifTheme.Body2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="16sp"
                         android:ellipsize="end"
                         android:maxLines="5"
-                        android:textColor="?attr/colorSecondaryVariant"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/reveal_notif_icon"
-                        app:layout_constraintTop_toBottomOf="@id/reveal_notif_title"
+                        app:layout_constraintStart_toEndOf="@id/notif_icon"
+                        app:layout_constraintTop_toBottomOf="@id/notif_title"
                         app:notifText="@{notifItem}"
                         tools:text="Notif Title" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.circularreveal.CircularRevealFrameLayout>
+                <com.google.android.material.circularreveal.CircularRevealFrameLayout
+                    android:id="@+id/notif_pinned_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorTerciary"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/notif_pin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:contentDescription="@null"
-                android:focusable="true"
-                android:onClick="@{() -> notifAdapterListener.pinNotifItem(notifItem)}"
-                android:padding="16dp"
-                android:src="@drawable/ic_notif_pin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/reveal_notif_info"
+                            style="@style/NotifTheme.Overline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8sp"
+                            android:layout_marginEnd="56dp"
+                            android:textColor="?attr/colorSecondaryVariant"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:notifInfo="@{notifItem}"
+                            tools:text="NOTIF • 69 MINUTES AGO" />
 
-    </com.google.android.material.card.MaterialCardView>
+                        <ImageView
+                            android:id="@+id/reveal_notif_icon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="8dp"
+                            android:contentDescription="@null"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/reveal_notif_info"
+                            app:layout_constraintVertical_bias="0"
+                            app:notifIcon="@{notifItem}"
+                            tools:src="@mipmap/ic_launcher" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/reveal_notif_title"
+                            style="@style/NotifTheme.Subtitle1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4sp"
+                            android:layout_marginEnd="56dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="?attr/colorOnTerciary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/reveal_notif_icon"
+                            app:layout_constraintTop_toBottomOf="@id/reveal_notif_info"
+                            app:notifTitle="@{notifItem}"
+                            tools:text="Notif Title" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/reveal_notif_message"
+                            style="@style/NotifTheme.Body2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:maxLines="5"
+                            android:textColor="?attr/colorSecondaryVariant"
+                            app:layout_constraintBottom_toTopOf="@id/notif_item_actions"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/reveal_notif_icon"
+                            app:layout_constraintTop_toBottomOf="@id/reveal_notif_title"
+                            app:layout_constraintVertical_bias="0"
+                            app:notifText="@{notifItem}"
+                            tools:text="Notif Title" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/notif_item_actions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="44dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/reveal_notif_message">
+
+                            <View
+                                android:id="@+id/divider"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorDivider"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/NotifTheme.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dismiss"
+                                android:textColor="?attr/colorOnTerciary"
+                                app:backgroundTint="@android:color/transparent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.circularreveal.CircularRevealFrameLayout>
+
+                <ImageView
+                    android:id="@+id/notif_pin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    android:onClick="@{() -> notifAdapterListener.pinNotifItem(notifItem)}"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="16dp"
+                    android:src="@drawable/ic_notif_pin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
 </layout>

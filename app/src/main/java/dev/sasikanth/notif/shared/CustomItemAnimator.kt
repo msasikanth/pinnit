@@ -3,7 +3,7 @@ package dev.sasikanth.notif.shared
 import android.animation.Animator
 import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.addListener
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
@@ -66,7 +66,11 @@ class CustomItemAnimator : DefaultItemAnimator() {
             return super.animateChange(oldHolder, newHolder, preInfo, postInfo)
         }
 
-        return if ((newHolder as? NotifItemViewHolder != null) && (preInfo as? NotifItemInfo != null) && (postInfo as? NotifItemInfo != null)) {
+        return if ((newHolder as? NotifItemViewHolder != null) &&
+            (oldHolder as? NotifItemViewHolder != null) &&
+            (preInfo as? NotifItemInfo != null) &&
+            (postInfo as? NotifItemInfo != null)
+        ) {
             val oldPinStatus = preInfo.isPinned
             val newPinStatus = postInfo.isPinned
 
@@ -75,7 +79,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
             }
 
             try {
-                newHolder.getPinnedContent().isGone = false
+                newHolder.getPinnedContent().isVisible = true
 
                 val cx = newHolder.touchCoordinates[0]
                 val cy = newHolder.touchCoordinates[1]
@@ -107,14 +111,14 @@ class CustomItemAnimator : DefaultItemAnimator() {
                     anim.addListener(
                         onStart = {
                             newHolder.apply {
-                                getOriginalContent().isGone = false
+                                getOriginalContent().isVisible = true
                                 getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
                             }
                         },
                         onEnd = {
                             newHolder.apply {
-                                getOriginalContent().isGone = true
-                                getPinnedContent().isGone = false
+                                getOriginalContent().isVisible = false
+                                getPinnedContent().isVisible = true
                                 getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
                                 dispatchAnimationFinished(this)
                             }
@@ -126,14 +130,14 @@ class CustomItemAnimator : DefaultItemAnimator() {
                     anim.addListener(
                         onStart = {
                             newHolder.apply {
-                                getOriginalContent().isGone = false
+                                getOriginalContent().isVisible = true
                                 getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
                             }
                         },
                         onEnd = {
                             newHolder.apply {
-                                getOriginalContent().isGone = false
-                                getPinnedContent().isGone = true
+                                getOriginalContent().isVisible = true
+                                getPinnedContent().isVisible = false
                                 getNotifPinView().setImageResource(R.drawable.ic_notif_pin)
                                 dispatchAnimationFinished(this)
                             }
