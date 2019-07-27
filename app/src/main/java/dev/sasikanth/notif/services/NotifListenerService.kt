@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.text.TextUtils
 import androidx.core.app.NotificationCompat
 import dev.sasikanth.notif.data.Message
 import dev.sasikanth.notif.data.NotifItem
@@ -50,9 +49,7 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     private val notifRepository: NotifRepository by inject()
 
     private val job = Job()
-    private val allowedApps = mutableSetOf(
-        "com.readdle.spark"
-    )
+//    private val allowedApps = mutableSetOf()
 
     init {
         instance = this
@@ -238,33 +235,38 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
      *
      * @return true if a notification should be filtered out
      */
-    private suspend fun shouldBeFilteredOut(sbn: StatusBarNotification): Boolean {
+    private fun shouldBeFilteredOut(sbn: StatusBarNotification): Boolean {
         val notification = sbn.notification
 
-        // TelegramX receives an acknowledgement notification if it's opened in another app,
-        // ignoring those notifications.
-        // TODO: Perfect it in future to deal with other apps as well
-        if (sbn.packageName == "org.thunderdog.challegram") {
-            if (notification.flags == 0x28) {
-                return true
-            }
-        }
+        val title = notification.extras.getCharSequence(Notification.EXTRA_TITLE)
+        val text = notification.extras.getCharSequence(Notification.EXTRA_TEXT)
 
-        // Checking if the notification package name is present in allowed apps list
-        if (!allowedApps.contains(sbn.packageName)) {
+        // Filter it title and text both are empty or null
+        if (title.isNullOrEmpty() && text.isNullOrEmpty()) {
             return true
         }
 
-        // Ignoring notification if the package name matches with this app
+        // TODO: Filter what apps can show notifications
+//        if (!allowedApps.contains(sbn.packageName)) {
+//            return true
+//        }
+
+        // Filter if the notification package name matched notif app package naem
         if (sbn.packageName == applicationContext.packageName) {
             return true
         }
 
-        // Checking if a notification is clearable or not, if not return true to filter it
+        // Filter if a notification is not clearable
         if (!sbn.isClearable) {
             return true
         }
 
+        // Filter if it's a group summary
+        if ((notification.flags and Notification.FLAG_GROUP_SUMMARY) != 0) {
+            return true
+        }
+
+        // Filter media style notifications
         val template = notification.extras.getString(NotificationCompat.EXTRA_TEMPLATE)
         if (template == Notification.MediaStyle::class.java.name) {
             return true
@@ -277,9 +279,6 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
-        val title = notification.extras.getCharSequence(Notification.EXTRA_TITLE)
-        val text = notification.extras.getCharSequence(Notification.EXTRA_TEXT)
-
-        return TextUtils.isEmpty(title) && TextUtils.isEmpty(text)
+        return false
     }
 }
