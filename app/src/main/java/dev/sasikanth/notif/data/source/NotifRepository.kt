@@ -13,8 +13,8 @@ class NotifRepository(
         return notifDataSource.getNotifs()
     }
 
-    suspend fun getNotifsByPackageName(packageName: String): Result<List<NotifItem>> {
-        return notifDataSource.getNotifsByPackageName(packageName)
+    fun getPinnedNotifs(): LiveData<List<NotifItem>> {
+        return notifDataSource.getPinnedNotifs()
     }
 
     suspend fun getNotif(id: Long): Result<NotifItem> {

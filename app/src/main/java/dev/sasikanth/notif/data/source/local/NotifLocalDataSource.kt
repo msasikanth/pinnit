@@ -16,6 +16,10 @@ class NotifLocalDataSource(
         return notifDao.getNotifications()
     }
 
+    fun getPinnedNotifs(): LiveData<List<NotifItem>> {
+        return notifDao.getPinnedNotifications()
+    }
+
     suspend fun getNotif(id: Long): Result<NotifItem> = withContext(ioDispatcher) {
         return@withContext try {
             val notifItem = notifDao.getNotificationById(id)
@@ -24,15 +28,6 @@ class NotifLocalDataSource(
             } else {
                 Result.Error(NullPointerException("Notification is not found"))
             }
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
-    }
-
-    suspend fun getNotifsByPackageName(packageName: String): Result<List<NotifItem>> = withContext(ioDispatcher) {
-        return@withContext try {
-            val notifs = notifDao.getNotificationsByPackageName(packageName)
-            Result.Success(notifs)
         } catch (e: Exception) {
             Result.Error(e)
         }
