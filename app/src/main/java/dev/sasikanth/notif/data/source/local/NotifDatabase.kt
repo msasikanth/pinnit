@@ -11,5 +11,5 @@ import dev.sasikanth.notif.data.converters.TemplateStyleConverter
 @Database(entities = [NotifItem::class], version = 1)
 abstract class NotifDatabase : RoomDatabase() {
 
-    abstract fun notifDao(): NotifDao
+    abstract val notifDao: NotifDao
 }
