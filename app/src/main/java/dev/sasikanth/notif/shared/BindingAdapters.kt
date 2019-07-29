@@ -2,6 +2,7 @@ package dev.sasikanth.notif.shared
 
 import android.graphics.BitmapFactory
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
@@ -57,5 +58,19 @@ fun AppCompatTextView.setNotifText(notifItem: NotifItem?) {
         } else {
             text = notif.text
         }
+    }
+}
+
+@BindingAdapter("srcRes")
+fun ImageView.setImageRes(drawableRes: Int) {
+    setImageResource(drawableRes)
+}
+
+@BindingAdapter("isVisible")
+fun View.setVisibility(isVisible: Boolean) {
+    visibility = if (isVisible) {
+        View.VISIBLE
+    } else {
+        View.GONE
     }
 }

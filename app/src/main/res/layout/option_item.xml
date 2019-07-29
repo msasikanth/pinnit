@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="option"
+            type="dev.sasikanth.notif.shared.Option" />
+
+        <variable
+            name="onOptionSelected"
+            type="dev.sasikanth.notif.shared.OptionsBottomSheet.OnOptionSelected" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> onOptionSelected.onOptionSelected(option)}"
+        android:paddingStart="24dp"
+        android:paddingEnd="16dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/option_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcRes="@{option.icon}"
+            tools:src="@drawable/ic_noitf_dark_mode" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/option_label"
+            style="@style/NotifTheme.Subtitle2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:text="@{option.title}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/toggle"
+            app:layout_constraintStart_toEndOf="@+id/option_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/option_dark_mode" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{option.toggleChecked}"
+            app:isVisible="@{option.toggleEnabled}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/option_label"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -12,36 +12,9 @@
         android:layout_height="match_parent"
         tools:context=".historypage.HistoryFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/error_notif_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/error_notif_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/notif_pin_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/error_notif_title"
-                style="@style/NotifTheme.Headline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/notif_error_history_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/error_notif_icon" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/notif_error_layout"
+            layout="@layout/notif_error_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notif_history_list"

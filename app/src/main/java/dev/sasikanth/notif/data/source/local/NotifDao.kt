@@ -21,7 +21,7 @@ interface NotifDao {
     suspend fun getNotificationById(id: Long): NotifItem?
 
     @Query("SELECT * FROM notifs WHERE notif_key == :key ORDER BY posted_on DESC LIMIT 1")
-    suspend fun getNotificationByKey(key: String): NotifItem
+    suspend fun getNotificationByKey(key: String): NotifItem?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotifItem(notifItem: NotifItem): Long

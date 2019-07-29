@@ -172,22 +172,22 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                             }
                         }
 
-                        notifRepository.saveNotif(
-                            NotifItem(
-                                0,
-                                statusBarNotification.key,
-                                statusBarNotification.id,
-                                iconBytes,
-                                title,
-                                text,
-                                messages,
-                                statusBarNotification.packageName,
-                                appLabel,
-                                statusBarNotification.postTime,
-                                templateStyle,
-                                false
-                            )
+                        val notifItem = NotifItem(
+                            0,
+                            statusBarNotification.key,
+                            statusBarNotification.id,
+                            iconBytes,
+                            title,
+                            text,
+                            messages,
+                            statusBarNotification.packageName,
+                            appLabel,
+                            statusBarNotification.postTime,
+                            templateStyle,
+                            false
                         )
+
+                        notifRepository.saveNotif(notifItem)
                     }
                 }
             }

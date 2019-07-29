@@ -59,7 +59,7 @@ class HistoryFragment : Fragment() {
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notifHistoryList)
 
         mainViewModel.notifList.observe(viewLifecycleOwner, Observer {
-            binding.errorNotifView.isVisible = it.isNullOrEmpty()
+            binding.notifErrorLayout.errorNotifView.isVisible = it.isNullOrEmpty()
             binding.notifHistoryList.isVisible = !it.isNullOrEmpty()
 
             adapter.submitList(it)

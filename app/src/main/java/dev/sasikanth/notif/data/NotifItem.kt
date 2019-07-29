@@ -57,6 +57,29 @@ data class NotifItem(
         return true
     }
 
+    fun equalsLastItem(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as NotifItem
+
+        if (notifKey != other.notifKey) return false
+        if (notifId != other.notifId) return false
+        if (iconBytes != null) {
+            if (other.iconBytes == null) return false
+            if (!iconBytes.contentEquals(other.iconBytes)) return false
+        } else if (other.iconBytes != null) return false
+        if (title != other.title) return false
+        if (text != other.text) return false
+        if (messages != other.messages) return false
+        if (packageName != other.packageName) return false
+        if (appLabel != other.appLabel) return false
+        if (template != other.template) return false
+        if (isPinned != other.isPinned) return false
+
+        return true
+    }
+
     override fun hashCode(): Int {
         var result = _id.hashCode()
         result = 31 * result + notifKey.hashCode()

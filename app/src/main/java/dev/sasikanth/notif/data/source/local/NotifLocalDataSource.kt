@@ -33,6 +33,14 @@ class NotifLocalDataSource(
         }
     }
 
+    suspend fun getNotif(key: String): NotifItem? = withContext(ioDispatcher) {
+        return@withContext try {
+            notifDao.getNotificationByKey(key)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     suspend fun saveNotif(notifItem: NotifItem) = withContext(ioDispatcher) {
         notifDao.insertNotifItem(notifItem)
     }
