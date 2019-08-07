@@ -5,6 +5,13 @@
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/currentFragment">
 
+    <action
+        android:id="@+id/actionHistoryFragment"
+        app:destination="@id/historyFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/currentFragment"
         android:name="dev.sasikanth.notif.currentpage.CurrentFragment"
@@ -13,11 +20,4 @@
         android:id="@+id/historyFragment"
         android:name="dev.sasikanth.notif.historypage.HistoryFragment"
         tools:layout="@layout/fragment_history" />
-    <action
-        android:id="@+id/actionHistoryFragment"
-        app:destination="@id/historyFragment"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>

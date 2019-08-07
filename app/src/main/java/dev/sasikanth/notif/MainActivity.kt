@@ -95,12 +95,18 @@ class MainActivity : AppCompatActivity() {
                 isNightMode,
                 true
             )
-            val history = Option(1, R.string.option_history, R.drawable.ic_notif_history)
+
+            val historyOrCurrent =
+                if (navController.currentDestination?.id == R.id.currentFragment) {
+                    Option(1, R.string.option_history, R.drawable.ic_notif_history)
+                } else {
+                    Option(1, R.string.current, R.drawable.ic_notif_current)
+                }
             val apps = Option(2, R.string.option_your_apps, R.drawable.ic_notif_apps)
             val about = Option(3, R.string.option_about, R.drawable.ic_noitf_about)
 
             OptionsBottomSheet()
-                .addOption(darkMode, history, apps, about)
+                .addOption(darkMode, historyOrCurrent, apps, about)
                 .setOnOptionSelectedListener(OptionsBottomSheet.OnOptionSelected {
                     when (it.id) {
                         0 -> {
@@ -113,6 +119,8 @@ class MainActivity : AppCompatActivity() {
                         1 -> {
                             if (navController.currentDestination?.id != R.id.historyFragment) {
                                 navController.navigate(R.id.actionHistoryFragment)
+                            } else {
+                                navController.navigate(R.id.currentFragment)
                             }
                         }
                     }
