@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.sasikanth.notif.data.NotifItem
+import dev.sasikanth.notif.data.Result
 import dev.sasikanth.notif.data.source.NotifRepository
 import dev.sasikanth.notif.utils.Event
 import kotlinx.coroutines.launch
@@ -20,6 +21,10 @@ class MainViewModel(private val notifRepository: NotifRepository) : ViewModel() 
     private val _showOptionsMenu = MutableLiveData<Event<Unit>>()
     val showOptionsMenu: LiveData<Event<Unit>>
         get() = _showOptionsMenu
+
+    private val _notifDeleted = MutableLiveData<Event<NotifItem>>()
+    val notifDeleted: LiveData<Event<NotifItem>>
+        get() = _notifDeleted
 
     fun showOptionsMenu() {
         _showOptionsMenu.postValue(Event(Unit))
@@ -49,7 +54,19 @@ class MainViewModel(private val notifRepository: NotifRepository) : ViewModel() 
 
     fun deleteNotif(notifId: Long) {
         viewModelScope.launch {
-            notifRepository.deleteNotif(notifId)
+            val notifItem = notifRepository.getNotif(notifId)
+            if (notifItem is Result.Success) {
+                val deletedRow = notifRepository.deleteNotif(notifId)
+                if (deletedRow == 1) {
+                    _notifDeleted.postValue(Event(notifItem.data))
+                }
+            }
+        }
+    }
+
+    fun saveNotif(notifItem: NotifItem) {
+        viewModelScope.launch {
+            notifRepository.saveNotif(notifItem)
         }
     }
 }

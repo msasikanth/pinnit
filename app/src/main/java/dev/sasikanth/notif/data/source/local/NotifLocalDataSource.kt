@@ -58,7 +58,7 @@ class NotifLocalDataSource(
     }
 
     suspend fun deleteNotif(id: Long) = withContext(ioDispatcher) {
-        notifDao.deleteNotifById(id)
+        return@withContext notifDao.deleteNotifById(id)
     }
 
     suspend fun deleteAllNotifs() = withContext(ioDispatcher) {

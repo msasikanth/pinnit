@@ -26,4 +26,6 @@
     <string name="notif_error_current_title">No notifications to pin</string>
     <string name="notif_error_current_subtitle">Looking for a notification?\nTry checking your history</string>
     <string name="view_history">View history</string>
+    <string name="notif_deleted">Notification deleted</string>
+    <string name="undo">Undo</string>
 </resources>

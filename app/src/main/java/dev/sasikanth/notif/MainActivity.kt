@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import dev.sasikanth.notif.databinding.ActivityMainBinding
 import dev.sasikanth.notif.shared.Option
 import dev.sasikanth.notif.shared.OptionsBottomSheet
@@ -76,6 +77,15 @@ class MainActivity : AppCompatActivity() {
                 binding.notifActionButton.text = getString(R.string.create)
             }
         }
+
+        mainViewModel.notifDeleted.observe(this, EventObserver { notifItem ->
+            Snackbar.make(binding.mainRootView, R.string.notif_deleted, Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.bottomAppBar)
+                .setAction(R.string.undo) {
+                    mainViewModel.saveNotif(notifItem)
+                }
+                .show()
+        })
 
         mainViewModel.showOptionsMenu.observe(this, EventObserver {
             val darkMode = Option(

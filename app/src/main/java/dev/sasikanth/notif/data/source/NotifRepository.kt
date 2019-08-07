@@ -44,9 +44,7 @@ class NotifRepository(
         notifDataSource.unPinNotif(id)
     }
 
-    suspend fun deleteNotif(id: Long) {
-        notifDataSource.deleteNotif(id)
-    }
+    suspend fun deleteNotif(id: Long) = notifDataSource.deleteNotif(id)
 
     suspend fun deleteAllNotifs() {
         notifDataSource.deleteAllNotifs()
