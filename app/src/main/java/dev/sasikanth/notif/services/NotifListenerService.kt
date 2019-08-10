@@ -15,14 +15,15 @@ import dev.sasikanth.notif.data.Message
 import dev.sasikanth.notif.data.NotifItem
 import dev.sasikanth.notif.data.TemplateStyle
 import dev.sasikanth.notif.data.source.NotifRepository
+import dev.sasikanth.notif.di.injector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class NotifListenerService : NotificationListenerService(), CoroutineScope {
@@ -46,7 +47,8 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
         }
     }
 
-    private val notifRepository: NotifRepository by inject()
+    @Inject
+    lateinit var notifRepository: NotifRepository
 
     private val job = Job()
 //    private val allowedApps = mutableSetOf()
@@ -60,6 +62,8 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
 
     override fun onCreate() {
         super.onCreate()
+        injector.inject(this)
+
         isListenerCreated = true
     }
 

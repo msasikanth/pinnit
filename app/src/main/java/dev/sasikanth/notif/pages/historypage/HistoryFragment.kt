@@ -1,5 +1,6 @@
-package dev.sasikanth.notif.historypage
+package dev.sasikanth.notif.pages.historypage
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,20 +9,25 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
-import dev.sasikanth.notif.MainViewModel
 import dev.sasikanth.notif.databinding.FragmentHistoryBinding
+import dev.sasikanth.notif.di.activityViewModels
+import dev.sasikanth.notif.di.injector
 import dev.sasikanth.notif.shared.CustomItemAnimator
 import dev.sasikanth.notif.shared.ItemTouchHelperCallback
 import dev.sasikanth.notif.shared.NotifAdapterListener
 import dev.sasikanth.notif.shared.NotifDividerItemDecorator
 import dev.sasikanth.notif.shared.NotifListAdapter
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HistoryFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val mainViewModel by activityViewModels { injector.mainViewModel }
 
     private lateinit var binding: FragmentHistoryBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        injector.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

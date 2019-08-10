@@ -12,22 +12,24 @@ import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dev.sasikanth.notif.databinding.ActivityMainBinding
+import dev.sasikanth.notif.di.injector
+import dev.sasikanth.notif.di.viewModels
 import dev.sasikanth.notif.shared.Option
 import dev.sasikanth.notif.shared.OptionsBottomSheet
 import dev.sasikanth.notif.shared.isNightMode
 import dev.sasikanth.notif.utils.EventObserver
 import dev.sasikanth.notif.utils.NotifPreferences
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var notifPreferences: NotifPreferences
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    private val mainViewModel: MainViewModel by viewModel()
-    private val notifPreferences: NotifPreferences by inject()
-
+    private val mainViewModel by viewModels { injector.mainViewModel }
     private val notifPermissionDialog: AlertDialog by lazy {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.notif_permission_dialog_title)
@@ -62,6 +64,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injector.inject(this)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = mainViewModel
         binding.lifecycleOwner = this

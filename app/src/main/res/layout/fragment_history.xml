@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".historypage.HistoryFragment">
+        tools:context=".pages.historypage.HistoryFragment">
 
         <include
             android:id="@+id/notif_error_layout"

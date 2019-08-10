@@ -14,10 +14,10 @@
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/currentFragment"
-        android:name="dev.sasikanth.notif.currentpage.CurrentFragment"
+        android:name="dev.sasikanth.notif.pages.currentpage.CurrentFragment"
         tools:layout="@layout/fragment_current" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="dev.sasikanth.notif.historypage.HistoryFragment"
+        android:name="dev.sasikanth.notif.pages.historypage.HistoryFragment"
         tools:layout="@layout/fragment_history" />
 </navigation>

@@ -9,8 +9,12 @@ import dev.sasikanth.notif.data.Result
 import dev.sasikanth.notif.data.source.NotifRepository
 import dev.sasikanth.notif.utils.Event
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val notifRepository: NotifRepository) : ViewModel() {
+class MainViewModel
+@Inject constructor(
+    private val notifRepository: NotifRepository
+) : ViewModel() {
 
     val notifList: LiveData<List<NotifItem>> = notifRepository.getNotifs()
 

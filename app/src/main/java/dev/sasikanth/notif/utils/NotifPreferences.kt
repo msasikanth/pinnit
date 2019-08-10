@@ -5,8 +5,10 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import dev.sasikanth.notif.R
+import javax.inject.Inject
 
-class NotifPreferences(
+class NotifPreferences
+@Inject constructor(
     private val context: Context,
     private val sharedPreferences: SharedPreferences
 ) {

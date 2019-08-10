@@ -4,8 +4,12 @@ import androidx.lifecycle.LiveData
 import dev.sasikanth.notif.data.NotifItem
 import dev.sasikanth.notif.data.Result
 import dev.sasikanth.notif.data.source.local.NotifLocalDataSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotifRepository(
+@Singleton
+class NotifRepository
+@Inject constructor(
     private val notifDataSource: NotifLocalDataSource
 ) {
 
