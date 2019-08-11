@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
+import dev.sasikanth.notif.R
 import dev.sasikanth.notif.data.NotifItem
 import dev.sasikanth.notif.data.TemplateStyle
 
@@ -72,5 +73,14 @@ fun View.setVisibility(isVisible: Boolean) {
         View.VISIBLE
     } else {
         View.GONE
+    }
+}
+
+@BindingAdapter("isOptionSelected")
+fun View.setOptionSelected(isSelected: Boolean) {
+    if (isSelected) {
+        this.setBackgroundResource(R.drawable.option_item_selected)
+    } else {
+        this.background = null
     }
 }

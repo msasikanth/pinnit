@@ -100,6 +100,22 @@
                     app:rippleColor="?attr/colorOnTerciary"
                     tools:text="@string/create" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tooltip"
+                    style="@style/NotifTheme.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/apps_tooltip_background"
+                    android:text="@string/apps_tooltip"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnSurface"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/notif_action_options"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/notif_action_options"
                     android:layout_width="wrap_content"

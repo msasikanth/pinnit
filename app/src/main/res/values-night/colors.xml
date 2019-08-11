@@ -5,6 +5,7 @@
 
     <color name="colorSecondary">#CE7EBA</color>
     <color name="colorSecondaryVariant">#FFFFFF</color>
+    <color name="colorSecondaryRipple">#33CE7EBA</color>
 
     <color name="colorTerciary">#661F54</color>
     <color name="colorOnTerciary">#FFFFFF</color>

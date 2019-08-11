@@ -67,7 +67,7 @@
         <item name="android:letterSpacing">0.0715</item>
     </style>
 
-    <style name="NotifTheme.Button">
+    <style name="NotifTheme.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textAppearance">@style/Notif.TextBase.Button</item>
         <item name="lineHeight">24sp</item>
         <item name="firstBaselineToTopHeight">16sp</item>

@@ -16,6 +16,7 @@ import dev.sasikanth.notif.data.NotifItem
 import dev.sasikanth.notif.data.TemplateStyle
 import dev.sasikanth.notif.data.source.NotifRepository
 import dev.sasikanth.notif.di.injector
+import dev.sasikanth.notif.utils.NotifPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,10 +49,14 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     }
 
     @Inject
+    lateinit var notifPreferences: NotifPreferences
+
+    @Inject
     lateinit var notifRepository: NotifRepository
 
     private val job = Job()
-//    private val allowedApps = mutableSetOf()
+    private val allowedApps: MutableSet<String>
+        get() = notifPreferences.allowedApps
 
     init {
         instance = this
@@ -133,13 +138,13 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
 
                         when (templateStyle) {
                             TemplateStyle.BigTextStyle -> {
-                                title =
-                                    notification.extras.getCharSequence(Notification.EXTRA_TITLE_BIG)?.toString()
-                                        ?: title
+                                title = notification.extras
+                                    .getCharSequence(Notification.EXTRA_TITLE_BIG)
+                                    ?.toString() ?: title
 
-                                text =
-                                    notification.extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
-                                        ?: text
+                                text = notification.extras
+                                    .getCharSequence(Notification.EXTRA_BIG_TEXT)
+                                    ?.toString() ?: text
                             }
                             TemplateStyle.BigPictureStyle -> {
                                 // TODO: Save image and add uri to db
@@ -152,7 +157,8 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                             TemplateStyle.MessagingStyle -> {
                                 val conversationTitle =
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                        notification.extras.getCharSequence(Notification.EXTRA_CONVERSATION_TITLE)
+                                        notification.extras
+                                            .getCharSequence(Notification.EXTRA_CONVERSATION_TITLE)
                                             ?.toString()
                                     } else {
                                         null
@@ -190,7 +196,6 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                             templateStyle,
                             false
                         )
-
                         notifRepository.saveNotif(notifItem)
                     }
                 }
@@ -250,10 +255,9 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
-        // TODO: Filter what apps can show notifications
-//        if (!allowedApps.contains(sbn.packageName)) {
-//            return true
-//        }
+        if (!allowedApps.contains(sbn.packageName)) {
+            return true
+        }
 
         // Filter if the notification package name matched notif app package naem
         if (sbn.packageName == applicationContext.packageName) {

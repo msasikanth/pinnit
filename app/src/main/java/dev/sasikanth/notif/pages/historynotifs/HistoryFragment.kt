@@ -1,4 +1,4 @@
-package dev.sasikanth.notif.pages.historypage
+package dev.sasikanth.notif.pages.historynotifs
 
 import android.content.Context
 import android.os.Bundle
@@ -38,11 +38,15 @@ class HistoryFragment : Fragment() {
 
         val adapter = NotifListAdapter(NotifAdapterListener(
             onNotifClick = { notifItem ->
-                val packageManager = requireActivity().packageManager
-                packageManager?.let {
-                    startActivity(
-                        packageManager.getLaunchIntentForPackage(notifItem.packageName)
-                    )
+                try {
+                    val packageManager = requireActivity().packageManager
+                    packageManager?.let {
+                        startActivity(
+                            packageManager.getLaunchIntentForPackage(notifItem.packageName)
+                        )
+                    }
+                } catch (e: Exception) {
+                    // TODO: Handle exception
                 }
             },
             pinNote = { notifId, isPinned ->
@@ -64,6 +68,7 @@ class HistoryFragment : Fragment() {
             })
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notifHistoryList)
 
+        // TODO: Verify item updates when app is opened
         mainViewModel.notifList.observe(viewLifecycleOwner, Observer {
             binding.notifErrorLayout.errorNotifView.isVisible = it.isNullOrEmpty()
             binding.notifHistoryList.isVisible = !it.isNullOrEmpty()

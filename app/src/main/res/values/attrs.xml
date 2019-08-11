@@ -3,4 +3,5 @@
     <attr name="colorTerciary" format="color" />
     <attr name="colorOnTerciary" format="color" />
     <attr name="colorDivider" format="color" />
+    <attr name="colorSecondaryRipple" format="color" />
 </resources>

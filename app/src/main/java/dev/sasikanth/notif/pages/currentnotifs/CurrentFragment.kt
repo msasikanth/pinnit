@@ -1,4 +1,4 @@
-package dev.sasikanth.notif.pages.currentpage
+package dev.sasikanth.notif.pages.currentnotifs
 
 import android.os.Bundle
 import android.view.LayoutInflater

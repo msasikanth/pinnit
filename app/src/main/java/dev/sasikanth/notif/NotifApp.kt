@@ -8,8 +8,9 @@ import timber.log.Timber
 
 class NotifApp : Application(), ComponentProvider {
 
-    override val component: NotifAppComponent
-        get() = DaggerNotifAppComponent.factory().create(this)
+    override val component: NotifAppComponent by lazy {
+        DaggerNotifAppComponent.factory().create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()

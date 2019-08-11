@@ -11,18 +11,18 @@ import javax.inject.Singleton
 @Module
 object DataModule {
 
-    @Singleton
     @Provides
     @JvmStatic
+    @Singleton
     fun providesRoomDatabase(context: Context) = Room.databaseBuilder(
         context,
         NotifDatabase::class.java,
         "Notifs.db"
     ).build()
 
-    @Singleton
     @Provides
     @JvmStatic
+    @Singleton
     fun providesNotifLocalDataSource(notifDatabase: NotifDatabase) = NotifLocalDataSource(
         notifDao = notifDatabase.notifDao
     )

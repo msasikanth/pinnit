@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- TODO: Set visibility to gone -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,11 +60,11 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp"
+                style="@style/NotifTheme.Button"
                 android:text="@string/view_history"
                 android:textColor="?attr/colorOnTerciary"
                 app:backgroundTint="?attr/colorTerciary"
                 app:cornerRadius="2dp"
-                app:elevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

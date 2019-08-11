@@ -7,7 +7,7 @@
 
         <variable
             name="option"
-            type="dev.sasikanth.notif.shared.Option" />
+            type="dev.sasikanth.notif.shared.Option.OptionItem" />
 
         <variable
             name="onOptionSelected"
@@ -17,12 +17,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
+        android:foreground="@drawable/option_item_ripple"
         android:onClick="@{() -> onOptionSelected.onOptionSelected(option)}"
         android:paddingStart="24dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="16dp"
+        app:isOptionSelected="@{option.selected}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/option_icon"
@@ -34,7 +37,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:selected="@{option.selected}"
             app:srcRes="@{option.icon}"
+            app:tint="@color/option_item"
             tools:src="@drawable/ic_noitf_dark_mode" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -46,10 +51,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:text="@{option.title}"
+            android:textColor="@color/option_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/toggle"
             app:layout_constraintStart_toEndOf="@+id/option_icon"
             app:layout_constraintTop_toTopOf="parent"
+            app:selected="@{option.selected}"
             tools:text="@string/option_dark_mode" />
 
         <androidx.appcompat.widget.SwitchCompat

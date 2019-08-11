@@ -9,16 +9,25 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dev.sasikanth.notif.R
 import dev.sasikanth.notif.databinding.OptionItemBinding
 import dev.sasikanth.notif.databinding.OptionsBottomSheetBinding
 
-data class Option(
-    val id: Int,
-    @StringRes val title: Int,
-    @DrawableRes val icon: Int,
-    val isToggleChecked: Boolean = false,
-    val isToggleEnabled: Boolean = false
-)
+private const val OPTION_ITEM = 1
+private const val OPTION_SEPARATOR = 2
+
+sealed class Option {
+    data class OptionItem(
+        val id: Int,
+        @StringRes val title: Int,
+        @DrawableRes val icon: Int,
+        val isToggleChecked: Boolean = false,
+        val isToggleEnabled: Boolean = false,
+        val isSelected: Boolean = false
+    ) : Option()
+
+    object OptionSeparator : Option()
+}
 
 class OptionsBottomSheet : BottomSheetDialogFragment() {
 
@@ -66,33 +75,60 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
         show(fragmentManager, TAG)
     }
 
-    class OnOptionSelected(private val optionSelected: (option: Option) -> Unit) {
-        fun onOptionSelected(option: Option) {
+    class OnOptionSelected(private val optionSelected: (option: Option.OptionItem) -> Unit) {
+        fun onOptionSelected(option: Option.OptionItem) {
             optionSelected(option)
         }
     }
 
     private inner class OptionsRecyclerView(private val onOptionSelected: OnOptionSelected) :
-        RecyclerView.Adapter<OptionItemViewHolder>() {
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        private var options: List<Option> = emptyList()
+        private var options: List<Any> = emptyList()
 
-        fun addItems(options: List<Option>) {
+        fun addItems(options: List<Any>) {
             this.options = options
             notifyDataSetChanged()
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionItemViewHolder {
-            return OptionItemViewHolder.from(parent)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            return if (viewType == OPTION_ITEM) {
+                OptionItemViewHolder.from(parent)
+            } else {
+                OptionItemSeparator.from(parent)
+            }
         }
 
         override fun getItemCount(): Int {
             return options.size
         }
 
-        override fun onBindViewHolder(holder: OptionItemViewHolder, position: Int) {
+        override fun getItemViewType(position: Int): Int {
+            return if (options[position] is Option.OptionItem) {
+                OPTION_ITEM
+            } else {
+                OPTION_SEPARATOR
+            }
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             if (position != RecyclerView.NO_POSITION) {
-                holder.bind(options[position], onOptionSelected)
+                if (holder is OptionItemViewHolder) {
+                    holder.bind(options[position] as Option.OptionItem, onOptionSelected)
+                }
+            }
+        }
+    }
+
+    private class OptionItemSeparator private constructor(private val itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+        companion object {
+
+            fun from(parent: ViewGroup): OptionItemSeparator {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = layoutInflater.inflate(R.layout.option_item_separator, parent, false)
+                return OptionItemSeparator(view)
             }
         }
     }
@@ -120,7 +156,7 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        fun bind(option: Option, onOptionSelected: OnOptionSelected) {
+        fun bind(option: Option.OptionItem, onOptionSelected: OnOptionSelected) {
             binding.option = option
             binding.onOptionSelected = onOptionSelected
             binding.executePendingBindings()

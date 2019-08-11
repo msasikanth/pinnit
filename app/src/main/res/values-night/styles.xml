@@ -7,6 +7,7 @@
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorSecondaryRipple">@color/colorSecondaryRipple</item>
         <item name="colorTerciary">@color/colorTerciary</item>
         <item name="colorOnTerciary">@color/colorOnTerciary</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>

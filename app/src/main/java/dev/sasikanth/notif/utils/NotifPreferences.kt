@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import dev.sasikanth.notif.R
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NotifPreferences
 @Inject constructor(
     private val context: Context,
@@ -15,6 +17,7 @@ class NotifPreferences
 
     companion object {
         const val KEY_THEME = "pref_theme"
+        const val KEY_ALLOWED_APPS = "allowed_apps"
     }
 
     private val defaultThemeValue = context.getString(R.string.pref_theme_light)
@@ -31,6 +34,14 @@ class NotifPreferences
         set(value) {
             sharedPreferences.edit {
                 putString(KEY_THEME, getStorageKeyForTheme(value))
+            }
+        }
+
+    var allowedApps: MutableSet<String>
+        get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, mutableSetOf()) ?: mutableSetOf()
+        set(value) {
+            sharedPreferences.edit {
+                putStringSet(KEY_ALLOWED_APPS, value)
             }
         }
 

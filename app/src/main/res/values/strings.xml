@@ -28,4 +28,9 @@
     <string name="view_history">View history</string>
     <string name="notif_deleted">Notification deleted</string>
     <string name="undo">Undo</string>
+    <string name="apps">Your apps</string>
+    <string name="apps_select_all">Select all</string>
+    <string name="apps_unselect_all">Unselect all</string>
+
+    <string name="apps_tooltip">Apps that are not selected will be ignored</string>
 </resources>

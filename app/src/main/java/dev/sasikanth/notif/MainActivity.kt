@@ -6,6 +6,7 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -14,7 +15,8 @@ import com.google.android.material.snackbar.Snackbar
 import dev.sasikanth.notif.databinding.ActivityMainBinding
 import dev.sasikanth.notif.di.injector
 import dev.sasikanth.notif.di.viewModels
-import dev.sasikanth.notif.shared.Option
+import dev.sasikanth.notif.shared.Option.OptionItem
+import dev.sasikanth.notif.shared.Option.OptionSeparator
 import dev.sasikanth.notif.shared.OptionsBottomSheet
 import dev.sasikanth.notif.shared.isNightMode
 import dev.sasikanth.notif.utils.EventObserver
@@ -73,12 +75,33 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.historyFragment) {
-                binding.appBarLabel.text = getString(R.string.history)
-                binding.notifActionButton.text = getString(R.string.clear_history)
-            } else {
-                binding.appBarLabel.text = getString(R.string.current)
-                binding.notifActionButton.text = getString(R.string.create)
+            when (destination.id) {
+                R.id.currentFragment -> {
+                    binding.apply {
+                        notifActionSearch.isVisible = true
+                        notifActionButton.isVisible = true
+                        tooltip.isVisible = false
+                        appBarLabel.text = getString(R.string.current)
+                        notifActionButton.text = getString(R.string.create)
+                    }
+                }
+                R.id.historyFragment -> {
+                    binding.apply {
+                        notifActionSearch.isVisible = true
+                        notifActionButton.isVisible = true
+                        tooltip.isVisible = false
+                        appBarLabel.text = getString(R.string.history)
+                        notifActionButton.text = getString(R.string.clear_history)
+                    }
+                }
+                R.id.appsFragment -> {
+                    binding.apply {
+                        notifActionSearch.isVisible = false
+                        notifActionButton.isVisible = false
+                        tooltip.isVisible = true
+                        appBarLabel.text = getString(R.string.apps)
+                    }
+                }
             }
         }
 
@@ -92,39 +115,58 @@ class MainActivity : AppCompatActivity() {
         })
 
         mainViewModel.showOptionsMenu.observe(this, EventObserver {
-            val darkMode = Option(
-                0,
+
+            val currentNotifs = OptionItem(
+                id = 1,
+                title = R.string.current,
+                icon = R.drawable.ic_notif_current,
+                isSelected = navController.currentDestination?.id == R.id.currentFragment
+            )
+            val apps = OptionItem(
+                id = 2,
+                title = R.string.option_your_apps,
+                icon = R.drawable.ic_notif_apps,
+                isSelected = navController.currentDestination?.id == R.id.appsFragment
+            )
+            val historyNotifs = OptionItem(
+                id = 3,
+                title = R.string.option_history,
+                icon = R.drawable.ic_notif_history,
+                isSelected = navController.currentDestination?.id == R.id.historyFragment
+            )
+            val about = OptionItem(4, R.string.option_about, R.drawable.ic_noitf_about)
+            val optionSeparator = OptionSeparator
+            val darkMode = OptionItem(
+                5,
                 R.string.option_dark_mode,
                 R.drawable.ic_noitf_dark_mode,
                 isNightMode,
                 true
             )
 
-            val historyOrCurrent =
-                if (navController.currentDestination?.id == R.id.currentFragment) {
-                    Option(1, R.string.option_history, R.drawable.ic_notif_history)
-                } else {
-                    Option(1, R.string.current, R.drawable.ic_notif_current)
-                }
-            val apps = Option(2, R.string.option_your_apps, R.drawable.ic_notif_apps)
-            val about = Option(3, R.string.option_about, R.drawable.ic_noitf_about)
-
             OptionsBottomSheet()
-                .addOption(darkMode, historyOrCurrent, apps, about)
+                .addOption(
+                    currentNotifs, apps, historyNotifs, about, optionSeparator, darkMode
+                )
                 .setOnOptionSelectedListener(OptionsBottomSheet.OnOptionSelected {
                     when (it.id) {
-                        0 -> {
+                        1 -> {
+                            navController.navigate(R.id.currentFragment)
+                        }
+                        2 -> {
+                            navController.navigate(R.id.appsFragment)
+                        }
+                        3 -> {
+                            navController.navigate(R.id.actionHistoryFragment)
+                        }
+                        4 -> {
+                            // TODO: Navigate to about page
+                        }
+                        5 -> {
                             if (isNightMode) {
                                 notifPreferences.themePreference = NotifPreferences.Theme.LIGHT
                             } else {
                                 notifPreferences.themePreference = NotifPreferences.Theme.DARK
-                            }
-                        }
-                        1 -> {
-                            if (navController.currentDestination?.id != R.id.historyFragment) {
-                                navController.navigate(R.id.actionHistoryFragment)
-                            } else {
-                                navController.navigate(R.id.currentFragment)
                             }
                         }
                     }
