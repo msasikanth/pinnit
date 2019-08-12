@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/notif_error_layout"
-            layout="@layout/notif_error_layout" />
+            layout="@layout/notif_error_history" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notif_history_list"
