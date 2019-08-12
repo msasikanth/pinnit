@@ -1,4 +1,4 @@
-package dev.sasikanth.notif.shared
+package dev.sasikanth.notif.shared.animators
 
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView

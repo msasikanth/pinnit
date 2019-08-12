@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import dev.sasikanth.notif.databinding.FragmentAppsBinding
 import dev.sasikanth.notif.di.injector
 import dev.sasikanth.notif.di.viewModels
-import dev.sasikanth.notif.shared.AppsCustomItemAnimator
+import dev.sasikanth.notif.shared.animators.AppsCustomItemAnimator
 
 class AppsFragment : Fragment() {
 
@@ -48,7 +48,8 @@ class AppsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.appsList.itemAnimator = AppsCustomItemAnimator()
+        binding.appsList.itemAnimator =
+            AppsCustomItemAnimator()
         binding.appsList.setHasFixedSize(true)
         binding.appsList.adapter = appsAdapter
     }

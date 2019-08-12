@@ -1,4 +1,4 @@
-package dev.sasikanth.notif.shared
+package dev.sasikanth.notif.shared.animators
 
 import android.animation.Animator
 import android.view.animation.AccelerateInterpolator

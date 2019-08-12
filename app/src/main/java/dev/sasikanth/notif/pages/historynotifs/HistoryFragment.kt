@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import dev.sasikanth.notif.databinding.FragmentHistoryBinding
 import dev.sasikanth.notif.di.activityViewModels
 import dev.sasikanth.notif.di.injector
-import dev.sasikanth.notif.shared.CustomItemAnimator
+import dev.sasikanth.notif.shared.animators.CustomItemAnimator
 import dev.sasikanth.notif.shared.ItemTouchHelperCallback
 import dev.sasikanth.notif.shared.NotifAdapterListener
 import dev.sasikanth.notif.shared.NotifDividerItemDecorator
@@ -55,7 +55,8 @@ class HistoryFragment : Fragment() {
         ))
 
         binding.notifHistoryList.setHasFixedSize(true)
-        binding.notifHistoryList.itemAnimator = CustomItemAnimator()
+        binding.notifHistoryList.itemAnimator =
+            CustomItemAnimator()
         binding.notifHistoryList.adapter = adapter
         binding.notifHistoryList.addItemDecoration(NotifDividerItemDecorator(requireContext()))
 
