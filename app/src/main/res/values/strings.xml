@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Notif</string>
+    <string name="app_version">v%1$s</string>
+
     <string name="search">Search</string>
     <string name="create">Create</string>
     <string name="history">History</string>
@@ -33,4 +35,8 @@
     <string name="apps_unselect_all">Unselect all</string>
 
     <string name="apps_tooltip">Apps that are not selected will be ignored</string>
+    <string name="questions_or_bugs">Questions or bug reports</string>
+    <string name="contact_support">Contact support</string>
+    <string name="support_subject">Notif support : %1$s</string>
+    <string name="send_email">Send email</string>
 </resources>

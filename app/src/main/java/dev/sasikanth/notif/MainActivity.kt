@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dev.sasikanth.notif.databinding.ActivityMainBinding
@@ -160,7 +162,34 @@ class MainActivity : AppCompatActivity() {
                             navController.navigate(R.id.actionHistoryFragment)
                         }
                         4 -> {
-                            // TODO: Navigate to about page
+                            val dialog = MaterialAlertDialogBuilder(this).apply {
+                                setView(R.layout.notif_about_dialog)
+                            }.create()
+
+                            if (!dialog.isShowing) {
+                                dialog.show()
+                                dialog.findViewById<AppCompatTextView>(R.id.app_version)?.text =
+                                    getString(R.string.app_version, BuildConfig.VERSION_NAME)
+                                dialog.findViewById<MaterialButton>(R.id.contact_support)
+                                    ?.setOnClickListener {
+                                        val intent = Intent(Intent.ACTION_SEND)
+                                        intent.type = "text/plain"
+                                        intent.putExtra(
+                                            Intent.EXTRA_EMAIL,
+                                            arrayOf("contact@msasikanth.com")
+                                        )
+                                        intent.putExtra(
+                                            Intent.EXTRA_SUBJECT,
+                                            getString(R.string.support_subject, BuildConfig.VERSION_NAME)
+                                        )
+                                        startActivity(
+                                            Intent.createChooser(
+                                                intent,
+                                                getString(R.string.send_email)
+                                            )
+                                        )
+                                    }
+                            }
                         }
                         5 -> {
                             if (isNightMode) {
