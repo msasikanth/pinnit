@@ -22,12 +22,13 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:paddingBottom="88dp"
+            android:paddingBottom="4dp"
             android:splitMotionEvents="false"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:paddingBottomSystemWindowInsets="@{true}"
             app:spanCount="1"
             tools:listitem="@layout/notif_item" />
 

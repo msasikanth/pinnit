@@ -16,4 +16,8 @@
     <color name="notifCardBackground">#261321</color>
     <color name="notifCardBackgroundOverlay">#00000000</color>
     <color name="colorDivider">#66999999</color>
+
+    <color name="statusBar">#66000000</color>
+    <color name="navigationBar">#000000</color>
+
 </resources>

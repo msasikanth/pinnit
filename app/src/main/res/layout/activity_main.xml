@@ -14,6 +14,7 @@
         android:id="@+id/main_root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutFullscreen="@{true}"
         tools:context=".MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -24,7 +25,9 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentInsetEnd="16dp">
+                app:contentInsetEnd="16dp"
+                app:paddingTopSystemWindowInsets="@{true}"
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/app_bar_label"
@@ -59,7 +62,8 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             app:contentInsetEnd="16dp"
-            app:elevation="1dp">
+            app:elevation="1dp"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -138,4 +142,5 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity() {
             if (navController.currentDestination?.id == R.id.historyFragment) {
                 mainViewModel.deleteUnPinnedNotifs()
             } else {
-                // TODO: Launch create and pin bottom sheet
+                // TODO: Launch create page
             }
         })
     }

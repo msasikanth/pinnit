@@ -10,14 +10,15 @@
         <item name="colorSecondaryRipple">@color/colorSecondaryRipple</item>
         <item name="colorTerciary">@color/colorTerciary</item>
         <item name="colorOnTerciary">@color/colorOnTerciary</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="android:navigationBarColor">@color/navigationBar</item>
         <item name="colorDivider">@color/colorDivider</item>
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="bottomSheetDialogTheme">@style/NotifTheme.BottomSheet</item>
         <item name="materialAlertDialogTheme">@style/AlertDialogButtons</item>
     </style>
-    
+
     <style name="NotifTheme.BottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:windowTranslucentNavigation">false</item>
