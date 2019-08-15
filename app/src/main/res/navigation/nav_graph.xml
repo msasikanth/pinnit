@@ -14,14 +14,14 @@
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/currentFragment"
-        android:name="dev.sasikanth.notif.pages.currentnotifs.CurrentFragment"
+        android:name="dev.sasikanth.pinnit.pages.currentnotifs.CurrentFragment"
         tools:layout="@layout/fragment_current" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="dev.sasikanth.notif.pages.historynotifs.HistoryFragment"
+        android:name="dev.sasikanth.pinnit.pages.historynotifs.HistoryFragment"
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/appsFragment"
-        android:name="dev.sasikanth.notif.pages.apps.AppsFragment"
+        android:name="dev.sasikanth.pinnit.pages.apps.AppsFragment"
         tools:layout="@layout/fragment_apps"/>
 </navigation>

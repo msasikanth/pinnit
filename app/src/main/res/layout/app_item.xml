@@ -7,11 +7,11 @@
 
         <variable
             name="appItem"
-            type="dev.sasikanth.notif.data.AppItem" />
+            type="dev.sasikanth.pinnit.data.AppItem" />
 
         <variable
             name="appItemListener"
-            type="dev.sasikanth.notif.pages.apps.AppItemListener" />
+            type="dev.sasikanth.pinnit.pages.apps.AppItemListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

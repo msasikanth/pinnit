@@ -7,11 +7,11 @@
 
         <variable
             name="option"
-            type="dev.sasikanth.notif.shared.Option.OptionItem" />
+            type="dev.sasikanth.pinnit.shared.Option.OptionItem" />
 
         <variable
             name="onOptionSelected"
-            type="dev.sasikanth.notif.shared.OptionsBottomSheet.OnOptionSelected" />
+            type="dev.sasikanth.pinnit.shared.OptionsBottomSheet.OnOptionSelected" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

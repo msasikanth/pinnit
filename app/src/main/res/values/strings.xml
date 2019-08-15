@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">Notif</string>
+    <string name="app_name">Pinnit</string>
     <string name="app_version">v%1$s</string>
 
     <string name="search">Search</string>
     <string name="create">Create</string>
-    <string name="history">History</string>
     <string name="clear_history">Clear History</string>
     <string name="notif_error_history_title">No notifications present</string>
     <string name="dismiss">Dismiss</string>
@@ -17,26 +16,28 @@
     </string>
     <string name="notif_permission_dialog_positive_action">Open settings</string>
     <string name="notif_permission_dialog_negative_action">Close</string>
-    <string name="option_dark_mode">Dark mode</string>
-    <string name="option_history">History</string>
-    <string name="option_your_apps">Your apps</string>
-    <string name="option_about">About</string>
     <string name="current">Current</string>
-
-    <string name="pref_theme_light">pref_notif_light</string>
-    <string name="pref_theme_dark">pref_notif_dark</string>
+    <string name="history">History</string>
     <string name="notif_error_current_title">No notifications to pin</string>
     <string name="notif_error_current_subtitle">Looking for a notification?\nTry checking your history</string>
     <string name="view_history">View history</string>
     <string name="notif_deleted">Notification deleted</string>
     <string name="undo">Undo</string>
-    <string name="apps">Your apps</string>
-    <string name="apps_select_all">Select all</string>
-    <string name="apps_unselect_all">Unselect all</string>
 
+    <!-- Preferences -->
+    <string name="pref_theme_light">pref_notif_light</string>
+    <string name="pref_theme_dark">pref_notif_dark</string>
+    <string name="option_dark_mode">Dark mode</string>
+
+    <!-- Apps page -->
+    <string name="option_your_apps">Your apps</string>
+    <string name="apps">Your apps</string>
     <string name="apps_tooltip">Apps that are not selected will be ignored</string>
+
+    <!-- About dialog -->
+    <string name="option_about">About</string>
     <string name="questions_or_bugs">Questions or bug reports</string>
     <string name="contact_support">Contact support</string>
-    <string name="support_subject">Notif support : %1$s</string>
+    <string name="support_subject">Pinnit support : %1$s</string>
     <string name="send_email">Send email</string>
 </resources>

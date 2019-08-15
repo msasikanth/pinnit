@@ -7,11 +7,11 @@
 
         <variable
             name="notifItem"
-            type="dev.sasikanth.notif.data.NotifItem" />
+            type="dev.sasikanth.pinnit.data.NotifItem" />
 
         <variable
             name="notifAdapterListener"
-            type="dev.sasikanth.notif.shared.NotifAdapterListener" />
+            type="dev.sasikanth.pinnit.shared.NotifAdapterListener" />
     </data>
 
     <FrameLayout
