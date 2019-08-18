@@ -17,20 +17,42 @@
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="bottomSheetDialogTheme">@style/NotifTheme.BottomSheet</item>
-        <item name="materialAlertDialogTheme">@style/AlertDialogButtons</item>
+        <item name="materialAlertDialogTheme">@style/PinnitAlertDialogTheme</item>
+        <item name="floatingActionButtonStyle">@style/Fab</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent</item>
     </style>
 
-    <style name="AlertDialogButtons" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    <style name="Fab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="tint">?attr/colorOnTerciary</item>
+        <item name="backgroundTint">?attr/colorTerciary</item>
+        <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
+        <item name="shapeAppearanceOverlay">@style/Fab.ShapeOverlay</item>
     </style>
 
-    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/colorSecondary</item>
+    <style name="Fab.ShapeOverlay" parent="ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton">
+        <item name="cornerSize">2dp</item>
     </style>
 
-    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/colorSecondary</item>
+    <style name="PinnitAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/PinnitAlertDialogTheme.TitleTextStyle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/PinnitAlertDialogTheme.BodyTextStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonStyle</item>
+    </style>
+
+    <style name="PinnitAlertDialogTheme.TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textAppearance">@style/Notif.TextBase.Headline6</item>
+    </style>
+
+    <style name="PinnitAlertDialogTheme.BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textAppearance">@style/Notif.TextBase.Body2</item>
+    </style>
+
+    <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="rippleColor">?attr/colorSecondaryRipple</item>
+        <item name="cornerRadius">2dp</item>
+        <item name="android:textAppearance">@style/Notif.TextBase.Button</item>
     </style>
 
     <style name="NotifTheme.BottomSheet" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
@@ -43,6 +65,11 @@
         <item name="android:colorBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:navigationBarColor">@android:color/black</item>
+    </style>
+
+    <style name="ShapeAppearance.Pinnit.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">2dp</item>
     </style>
 
 </resources>

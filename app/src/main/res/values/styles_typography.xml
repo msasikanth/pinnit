@@ -17,7 +17,7 @@
 
     <!-- Caption -->
     <style name="Notif.TextBase.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/barlow_medium</item>
+        <item name="fontFamily">@font/barlow_semibold</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.02085</item>
     </style>

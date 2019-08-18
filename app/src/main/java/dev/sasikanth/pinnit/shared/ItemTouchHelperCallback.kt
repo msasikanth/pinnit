@@ -60,7 +60,7 @@ class ItemTouchHelperCallback(
         val itemView = viewHolder.itemView
         val iconMarginH = 24.px
         val colorDrawable = ColorDrawable(
-            ContextCompat.getColor(context, R.color.notifCardBackgroundOverlay)
+            context.resolveColor(colorRes = R.color.notifCardBackgroundOverlay)
         )
         val icon = ContextCompat.getDrawable(context, R.drawable.ic_notif_delete)
         val cellHeight = itemView.bottom - itemView.top

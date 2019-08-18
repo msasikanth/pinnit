@@ -94,19 +94,16 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
         super.onNotificationPosted(sbn)
         sbn?.let { statusBarNotification ->
             val notification = statusBarNotification.notification
-
             launch {
                 val shouldBeFilteredOut = shouldBeFilteredOut(statusBarNotification)
                 if (!shouldBeFilteredOut) {
                     // Notification shouldn't be filtered out
                     withContext(Dispatchers.IO) {
-                        val packageManager = applicationContext.packageManager
                         val appInfo = packageManager.getApplicationInfo(
                             statusBarNotification.packageName, PackageManager.GET_META_DATA
                         )
 
                         val appLabel = packageManager.getApplicationLabel(appInfo).toString()
-
                         var title = notification.extras.getCharSequence(
                             NotificationCompat.EXTRA_TITLE
                         )?.toString().orEmpty()
@@ -259,7 +256,7 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
-        // Filter if the notification package name matched notif app package naem
+        // Filter if the notification package name matched notif app package name
         if (sbn.packageName == applicationContext.packageName) {
             return true
         }

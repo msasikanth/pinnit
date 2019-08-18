@@ -2,6 +2,8 @@
     <string name="app_name">Pinnit</string>
     <string name="app_version">v%1$s</string>
 
+    <string name="channel_pinned">Pinned Notifications</string>
+
     <string name="search">Search</string>
     <string name="create">Create</string>
     <string name="clear_history">Clear History</string>
@@ -40,4 +42,8 @@
     <string name="contact_support">Contact support</string>
     <string name="support_subject">Pinnit support : %1$s</string>
     <string name="send_email">Send email</string>
+    <string name="clear_history_dialog_title">Clear notification history?</string>
+    <string name="clear_history_dialog_subtitle">This action cannot be undone</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

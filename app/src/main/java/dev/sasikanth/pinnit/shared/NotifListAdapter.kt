@@ -121,7 +121,7 @@ object NotifDiffCallback : DiffUtil.ItemCallback<NotifItem>() {
 }
 
 class NotifAdapterListener(
-    private val pinNote: (notifId: Long, isPinned: Boolean) -> Unit,
+    private val pinNote: (notifItem: NotifItem, isPinned: Boolean) -> Unit,
     private val onNotifClick: (notifItem: NotifItem) -> Unit
 ) {
     fun onNotifItemClick(notifItem: NotifItem) {
@@ -129,7 +129,7 @@ class NotifAdapterListener(
     }
 
     fun pinNotifItem(notifItem: NotifItem): Boolean {
-        pinNote(notifItem._id, !notifItem.isPinned)
+        pinNote(notifItem, !notifItem.isPinned)
         return true
     }
 }

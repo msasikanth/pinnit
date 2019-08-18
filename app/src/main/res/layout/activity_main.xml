@@ -26,8 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentInsetEnd="16dp"
-                app:paddingTopSystemWindowInsets="@{true}"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:paddingTopSystemWindowInsets="@{true}">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/app_bar_label"
@@ -52,94 +52,13 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navGraph="@navigation/nav_graph" />
 
-        <com.google.android.material.bottomappbar.BottomAppBar
+        <dev.sasikanth.pinnit.shared.widget.NotifBottomBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            app:contentInsetEnd="16dp"
-            app:elevation="1dp"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/notif_action_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/search"
-                    android:focusable="true"
-                    android:foreground="@drawable/bottom_bar_item_ripple"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_notif_search"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/notif_action_button"
-                    style="@style/NotifTheme.Button"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:onClick="@{() -> mainViewModel.notifAction()}"
-                    android:textColor="?attr/colorOnTerciary"
-                    android:visibility="visible"
-                    app:backgroundTint="?attr/colorTerciary"
-                    app:cornerRadius="2dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/notif_action_options"
-                    app:layout_constraintStart_toEndOf="@id/notif_action_search"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:rippleColor="?attr/colorOnTerciary"
-                    tools:text="@string/create" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tooltip"
-                    style="@style/NotifTheme.Caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/apps_tooltip_background"
-                    android:text="@string/apps_tooltip"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorOnSurface"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/notif_action_options"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/notif_action_options"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/menu"
-                    android:focusable="true"
-                    android:foreground="@drawable/bottom_bar_item_ripple"
-                    android:onClick="@{() -> mainViewModel.showOptionsMenu()}"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_drawer"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
+            app:onOptionsClick="@{() -> mainViewModel.showOptionsMenu()}"
+            app:onPageActionClick="@{() -> mainViewModel.notifAction()}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

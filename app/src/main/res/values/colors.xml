@@ -9,6 +9,8 @@
 
     <color name="colorTerciary">#4D0039</color>
     <color name="colorOnTerciary">#FFFFFF</color>
+    <color name="disabledColorTerciary">#664D0039</color>
+    <color name="disabledColorOnTerciary">#66FFFFFF</color>
 
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#000000</color>

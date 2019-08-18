@@ -17,6 +17,8 @@ import dev.sasikanth.pinnit.shared.NotifAdapterListener
 import dev.sasikanth.pinnit.shared.NotifDividerItemDecorator
 import dev.sasikanth.pinnit.shared.NotifListAdapter
 import dev.sasikanth.pinnit.shared.animators.CustomItemAnimator
+import dev.sasikanth.pinnit.shared.dismissNotification
+import dev.sasikanth.pinnit.shared.showPersistentNotif
 
 class HistoryFragment : Fragment() {
 
@@ -49,8 +51,13 @@ class HistoryFragment : Fragment() {
                     // TODO: Handle exception
                 }
             },
-            pinNote = { notifId, isPinned ->
-                mainViewModel.pinUnpinNotif(notifId, isPinned)
+            pinNote = { notifItem, isPinned ->
+                mainViewModel.pinUnpinNotif(notifItem._id, isPinned)
+                if (isPinned) {
+                    requireContext().showPersistentNotif(notifItem)
+                } else {
+                    requireContext().dismissNotification(notifItem.notifId)
+                }
             }
         ))
 

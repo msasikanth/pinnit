@@ -16,7 +16,9 @@
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="bottomSheetDialogTheme">@style/NotifTheme.BottomSheet</item>
-        <item name="materialAlertDialogTheme">@style/AlertDialogButtons</item>
+        <item name="materialAlertDialogTheme">@style/PinnitAlertDialogTheme</item>
+        <item name="floatingActionButtonStyle">@style/Fab</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent</item>
     </style>
 
     <style name="NotifTheme.BottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">

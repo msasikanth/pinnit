@@ -7,7 +7,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -80,28 +79,22 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.currentFragment -> {
                     binding.apply {
-                        notifActionSearch.isVisible = true
-                        notifActionButton.isVisible = true
-                        tooltip.isVisible = false
                         appBarLabel.text = getString(R.string.current)
-                        notifActionButton.text = getString(R.string.create)
+                        bottomAppBar.setPageActionButtonTitle(R.string.create)
+                        bottomAppBar.isTooltipVisible(false)
                     }
                 }
                 R.id.historyFragment -> {
                     binding.apply {
-                        notifActionSearch.isVisible = true
-                        notifActionButton.isVisible = true
-                        tooltip.isVisible = false
                         appBarLabel.text = getString(R.string.history)
-                        notifActionButton.text = getString(R.string.clear_history)
+                        bottomAppBar.setPageActionButtonTitle(R.string.clear_history)
+                        bottomAppBar.isTooltipVisible(false)
                     }
                 }
                 R.id.appsFragment -> {
                     binding.apply {
-                        notifActionSearch.isVisible = false
-                        notifActionButton.isVisible = false
-                        tooltip.isVisible = true
                         appBarLabel.text = getString(R.string.apps)
+                        bottomAppBar.isTooltipVisible(true)
                     }
                 }
             }
@@ -180,7 +173,10 @@ class MainActivity : AppCompatActivity() {
                                         )
                                         intent.putExtra(
                                             Intent.EXTRA_SUBJECT,
-                                            getString(R.string.support_subject, BuildConfig.VERSION_NAME)
+                                            getString(
+                                                R.string.support_subject,
+                                                BuildConfig.VERSION_NAME
+                                            )
                                         )
                                         startActivity(
                                             Intent.createChooser(
@@ -205,7 +201,15 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.notifAction.observe(this, EventObserver {
             if (navController.currentDestination?.id == R.id.historyFragment) {
-                mainViewModel.deleteUnPinnedNotifs()
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(getString(R.string.clear_history_dialog_title))
+                    .setMessage(getString(R.string.clear_history_dialog_subtitle))
+                    .setPositiveButton(R.string.yes) { _, _ ->
+                        mainViewModel.deleteUnPinnedNotifs()
+                    }
+                    .setNegativeButton(R.string.no) { _, _ ->
+                    }
+                    .show()
             } else {
                 // TODO: Launch create page
             }
