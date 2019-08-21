@@ -29,7 +29,9 @@ data class NotifItem(
     @ColumnInfo(name = "template")
     val template: TemplateStyle,
     @ColumnInfo(name = "is_pinned")
-    val isPinned: Boolean
+    val isPinned: Boolean,
+    @ColumnInfo(name = "is_current")
+    val isCurrent: Boolean
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -53,6 +55,7 @@ data class NotifItem(
         if (postedOn != other.postedOn) return false
         if (template != other.template) return false
         if (isPinned != other.isPinned) return false
+        if (isCurrent != other.isCurrent) return false
 
         return true
     }
@@ -76,6 +79,7 @@ data class NotifItem(
         if (appLabel != other.appLabel) return false
         if (template != other.template) return false
         if (isPinned != other.isPinned) return false
+        if (isCurrent != other.isCurrent) return false
 
         return true
     }
@@ -93,6 +97,7 @@ data class NotifItem(
         result = 31 * result + postedOn.hashCode()
         result = 31 * result + template.hashCode()
         result = 31 * result + isPinned.hashCode()
+        result = 31 * result + isCurrent.hashCode()
         return result
     }
 }

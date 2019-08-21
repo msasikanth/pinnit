@@ -1,7 +1,6 @@
 package dev.sasikanth.pinnit.di
 
 import android.content.Context
-import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dev.sasikanth.pinnit.data.source.local.NotifDatabase
@@ -14,11 +13,7 @@ object DataModule {
     @Provides
     @JvmStatic
     @Singleton
-    fun providesRoomDatabase(context: Context) = Room.databaseBuilder(
-        context,
-        NotifDatabase::class.java,
-        "Notifs.db"
-    ).build()
+    fun providesRoomDatabase(context: Context) = NotifDatabase.createDatabase(context)
 
     @Provides
     @JvmStatic
