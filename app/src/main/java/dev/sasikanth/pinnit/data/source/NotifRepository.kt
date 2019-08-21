@@ -25,6 +25,10 @@ class NotifRepository
         return notifDataSource.getNotif(id)
     }
 
+    suspend fun getNotif(key: String): NotifItem? {
+        return notifDataSource.getNotif(key)
+    }
+
     suspend fun saveNotif(notifItem: NotifItem): Long {
         val lastItemByKey = notifDataSource.getNotif(notifItem.notifKey)
         if (lastItemByKey != null) {

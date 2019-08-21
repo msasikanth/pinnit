@@ -180,18 +180,19 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                         }
 
                         val notifItem = NotifItem(
-                            0,
-                            statusBarNotification.key,
-                            statusBarNotification.id,
-                            iconBytes,
-                            title,
-                            text,
-                            messages,
-                            statusBarNotification.packageName,
-                            appLabel,
-                            statusBarNotification.postTime,
-                            templateStyle,
-                            false
+                            _id = 0,
+                            notifKey = statusBarNotification.key,
+                            notifId = statusBarNotification.id,
+                            iconBytes = iconBytes,
+                            title = title,
+                            text = text,
+                            messages = messages,
+                            packageName = statusBarNotification.packageName,
+                            appLabel = appLabel,
+                            postedOn = statusBarNotification.postTime,
+                            template = templateStyle,
+                            isPinned = false,
+                            isCurrent = false // TODO: Set as current when notification is posted
                         )
                         notifRepository.saveNotif(notifItem)
                     }
