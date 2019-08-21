@@ -36,6 +36,10 @@ class AppsFragment : Fragment() {
             appsViewModel.setAllowState(appItem)
         })
 
+        binding.appsList.itemAnimator = AppsCustomItemAnimator()
+        binding.appsList.setHasFixedSize(true)
+        binding.appsList.adapter = appsAdapter
+
         appsViewModel.installedApps.observe(viewLifecycleOwner, Observer { apps ->
             binding.appsLoading.isVisible = false
             binding.appsList.isVisible = true
@@ -43,14 +47,5 @@ class AppsFragment : Fragment() {
         })
 
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        binding.appsList.itemAnimator =
-            AppsCustomItemAnimator()
-        binding.appsList.setHasFixedSize(true)
-        binding.appsList.adapter = appsAdapter
     }
 }
