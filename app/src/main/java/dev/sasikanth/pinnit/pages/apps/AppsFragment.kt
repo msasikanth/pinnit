@@ -18,7 +18,6 @@ class AppsFragment : Fragment() {
     private val appsViewModel by viewModels { injector.appsViewModel }
 
     private lateinit var binding: FragmentAppsBinding
-    private lateinit var appsAdapter: AppsAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,18 +31,17 @@ class AppsFragment : Fragment() {
     ): View? {
         binding = FragmentAppsBinding.inflate(layoutInflater)
 
-        appsAdapter = AppsAdapter(AppItemListener { appItem ->
+        val appsController = AppsEpoxyController(AppItemListener { appItem ->
             appsViewModel.setAllowState(appItem)
         })
-
+        binding.appsController = appsController
+        appsController.setFilterDuplicates(true)
         binding.appsList.itemAnimator = AppsCustomItemAnimator()
-        binding.appsList.setHasFixedSize(true)
-        binding.appsList.adapter = appsAdapter
 
-        appsViewModel.installedApps.observe(viewLifecycleOwner, Observer { apps ->
+        appsViewModel.installedApps.observe(viewLifecycleOwner, Observer { appsList ->
             binding.appsLoading.isVisible = false
             binding.appsList.isVisible = true
-            appsAdapter.submitList(apps)
+            appsController.appsList = appsList
         })
 
         return binding.root

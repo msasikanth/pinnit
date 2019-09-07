@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="appsController"
+            type="dev.sasikanth.pinnit.pages.apps.AppsEpoxyController" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,10 +24,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/apps_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/notifCardBackgroundOverlay"
             android:clipToPadding="false"
             android:paddingStart="2dp"
@@ -33,10 +36,17 @@
             android:paddingBottom="88dp"
             android:splitMotionEvents="false"
             android:visibility="gone"
+            app:controller="@{appsController}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:paddingBottomSystemWindowInsets="@{true}"
+            app:paddingLeftSystemWindowInsets="@{true}"
+            app:paddingRightSystemWindowInsets="@{true}"
             app:spanCount="3"
-            tools:listitem="@layout/app_item" />
+            tools:listitem="@layout/app_item_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
