@@ -10,29 +10,29 @@ import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.NotifItem
+import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
 
 @BindingAdapter("notifInfo")
-fun AppCompatTextView.setNotifInfo(notifItem: NotifItem?) {
-    notifItem?.let {
+fun AppCompatTextView.setNotifInfo(pinnitItem: PinnitItem?) {
+    pinnitItem?.let {
         val relativeTime = DateUtils.getRelativeTimeSpanString(
-            notifItem.postedOn,
+            pinnitItem.postedOn,
             System.currentTimeMillis(),
             DateUtils.SECOND_IN_MILLIS
         )
-        text = "${notifItem.appLabel} • $relativeTime"
+        text = "${pinnitItem.appLabel} • $relativeTime"
     }
 }
 
 @BindingAdapter("notifIcon")
-fun ImageView.setNotifIcon(notifItem: NotifItem?) {
-    notifItem?.let {
+fun ImageView.setNotifIcon(pinnitItem: PinnitItem?) {
+    pinnitItem?.let {
         val iconBytes = it.iconBytes
         if (iconBytes != null) {
             Glide.with(this)
                 .asBitmap()
-                .load(notifItem.iconBytes)
+                .load(pinnitItem.iconBytes)
                 .circleCrop()
                 .into(this)
         }
@@ -40,18 +40,18 @@ fun ImageView.setNotifIcon(notifItem: NotifItem?) {
 }
 
 @BindingAdapter("notifTitle")
-fun AppCompatTextView.setNotifTitle(notifItem: NotifItem?) {
-    notifItem?.let {
-        text = notifItem.title
+fun AppCompatTextView.setNotifTitle(pinnitItem: PinnitItem?) {
+    pinnitItem?.let {
+        text = pinnitItem.title
     }
 }
 
-@BindingAdapter("notifText")
-fun AppCompatTextView.setNotifText(notifItem: NotifItem?) {
-    notifItem?.let { notif ->
-        if (notif.template == TemplateStyle.MessagingStyle) {
+@BindingAdapter("pinnitText")
+fun AppCompatTextView.setNotifText(pinnitItem: PinnitItem?) {
+    pinnitItem?.let { pinnit ->
+        if (pinnit.template == TemplateStyle.MessagingStyle) {
             val messagesBuilder = StringBuilder()
-            val lastMessages = notif.messages.takeLast(5).sortedBy { it.timestamp }
+            val lastMessages = pinnit.messages.takeLast(5).sortedBy { it.timestamp }
 
             lastMessages.forEachIndexed { index, message ->
                 val messageText = "${message.senderName}: ${message.message}"
@@ -64,7 +64,7 @@ fun AppCompatTextView.setNotifText(notifItem: NotifItem?) {
 
             text = messagesBuilder.toString()
         } else {
-            text = notif.text
+            text = pinnit.text
         }
     }
 }

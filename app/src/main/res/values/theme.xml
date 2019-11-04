@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Platform.Pinnit.v23" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/white_80</item>
+        <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+    </style>
+
+    <style name="Platform.Pinnit" parent="Platform.Pinnit.v23" />
+
+    <style name="Platform.Theme.Pinnit" parent="Platform.Pinnit" />
+
+    <style name="Base.Theme.Pinnit" parent="Platform.Theme.Pinnit">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnPrimaryVariant">@color/maroon_100</item>
+        <item name="colorSecondary">@color/brandColor</item>
+        <item name="colorSecondaryRipple">@color/brandColorRipple</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
+        <item name="colorDivider">@color/colorDivider</item>
+        <item name="colorRowBackground">@color/colorRowBackground</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="elevationOverlayColor">@color/colorBackground</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent
+        </item>
+        <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Pinnit.BottomSheetDialog</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Pinnit.Body2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Pinnit.Body1</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Pinnit.Button</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Pinnit.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Pinnit.Subtitle2</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Pinnit.Headline6</item>
+    </style>
+
+    <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
+        <item name="android:windowBackground">@drawable/splash_layout</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Theme.Pinnit.Main" parent="Base.Theme.Pinnit" />
+
+</resources>

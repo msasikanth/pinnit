@@ -1,28 +1,28 @@
 package dev.sasikanth.pinnit.data.source.local
 
 import androidx.lifecycle.LiveData
-import dev.sasikanth.pinnit.data.NotifItem
+import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class NotifLocalDataSource(
-    private val notifDao: NotifDao,
+class PinnitLocalDataSource(
+    private val pinnitDao: PinnitDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    fun getNotifs(): LiveData<List<NotifItem>> {
-        return notifDao.getNotifications()
+    fun getNotifs(): LiveData<List<PinnitItem>> {
+        return pinnitDao.getNotifications()
     }
 
-    fun getPinnedNotifs(): LiveData<List<NotifItem>> {
-        return notifDao.getPinnedNotifications()
+    fun getPinnedNotifs(): LiveData<List<PinnitItem>> {
+        return pinnitDao.getPinnedNotifications()
     }
 
-    suspend fun getNotif(id: Long): Result<NotifItem> = withContext(ioDispatcher) {
+    suspend fun getNotif(id: Long): Result<PinnitItem> = withContext(ioDispatcher) {
         return@withContext try {
-            val notifItem = notifDao.getNotificationById(id)
+            val notifItem = pinnitDao.getNotificationById(id)
             if (notifItem != null) {
                 Result.Success(notifItem)
             } else {
@@ -33,39 +33,39 @@ class NotifLocalDataSource(
         }
     }
 
-    suspend fun getNotif(key: String): NotifItem? = withContext(ioDispatcher) {
+    suspend fun getNotif(key: String): PinnitItem? = withContext(ioDispatcher) {
         return@withContext try {
-            notifDao.getNotificationByKey(key)
+            pinnitDao.getNotificationByKey(key)
         } catch (e: Exception) {
             null
         }
     }
 
-    suspend fun saveNotif(notifItem: NotifItem) = withContext(ioDispatcher) {
-        notifDao.insertNotifItem(notifItem)
+    suspend fun saveNotif(pinnitItem: PinnitItem) = withContext(ioDispatcher) {
+        pinnitDao.insertNotifItem(pinnitItem)
     }
 
-    suspend fun updateNotif(notifItem: NotifItem) = withContext(ioDispatcher) {
-        notifDao.updateNotifItem(notifItem)
+    suspend fun updateNotif(pinnitItem: PinnitItem) = withContext(ioDispatcher) {
+        pinnitDao.updateNotifItem(pinnitItem)
     }
 
     suspend fun pinNotif(id: Long) = withContext(ioDispatcher) {
-        notifDao.updateNotifPinStatus(id, true)
+        pinnitDao.updateNotifPinStatus(id, true)
     }
 
     suspend fun unPinNotif(id: Long) = withContext(ioDispatcher) {
-        notifDao.updateNotifPinStatus(id, false)
+        pinnitDao.updateNotifPinStatus(id, false)
     }
 
     suspend fun deleteNotif(id: Long) = withContext(ioDispatcher) {
-        return@withContext notifDao.deleteNotifById(id)
+        return@withContext pinnitDao.deleteNotifById(id)
     }
 
     suspend fun deleteAllNotifs() = withContext(ioDispatcher) {
-        notifDao.deleteNotifs()
+        pinnitDao.deleteNotifs()
     }
 
     suspend fun deleteUnPinnedNotifs() = withContext(ioDispatcher) {
-        notifDao.deleteUnPinnedNotifs()
+        pinnitDao.deleteUnPinnedNotifs()
     }
 }

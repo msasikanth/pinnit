@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Platform.Pinnit.v27" parent="Platform.Pinnit.v23">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Platform.Pinnit" parent="Platform.Pinnit.v27" />
+
+    <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
+        <item name="android:windowBackground">@drawable/splash_layout</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+</resources>

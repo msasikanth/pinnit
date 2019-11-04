@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
-                android:src="@drawable/notif_pin_icon"
+                android:src="@drawable/pinnit_pin_icon"
                 app:layout_constraintBottom_toTopOf="@id/error_notif_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/error_notif_title"
-                style="@style/NotifTheme.Headline6"
+                style="@style/TextStyle.Pinnit.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -42,4 +42,3 @@
 
     </merge>
 </layout>
-        

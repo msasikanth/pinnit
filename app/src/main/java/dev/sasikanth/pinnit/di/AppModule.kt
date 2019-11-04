@@ -10,7 +10,6 @@ import dagger.Reusable
 object AppModule {
 
     @Provides
-    @JvmStatic
     @Reusable
     fun providesPackageManager(context: Context): PackageManager = context.packageManager
 }

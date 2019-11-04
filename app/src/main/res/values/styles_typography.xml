@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Overline -->
-    <style name="Notif.TextBase.Overline" parent="TextAppearance.MaterialComponents.Overline">
+    <style name="TextAppearance.Pinnit.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="fontFamily">@font/bai_jam_medium</item>
         <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">0.1</item>
     </style>
 
-    <style name="NotifTheme.Overline">
-        <item name="android:textAppearance">@style/Notif.TextBase.Overline</item>
+    <style name="TextStyle.Pinnit.Overline" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline</item>
         <item name="lineHeight">16sp</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>
@@ -16,14 +16,14 @@
     <!-- Overline -->
 
     <!-- Caption -->
-    <style name="Notif.TextBase.Caption" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="TextAppearance.Pinnit.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/barlow_semibold</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.02085</item>
     </style>
 
-    <style name="NotifTheme.Caption">
-        <item name="android:textAppearance">@style/Notif.TextBase.Caption</item>
+    <style name="TextStyle.Pinnit.Caption" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Caption</item>
         <item name="lineHeight">20sp</item>
         <item name="firstBaselineToTopHeight">12sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
@@ -31,14 +31,14 @@
     <!-- Caption -->
 
     <!-- Body 02 -->
-    <style name="Notif.TextBase.Body2" parent="TextAppearance.MaterialComponents.Body2">
+    <style name="TextAppearance.Pinnit.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/barlow_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.01785</item>
     </style>
 
-    <style name="NotifTheme.Body2">
-        <item name="android:textAppearance">@style/Notif.TextBase.Body2</item>
+    <style name="TextStyle.Pinnit.Body2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
         <item name="lineHeight">20sp</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
@@ -46,14 +46,14 @@
     <!-- Body 02 -->
 
     <!-- Body 01 -->
-    <style name="Notif.TextBase.Body1" parent="TextAppearance.MaterialComponents.Body1">
+    <style name="TextAppearance.Pinnit.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/barlow_medium</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
-    <style name="NotifTheme.Body1">
-        <item name="android:textAppearance">@style/Notif.TextBase.Body1</item>
+    <style name="TextStyle.Pinnit.Body1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body1</item>
         <item name="lineHeight">24sp</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
@@ -61,38 +61,22 @@
     <!-- Body 01 -->
 
     <!-- Button -->
-    <style name="Notif.TextBase.Button" parent="TextAppearance.MaterialComponents.Button">
+    <style name="TextAppearance.Pinnit.Button" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">@font/bai_jam_bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.0715</item>
     </style>
-
-    <style name="NotifTheme.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:textAppearance">@style/Notif.TextBase.Button</item>
-        <item name="lineHeight">24sp</item>
-        <item name="firstBaselineToTopHeight">16sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-    </style>
     <!-- Button -->
 
-    <!-- Text Button -->
-    <style name="NotifTheme.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textAppearance">@style/Notif.TextBase.Button</item>
-        <item name="lineHeight">24sp</item>
-        <item name="firstBaselineToTopHeight">16sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-    </style>
-    <!-- Text Button -->
-
     <!-- Subtitle 01 -->
-    <style name="Notif.TextBase.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <style name="TextAppearance.Pinnit.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/archivo_semibold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.0125</item>
     </style>
 
-    <style name="NotifTheme.Subtitle1">
-        <item name="android:textAppearance">@style/Notif.TextBase.Subtitle1</item>
+    <style name="TextStyle.Pinnit.Subtitle1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle1</item>
         <item name="lineHeight">24sp</item>
         <item name="firstBaselineToTopHeight">20sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
@@ -100,14 +84,14 @@
     <!-- Subtitle 01 -->
 
     <!-- Subtitle 02 -->
-    <style name="Notif.TextBase.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+    <style name="TextAppearance.Pinnit.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="fontFamily">@font/bai_jam_medium</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.03125</item>
     </style>
 
-    <style name="NotifTheme.Subtitle2">
-        <item name="android:textAppearance">@style/Notif.TextBase.Subtitle2</item>
+    <style name="TextStyle.Pinnit.Subtitle2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle2</item>
         <item name="lineHeight">24sp</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
@@ -115,14 +99,14 @@
     <!-- Subtitle 02 -->
 
     <!-- Headline 6 -->
-    <style name="Notif.TextBase.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="TextAppearance.Pinnit.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/bai_jam_semibold</item>
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
-    <style name="NotifTheme.Headline6">
-        <item name="android:textAppearance">@style/Notif.TextBase.Headline6</item>
+    <style name="TextStyle.Pinnit.Headline6" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
         <item name="lineHeight">32sp</item>
         <item name="firstBaselineToTopHeight">24sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>

@@ -40,11 +40,11 @@
             app:selected="@{option.selected}"
             app:srcRes="@{option.icon}"
             app:tint="@color/option_item"
-            tools:src="@drawable/ic_noitf_dark_mode" />
+            tools:src="@drawable/ic_pinnit_dark_mode" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/option_label"
-            style="@style/NotifTheme.Subtitle2"
+            style="@style/TextStyle.Pinnit.Subtitle2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"

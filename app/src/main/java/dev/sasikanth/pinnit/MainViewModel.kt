@@ -4,19 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.sasikanth.pinnit.data.NotifItem
+import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.Result
-import dev.sasikanth.pinnit.data.source.NotifRepository
+import dev.sasikanth.pinnit.data.source.PinnitRepository
 import dev.sasikanth.pinnit.utils.Event
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class MainViewModel
 @Inject constructor(
-    private val notifRepository: NotifRepository
+    private val pinnitRepository: PinnitRepository
 ) : ViewModel() {
 
-    val notifList: LiveData<List<NotifItem>> = notifRepository.getNotifs()
+    val pinnitList: LiveData<List<PinnitItem>> = pinnitRepository.getNotifs()
 
     private val _notifAction = MutableLiveData<Event<Unit>>()
     val notifAction: LiveData<Event<Unit>>
@@ -26,8 +26,8 @@ class MainViewModel
     val showOptionsMenu: LiveData<Event<Unit>>
         get() = _showOptionsMenu
 
-    private val _notifDeleted = MutableLiveData<Event<NotifItem>>()
-    val notifDeleted: LiveData<Event<NotifItem>>
+    private val _notifDeleted = MutableLiveData<Event<PinnitItem>>()
+    val pinnitDeleted: LiveData<Event<PinnitItem>>
         get() = _notifDeleted
 
     fun showOptionsMenu() {
@@ -41,26 +41,26 @@ class MainViewModel
     fun pinUnpinNotif(notifId: Long, isPinned: Boolean) {
         viewModelScope.launch {
             if (isPinned) {
-                notifRepository.pinNotif(notifId)
+                pinnitRepository.pinNotif(notifId)
             } else {
-                notifRepository.unPinNotif(notifId)
+                pinnitRepository.unPinNotif(notifId)
             }
         }
     }
 
     fun deleteUnPinnedNotifs() {
-        if (!notifList.value.isNullOrEmpty()) {
+        if (!pinnitList.value.isNullOrEmpty()) {
             viewModelScope.launch {
-                notifRepository.deleteUnPinnedNotifs()
+                pinnitRepository.deleteUnPinnedNotifs()
             }
         }
     }
 
     fun deleteNotif(notifId: Long) {
         viewModelScope.launch {
-            val notifItem = notifRepository.getNotif(notifId)
+            val notifItem = pinnitRepository.getNotif(notifId)
             if (notifItem is Result.Success) {
-                val deletedRow = notifRepository.deleteNotif(notifId)
+                val deletedRow = pinnitRepository.deleteNotif(notifId)
                 if (deletedRow == 1) {
                     _notifDeleted.postValue(Event(notifItem.data))
                 }
@@ -68,9 +68,9 @@ class MainViewModel
         }
     }
 
-    fun saveNotif(notifItem: NotifItem) {
+    fun saveNotif(pinnitItem: PinnitItem) {
         viewModelScope.launch {
-            notifRepository.saveNotif(notifItem)
+            pinnitRepository.saveNotif(pinnitItem)
         }
     }
 }

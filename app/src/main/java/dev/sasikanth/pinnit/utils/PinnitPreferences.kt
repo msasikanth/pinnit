@@ -7,7 +7,7 @@ import androidx.core.content.edit
 import dev.sasikanth.pinnit.R
 import javax.inject.Inject
 
-class NotifPreferences
+class PinnitPreferences
 @Inject constructor(
     private val context: Context,
     private val sharedPreferences: SharedPreferences

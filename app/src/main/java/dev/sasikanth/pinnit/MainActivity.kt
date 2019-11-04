@@ -21,13 +21,13 @@ import dev.sasikanth.pinnit.shared.Option.OptionSeparator
 import dev.sasikanth.pinnit.shared.OptionsBottomSheet
 import dev.sasikanth.pinnit.shared.isNightMode
 import dev.sasikanth.pinnit.utils.EventObserver
-import dev.sasikanth.pinnit.utils.NotifPreferences
+import dev.sasikanth.pinnit.utils.PinnitPreferences
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var notifPreferences: NotifPreferences
+    lateinit var pinnitPreferences: PinnitPreferences
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -66,8 +66,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Pinnit_Main)
         injector.inject(this)
+        super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = mainViewModel
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mainViewModel.notifDeleted.observe(this, EventObserver { notifItem ->
+        mainViewModel.pinnitDeleted.observe(this, EventObserver { notifItem ->
             Snackbar.make(binding.mainRootView, R.string.notif_deleted, Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.bottomAppBar)
                 .setAction(R.string.undo) {
@@ -114,27 +115,27 @@ class MainActivity : AppCompatActivity() {
             val currentNotifs = OptionItem(
                 id = 1,
                 title = R.string.current,
-                icon = R.drawable.ic_notif_current,
+                icon = R.drawable.ic_pinnit_current,
                 isSelected = navController.currentDestination?.id == R.id.currentFragment
             )
             val apps = OptionItem(
                 id = 2,
                 title = R.string.option_your_apps,
-                icon = R.drawable.ic_notif_apps,
+                icon = R.drawable.ic_pinnit_apps,
                 isSelected = navController.currentDestination?.id == R.id.appsFragment
             )
             val historyNotifs = OptionItem(
                 id = 3,
                 title = R.string.history,
-                icon = R.drawable.ic_notif_history,
+                icon = R.drawable.ic_pinnit_history,
                 isSelected = navController.currentDestination?.id == R.id.historyFragment
             )
-            val about = OptionItem(4, R.string.option_about, R.drawable.ic_noitf_about)
+            val about = OptionItem(4, R.string.option_about, R.drawable.ic_pinnit_about)
             val optionSeparator = OptionSeparator
             val darkMode = OptionItem(
                 5,
                 R.string.option_dark_mode,
-                R.drawable.ic_noitf_dark_mode,
+                R.drawable.ic_pinnit_dark_mode,
                 isNightMode,
                 true
             )
@@ -152,11 +153,11 @@ class MainActivity : AppCompatActivity() {
                             navController.navigate(R.id.appsFragment)
                         }
                         3 -> {
-                            navController.navigate(R.id.actionHistoryFragment)
+                            navController.navigate(R.id.historyFragment)
                         }
                         4 -> {
                             val dialog = MaterialAlertDialogBuilder(this).apply {
-                                setView(R.layout.notif_about_dialog)
+                                setView(R.layout.pinnit_about_dialog)
                             }.create()
 
                             if (!dialog.isShowing) {
@@ -189,9 +190,9 @@ class MainActivity : AppCompatActivity() {
                         }
                         5 -> {
                             if (isNightMode) {
-                                notifPreferences.themePreference = NotifPreferences.Theme.LIGHT
+                                pinnitPreferences.themePreference = PinnitPreferences.Theme.LIGHT
                             } else {
-                                notifPreferences.themePreference = NotifPreferences.Theme.DARK
+                                pinnitPreferences.themePreference = PinnitPreferences.Theme.DARK
                             }
                         }
                     }
@@ -225,10 +226,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isNotificationAccessGiven(): Boolean {
-        if (!NotificationManagerCompat.getEnabledListenerPackages(this).contains(packageName)) {
-            return false
-        }
-        return true
+        return NotificationManagerCompat.getEnabledListenerPackages(this).contains(packageName)
     }
 
     private fun openNotificationSettings() {

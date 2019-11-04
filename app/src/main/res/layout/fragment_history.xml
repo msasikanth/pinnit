@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/notif_error_layout"
-            layout="@layout/notif_error_history" />
+            layout="@layout/pinnit_error_history" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notif_history_list"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:paddingBottomSystemWindowInsets="@{true}"
             app:spanCount="1"
-            tools:listitem="@layout/notif_item" />
+            tools:listitem="@layout/pinnit_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

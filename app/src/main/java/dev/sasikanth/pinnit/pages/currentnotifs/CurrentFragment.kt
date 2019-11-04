@@ -31,7 +31,7 @@ class CurrentFragment : Fragment() {
         binding = FragmentCurrentBinding.inflate(layoutInflater, container, false)
         binding.mainViewModel = mainViewModel
         binding.notifErrorLayout.errorNotifAction.setOnClickListener {
-            findNavController().navigate(R.id.actionHistoryFragment)
+            findNavController().navigate(R.id.historyFragment)
         }
 
         binding.lifecycleOwner = this

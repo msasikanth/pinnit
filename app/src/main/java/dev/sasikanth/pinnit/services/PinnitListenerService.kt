@@ -12,32 +12,32 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import androidx.core.app.NotificationCompat
 import dev.sasikanth.pinnit.data.Message
-import dev.sasikanth.pinnit.data.NotifItem
+import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
-import dev.sasikanth.pinnit.data.source.NotifRepository
+import dev.sasikanth.pinnit.data.source.PinnitRepository
 import dev.sasikanth.pinnit.di.injector
-import dev.sasikanth.pinnit.utils.NotifPreferences
+import dev.sasikanth.pinnit.utils.PinnitPreferences
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-class NotifListenerService : NotificationListenerService(), CoroutineScope {
+class PinnitListenerService : NotificationListenerService(), CoroutineScope {
 
     companion object {
 
         @Volatile
-        private var instance: NotifListenerService? = null
+        private var instance: PinnitListenerService? = null
 
         private var isListenerConnected = false
         private var isListenerCreated = false
 
-        fun getInstanceIfConnected(): NotifListenerService? {
+        fun getInstanceIfConnected(): PinnitListenerService? {
             synchronized(this) {
                 return if (isListenerConnected) {
                     instance
@@ -49,14 +49,14 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
     }
 
     @Inject
-    lateinit var notifPreferences: NotifPreferences
+    lateinit var pinnitPreferences: PinnitPreferences
 
     @Inject
-    lateinit var notifRepository: NotifRepository
+    lateinit var pinnitRepository: PinnitRepository
 
     private val job = Job()
     private val allowedApps: MutableSet<String>
-        get() = notifPreferences.allowedApps
+        get() = pinnitPreferences.allowedApps
 
     init {
         instance = this
@@ -179,7 +179,7 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                             }
                         }
 
-                        val notifItem = NotifItem(
+                        val notifItem = PinnitItem(
                             _id = 0,
                             notifKey = statusBarNotification.key,
                             notifId = statusBarNotification.id,
@@ -194,7 +194,7 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
                             isPinned = false,
                             isCurrent = false // TODO: Set as current when notification is posted
                         )
-                        notifRepository.saveNotif(notifItem)
+                        pinnitRepository.saveNotif(notifItem)
                     }
                 }
             }
@@ -257,7 +257,7 @@ class NotifListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
-        // Filter if the notification package name matched notif app package name
+        // Filter if the notification package name matched pinnit app package name
         if (sbn.packageName == applicationContext.packageName) {
             return true
         }

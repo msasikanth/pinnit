@@ -1,0 +1,46 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="pinned"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path
+        android:name="pierced"
+        android:pathData="M 20 28 L 16 30 L 12 28 Z"
+        android:fillColor="?attr/colorOnPrimary"
+        android:strokeWidth="1"
+        android:fillType="evenOdd"/>
+    <clip-path
+        android:name="mask"
+        android:pathData="M 4 0 L 28 0 L 28 28 L 4 28 Z"/>
+    <path
+        android:name="check_top_left_to_center"
+        android:pathData="M 12.41 4.41 L 15 7"
+        android:strokeColor="?attr/colorOnPrimary"
+        android:strokeWidth="2"
+        android:trimPathEnd="0"
+        android:strokeLineCap="square"/>
+    <path
+        android:name="check_center_to_top_right"
+        android:pathData="M 15 7 L 20.59 1.41"
+        android:strokeColor="?attr/colorOnPrimary"
+        android:strokeWidth="2"
+        android:trimPathEnd="0"
+        android:strokeLineCap="square"/>
+    <path
+        android:name="check_full"
+        android:pathData="M 11.705 3.705 L 15 7 L 21.295 0.705"
+        android:strokeColor="?attr/colorOnPrimary"
+        android:strokeWidth="2"/>
+    <group
+        android:name="pin_group"
+        android:translateY="6">
+        <path
+            android:name="pin_shape"
+            android:pathData="M 22 5.5 C 22 5.224 21.776 5 21.5 5 L 10.5 5 C 10.224 5 10 5.224 10 5.5 L 10 10.5 C 10 10.776 10.224 11 10.5 11 L 12 11 L 12 13.5 L 10.2 14.85 C 10.074 14.944 10 15.093 10 15.25 L 10 19.5 C 10 19.776 10.224 20 10.5 20 L 15 20 L 15 26.5 L 16 28 L 17 26.5 L 17 20 L 21.5 20 C 21.776 20 22 19.776 22 19.5 L 22 15.25 C 22 15.093 21.926 14.944 21.8 14.85 L 20 13.5 L 20 11 L 21.5 11 C 21.776 11 22 10.776 22 10.5 L 22 5.5 Z M 20 7 L 12 7 L 12 9 L 15 9 L 15 10 L 14 11 L 14 14.5 L 12 16 L 12 18 L 20 18 L 20 16 L 18 14.5 L 18 11 L 17 10 L 17 9 L 20 9 L 20 7 Z"
+            android:fillColor="?attr/colorOnPrimary"
+            android:strokeWidth="1"
+            android:fillType="evenOdd"/>
+    </group>
+</vector>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/unpinned"
+        android:drawable="@drawable/ic_pinnit_pin"
+        android:state_checked="false" />
+    <item
+        android:id="@+id/pinned"
+        android:drawable="@drawable/ic_pinnit_pinned"
+        android:state_checked="true" />
+
+    <transition
+        android:drawable="@drawable/avd_pin_to_pinned"
+        android:fromId="@id/unpinned"
+        android:toId="@id/pinned" />
+    <transition
+        android:drawable="@drawable/avd_pinned_to_unpinned"
+        android:fromId="@id/pinned"
+        android:toId="@id/unpinned" />
+</animated-selector>

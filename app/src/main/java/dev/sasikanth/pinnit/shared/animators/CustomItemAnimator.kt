@@ -8,8 +8,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.circularreveal.CircularRevealCompat
-import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.shared.NotifListAdapter.NotifItemViewHolder
+import dev.sasikanth.pinnit.shared.PinnitListAdapter.PinnitItemViewHolder
 
 class CustomItemAnimator : DefaultItemAnimator() {
 
@@ -21,11 +20,11 @@ class CustomItemAnimator : DefaultItemAnimator() {
     }
 
     private fun getItemHolderInfo(
-        notifItemViewHolder: NotifItemViewHolder,
+        pinnitItemViewHolder: PinnitItemViewHolder,
         info: NotifItemInfo
     ): ItemHolderInfo {
-        info.id = notifItemViewHolder.notifItem()?._id ?: 0L
-        info.isPinned = notifItemViewHolder.isPinned()
+        info.id = pinnitItemViewHolder.pinnitItem()?._id ?: 0L
+        info.isPinned = pinnitItemViewHolder.isPinned()
         return info
     }
 
@@ -45,7 +44,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
             changeFlags,
             payloads
         ) as NotifItemInfo
-        return getItemHolderInfo(viewHolder as NotifItemViewHolder, notifItemInfo)
+        return getItemHolderInfo(viewHolder as PinnitItemViewHolder, notifItemInfo)
     }
 
     override fun recordPostLayoutInformation(
@@ -53,7 +52,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
         viewHolder: RecyclerView.ViewHolder
     ): ItemHolderInfo {
         val notifItemInfo = super.recordPostLayoutInformation(state, viewHolder) as NotifItemInfo
-        return getItemHolderInfo(viewHolder as NotifItemViewHolder, notifItemInfo)
+        return getItemHolderInfo(viewHolder as PinnitItemViewHolder, notifItemInfo)
     }
 
     override fun animateChange(
@@ -66,8 +65,8 @@ class CustomItemAnimator : DefaultItemAnimator() {
             return super.animateChange(oldHolder, newHolder, preInfo, postInfo)
         }
 
-        return if ((newHolder as? NotifItemViewHolder != null) &&
-            (oldHolder as? NotifItemViewHolder != null) &&
+        return if ((newHolder as? PinnitItemViewHolder != null) &&
+            (oldHolder as? PinnitItemViewHolder != null) &&
             (preInfo as? NotifItemInfo != null) &&
             (postInfo as? NotifItemInfo != null)
         ) {
@@ -112,14 +111,13 @@ class CustomItemAnimator : DefaultItemAnimator() {
                         onStart = {
                             newHolder.apply {
                                 getOriginalContent().isVisible = true
-                                getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
+                                getPinButton().isChecked = true
                             }
                         },
                         onEnd = {
                             newHolder.apply {
                                 getOriginalContent().isVisible = false
                                 getPinnedContent().isVisible = true
-                                getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
                                 dispatchAnimationFinished(this)
                             }
                         }
@@ -131,14 +129,13 @@ class CustomItemAnimator : DefaultItemAnimator() {
                         onStart = {
                             newHolder.apply {
                                 getOriginalContent().isVisible = true
-                                getNotifPinView().setImageResource(R.drawable.ic_notif_pinned)
                             }
                         },
                         onEnd = {
                             newHolder.apply {
                                 getOriginalContent().isVisible = true
                                 getPinnedContent().isVisible = false
-                                getNotifPinView().setImageResource(R.drawable.ic_notif_pin)
+                                getPinButton().isChecked = false
                                 dispatchAnimationFinished(this)
                             }
                         }

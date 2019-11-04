@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/notif_icon"
+        android:src="@drawable/pinnit_icon"
         app:layout_constraintBottom_toTopOf="@+id/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/app_version"
-        style="@style/NotifTheme.Subtitle2"
+        style="@style/TextStyle.Pinnit.Subtitle2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -49,7 +49,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/app_name"
-        style="@style/NotifTheme.Headline6"
+        style="@style/TextStyle.Pinnit.Headline6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,7 +63,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/support_desc"
-        style="@style/NotifTheme.Body1"
+        style="@style/TextStyle.Pinnit.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -78,15 +78,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/contact_support"
-        style="@style/NotifTheme.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="?attr/colorTerciary"
         android:text="@string/contact_support"
-        android:textColor="?attr/colorOnTerciary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/support_desc" />

@@ -14,7 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
 import androidx.core.content.ContextCompat
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.NotifItem
+import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
 
 val Int.px: Int
@@ -35,7 +35,7 @@ fun Context.dismissNotification(notifId: Int) {
     NotificationManagerCompat.from(this).cancel(notifId)
 }
 
-fun Context.showPersistentNotif(notifItem: NotifItem) {
+fun Context.showPersistentNotif(pinnitItem: PinnitItem) {
     // Create the NotificationChannel, but only on API 26+ because
     // the NotificationChannel class is new and not in the support library
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -47,28 +47,28 @@ fun Context.showPersistentNotif(notifItem: NotifItem) {
     }
 
     val notificationBuilder = if (
-        notifItem.template == TemplateStyle.DefaultStyle ||
-        notifItem.template == TemplateStyle.BigTextStyle ||
-        notifItem.template == TemplateStyle.InboxStyle
+        pinnitItem.template == TemplateStyle.DefaultStyle ||
+        pinnitItem.template == TemplateStyle.BigTextStyle ||
+        pinnitItem.template == TemplateStyle.InboxStyle
     ) {
         NotificationCompat.Builder(this, getString(R.string.channel_pinned))
             .setSmallIcon(R.drawable.ic_pinnit_notification)
-            .setContentTitle(notifItem.title)
-            .setContentText(notifItem.text)
+            .setContentTitle(pinnitItem.title)
+            .setContentText(pinnitItem.text)
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .bigText(notifItem.text)
+                    .bigText(pinnitItem.text)
             )
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
-    } else if (notifItem.template == TemplateStyle.MessagingStyle) {
+    } else if (pinnitItem.template == TemplateStyle.MessagingStyle) {
         val messageStyle = NotificationCompat.MessagingStyle(
             Person.Builder()
                 .setName("Me")
                 .build()
-        ).setConversationTitle(notifItem.title)
+        ).setConversationTitle(pinnitItem.title)
 
-        notifItem.messages.forEach {
+        pinnitItem.messages.forEach {
             messageStyle.addMessage(
                 it.message, it.timestamp, Person.Builder()
                     .setName(it.senderName)
@@ -84,13 +84,13 @@ fun Context.showPersistentNotif(notifItem: NotifItem) {
     } else {
         NotificationCompat.Builder(this, getString(R.string.channel_pinned))
             .setSmallIcon(R.drawable.ic_pinnit_notification)
-            .setContentTitle(notifItem.title)
-            .setContentText(notifItem.text)
+            .setContentTitle(pinnitItem.title)
+            .setContentText(pinnitItem.text)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
     }
     with(NotificationManagerCompat.from(this)) {
-        notify(notifItem.notifId, notificationBuilder.build())
+        notify(pinnitItem.notifId, notificationBuilder.build())
     }
 }
 

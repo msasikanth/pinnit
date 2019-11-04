@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0D0D0D</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
+    <!-- App Colors Dark -->
+    <color name="colorPrimaryDisabled">#66661F54</color>
 
-    <color name="colorSecondary">#CE7EBA</color>
-    <color name="colorSecondaryVariant">#FFFFFF</color>
-    <color name="colorSecondaryRipple">#33CE7EBA</color>
+    <color name="brandColor">@color/maroon_200</color>
+    <color name="brandColorRipple">#33E5B3D4</color>
 
-    <color name="colorTerciary">#661F54</color>
-    <color name="colorOnTerciary">#FFFFFF</color>
-    <color name="disabledColorTerciary">#66661F54</color>
-    <color name="disabledColorOnTerciary">#66FFFFFF</color>
+    <color name="colorSurface">@color/maroon_900</color>
+    <color name="colorOnSurface">@android:color/white</color>
 
-    <color name="colorSurface">#1A1A1A</color>
-    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorBackground">@color/maroon_1000</color>
+    <color name="colorOnBackground">@android:color/white</color>
+    <color name="colorOnBackgroundVariant">@color/white_80</color>
 
-    <color name="notifCardBackground">#261321</color>
-    <color name="notifCardBackgroundOverlay">#00000000</color>
-    <color name="colorDivider">#66999999</color>
-
-    <color name="statusBar">#66000000</color>
-    <color name="navigationBar">#000000</color>
-
+    <color name="colorDivider">@color/white_15</color>
+    <color name="colorRowBackground">@android:color/black</color>
 </resources>

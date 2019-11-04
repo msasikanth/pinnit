@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "notifs")
-data class NotifItem(
+data class PinnitItem(
     @PrimaryKey(autoGenerate = true)
     val _id: Long,
     @ColumnInfo(name = "notif_key")
@@ -38,7 +38,7 @@ data class NotifItem(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as NotifItem
+        other as PinnitItem
 
         if (_id != other._id) return false
         if (notifKey != other.notifKey) return false
@@ -64,7 +64,7 @@ data class NotifItem(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as NotifItem
+        other as PinnitItem
 
         if (notifKey != other.notifKey) return false
         if (notifId != other.notifId) return false

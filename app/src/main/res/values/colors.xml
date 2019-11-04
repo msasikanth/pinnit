@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorOnPrimary">#000000</color>
+    <color name="maroon_1000">#14000E</color>
+    <color name="maroon_900">#240018</color>
+    <color name="maroon_800">#380025</color>
+    <color name="maroon_700">#4D0033</color>
+    <color name="maroon_200">#E5B3D4</color>
+    <color name="maroon_100">#FFE5F6</color>
 
-    <color name="colorSecondary">#82316E</color>
-    <color name="colorSecondaryVariant">#F2D9EC</color>
-    <color name="colorSecondaryRipple">#3382316E</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_15">#26FFFFFF</color>
 
-    <color name="colorTerciary">#4D0039</color>
-    <color name="colorOnTerciary">#FFFFFF</color>
-    <color name="disabledColorTerciary">#664D0039</color>
-    <color name="disabledColorOnTerciary">#66FFFFFF</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_15">#26000000</color>
 
-    <color name="colorSurface">#FFFFFF</color>
-    <color name="colorOnSurface">#000000</color>
+    <!-- App Colors Light -->
+    <color name="colorPrimary">@color/maroon_700</color>
+    <color name="colorPrimaryVariant">@color/maroon_800</color>
+    <color name="colorOnPrimary">@android:color/white</color>
+    <color name="colorPrimaryDisabled">#664D0039</color>
 
-    <color name="notifCardBackground">#FFFFFF</color>
-    <color name="notifCardBackgroundOverlay">#F5E9F1</color>
-    <color name="colorDivider">#66999999</color>
+    <color name="brandColor">@color/maroon_700</color>
+    <color name="brandColorRipple">#334D0033</color>
 
-    <color name="statusBar">#B3FFFFFF</color>
-    <color name="navigationBar">#000000</color>
+    <color name="colorSurface">@android:color/white</color>
+    <color name="colorOnSurface">@android:color/black</color>
 
+    <color name="colorBackground">@android:color/white</color>
+    <color name="colorOnBackground">@android:color/black</color>
+    <color name="colorOnBackgroundVariant">@color/black_70</color>
+
+    <color name="colorDivider">@color/black_15</color>
+    <color name="colorRowBackground">@color/maroon_100</color>
 </resources>

@@ -4,13 +4,13 @@
     package="dev.sasikanth.pinnit">
 
     <application
-        android:name=".NotifApp"
+        android:name=".PinnitApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NotifTheme"
+        android:theme="@style/Theme.Pinnit"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -21,7 +21,7 @@
         </activity>
 
         <service
-            android:name=".services.NotifListenerService"
+            android:name=".services.PinnitListenerService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

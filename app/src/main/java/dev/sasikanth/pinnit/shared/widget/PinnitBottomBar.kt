@@ -13,7 +13,7 @@ import com.google.android.material.button.MaterialButton
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.shared.doOnApplyWindowInsets
 
-class NotifBottomBar @JvmOverloads constructor(
+class PinnitBottomBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -25,7 +25,7 @@ class NotifBottomBar @JvmOverloads constructor(
     private val pageAction: MaterialButton
 
     init {
-        inflate(context, R.layout.notif_bottom_bar, this)
+        inflate(context, R.layout.pinnit_bottom_bar, this)
 
         actionSearch = findViewById(R.id.notif_search)
         actionOptions = findViewById(R.id.notif_options)
@@ -74,6 +74,6 @@ class NotifBottomBar @JvmOverloads constructor(
     }
 
     override fun getBehavior(): CoordinatorLayout.Behavior<*> {
-        return HideBottomViewOnScrollBehavior<NotifBottomBar>()
+        return HideBottomViewOnScrollBehavior<PinnitBottomBar>()
     }
 }

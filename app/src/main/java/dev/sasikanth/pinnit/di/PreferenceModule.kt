@@ -2,7 +2,6 @@ package dev.sasikanth.pinnit.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,10 +10,7 @@ import javax.inject.Singleton
 object PreferenceModule {
 
     @Provides
-    @JvmStatic
     @Singleton
     fun providesSharedPreferences(context: Context): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(
-            context
-        )
+        context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 }

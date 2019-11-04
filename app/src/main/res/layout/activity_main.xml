@@ -20,7 +20,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true">
+            app:liftOnScroll="true"
+            android:backgroundTint="?android:attr/colorBackground">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -31,7 +32,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/app_bar_label"
-                    style="@style/NotifTheme.Headline6"
+                    style="@style/TextStyle.Pinnit.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -52,7 +53,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navGraph="@navigation/nav_graph" />
 
-        <dev.sasikanth.pinnit.shared.widget.NotifBottomBar
+        <dev.sasikanth.pinnit.shared.widget.PinnitBottomBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

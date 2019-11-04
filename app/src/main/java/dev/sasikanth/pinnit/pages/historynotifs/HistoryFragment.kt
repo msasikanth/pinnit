@@ -8,14 +8,15 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import dev.sasikanth.pinnit.databinding.FragmentHistoryBinding
 import dev.sasikanth.pinnit.di.activityViewModels
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.shared.ItemTouchHelperCallback
-import dev.sasikanth.pinnit.shared.NotifAdapterListener
-import dev.sasikanth.pinnit.shared.NotifDividerItemDecorator
-import dev.sasikanth.pinnit.shared.NotifListAdapter
+import dev.sasikanth.pinnit.shared.PinnitAdapterListener
+import dev.sasikanth.pinnit.shared.PinnitListAdapter
 import dev.sasikanth.pinnit.shared.animators.CustomItemAnimator
 import dev.sasikanth.pinnit.shared.dismissNotification
 import dev.sasikanth.pinnit.shared.showPersistentNotif
@@ -38,8 +39,8 @@ class HistoryFragment : Fragment() {
     ): View? {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        val adapter = NotifListAdapter(NotifAdapterListener(
-            onNotifClick = { notifItem ->
+        val adapter = PinnitListAdapter(PinnitAdapterListener(
+            onNotificationClicked = { notifItem ->
                 try {
                     val packageManager = requireActivity().packageManager
                     packageManager?.let {
@@ -51,7 +52,7 @@ class HistoryFragment : Fragment() {
                     // TODO: Handle exception
                 }
             },
-            pinNote = { notifItem, isPinned ->
+            pinNotification = { notifItem, isPinned ->
                 mainViewModel.pinUnpinNotif(notifItem._id, isPinned)
                 if (isPinned) {
                     requireContext().showPersistentNotif(notifItem)
@@ -65,7 +66,12 @@ class HistoryFragment : Fragment() {
         binding.notifHistoryList.itemAnimator =
             CustomItemAnimator()
         binding.notifHistoryList.adapter = adapter
-        binding.notifHistoryList.addItemDecoration(NotifDividerItemDecorator(requireContext()))
+        binding.notifHistoryList.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                RecyclerView.VERTICAL
+            )
+        )
 
         val itemTouchHelperCallback = ItemTouchHelperCallback(
             context = requireContext(),
@@ -77,7 +83,7 @@ class HistoryFragment : Fragment() {
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notifHistoryList)
 
         // TODO: Verify item updates when app is opened
-        mainViewModel.notifList.observe(viewLifecycleOwner, Observer {
+        mainViewModel.pinnitList.observe(viewLifecycleOwner, Observer {
             binding.notifErrorLayout.errorNotifView.isVisible = it.isNullOrEmpty()
             binding.notifHistoryList.isVisible = !it.isNullOrEmpty()
 
