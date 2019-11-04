@@ -35,6 +35,15 @@ allprojects {
 }
 
 spotless {
+    format 'misc', {
+        target project.fileTree(project.rootDir) {
+            include '**/*.gradle', '**/*.xml', '**/*.md', '**/*.gitignore'
+            exclude '.idea/**/*.*'
+        }
+
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
     kotlin {
         target("**/*.kt")
         ktlint()
