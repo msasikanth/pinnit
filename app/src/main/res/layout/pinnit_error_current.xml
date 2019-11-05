@@ -10,9 +10,9 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingBottom="88dp"
-        app:paddingBottomSystemWindowInsets="@{true}"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:paddingBottomSystemWindowInsets="@{true}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/error_notif_view"

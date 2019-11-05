@@ -20,8 +20,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true"
-            android:backgroundTint="?android:attr/colorBackground">
+            android:backgroundTint="?android:attr/colorBackground"
+            app:liftOnScroll="true">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"

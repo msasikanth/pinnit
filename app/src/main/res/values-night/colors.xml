@@ -15,4 +15,6 @@
 
     <color name="colorDivider">@color/white_15</color>
     <color name="colorRowBackground">@android:color/black</color>
+
+    <color name="statusBarColor">#6614000E</color>
 </resources>

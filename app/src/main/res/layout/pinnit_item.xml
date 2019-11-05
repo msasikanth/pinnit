@@ -51,7 +51,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/notif_info"
-                        style="@style/TextAppearance.Pinnit.Overline"
+                        style="@style/TextAppearance.Pinnit.Overline1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8sp"
@@ -131,7 +131,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/reveal_notif_info"
-                            style="@style/TextStyle.Pinnit.Overline"
+                            style="@style/TextStyle.Pinnit.Overline1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8sp"

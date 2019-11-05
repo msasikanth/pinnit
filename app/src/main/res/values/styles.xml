@@ -39,6 +39,13 @@
         <item name="cornerRadius">2dp</item>
     </style>
 
+    <style name="Widget.Pinnit.Button.TextButton.Snackbar" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+        <item name="android:textColor">@color/snackbarButtonTextColor</item>
+        <item name="rippleColor">?attr/colorSecondaryRipple</item>
+        <item name="cornerRadius">2dp</item>
+    </style>
+
     <!-- Alert Dialog -->
     <style name="ThemeOverlay.Pinnit.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">
