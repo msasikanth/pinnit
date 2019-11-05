@@ -7,19 +7,19 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "notifs")
 data class PinnitItem(
     @PrimaryKey(autoGenerate = true)
-    val _id: Long,
+    val _id: Long = 0L,
     @ColumnInfo(name = "notif_key")
     val notifKey: String,
     @ColumnInfo(name = "notif_id")
     val notifId: Int,
     @ColumnInfo(name = "large_icon")
-    val iconBytes: ByteArray?,
+    val iconBytes: ByteArray? = null,
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String = "",
     @ColumnInfo(name = "text")
-    val text: String,
+    val text: String = "",
     @ColumnInfo(name = "messages")
-    val messages: List<Message>,
+    val messages: List<Message> = emptyList(),
     @ColumnInfo(name = "package_name")
     val packageName: String,
     @ColumnInfo(name = "app_label")
@@ -27,11 +27,11 @@ data class PinnitItem(
     @ColumnInfo(name = "posted_on")
     val postedOn: Long,
     @ColumnInfo(name = "template")
-    val template: TemplateStyle,
+    val template: TemplateStyle = TemplateStyle.DefaultStyle,
     @ColumnInfo(name = "is_pinned")
-    val isPinned: Boolean,
+    val isPinned: Boolean = false,
     @ColumnInfo(name = "is_current")
-    val isCurrent: Boolean
+    val isCurrent: Boolean = false
 ) {
 
     override fun equals(other: Any?): Boolean {
