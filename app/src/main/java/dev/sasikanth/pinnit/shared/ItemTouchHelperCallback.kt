@@ -25,7 +25,7 @@ class ItemTouchHelperCallback(
         viewHolder: RecyclerView.ViewHolder
     ): Int {
         if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
-            if (viewHolder.isPinned()) {
+            if (viewHolder.isPinned) {
                 return 0
             }
         }
@@ -43,7 +43,7 @@ class ItemTouchHelperCallback(
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         if (viewHolder.adapterPosition != RecyclerView.NO_POSITION) {
             if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
-                onItemSwiped(viewHolder.pinnitItem())
+                onItemSwiped(viewHolder.pinnitItem)
             }
         }
     }

@@ -1,6 +1,5 @@
 package dev.sasikanth.pinnit.shared.animators
 
-import android.animation.Animator
 import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.addListener
 import androidx.core.view.isVisible
@@ -23,8 +22,8 @@ class CustomItemAnimator : DefaultItemAnimator() {
         pinnitItemViewHolder: PinnitItemViewHolder,
         info: NotifItemInfo
     ): ItemHolderInfo {
-        info.id = pinnitItemViewHolder.pinnitItem()?._id ?: 0L
-        info.isPinned = pinnitItemViewHolder.isPinned()
+        info.id = pinnitItemViewHolder.pinnitItem?._id ?: 0L
+        info.isPinned = pinnitItemViewHolder.isPinned
         return info
     }
 
@@ -78,25 +77,23 @@ class CustomItemAnimator : DefaultItemAnimator() {
             }
 
             try {
-                newHolder.getPinnedContent().isVisible = true
+                newHolder.pinnedContentView.isVisible = true
 
                 val cx = newHolder.touchCoordinates[0]
                 val cy = newHolder.touchCoordinates[1]
 
                 val radius = newHolder.itemView.width.toFloat()
-                val anim: Animator
-
-                if (newPinStatus) {
-                    anim = CircularRevealCompat.createCircularReveal(
-                        newHolder.getPinnedContent(),
+                val anim = if (newPinStatus) {
+                    CircularRevealCompat.createCircularReveal(
+                        newHolder.pinnedContentView,
                         cx,
                         cy,
                         0.0f,
                         radius
                     )
                 } else {
-                    anim = CircularRevealCompat.createCircularReveal(
-                        newHolder.getPinnedContent(),
+                    CircularRevealCompat.createCircularReveal(
+                        newHolder.pinnedContentView,
                         cx,
                         cy,
                         radius,
@@ -110,14 +107,14 @@ class CustomItemAnimator : DefaultItemAnimator() {
                     anim.addListener(
                         onStart = {
                             newHolder.apply {
-                                getOriginalContent().isVisible = true
-                                getPinButton().isChecked = true
+                                unPinnedContentView.isVisible = true
+                                pinToggleButton.isChecked = true
                             }
                         },
                         onEnd = {
                             newHolder.apply {
-                                getOriginalContent().isVisible = false
-                                getPinnedContent().isVisible = true
+                                unPinnedContentView.isVisible = false
+                                pinToggleButton.isVisible = true
                                 dispatchAnimationFinished(this)
                             }
                         }
@@ -128,14 +125,14 @@ class CustomItemAnimator : DefaultItemAnimator() {
                     anim.addListener(
                         onStart = {
                             newHolder.apply {
-                                getOriginalContent().isVisible = true
+                                unPinnedContentView.isVisible = true
                             }
                         },
                         onEnd = {
                             newHolder.apply {
-                                getOriginalContent().isVisible = true
-                                getPinnedContent().isVisible = false
-                                getPinButton().isChecked = false
+                                unPinnedContentView.isVisible = true
+                                pinnedContentView.isVisible = false
+                                pinToggleButton.isChecked = false
                                 dispatchAnimationFinished(this)
                             }
                         }
@@ -143,7 +140,6 @@ class CustomItemAnimator : DefaultItemAnimator() {
                 }
 
                 anim.start()
-
                 true
             } catch (e: Exception) {
                 super.animateChange(oldHolder, newHolder, preInfo, postInfo)
