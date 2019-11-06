@@ -40,20 +40,24 @@ ext {
             Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
 }
 
-spotless {
-    format 'misc', {
-        target project.fileTree(project.rootDir) {
-            include '**/*.gradle', '**/*.xml', '**/*.md', '**/*.gitignore'
-            exclude '.idea/**/*.*'
-        }
+subprojects {
+    apply plugin: 'com.diffplug.gradle.spotless'
 
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-    kotlin {
-        target("**/*.kt")
-        ktlint()
-        trimTrailingWhitespace()
-        endWithNewline()
+    spotless {
+        format 'misc', {
+            target project.fileTree(project.rootDir) {
+                include '**/*.gradle', '**/*.xml', '**/*.md', '**/*.gitignore'
+                exclude '.idea/**/*.*'
+            }
+
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+        kotlin {
+            target "**/*.kt"
+            ktlint()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
     }
 }
