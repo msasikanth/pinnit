@@ -45,7 +45,7 @@ fun AppCompatTextView.setNotifTitle(pinnitItem: PinnitItem?) {
     }
 }
 
-@BindingAdapter("pinnitText")
+@BindingAdapter("notifText")
 fun AppCompatTextView.setNotifText(pinnitItem: PinnitItem?) {
     pinnitItem?.let { pinnit ->
         if (pinnit.template == TemplateStyle.MessagingStyle) {
