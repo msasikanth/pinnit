@@ -26,8 +26,11 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix = '.debug'
         }
     }
     dataBinding {
@@ -72,8 +75,9 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation "io.coil-kt:coil:0.8.0"
+
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 
     implementation 'com.google.dagger:dagger:2.25.2'
     kapt 'com.google.dagger:dagger-compiler:2.25.2'

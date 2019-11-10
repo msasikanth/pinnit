@@ -44,6 +44,18 @@ class PinnitListAdapter(private val pinnitAdapterListener: PinnitAdapterListener
 
         val touchCoordinates = floatArrayOf(0f, 0f)
 
+        val pinnitItem: PinnitItem?
+            get() = binding.pinnitItem
+        val isPinned: Boolean
+            get() = pinnitItem?.isPinned ?: false
+
+        val unPinnedContentView: ConstraintLayout
+            get() = binding.notifOriginalContent
+        val pinnedContentView: CircularRevealFrameLayout
+            get() = binding.notifPinnedContent
+        val pinToggleButton: CheckableImageView
+            get() = binding.notifPin
+
         init {
             itemView.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
@@ -74,26 +86,6 @@ class PinnitListAdapter(private val pinnitAdapterListener: PinnitAdapterListener
             binding.notifPinnedContent.isVisible = pinnitItem.isPinned
             binding.notifOriginalContent.isVisible = !pinnitItem.isPinned
             binding.notifPin.isChecked = pinnitItem.isPinned
-        }
-
-        fun pinnitItem(): PinnitItem? {
-            return binding.pinnitItem
-        }
-
-        fun isPinned(): Boolean {
-            return binding.pinnitItem?.isPinned ?: false
-        }
-
-        fun getPinnedContent(): CircularRevealFrameLayout {
-            return binding.notifPinnedContent
-        }
-
-        fun getOriginalContent(): ConstraintLayout {
-            return binding.notifOriginalContent
-        }
-
-        fun getPinButton(): CheckableImageView {
-            return binding.notifPin
         }
     }
 }

@@ -8,7 +8,8 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
@@ -28,13 +29,11 @@ fun AppCompatTextView.setNotifInfo(pinnitItem: PinnitItem?) {
 @BindingAdapter("notifIcon")
 fun ImageView.setNotifIcon(pinnitItem: PinnitItem?) {
     pinnitItem?.let {
-        val iconBytes = it.iconBytes
-        if (iconBytes != null) {
-            Glide.with(this)
-                .asBitmap()
-                .load(pinnitItem.iconBytes)
-                .circleCrop()
-                .into(this)
+        val notifIconUri = it.notifIcon
+        if (notifIconUri != null) {
+            load(pinnitItem.notifIcon) {
+                transformations(CircleCropTransformation())
+            }
         }
     }
 }
@@ -46,7 +45,7 @@ fun AppCompatTextView.setNotifTitle(pinnitItem: PinnitItem?) {
     }
 }
 
-@BindingAdapter("pinnitText")
+@BindingAdapter("notifText")
 fun AppCompatTextView.setNotifText(pinnitItem: PinnitItem?) {
     pinnitItem?.let { pinnit ->
         if (pinnit.template == TemplateStyle.MessagingStyle) {
