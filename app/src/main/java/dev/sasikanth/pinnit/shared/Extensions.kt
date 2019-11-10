@@ -5,6 +5,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -113,4 +116,14 @@ fun Context.resolveColor(
         }
     }
     return ContextCompat.getColor(this, colorRes ?: 0)
+}
+
+inline fun Drawable.asBitmap(): Bitmap {
+    val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+
+    setBounds(0, 0, canvas.width, canvas.height)
+    draw(canvas)
+
+    return bitmap
 }

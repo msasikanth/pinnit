@@ -3,21 +3,23 @@ package dev.sasikanth.pinnit.services
 import android.app.Notification
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import androidx.core.app.NotificationCompat
+import androidx.core.net.toUri
 import dev.sasikanth.pinnit.data.Message
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
 import dev.sasikanth.pinnit.data.source.PinnitRepository
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.shared.asBitmap
 import dev.sasikanth.pinnit.utils.PinnitPreferences
-import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +29,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
+@Suppress("unused")
 class PinnitListenerService : NotificationListenerService(), CoroutineScope {
 
     companion object {
@@ -112,7 +115,8 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
                         )?.toString().orEmpty()
 
                         val messages = mutableListOf<Message>()
-                        val iconBytes = getIconBytes(notification, appInfo)
+                        val notificationIconUri =
+                            getNotificationIconUri(statusBarNotification, appInfo)
                         val template = notification.extras.getString(Notification.EXTRA_TEMPLATE)
 
                         val templateStyle =
@@ -183,7 +187,7 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
                             _id = 0,
                             notifKey = statusBarNotification.key,
                             notifId = statusBarNotification.id,
-                            iconBytes = iconBytes,
+                            notifIcon = notificationIconUri,
                             title = title,
                             text = text,
                             messages = messages,
@@ -201,39 +205,40 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
         }
     }
 
-    private fun getIconBytes(
-        notification: Notification,
+    // TODO: Handle get current notifications
+    fun getCurrentNotifications(): List<PinnitItem> {
+        return emptyList()
+    }
+
+    // TODO: Save notification icon / app icon to storage, don't save if already exists.
+    private fun getNotificationIconUri(
+        sbn: StatusBarNotification,
         appInfo: ApplicationInfo
-    ): ByteArray? {
-        val largeIcon = notification.getLargeIcon()
-        var iconBytes: ByteArray? = null
+    ): Uri? {
+        var uri: Uri? = null
+        val largeIcon = sbn.notification.getLargeIcon()
         try {
-            val drawable = if (largeIcon != null) {
+            val picturesStorage =
+                applicationContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val notifIconFile = File(picturesStorage, appInfo.packageName + sbn.key)
+            val iconDrawable = if (largeIcon != null) {
                 largeIcon.loadDrawable(applicationContext)
             } else {
                 packageManager.getApplicationIcon(appInfo)
             }
-            val bitmap = createBitmap(drawable)
-            ByteArrayOutputStream().use {
-                bitmap.compress(CompressFormat.PNG, 0, it)
-                iconBytes = it.toByteArray()
-            }
-        } catch (e: Exception) {
-            iconBytes = null
-        }
-        return iconBytes
-    }
 
-    private fun createBitmap(drawable: Drawable): Bitmap {
-        val bitmap = Bitmap.createBitmap(
-            drawable.intrinsicWidth,
-            drawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        return bitmap
+            // If icon does not exists create one, or else return the uri
+            if (notifIconFile.exists().not()) {
+                val bitmap = iconDrawable.asBitmap()
+                FileOutputStream(notifIconFile).use {
+                    bitmap.compress(CompressFormat.WEBP, 100, it)
+                }
+            }
+            uri = notifIconFile.toUri()
+        } catch (e: Exception) {
+            // Do nothing
+        }
+        return uri
     }
 
     /**
@@ -243,16 +248,7 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
      * @return true if a notification should be filtered out
      */
     private fun shouldBeFilteredOut(sbn: StatusBarNotification): Boolean {
-        val notification = sbn.notification
-
-        val title = notification.extras.getCharSequence(Notification.EXTRA_TITLE)
-        val text = notification.extras.getCharSequence(Notification.EXTRA_TEXT)
-
-        // Filter it title and text both are empty or null
-        if (title.isNullOrEmpty() && text.isNullOrEmpty()) {
-            return true
-        }
-
+        // Filter if package name is not present in allowed apps list
         if (!allowedApps.contains(sbn.packageName)) {
             return true
         }
@@ -267,6 +263,16 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
             return true
         }
 
+        val notification = sbn.notification
+
+        val title = notification.extras.getCharSequence(Notification.EXTRA_TITLE)
+        val text = notification.extras.getCharSequence(Notification.EXTRA_TEXT)
+
+        // Filter if title and text both are empty or null
+        if (title.isNullOrEmpty() && text.isNullOrEmpty()) {
+            return true
+        }
+
         // Filter if it's a group summary
         if ((notification.flags and Notification.FLAG_GROUP_SUMMARY) != 0) {
             return true
@@ -274,17 +280,14 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
 
         // Filter media style notifications
         val template = notification.extras.getString(NotificationCompat.EXTRA_TEMPLATE)
-        if (template == Notification.MediaStyle::class.java.name) {
-            return true
-        } else if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return if (template == Notification.MediaStyle::class.java.name) {
+            true
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 template == Notification.DecoratedMediaCustomViewStyle::class.java.name
             } else {
                 false
             }
-        ) {
-            return true
         }
-
-        return false
     }
 }

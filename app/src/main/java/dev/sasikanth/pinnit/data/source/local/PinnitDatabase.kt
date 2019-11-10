@@ -8,8 +8,13 @@ import androidx.room.TypeConverters
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.converters.MessageStyleConverter
 import dev.sasikanth.pinnit.data.converters.TemplateStyleConverter
+import dev.sasikanth.pinnit.data.converters.UriTypeConverter
 
-@TypeConverters(TemplateStyleConverter::class, MessageStyleConverter::class)
+@TypeConverters(
+    TemplateStyleConverter::class,
+    MessageStyleConverter::class,
+    UriTypeConverter::class
+)
 @Database(entities = [PinnitItem::class], version = 1)
 abstract class PinnitDatabase : RoomDatabase() {
 

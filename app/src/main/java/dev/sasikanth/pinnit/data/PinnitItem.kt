@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.data
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,8 +13,8 @@ data class PinnitItem(
     val notifKey: String,
     @ColumnInfo(name = "notif_id")
     val notifId: Int,
-    @ColumnInfo(name = "large_icon")
-    val iconBytes: ByteArray? = null,
+    @ColumnInfo(name = "notif_icon")
+    val notifIcon: Uri? = null,
     @ColumnInfo(name = "title")
     val title: String = "",
     @ColumnInfo(name = "text")
@@ -43,10 +44,7 @@ data class PinnitItem(
         if (_id != other._id) return false
         if (notifKey != other.notifKey) return false
         if (notifId != other.notifId) return false
-        if (iconBytes != null) {
-            if (other.iconBytes == null) return false
-            if (!iconBytes.contentEquals(other.iconBytes)) return false
-        } else if (other.iconBytes != null) return false
+        if (notifIcon != other.notifIcon) return false
         if (title != other.title) return false
         if (text != other.text) return false
         if (messages != other.messages) return false
@@ -68,10 +66,7 @@ data class PinnitItem(
 
         if (notifKey != other.notifKey) return false
         if (notifId != other.notifId) return false
-        if (iconBytes != null) {
-            if (other.iconBytes == null) return false
-            if (!iconBytes.contentEquals(other.iconBytes)) return false
-        } else if (other.iconBytes != null) return false
+        if (notifIcon != other.notifIcon) return false
         if (title != other.title) return false
         if (text != other.text) return false
         if (messages != other.messages) return false
@@ -88,7 +83,7 @@ data class PinnitItem(
         var result = _id.hashCode()
         result = 31 * result + notifKey.hashCode()
         result = 31 * result + notifId
-        result = 31 * result + (iconBytes?.contentHashCode() ?: 0)
+        result = 31 * result + (notifIcon.hashCode() ?: 0)
         result = 31 * result + title.hashCode()
         result = 31 * result + text.hashCode()
         result = 31 * result + messages.hashCode()
