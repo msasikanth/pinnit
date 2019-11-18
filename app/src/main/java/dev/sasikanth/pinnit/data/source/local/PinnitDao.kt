@@ -1,21 +1,21 @@
 package dev.sasikanth.pinnit.data.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import dev.sasikanth.pinnit.data.PinnitItem
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PinnitDao {
 
     @Query("SELECT * FROM notifs ORDER BY posted_on DESC")
-    fun getNotifications(): LiveData<List<PinnitItem>>
+    fun getNotifications(): Flow<List<PinnitItem>>
 
     @Query("SELECT * FROM notifs WHERE is_pinned == 1 ORDER BY posted_on DESC")
-    fun getPinnedNotifications(): LiveData<List<PinnitItem>>
+    fun getPinnedNotifications(): Flow<List<PinnitItem>>
 
     @Query("SELECT * FROM notifs WHERE _id == :id ORDER BY posted_on DESC LIMIT 1")
     suspend fun getNotificationById(id: Long): PinnitItem?

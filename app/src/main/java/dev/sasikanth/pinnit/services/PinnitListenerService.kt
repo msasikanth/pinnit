@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Environment
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import dev.sasikanth.pinnit.data.Message
@@ -40,6 +41,13 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
         private var isListenerConnected = false
         private var isListenerCreated = false
 
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        fun getInstance(): PinnitListenerService? {
+            synchronized(this) {
+                return instance
+            }
+        }
+
         fun getInstanceIfConnected(): PinnitListenerService? {
             synchronized(this) {
                 return if (isListenerConnected) {
@@ -69,28 +77,29 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
         get() = job + Dispatchers.Main
 
     override fun onCreate() {
-        super.onCreate()
         injector.inject(this)
-
+        super.onCreate()
         isListenerCreated = true
+        Timber.i("onCreate")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         isListenerCreated = false
         job.cancel()
+        Timber.i("onDestroy")
     }
 
     override fun onListenerConnected() {
         super.onListenerConnected()
         isListenerConnected = true
-        Timber.i("Listener Connected")
+        Timber.i("onListenerConnected")
     }
 
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
         isListenerConnected = false
-        Timber.i("Listener Disconnected")
+        Timber.i("onListenerDisconnected")
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
@@ -205,16 +214,7 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
         }
     }
 
-    // TODO: Handle get current notifications
-    fun getCurrentNotifications(): List<PinnitItem> {
-        return emptyList()
-    }
-
-    // TODO: Save notification icon / app icon to storage, don't save if already exists.
-    private fun getNotificationIconUri(
-        sbn: StatusBarNotification,
-        appInfo: ApplicationInfo
-    ): Uri? {
+    private fun getNotificationIconUri(sbn: StatusBarNotification, appInfo: ApplicationInfo): Uri? {
         var uri: Uri? = null
         val largeIcon = sbn.notification.getLargeIcon()
         try {

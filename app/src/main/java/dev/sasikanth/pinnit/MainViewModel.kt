@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.Result
@@ -17,6 +18,7 @@ class MainViewModel
 ) : ViewModel() {
 
     val pinnitList: LiveData<List<PinnitItem>> = pinnitRepository.getNotifs()
+        .asLiveData()
 
     private val _notifAction = MutableLiveData<Event<Unit>>()
     val notifAction: LiveData<Event<Unit>>

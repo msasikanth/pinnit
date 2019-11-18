@@ -1,11 +1,11 @@
 package dev.sasikanth.pinnit.data.source
 
-import androidx.lifecycle.LiveData
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.Result
 import dev.sasikanth.pinnit.data.source.local.PinnitLocalDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class PinnitRepository
@@ -13,11 +13,11 @@ class PinnitRepository
     private val pinnitDataSource: PinnitLocalDataSource
 ) {
 
-    fun getNotifs(): LiveData<List<PinnitItem>> {
+    fun getNotifs(): Flow<List<PinnitItem>> {
         return pinnitDataSource.getNotifs()
     }
 
-    fun getPinnedNotifs(): LiveData<List<PinnitItem>> {
+    fun getPinnedNotifs(): Flow<List<PinnitItem>> {
         return pinnitDataSource.getPinnedNotifs()
     }
 

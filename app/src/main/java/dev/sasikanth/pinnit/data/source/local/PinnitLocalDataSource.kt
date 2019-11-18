@@ -1,10 +1,10 @@
 package dev.sasikanth.pinnit.data.source.local
 
-import androidx.lifecycle.LiveData
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class PinnitLocalDataSource(
@@ -12,11 +12,11 @@ class PinnitLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    fun getNotifs(): LiveData<List<PinnitItem>> {
+    fun getNotifs(): Flow<List<PinnitItem>> {
         return pinnitDao.getNotifications()
     }
 
-    fun getPinnedNotifs(): LiveData<List<PinnitItem>> {
+    fun getPinnedNotifs(): Flow<List<PinnitItem>> {
         return pinnitDao.getPinnedNotifications()
     }
 
