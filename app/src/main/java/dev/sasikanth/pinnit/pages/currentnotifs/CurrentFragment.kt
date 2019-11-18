@@ -34,7 +34,7 @@ class CurrentFragment : Fragment() {
             findNavController().navigate(R.id.historyFragment)
         }
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 }

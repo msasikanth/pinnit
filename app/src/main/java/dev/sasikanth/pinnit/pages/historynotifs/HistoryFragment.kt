@@ -90,7 +90,7 @@ class HistoryFragment : Fragment() {
             adapter.submitList(it)
         })
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 }
