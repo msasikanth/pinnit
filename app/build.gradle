@@ -83,6 +83,8 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.25.2'
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+
     testImplementation 'junit:junit:4.12'
     testImplementation "androidx.room:room-testing:$room_version"
 
