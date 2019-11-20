@@ -1,6 +1,6 @@
 package dev.sasikanth.pinnit.shared
 
-import android.text.format.DateUtils
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
@@ -10,29 +10,21 @@ import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import coil.api.load
 import coil.transform.CircleCropTransformation
+import de.hdodenhof.circleimageview.CircleImageView
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
 
-@BindingAdapter("notifInfo")
-fun AppCompatTextView.setNotifInfo(pinnitItem: PinnitItem?) {
-    pinnitItem?.let {
-        val relativeTime = DateUtils.getRelativeTimeSpanString(
-            pinnitItem.postedOn,
-            System.currentTimeMillis(),
-            DateUtils.SECOND_IN_MILLIS
-        )
-        text = "${pinnitItem.appLabel} • $relativeTime"
-    }
-}
-
 @BindingAdapter("notifIcon")
-fun ImageView.setNotifIcon(pinnitItem: PinnitItem?) {
+fun CircleImageView.setNotifIcon(pinnitItem: PinnitItem?) {
     pinnitItem?.let {
         val notifIconUri = it.notifIcon
         if (notifIconUri != null) {
+            val colorDrawable = ColorDrawable(context.resolveColor(attrRes = R.attr.colorPrimary))
             load(pinnitItem.notifIcon) {
                 transformations(CircleCropTransformation())
+                placeholder(colorDrawable)
+                error(colorDrawable)
             }
         }
     }
