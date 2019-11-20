@@ -12,6 +12,8 @@
         <item name="android:paddingEnd">16dp</item>
         <item name="android:insetTop">8dp</item>
         <item name="android:insetBottom">8dp</item>
+        <item name="cornerRadius">2dp</item>
+        <item name="elevation">0dp</item>
         <item name="android:maxHeight">@dimen/button_height</item>
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:textAppearance">?attr/textAppearanceButton</item>
@@ -58,6 +60,8 @@
         <item name="android:textColor">@color/button_group_text_state</item>
         <item name="strokeWidth">2dp</item>
         <item name="strokeColor">?attr/colorSecondary</item>
+        <item name="cornerRadius">2dp</item>
+        <item name="elevation">0dp</item>
     </style>
 
     <!-- Alert Dialog -->
