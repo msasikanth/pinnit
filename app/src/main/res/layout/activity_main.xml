@@ -34,10 +34,8 @@
                     android:id="@+id/app_bar_label"
                     style="@style/TextStyle.Pinnit.Headline6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:textAlignment="center"
+                    android:layout_height="56dp"
+                    android:gravity="center"
                     tools:text="@string/history" />
 
             </androidx.appcompat.widget.Toolbar>
