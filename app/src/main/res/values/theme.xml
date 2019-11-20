@@ -31,6 +31,7 @@
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent
         </item>
 
+        <item name="materialCardViewStyle">@style/Widget.Pinnit.CardView</item>
         <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
         <item name="snackbarButtonStyle">@style/Widget.Pinnit.Button.TextButton.Snackbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>

@@ -108,7 +108,7 @@
                 android:textColor="?attr/colorOnBackgroundVariant"
                 app:firstBaselineToTopHeight="16sp"
                 app:lastBaselineToBottomHeight="8sp"
-                app:layout_constraintEnd_toStartOf="@id/notif_toggle_pin"
+                app:layout_constraintEnd_toStartOf="@id/notif_toggle_pin_guideline"
                 app:layout_constraintStart_toEndOf="@id/notif_info_separator"
                 app:layout_constraintTop_toBottomOf="@id/top_guideline"
                 tools:text="24 minutes ago" />
@@ -125,7 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
-                app:layout_constraintEnd_toStartOf="@id/notif_toggle_pin"
+                app:layout_constraintEnd_toStartOf="@id/notif_toggle_pin_guideline"
                 app:layout_constraintStart_toEndOf="@id/start_guideline"
                 app:layout_constraintTop_toBottomOf="@id/notif_info_barrier" />
 
@@ -136,7 +136,7 @@
                 android:layout_marginTop="8sp"
                 android:layout_marginBottom="8sp"
                 app:civ_border_color="@android:color/white"
-                app:civ_border_width="2dp"
+                app:civ_border_width="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/start_guideline"
                 app:layout_constraintTop_toBottomOf="@id/notif_info_space"
@@ -162,7 +162,8 @@
                 app:layout_constraintBottom_toTopOf="@id/notif_text"
                 app:layout_constraintEnd_toStartOf="@id/end_guideline"
                 app:layout_constraintStart_toEndOf="@id/notif_icon_space"
-                app:layout_constraintTop_toBottomOf="@id/notif_info_space"
+                app:layout_constraintTop_toTopOf="@id/notif_icon_space"
+                app:layout_constraintVertical_bias="0.5"
                 app:notifTitle="@{pinnitItem}"
                 tools:text="Notification Title" />
 
@@ -177,9 +178,17 @@
                 app:layout_constraintEnd_toStartOf="@id/end_guideline"
                 app:layout_constraintStart_toEndOf="@id/notif_icon_space"
                 app:layout_constraintTop_toBottomOf="@id/notif_title"
+                app:layout_constraintVertical_bias="0.5"
                 app:notifText="@{pinnitItem}"
                 tools:maxLines="4"
                 tools:text="@tools:sample/lorem/random" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/notif_toggle_pin_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="64dp" />
 
             <dev.sasikanth.pinnit.utils.CheckableImageView
                 android:id="@+id/notif_toggle_pin"
@@ -189,8 +198,11 @@
                 android:focusable="true"
                 android:onClick="@{() -> pinnitAdapterListener.pinNotifItem(pinnitItem)}"
                 android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/notif_toggle_pin_guideline"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
                 app:srcCompat="@drawable/asld_pin_unpin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
