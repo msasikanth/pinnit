@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var pinnitPreferences: PinnitPreferences
 
-    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     private val mainViewModel by viewModels { injector.mainViewModel }
@@ -70,7 +69,8 @@ class MainActivity : AppCompatActivity() {
         injector.inject(this)
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val binding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = mainViewModel
         binding.lifecycleOwner = this
 
