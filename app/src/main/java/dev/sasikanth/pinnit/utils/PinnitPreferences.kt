@@ -36,7 +36,7 @@ class PinnitPreferences
         }
 
     var allowedApps: MutableSet<String>
-        get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, mutableSetOf()) ?: mutableSetOf()
+        get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, mutableSetOf())?.toMutableSet()!!
         set(value) {
             sharedPreferences.edit {
                 putStringSet(KEY_ALLOWED_APPS, value)
