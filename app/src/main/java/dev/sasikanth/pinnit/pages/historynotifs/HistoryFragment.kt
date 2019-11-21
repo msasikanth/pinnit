@@ -25,8 +25,6 @@ class HistoryFragment : Fragment() {
 
     private val mainViewModel by activityViewModels { injector.mainViewModel }
 
-    private lateinit var binding: FragmentHistoryBinding
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this)
@@ -37,7 +35,8 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        val binding: FragmentHistoryBinding =
+            FragmentHistoryBinding.inflate(inflater, container, false)
 
         val adapter = PinnitListAdapter(PinnitAdapterListener(
             onNotificationClicked = { notifItem ->

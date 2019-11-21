@@ -17,8 +17,6 @@ class AppsFragment : Fragment() {
 
     private val appsViewModel by viewModels { injector.appsViewModel }
 
-    private lateinit var binding: FragmentAppsBinding
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this)
@@ -29,7 +27,7 @@ class AppsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAppsBinding.inflate(layoutInflater)
+        val binding: FragmentAppsBinding = FragmentAppsBinding.inflate(layoutInflater)
 
         val appsController = AppsEpoxyController(AppItemListener { appItem ->
             appsViewModel.setAllowState(appItem)

@@ -16,8 +16,6 @@ class CurrentFragment : Fragment() {
 
     private val mainViewModel by activityViewModels { injector.mainViewModel }
 
-    private lateinit var binding: FragmentCurrentBinding
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this)
@@ -28,7 +26,8 @@ class CurrentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCurrentBinding.inflate(layoutInflater, container, false)
+        val binding: FragmentCurrentBinding =
+            FragmentCurrentBinding.inflate(layoutInflater, container, false)
         binding.mainViewModel = mainViewModel
         binding.notifErrorLayout.errorNotifAction.setOnClickListener {
             findNavController().navigate(R.id.historyFragment)
