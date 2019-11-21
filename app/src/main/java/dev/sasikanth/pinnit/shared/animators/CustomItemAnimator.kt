@@ -77,26 +77,27 @@ class CustomItemAnimator : DefaultItemAnimator() {
             }
 
             try {
-                newHolder.pinnedContentView.isVisible = true
+                newHolder.notifPinnedRevealLayout.isVisible = true
 
                 val cx = newHolder.touchCoordinates[0]
                 val cy = newHolder.touchCoordinates[1]
 
-                val radius = newHolder.itemView.width.toFloat()
+                val viewWidth = newHolder.itemView.width.toFloat()
+
                 val anim = if (newPinStatus) {
                     CircularRevealCompat.createCircularReveal(
-                        newHolder.pinnedContentView,
+                        newHolder.notifPinnedRevealLayout,
                         cx,
                         cy,
                         0.0f,
-                        radius
+                        viewWidth
                     )
                 } else {
                     CircularRevealCompat.createCircularReveal(
-                        newHolder.pinnedContentView,
+                        newHolder.notifPinnedRevealLayout,
                         cx,
                         cy,
-                        radius,
+                        viewWidth,
                         0.0f
                     )
                 }
@@ -107,14 +108,12 @@ class CustomItemAnimator : DefaultItemAnimator() {
                     anim.addListener(
                         onStart = {
                             newHolder.apply {
-                                unPinnedContentView.isVisible = true
-                                pinToggleButton.isChecked = true
+                                notifTogglePin.isChecked = true
                             }
                         },
                         onEnd = {
                             newHolder.apply {
-                                unPinnedContentView.isVisible = false
-                                pinToggleButton.isVisible = true
+                                newHolder.changeTextColor()
                                 dispatchAnimationFinished(this)
                             }
                         }
@@ -123,16 +122,11 @@ class CustomItemAnimator : DefaultItemAnimator() {
                     anim.duration = 200
                     anim.interpolator = accelerateInterpolator
                     anim.addListener(
-                        onStart = {
-                            newHolder.apply {
-                                unPinnedContentView.isVisible = true
-                            }
-                        },
                         onEnd = {
                             newHolder.apply {
-                                unPinnedContentView.isVisible = true
-                                pinnedContentView.isVisible = false
-                                pinToggleButton.isChecked = false
+                                notifPinnedRevealLayout.isVisible = false
+                                notifTogglePin.isChecked = false
+                                newHolder.changeTextColor()
                                 dispatchAnimationFinished(this)
                             }
                         }

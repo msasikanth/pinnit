@@ -14,6 +14,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline3</item>
         <item name="firstBaselineToTopHeight">52sp</item>
         <item name="lastBaselineToBottomHeight">16sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Headline3 -->
 
@@ -30,6 +31,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline4</item>
         <item name="firstBaselineToTopHeight">36sp</item>
         <item name="lastBaselineToBottomHeight">12sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Headline4 -->
 
@@ -46,6 +48,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline5</item>
         <item name="firstBaselineToTopHeight">28sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Headline5 -->
 
@@ -62,6 +65,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
         <item name="firstBaselineToTopHeight">24sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Headline6 -->
 
@@ -78,6 +82,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle1</item>
         <item name="firstBaselineToTopHeight">20sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Subtitle1 -->
 
@@ -94,6 +99,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle2</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Subtitle2 -->
 
@@ -110,6 +116,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Button -->
 
@@ -126,6 +133,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body1</item>
         <item name="firstBaselineToTopHeight">20sp</item>
         <item name="lastBaselineToBottomHeight">8sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Body1 -->
 
@@ -142,6 +150,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
         <item name="firstBaselineToTopHeight">16sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Body2 -->
 
@@ -158,6 +167,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Caption</item>
         <item name="firstBaselineToTopHeight">12sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Caption -->
 
@@ -174,6 +184,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline1</item>
         <item name="firstBaselineToTopHeight">12sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Overline 1 -->
 
@@ -190,6 +201,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline2</item>
         <item name="firstBaselineToTopHeight">12sp</item>
         <item name="lastBaselineToBottomHeight">4sp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
     <!-- Overline 2 -->
 
