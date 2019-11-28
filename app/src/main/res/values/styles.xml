@@ -12,7 +12,7 @@
         <item name="android:paddingEnd">16dp</item>
         <item name="android:insetTop">8dp</item>
         <item name="android:insetBottom">8dp</item>
-        <item name="cornerRadius">2dp</item>
+        <item name="cornerRadius">@dimen/shape_theming_radius</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:maxHeight">@dimen/button_height</item>
         <item name="android:minHeight">@dimen/button_height</item>
@@ -38,14 +38,14 @@
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="rippleColor">?attr/colorSecondaryRipple</item>
-        <item name="cornerRadius">2dp</item>
+        <item name="cornerRadius">@dimen/shape_theming_radius</item>
     </style>
 
     <style name="Widget.Pinnit.Button.TextButton.Snackbar" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
-        <item name="android:textColor">@color/snackbarButtonTextColor</item>
-        <item name="rippleColor">?attr/colorSecondaryRipple</item>
-        <item name="cornerRadius">2dp</item>
+        <item name="android:textColor">@color/maroon_200</item>
+        <item name="rippleColor">@color/maroon_200</item>
+        <item name="cornerRadius">@dimen/shape_theming_radius</item>
     </style>
 
     <style name="Widget.Pinnit.Button.Group.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -59,8 +59,8 @@
         <item name="backgroundTint">@color/button_group_state</item>
         <item name="android:textColor">@color/button_group_text_state</item>
         <item name="strokeWidth">2dp</item>
-        <item name="strokeColor">?attr/colorSecondary</item>
-        <item name="cornerRadius">2dp</item>
+        <item name="strokeColor">?attr/colorOutlinedButtonGroup</item>
+        <item name="cornerRadius">@dimen/shape_theming_radius</item>
         <item name="elevation">0dp</item>
     </style>
 
@@ -75,6 +75,9 @@
         </item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
         </item>
+        <item name="buttonBarStyle">@style/MaterialAlertDialog.Pinnit.ButtonRow
+        </item>
+
     </style>
 
     <style name="MaterialAlertDialog.Pinnit.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
@@ -83,6 +86,11 @@
 
     <style name="MaterialAlertDialog.Pinnit.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
         <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Pinnit.ButtonRow" parent="">
+        <item name="android:background">@drawable/rectangle</item>
+        <item name="android:backgroundTint">@color/color_secondary_5</item>
     </style>
 
     <!-- Bottom Sheet -->
