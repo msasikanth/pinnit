@@ -115,22 +115,22 @@ class MainActivity : AppCompatActivity() {
             val currentNotifs = OptionItem(
                 id = 1,
                 title = R.string.current,
-                icon = R.drawable.ic_pinnit_current,
+                icon = R.drawable.sld_current,
                 isSelected = navController.currentDestination?.id == R.id.currentFragment
             )
-            val apps = OptionItem(
-                id = 2,
-                title = R.string.your_apps,
-                icon = R.drawable.ic_pinnit_apps,
-                isSelected = navController.currentDestination?.id == R.id.appsFragment
-            )
             val historyNotifs = OptionItem(
-                id = 3,
+                id = 2,
                 title = R.string.history,
-                icon = R.drawable.ic_pinnit_history,
+                icon = R.drawable.sld_history,
                 isSelected = navController.currentDestination?.id == R.id.historyFragment
             )
-            val about = OptionItem(4, R.string.about, R.drawable.ic_pinnit_about)
+            val apps = OptionItem(
+                id = 3,
+                title = R.string.your_apps,
+                icon = R.drawable.sld_apps,
+                isSelected = navController.currentDestination?.id == R.id.appsFragment
+            )
+            val about = OptionItem(4, R.string.about, R.drawable.sld_about)
             val optionSeparator = OptionSeparator
             val darkMode = OptionItem(
                 5,
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
             OptionsBottomSheet()
                 .addOption(
-                    currentNotifs, apps, historyNotifs, about, optionSeparator, darkMode
+                    currentNotifs, historyNotifs, apps, about, optionSeparator, darkMode
                 )
                 .setOnOptionSelectedListener(OptionsBottomSheet.OnOptionSelected {
                     when (it.id) {
@@ -150,10 +150,10 @@ class MainActivity : AppCompatActivity() {
                             navController.navigate(R.id.currentFragment)
                         }
                         2 -> {
-                            navController.navigate(R.id.appsFragment)
+                            navController.navigate(R.id.historyFragment)
                         }
                         3 -> {
-                            navController.navigate(R.id.historyFragment)
+                            navController.navigate(R.id.appsFragment)
                         }
                         4 -> {
                             val dialog = MaterialAlertDialogBuilder(this).apply {
