@@ -42,7 +42,7 @@
             app:tint="@color/option_item"
             tools:src="@drawable/ic_pinnit_dark_mode" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/option_label"
             style="@style/TextStyle.Pinnit.Subtitle2"
             android:layout_width="0dp"

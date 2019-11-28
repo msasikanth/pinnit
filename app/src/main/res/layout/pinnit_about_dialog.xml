@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_version" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_version"
         style="@style/TextStyle.Pinnit.Subtitle2"
         android:layout_width="0dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/app_name"
         tools:text="v1.0.0" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name"
         style="@style/TextStyle.Pinnit.Headline6"
         android:layout_width="0dp"
@@ -62,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_icon" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/support_desc"
         style="@style/TextStyle.Pinnit.Body1"
         android:layout_width="0dp"

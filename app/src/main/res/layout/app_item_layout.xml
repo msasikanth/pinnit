@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="?attr/colorSecondary" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/app_label"
                 style="@style/TextStyle.Pinnit.Body2"
                 android:layout_width="0dp"

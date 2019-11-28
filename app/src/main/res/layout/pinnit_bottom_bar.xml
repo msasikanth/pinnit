@@ -54,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/create" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tooltip"
             style="@style/TextStyle.Pinnit.Caption"
             android:layout_width="0dp"

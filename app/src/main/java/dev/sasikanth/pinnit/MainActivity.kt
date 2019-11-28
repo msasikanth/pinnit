@@ -34,13 +34,13 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel by viewModels { injector.mainViewModel }
     private val notifPermissionDialog: AlertDialog by lazy {
         MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.notif_permission_dialog_title)
-            .setMessage(R.string.notif_permission_dialog_content)
+            .setTitle(R.string.missing_permissions_title)
+            .setMessage(R.string.missing_permissions_desc)
             .setCancelable(false)
-            .setPositiveButton(R.string.notif_permission_dialog_positive_action) { _, _ ->
+            .setPositiveButton(R.string.grant_permission) { _, _ ->
                 openNotificationSettings()
             }
-            .setNegativeButton(R.string.notif_permission_dialog_negative_action) { _, _ ->
+            .setNegativeButton(R.string.notif_permission_dialog_negative_action_DEPRECATED) { _, _ ->
                 finish()
             }
             .create()
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.appsFragment -> {
                     binding.apply {
-                        appBarLabel.text = getString(R.string.apps)
+                        appBarLabel.text = getString(R.string.your_apps)
                         bottomAppBar.isTooltipVisible(true)
                     }
                 }
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.pinnitDeleted.observe(this, EventObserver { notifItem ->
-            Snackbar.make(binding.mainRootView, R.string.notif_deleted, Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.mainRootView, R.string.notification_deleted, Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.bottomAppBar)
                 .setAction(R.string.undo) {
                     mainViewModel.saveNotif(notifItem)
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             )
             val apps = OptionItem(
                 id = 2,
-                title = R.string.option_your_apps,
+                title = R.string.your_apps,
                 icon = R.drawable.ic_pinnit_apps,
                 isSelected = navController.currentDestination?.id == R.id.appsFragment
             )
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                 icon = R.drawable.ic_pinnit_history,
                 isSelected = navController.currentDestination?.id == R.id.historyFragment
             )
-            val about = OptionItem(4, R.string.option_about, R.drawable.ic_pinnit_about)
+            val about = OptionItem(4, R.string.about, R.drawable.ic_pinnit_about)
             val optionSeparator = OptionSeparator
             val darkMode = OptionItem(
                 5,
