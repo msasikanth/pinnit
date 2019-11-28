@@ -27,7 +27,8 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="19dp"
-        android:background="?attr/colorDivider"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="?attr/colorDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_version" />

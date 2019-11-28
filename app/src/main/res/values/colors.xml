@@ -14,8 +14,46 @@
     <color name="maroon_100">#FFE5F6</color>
 
     <!-- 70% White -->
-    <color name="statusBarDay">#B3FFFFFF</color>
-    <!-- 40% Maroon 1000 -->
-    <color name="statusBarNight">#6614000E</color>
+    <color name="statusBarColor">#B3FFFFFF</color>
+
+
+    <!-- DAY THEME -->
+
+
+    <color name="colorPrimary">@color/maroon_700</color>
+    <color name="colorPrimaryVariant">@color/maroon_800</color>
+
+    <color name="colorOnPrimary">@android:color/white</color>
+    <color name="colorOnPrimaryVariant">@color/maroon_100</color>
+
+    <color name="colorSecondary">@color/maroon_700</color>
+
+    <color name="colorSurface">@android:color/white</color>
+    <color name="colorOnSurface">@android:color/black</color>
+
+    <color name="colorBackground">@android:color/white</color>
+    <color name="colorOnBackground">@android:color/black</color>
+
+    <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+    <color name="colorOutlinedButtonGroup">@color/maroon_700</color>
+
+    <!-- Background underneath notifications -->
+    <color name="colorRowBackground">@color/maroon_100</color>
+
+
+    <!-- COLOR STATE LISTS -->
+
+
+    <!-- colorStateList of the current colorSecondary at 20% opacity -->
+    <color name="colorSecondaryRipple">@color/color_secondary_20</color>
+
+    <!-- colorStateList of the current colorOnBackground at 70% opacity -->
+    <color name="colorOnBackgroundVariant">@color/color_on_background_70</color>
+
+    <!-- colorStateList of the current colorOnBackground at 15% opacity -->
+    <color name="colorDivider">@color/color_on_background_15</color>
+
+    <!-- colorStateList of the current colorSecondary at 5% opacity -->
+    <color name="colorButtonRow">@color/color_secondary_5</color>
 
 </resources>
