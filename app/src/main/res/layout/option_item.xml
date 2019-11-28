@@ -23,7 +23,7 @@
         android:focusable="true"
         android:foreground="@drawable/option_item_ripple"
         android:onClick="@{() -> onOptionSelected.onOptionSelected(option)}"
-        android:paddingStart="24dp"
+        android:paddingStart="16dp"
         android:paddingEnd="16dp"
         app:isOptionSelected="@{option.selected}">
 
@@ -44,12 +44,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/option_label"
-            style="@style/TextStyle.Pinnit.Subtitle2"
+            style="@style/TextStyle.Pinnit.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
             android:text="@{option.title}"
             android:textColor="@color/option_item"
             app:layout_constraintBottom_toBottomOf="parent"
