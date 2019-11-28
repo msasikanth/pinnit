@@ -159,6 +159,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorOnBackground"
+                android:translationY="4sp"
                 app:layout_constraintBottom_toTopOf="@id/notif_text"
                 app:layout_constraintEnd_toStartOf="@id/end_guideline"
                 app:layout_constraintStart_toEndOf="@id/notif_icon_space"
@@ -182,6 +183,14 @@
                 app:notifText="@{pinnitItem}"
                 tools:maxLines="4"
                 tools:text="@tools:sample/lorem/random" />
+
+            <View
+                android:id="@+id/pinnit_item_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@drawable/rectangle"
+                android:backgroundTint="?attr/colorDivider"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/notif_toggle_pin_guideline"

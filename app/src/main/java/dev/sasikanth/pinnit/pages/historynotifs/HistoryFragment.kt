@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import dev.sasikanth.pinnit.databinding.FragmentHistoryBinding
 import dev.sasikanth.pinnit.di.activityViewModels
 import dev.sasikanth.pinnit.di.injector
@@ -65,12 +63,6 @@ class HistoryFragment : Fragment() {
         binding.notifHistoryList.itemAnimator =
             CustomItemAnimator()
         binding.notifHistoryList.adapter = adapter
-        binding.notifHistoryList.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                RecyclerView.VERTICAL
-            )
-        )
 
         val itemTouchHelperCallback = ItemTouchHelperCallback(
             context = requireContext(),

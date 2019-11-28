@@ -25,7 +25,7 @@
             android:clickable="true"
             android:contentDescription="@string/search"
             android:focusable="true"
-            android:foreground="@drawable/bottom_bar_item_ripple"
+            android:foreground="@drawable/option_item_ripple"
             android:padding="16dp"
             android:src="@drawable/ic_pinnit_search"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,13 +53,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="72dp"
+            android:layout_marginStart="72dp"
             android:text="@string/apps_tooltip"
             android:textAlignment="center"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/pinnit_options"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -70,7 +71,7 @@
             android:clickable="true"
             android:contentDescription="@string/menu"
             android:focusable="true"
-            android:foreground="@drawable/bottom_bar_item_ripple"
+            android:foreground="@drawable/option_item_ripple"
             android:padding="16dp"
             android:src="@drawable/ic_drawer"
             app:layout_constraintBottom_toBottomOf="parent"
