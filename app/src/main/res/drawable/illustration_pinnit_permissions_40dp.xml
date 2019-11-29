@@ -26,7 +26,7 @@
         android:pathData="M20,37C29.3888,37 37,29.3888 37,20C37,10.6112 29.3888,3 20,3C10.6112,3 3,10.6112 3,20C3,29.3888 10.6112,37 20,37ZM20,35C28.2843,35 35,28.2843 35,20C35,11.7157 28.2843,5 20,5C11.7157,5 5,11.7157 5,20C5,28.2843 11.7157,35 20,35Z"
         android:fillType="evenOdd">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startY="-8.285"
             android:startX="-8.285"
             android:endY="48.2888"
