@@ -34,13 +34,13 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel by viewModels { injector.mainViewModel }
     private val notifPermissionDialog: AlertDialog by lazy {
         MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.notif_permission_dialog_title)
-            .setMessage(R.string.notif_permission_dialog_content)
+            .setTitle(R.string.missing_permissions_title)
+            .setMessage(R.string.missing_permissions_desc)
             .setCancelable(false)
-            .setPositiveButton(R.string.notif_permission_dialog_positive_action) { _, _ ->
+            .setPositiveButton(R.string.grant_permission) { _, _ ->
                 openNotificationSettings()
             }
-            .setNegativeButton(R.string.notif_permission_dialog_negative_action) { _, _ ->
+            .setNegativeButton(R.string.notif_permission_dialog_negative_action_DEPRECATED) { _, _ ->
                 finish()
             }
             .create()
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.appsFragment -> {
                     binding.apply {
-                        appBarLabel.text = getString(R.string.apps)
+                        appBarLabel.text = getString(R.string.your_apps)
                         bottomAppBar.isTooltipVisible(true)
                     }
                 }
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.pinnitDeleted.observe(this, EventObserver { notifItem ->
-            Snackbar.make(binding.mainRootView, R.string.notif_deleted, Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.mainRootView, R.string.notification_deleted, Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.bottomAppBar)
                 .setAction(R.string.undo) {
                     mainViewModel.saveNotif(notifItem)
@@ -115,22 +115,22 @@ class MainActivity : AppCompatActivity() {
             val currentNotifs = OptionItem(
                 id = 1,
                 title = R.string.current,
-                icon = R.drawable.ic_pinnit_current,
+                icon = R.drawable.sld_current,
                 isSelected = navController.currentDestination?.id == R.id.currentFragment
             )
-            val apps = OptionItem(
-                id = 2,
-                title = R.string.option_your_apps,
-                icon = R.drawable.ic_pinnit_apps,
-                isSelected = navController.currentDestination?.id == R.id.appsFragment
-            )
             val historyNotifs = OptionItem(
-                id = 3,
+                id = 2,
                 title = R.string.history,
-                icon = R.drawable.ic_pinnit_history,
+                icon = R.drawable.sld_history,
                 isSelected = navController.currentDestination?.id == R.id.historyFragment
             )
-            val about = OptionItem(4, R.string.option_about, R.drawable.ic_pinnit_about)
+            val apps = OptionItem(
+                id = 3,
+                title = R.string.your_apps,
+                icon = R.drawable.sld_apps,
+                isSelected = navController.currentDestination?.id == R.id.appsFragment
+            )
+            val about = OptionItem(4, R.string.about, R.drawable.sld_about)
             val optionSeparator = OptionSeparator
             val darkMode = OptionItem(
                 5,
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
             OptionsBottomSheet()
                 .addOption(
-                    currentNotifs, apps, historyNotifs, about, optionSeparator, darkMode
+                    currentNotifs, historyNotifs, apps, about, optionSeparator, darkMode
                 )
                 .setOnOptionSelectedListener(OptionsBottomSheet.OnOptionSelected {
                     when (it.id) {
@@ -150,10 +150,10 @@ class MainActivity : AppCompatActivity() {
                             navController.navigate(R.id.currentFragment)
                         }
                         2 -> {
-                            navController.navigate(R.id.appsFragment)
+                            navController.navigate(R.id.historyFragment)
                         }
                         3 -> {
-                            navController.navigate(R.id.historyFragment)
+                            navController.navigate(R.id.appsFragment)
                         }
                         4 -> {
                             val dialog = MaterialAlertDialogBuilder(this).apply {

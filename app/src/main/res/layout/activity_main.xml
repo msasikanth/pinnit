@@ -30,7 +30,7 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:paddingTopSystemWindowInsets="@{true}">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/app_bar_label"
                     style="@style/TextStyle.Pinnit.Headline6"
                     android:layout_width="match_parent"

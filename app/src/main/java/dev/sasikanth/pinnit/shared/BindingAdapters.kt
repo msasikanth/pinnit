@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.textview.MaterialTextView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import coil.api.load
@@ -31,14 +31,14 @@ fun CircleImageView.setNotifIcon(pinnitItem: PinnitItem?) {
 }
 
 @BindingAdapter("notifTitle")
-fun AppCompatTextView.setNotifTitle(pinnitItem: PinnitItem?) {
+fun MaterialTextView.setNotifTitle(pinnitItem: PinnitItem?) {
     pinnitItem?.let {
         text = pinnitItem.title
     }
 }
 
 @BindingAdapter("notifText")
-fun AppCompatTextView.setNotifText(pinnitItem: PinnitItem?) {
+fun MaterialTextView.setNotifText(pinnitItem: PinnitItem?) {
     pinnitItem?.let { pinnit ->
         if (pinnit.template == TemplateStyle.MessagingStyle) {
             val messagesBuilder = StringBuilder()

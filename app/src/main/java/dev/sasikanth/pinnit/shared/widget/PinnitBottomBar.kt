@@ -27,10 +27,10 @@ class PinnitBottomBar @JvmOverloads constructor(
     init {
         inflate(context, R.layout.pinnit_bottom_bar, this)
 
-        actionSearch = findViewById(R.id.notif_search)
-        actionOptions = findViewById(R.id.notif_options)
+        actionSearch = findViewById(R.id.pinnit_search)
+        actionOptions = findViewById(R.id.pinnit_options)
         tooltip = findViewById(R.id.tooltip)
-        pageAction = findViewById(R.id.notif_page_action)
+        pageAction = findViewById(R.id.pinnit_page_action)
 
         val bottomAppBarContent: ConstraintLayout = findViewById(R.id.bottom_app_bar_content)
         bottomAppBarContent.doOnApplyWindowInsets { view, windowInsets, padding, _ ->

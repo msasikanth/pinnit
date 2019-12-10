@@ -91,7 +91,7 @@
         <item name="fontFamily">@font/bai_jam_medium</item>
         <item name="android:textSize">14sp</item>
 
-        <item name="lineHeight">24sp</item>
+        <item name="lineHeight">20sp</item>
         <item name="android:letterSpacing">0.0357</item>
     </style>
 

@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App Colors Dark -->
-    <color name="colorPrimaryDisabled">#66661F54</color>
 
-    <color name="brandColor">@color/maroon_200</color>
-    <color name="brandColorRipple">#33E5B3D4</color>
+    <!-- 40% Maroon 1000 -->
+    <color name="statusBarColor">#6614000E</color>
+
+    <color name="colorPrimary">@color/maroon_600</color>
+    <color name="colorPrimaryVariant">@color/maroon_700</color>
+
+    <color name="colorSecondary">@color/maroon_200</color>
 
     <color name="colorSurface">@color/maroon_900</color>
     <color name="colorOnSurface">@android:color/white</color>
 
     <color name="colorBackground">@color/maroon_1000</color>
     <color name="colorOnBackground">@android:color/white</color>
-    <color name="colorOnBackgroundVariant">@color/white_80</color>
 
-    <color name="colorDivider">@color/white_15</color>
+    <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+    <color name="colorOutlinedButtonGroup">@color/maroon_150</color>
+
+    <!-- Background underneath notifications -->
     <color name="colorRowBackground">@android:color/black</color>
 
-    <color name="statusBarColor">#6614000E</color>
 </resources>
