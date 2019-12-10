@@ -8,6 +8,7 @@
             android:id="@+id/error_notif_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="88dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -17,26 +18,40 @@
 
             <ImageView
                 android:id="@+id/error_notif_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:contentDescription="@null"
-                android:src="@drawable/pinnit_pin_icon"
-                app:layout_constraintBottom_toTopOf="@id/error_notif_title"
+                android:src="@drawable/illustration_pinnit_history_40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/error_notif_title"
                 style="@style/TextStyle.Pinnit.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/notif_error_history_title"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="72dp"
+                android:text="@string/no_notifications_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/error_notif_icon" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/error_notif_subtitle"
+                style="@style/TextStyle.Pinnit.Subtitle2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="72dp"
+                android:text="@string/no_notifications_history_desc"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/error_notif_title" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

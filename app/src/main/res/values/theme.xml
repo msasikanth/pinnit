@@ -7,26 +7,43 @@
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 
+
     <style name="Platform.Pinnit" parent="Platform.Pinnit.v23" />
 
     <style name="Platform.Theme.Pinnit" parent="Platform.Pinnit" />
 
     <style name="Base.Theme.Pinnit" parent="Platform.Theme.Pinnit">
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorOnPrimaryVariant">@color/maroon_100</item>
-        <item name="colorSecondary">@color/brandColor</item>
-        <item name="colorSecondaryRipple">@color/brandColorRipple</item>
+        <item name="colorOnPrimaryVariant">@color/colorOnPrimaryVariant</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryRipple">@color/color_secondary_20</item>
+
         <item name="colorSurface">@color/colorSurface</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
+
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
-        <item name="colorDivider">@color/colorDivider</item>
+
+        <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+        <item name="colorOutlinedButtonGroup">@color/colorOutlinedButtonGroup</item>
+
+        <!-- Background underneath notifications -->
         <item name="colorRowBackground">@color/colorRowBackground</item>
+
+        <item name="colorDivider">@color/colorDivider</item>
+
+        <item name="colorButtonRow">@color/colorButtonRow</item>
+
+
         <item name="elevationOverlayEnabled">false</item>
-        <item name="elevationOverlayColor">@color/colorBackground</item>
+        <item name="elevationOverlayColor">@android:color/transparent</item>
+
 
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent
         </item>
@@ -52,9 +69,9 @@
 
     <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
         <item name="android:windowBackground">@drawable/splash_layout</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">@color/maroon_700</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/maroon_700</item>
     </style>
 
     <style name="Theme.Pinnit.Main" parent="Base.Theme.Pinnit" />

@@ -10,9 +10,9 @@
 
     <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
         <item name="android:windowBackground">@drawable/splash_layout</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">@color/maroon_700</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/maroon_700</item>
         <item name="android:windowLightNavigationBar">false</item>
     </style>
 

@@ -2,10 +2,10 @@
 <resources>
     <style name="ShapeAppearance.Pinnit.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">2dp</item>
+        <item name="cornerSize">@dimen/shape_theming_radius</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.Pinnit.FloatingActionButton" parent="ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton">
-        <item name="cornerSize">2dp</item>
+        <item name="cornerSize">@dimen/shape_theming_radius</item>
     </style>
 </resources>

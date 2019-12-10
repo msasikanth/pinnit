@@ -1,9 +1,11 @@
 package dev.sasikanth.pinnit.shared
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -55,6 +57,7 @@ class PinnitListAdapter(private val pinnitAdapterListener: PinnitAdapterListener
         val notifTogglePin: CheckableImageView
             get() = binding.notifTogglePin
 
+
         init {
             itemView.setOnTouchListener { _, motionEvent ->
                 if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
@@ -89,12 +92,14 @@ class PinnitListAdapter(private val pinnitAdapterListener: PinnitAdapterListener
 
         fun changeTextColor() {
             if (isPinned) {
+                binding.pinnitEditButton.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
                 binding.notifTitle.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
                 binding.notifText.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
                 binding.notifAppName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
                 binding.notifInfoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
                 binding.notifTimestamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
             } else {
+                binding.pinnitEditButton.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
                 binding.notifTitle.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackground))
                 binding.notifText.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
                 binding.notifAppName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))

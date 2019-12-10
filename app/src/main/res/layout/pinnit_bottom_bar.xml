@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <View
-        android:id="@+id/shadow"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@drawable/shadow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_app_bar_content"
         android:layout_width="0dp"
@@ -20,19 +11,21 @@
         android:background="?attr/colorSurface"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shadow">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/notif_search"
+            android:id="@+id/pinnit_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:clickable="true"
             android:contentDescription="@string/search"
             android:focusable="true"
-            android:foreground="@drawable/bottom_bar_item_ripple"
+            android:background="@drawable/option_item_ripple"
             android:padding="16dp"
             android:src="@drawable/ic_pinnit_search"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/notif_page_action"
+            android:id="@+id/pinnit_page_action"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -49,39 +42,52 @@
             android:visibility="visible"
             app:backgroundTint="@color/button_state"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/notif_search"
-            app:layout_constraintStart_toEndOf="@id/notif_options"
+            app:layout_constraintEnd_toStartOf="@id/pinnit_search"
+            app:layout_constraintStart_toEndOf="@id/pinnit_options"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/create" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tooltip"
             style="@style/TextStyle.Pinnit.Caption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="72dp"
+            android:layout_marginStart="72dp"
             android:text="@string/apps_tooltip"
             android:textAlignment="center"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/notif_options"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/notif_options"
+            android:id="@+id/pinnit_options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:clickable="true"
             android:contentDescription="@string/menu"
             android:focusable="true"
-            android:foreground="@drawable/bottom_bar_item_ripple"
+            android:background="@drawable/option_item_ripple"
             android:padding="16dp"
             android:src="@drawable/ic_drawer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/bottom_bar_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:translationY="-8dp"
+            android:background="@drawable/rectangle"
+            android:backgroundTint="?attr/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bottom_app_bar_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

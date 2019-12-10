@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="maroon_1000">#14000E</color>
     <color name="maroon_900">#240018</color>
-    <color name="maroon_800">#380025</color>
+    <color name="maroon_800">#3D0029</color>
     <color name="maroon_700">#4D0033</color>
+    <color name="maroon_600">#660044</color>
+    <color name="maroon_500">#852163</color>
+    <color name="maroon_400">#A64B87</color>
+    <color name="maroon_300">#C787B1</color>
     <color name="maroon_200">#E5B3D4</color>
+    <color name="maroon_150">#F5D0E9</color>
     <color name="maroon_100">#FFE5F6</color>
 
-    <color name="white_80">#CCFFFFFF</color>
-    <color name="white_15">#26FFFFFF</color>
+    <!-- 70% White -->
+    <color name="statusBarColor">#B3FFFFFF</color>
 
-    <color name="black_70">#B3000000</color>
-    <color name="black_15">#26000000</color>
 
-    <!-- App Colors Light -->
+    <!-- DAY THEME -->
+
+
     <color name="colorPrimary">@color/maroon_700</color>
     <color name="colorPrimaryVariant">@color/maroon_800</color>
-    <color name="colorOnPrimary">@android:color/white</color>
-    <color name="colorPrimaryDisabled">#664D0039</color>
 
-    <color name="brandColor">@color/maroon_700</color>
-    <color name="brandColorRipple">#334D0033</color>
+    <color name="colorOnPrimary">@android:color/white</color>
+    <color name="colorOnPrimaryVariant">@color/maroon_100</color>
+
+    <color name="colorSecondary">@color/maroon_700</color>
 
     <color name="colorSurface">@android:color/white</color>
     <color name="colorOnSurface">@android:color/black</color>
 
     <color name="colorBackground">@android:color/white</color>
     <color name="colorOnBackground">@android:color/black</color>
-    <color name="colorOnBackgroundVariant">@color/black_70</color>
 
-    <color name="colorDivider">@color/black_15</color>
+    <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+    <color name="colorOutlinedButtonGroup">@color/maroon_700</color>
+
+    <!-- Background underneath notifications -->
     <color name="colorRowBackground">@color/maroon_100</color>
-    <color name="snackbarButtonTextColor">@color/maroon_200</color>
 
-    <color name="statusBarColor">@color/white_80</color>
+
+    <!-- COLOR STATE LISTS -->
+
+
+    <!-- colorStateList of the current colorSecondary at 20% opacity -->
+    <color name="colorSecondaryRipple">@color/color_secondary_20</color>
+
+    <!-- colorStateList of the current colorOnBackground at 70% opacity -->
+    <color name="colorOnBackgroundVariant">@color/color_on_background_70</color>
+
+    <!-- colorStateList of the current colorOnBackground at 15% opacity -->
+    <color name="colorDivider">@color/color_on_background_15</color>
+
+    <!-- colorStateList of the current colorSecondary at 5% opacity -->
+    <color name="colorButtonRow">@color/color_secondary_5</color>
+
 </resources>
