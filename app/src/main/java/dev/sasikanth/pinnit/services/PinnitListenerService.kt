@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Environment
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import dev.sasikanth.pinnit.data.Message
@@ -22,7 +21,6 @@ import dev.sasikanth.pinnit.utils.PinnitPreferences
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,34 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-@Suppress("unused")
-class PinnitListenerService : NotificationListenerService(), CoroutineScope {
-
-    companion object {
-
-        @Volatile
-        private var instance: PinnitListenerService? = null
-
-        private var isListenerConnected = false
-        private var isListenerCreated = false
-
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        fun getInstance(): PinnitListenerService? {
-            synchronized(this) {
-                return instance
-            }
-        }
-
-        fun getInstanceIfConnected(): PinnitListenerService? {
-            synchronized(this) {
-                return if (isListenerConnected) {
-                    instance
-                } else {
-                    null
-                }
-            }
-        }
-    }
+class PinnitListenerService : NotificationListenerService() {
 
     @Inject
     lateinit var pinnitPreferences: PinnitPreferences
@@ -66,104 +37,93 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
     lateinit var pinnitRepository: PinnitRepository
 
     private val job = Job()
+    private val coroutineContext = Dispatchers.Main
+
     private val allowedApps: MutableSet<String>
         get() = pinnitPreferences.allowedApps
 
-    init {
-        instance = this
-    }
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+    private val coroutineScope = CoroutineScope(job + coroutineContext)
 
     override fun onCreate() {
         injector.inject(this)
         super.onCreate()
-        isListenerCreated = true
-        Timber.i("onCreate")
+        Timber.i("Notification listener service created")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        isListenerCreated = false
         job.cancel()
-        Timber.i("onDestroy")
+        Timber.i("Notification listener service destroyed")
     }
 
     override fun onListenerConnected() {
         super.onListenerConnected()
-        isListenerConnected = true
-        Timber.i("onListenerConnected")
+        Timber.i("Notification listener service connected")
     }
 
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
-        isListenerConnected = false
-        Timber.i("onListenerDisconnected")
+        Timber.i("Notification listener service disconnected")
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
-        sbn?.let { statusBarNotification ->
-            val notification = statusBarNotification.notification
-            launch {
-                val shouldBeFilteredOut = shouldBeFilteredOut(statusBarNotification)
-                if (!shouldBeFilteredOut) {
-                    // Notification shouldn't be filtered out
+        if (sbn != null) {
+            val notification = sbn.notification
+            coroutineScope.launch {
+                val notificationShouldBeFiltered = shouldFilterOutNotification(sbn)
+                if (notificationShouldBeFiltered.not()) {
                     withContext(Dispatchers.IO) {
-                        val appInfo = packageManager.getApplicationInfo(
-                            statusBarNotification.packageName, PackageManager.GET_META_DATA
-                        )
+                        val appInfo = packageManager
+                            .getApplicationInfo(
+                                sbn.packageName,
+                                PackageManager.GET_META_DATA
+                            )
 
-                        val appLabel = packageManager.getApplicationLabel(appInfo).toString()
-                        var title = notification.extras.getCharSequence(
-                            NotificationCompat.EXTRA_TITLE
-                        )?.toString().orEmpty()
-                        var text = notification.extras.getCharSequence(
-                            NotificationCompat.EXTRA_TEXT
-                        )?.toString().orEmpty()
+                        val appLabel = packageManager
+                            .getApplicationLabel(appInfo)
+                            .toString()
+
+                        var title = notification
+                            .extras
+                            .getCharSequence(NotificationCompat.EXTRA_TITLE)
+                            ?.toString()
+                            .orEmpty()
+
+                        var text = notification
+                            .extras
+                            .getCharSequence(NotificationCompat.EXTRA_TEXT)
+                            ?.toString()
+                            .orEmpty()
 
                         val messages = mutableListOf<Message>()
-                        val notificationIconUri =
-                            getNotificationIconUri(statusBarNotification, appInfo)
-                        val template = notification.extras.getString(Notification.EXTRA_TEMPLATE)
+                        val notificationIconUri = getNotificationIconUri(sbn, appInfo)
 
-                        val templateStyle =
-                            when {
-                                template == Notification.BigTextStyle::class.java.name -> TemplateStyle.BigTextStyle
-                                template == Notification.BigPictureStyle::class.java.name -> TemplateStyle.BigPictureStyle
-                                template == Notification.InboxStyle::class.java.name -> TemplateStyle.InboxStyle
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    template == Notification.DecoratedCustomViewStyle::class.java.name
-                                } else {
-                                    false
-                                } -> TemplateStyle.DecoratedViewStyle
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    template == Notification.MessagingStyle::class.java.name
-                                } else {
-                                    false
-                                } -> TemplateStyle.MessagingStyle
-                                else -> TemplateStyle.DefaultStyle
-                            }
+                        // Identifying the template style for the notification
+                        val templateStyle = getNotificationTemplateStyle(notification)
 
+                        // Getting notification content like title, text, image etc.,
                         when (templateStyle) {
                             TemplateStyle.BigTextStyle -> {
-                                title = notification.extras
+                                title = notification
+                                    .extras
                                     .getCharSequence(Notification.EXTRA_TITLE_BIG)
                                     ?.toString() ?: title
 
-                                text = notification.extras
+                                text = notification
+                                    .extras
                                     .getCharSequence(Notification.EXTRA_BIG_TEXT)
                                     ?.toString() ?: text
                             }
-                            TemplateStyle.BigPictureStyle -> {
-                                // TODO: Save image and add uri to db
-                            }
+
                             TemplateStyle.InboxStyle -> {
-                                val extraLines =
-                                    notification.extras.getCharSequenceArray(Notification.EXTRA_TEXT_LINES)
+                                val extraLines = notification
+                                    .extras
+                                    .getCharSequenceArray(Notification.EXTRA_TEXT_LINES)
+
                                 text = extraLines?.joinToString(separator = "\n") ?: text
                             }
+
                             TemplateStyle.MessagingStyle -> {
                                 val conversationTitle =
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -173,8 +133,6 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
                                     } else {
                                         null
                                     }
-                                title = conversationTitle ?: title
-
                                 val messagingStyle = NotificationCompat.MessagingStyle
                                     .extractMessagingStyleFromNotification(notification)
                                 val extractedMessages = messagingStyle?.messages?.map {
@@ -184,9 +142,16 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
                                         it.timestamp
                                     )
                                 }
+
+                                title = conversationTitle ?: title
                                 messages.clear()
                                 messages.addAll(extractedMessages.orEmpty())
                             }
+
+                            TemplateStyle.BigPictureStyle -> {
+                                // TODO: Save image and add uri to db
+                            }
+
                             else -> {
                                 // TODO: Add else branch for template checking
                             }
@@ -194,15 +159,15 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
 
                         val notifItem = PinnitItem(
                             _id = 0,
-                            notifKey = statusBarNotification.key,
-                            notifId = statusBarNotification.id,
+                            notifKey = sbn.key,
+                            notifId = sbn.id,
                             notifIcon = notificationIconUri,
                             title = title,
                             text = text,
                             messages = messages,
-                            packageName = statusBarNotification.packageName,
+                            packageName = sbn.packageName,
                             appLabel = appLabel,
-                            postedOn = statusBarNotification.postTime,
+                            postedOn = sbn.postTime,
                             template = templateStyle,
                             isPinned = false,
                             isCurrent = false // TODO: Set as current when notification is posted
@@ -214,13 +179,35 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
         }
     }
 
+    private fun getNotificationTemplateStyle(notification: Notification): TemplateStyle {
+        val template = notification.extras.getString(Notification.EXTRA_TEMPLATE)
+
+        return when {
+            template == Notification.BigTextStyle::class.java.name -> TemplateStyle.BigTextStyle
+            template == Notification.BigPictureStyle::class.java.name -> TemplateStyle.BigPictureStyle
+            template == Notification.InboxStyle::class.java.name -> TemplateStyle.InboxStyle
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                template == Notification.DecoratedCustomViewStyle::class.java.name
+            } else {
+                false
+            } -> TemplateStyle.DecoratedViewStyle
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                template == Notification.MessagingStyle::class.java.name
+            } else {
+                false
+            } -> TemplateStyle.MessagingStyle
+            else -> TemplateStyle.DefaultStyle
+        }
+    }
+
     private fun getNotificationIconUri(sbn: StatusBarNotification, appInfo: ApplicationInfo): Uri? {
         var uri: Uri? = null
         val largeIcon = sbn.notification.getLargeIcon()
         try {
-            val picturesStorage =
-                applicationContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val notifIconFile = File(picturesStorage, appInfo.packageName + sbn.key)
+            val picturesStorage = applicationContext
+                .getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val notifIconFile =
+                File(picturesStorage, appInfo.packageName + sbn.key + sbn.hashCode())
             val iconDrawable = if (largeIcon != null) {
                 largeIcon.loadDrawable(applicationContext)
             } else {
@@ -247,7 +234,7 @@ class PinnitListenerService : NotificationListenerService(), CoroutineScope {
      *
      * @return true if a notification should be filtered out
      */
-    private fun shouldBeFilteredOut(sbn: StatusBarNotification): Boolean {
+    private fun shouldFilterOutNotification(sbn: StatusBarNotification): Boolean {
         // Filter if package name is not present in allowed apps list
         if (!allowedApps.contains(sbn.packageName)) {
             return true
