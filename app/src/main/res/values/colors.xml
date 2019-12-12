@@ -13,13 +13,7 @@
     <color name="maroon_150">#F5D0E9</color>
     <color name="maroon_100">#FFE5F6</color>
 
-    <!-- 70% White -->
-    <color name="statusBarColor">#B3FFFFFF</color>
-
-
     <!-- DAY THEME -->
-
-
     <color name="colorPrimary">@color/maroon_700</color>
     <color name="colorPrimaryVariant">@color/maroon_800</color>
 
@@ -34,6 +28,8 @@
     <color name="colorBackground">@android:color/white</color>
     <color name="colorOnBackground">@android:color/black</color>
 
+    <color name="statusBarColor">#B3FFFFFF</color>
+
     <!-- Color of our ToggleButtonGroup used for dark mode selections -->
     <color name="colorOutlinedButtonGroup">@color/maroon_700</color>
 
@@ -42,18 +38,9 @@
 
 
     <!-- COLOR STATE LISTS -->
-
-
-    <!-- colorStateList of the current colorSecondary at 20% opacity -->
     <color name="colorSecondaryRipple">@color/color_secondary_20</color>
-
-    <!-- colorStateList of the current colorOnBackground at 70% opacity -->
     <color name="colorOnBackgroundVariant">@color/color_on_background_70</color>
-
-    <!-- colorStateList of the current colorOnBackground at 15% opacity -->
     <color name="colorDivider">@color/color_on_background_15</color>
-
-    <!-- colorStateList of the current colorSecondary at 5% opacity -->
     <color name="colorButtonRow">@color/color_secondary_5</color>
 
 </resources>
