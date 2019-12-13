@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import dev.sasikanth.pinnit.databinding.FragmentAppsBinding
+import androidx.recyclerview.widget.SimpleItemAnimator
+import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.di.viewModels
-import dev.sasikanth.pinnit.shared.animators.AppsCustomItemAnimator
+import kotlinx.android.synthetic.main.fragment_apps.*
 
 class AppsFragment : Fragment() {
 
@@ -27,21 +28,34 @@ class AppsFragment : Fragment() {
       container: ViewGroup?,
       savedInstanceState: Bundle?
   ): View? {
-    val binding: FragmentAppsBinding = FragmentAppsBinding.inflate(layoutInflater)
+    return inflater.inflate(R.layout.fragment_apps, container, false)
+  }
 
-    val appsController = AppsEpoxyController(AppItemListener { appItem ->
-      appsViewModel.setAllowState(appItem)
-    })
-    binding.appsController = appsController
-    appsController.setFilterDuplicates(true)
-    binding.appsList.itemAnimator = AppsCustomItemAnimator()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    val appsAdapter = AppsAdapter { appItem ->
+      appsViewModel.toggleAppSelection(appItem)
+    }
+
+    with(appsRecyclerView) {
+      setHasFixedSize(true)
+      (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+      adapter = appsAdapter
+    }
 
     appsViewModel.installedApps.observe(viewLifecycleOwner, Observer { appsList ->
-      binding.appsLoading.isVisible = false
-      binding.appsList.isVisible = true
-      appsController.appsList = appsList
+      appsLoaded()
+      appsAdapter.submitList(appsList)
     })
+  }
 
-    return binding.root
+  override fun onDestroyView() {
+    appsRecyclerView.adapter = null
+    super.onDestroyView()
+  }
+
+  private fun appsLoaded() {
+    appsProgressBar.isVisible = false
+    appsRecyclerView.isVisible = true
   }
 }
