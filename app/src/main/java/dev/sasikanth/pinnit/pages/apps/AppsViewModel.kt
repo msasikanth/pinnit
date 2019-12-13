@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.pages.apps
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
@@ -11,11 +12,11 @@ import dev.sasikanth.pinnit.utils.PinnitPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Locale
 import javax.inject.Inject
 
 class AppsViewModel
 @Inject constructor(
+    private val context: Context,
     private val packageManager: PackageManager,
     private val pinnitPreferences: PinnitPreferences
 ) : ViewModel() {
@@ -30,31 +31,36 @@ class AppsViewModel
 
   private fun loadInstalledApps() {
     viewModelScope.launch {
-      val installedApps = withContext(Dispatchers.Default) {
-        val mainIntent = Intent(Intent.ACTION_MAIN, null)
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+      val installedApps = withContext(Dispatchers.IO) {
+        val mainIntent = Intent(Intent.ACTION_MAIN, null).apply {
+          addCategory(Intent.CATEGORY_LAUNCHER)
+        }
+
+        // Query apps
         packageManager.queryIntentActivities(mainIntent, PackageManager.GET_META_DATA)
-            .map {
-              val ci = it.activityInfo
-              AppItem(
-                  packageName = ci.packageName,
-                  appName = it.loadLabel(packageManager).toString(),
-                  icon = it.loadIcon(packageManager),
-                  isSelected = pinnitPreferences.allowedApps.contains(ci.packageName)
-              )
-            }.sortedBy { it.appName.toLowerCase(Locale.getDefault()) }
+            .map { resolveInfo ->
+              val packageName = resolveInfo.activityInfo.packageName
+              val appName = resolveInfo.loadLabel(packageManager).toString()
+              val appIcon = resolveInfo.loadIcon(packageManager)
+              val isAppSelected = pinnitPreferences.allowedApps.contains(packageName)
+
+              AppItem(packageName, appName, appIcon, isAppSelected)
+            }
+            .filter { it.packageName != context.packageName }
+            .sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.appName })
+            .sortedByDescending { it.isSelected }
       }
       _installedApps.value = installedApps
     }
   }
 
-  fun setAllowState(appItem: AppItem) {
+  fun toggleAppSelection(appItem: AppItem) {
     val allowedApps = pinnitPreferences.allowedApps
     pinnitPreferences.allowedApps = allowedApps.apply {
-      if (allowedApps.contains(appItem.packageName)) {
-        allowedApps.remove(appItem.packageName)
+      if (contains(appItem.packageName)) {
+        remove(appItem.packageName)
       } else {
-        allowedApps.add(appItem.packageName)
+        add(appItem.packageName)
       }
     }
     loadInstalledApps()

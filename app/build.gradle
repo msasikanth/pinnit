@@ -45,6 +45,10 @@ android {
   }
 }
 
+androidExtensions {
+  experimental = true
+}
+
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -67,10 +71,6 @@ dependencies {
   implementation "androidx.navigation:navigation-ui-ktx:$nav_version_ktx"
 
   implementation 'com.google.android.material:material:1.2.0-alpha02'
-
-  implementation "com.airbnb.android:epoxy:$epoxy_version"
-  kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
-  implementation "com.airbnb.android:epoxy-databinding:$epoxy_version"
 
   implementation 'com.google.code.gson:gson:2.8.5'
 

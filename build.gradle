@@ -16,7 +16,6 @@ buildscript {
   }
 
   ext {
-    epoxy_version = '3.8.0'
     lifecycle_version = "2.2.0-rc03"
     room_version = "2.2.2"
     nav_version_ktx = "2.2.0-rc03"
