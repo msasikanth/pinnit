@@ -15,33 +15,33 @@ import dev.sasikanth.pinnit.shared.animators.AppsCustomItemAnimator
 
 class AppsFragment : Fragment() {
 
-    private val appsViewModel by viewModels { injector.appsViewModel }
+  private val appsViewModel by viewModels { injector.appsViewModel }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        injector.inject(this)
-    }
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    injector.inject(this)
+  }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding: FragmentAppsBinding = FragmentAppsBinding.inflate(layoutInflater)
+  override fun onCreateView(
+      inflater: LayoutInflater,
+      container: ViewGroup?,
+      savedInstanceState: Bundle?
+  ): View? {
+    val binding: FragmentAppsBinding = FragmentAppsBinding.inflate(layoutInflater)
 
-        val appsController = AppsEpoxyController(AppItemListener { appItem ->
-            appsViewModel.setAllowState(appItem)
-        })
-        binding.appsController = appsController
-        appsController.setFilterDuplicates(true)
-        binding.appsList.itemAnimator = AppsCustomItemAnimator()
+    val appsController = AppsEpoxyController(AppItemListener { appItem ->
+      appsViewModel.setAllowState(appItem)
+    })
+    binding.appsController = appsController
+    appsController.setFilterDuplicates(true)
+    binding.appsList.itemAnimator = AppsCustomItemAnimator()
 
-        appsViewModel.installedApps.observe(viewLifecycleOwner, Observer { appsList ->
-            binding.appsLoading.isVisible = false
-            binding.appsList.isVisible = true
-            appsController.appsList = appsList
-        })
+    appsViewModel.installedApps.observe(viewLifecycleOwner, Observer { appsList ->
+      binding.appsLoading.isVisible = false
+      binding.appsList.isVisible = true
+      appsController.appsList = appsList
+    })
 
-        return binding.root
-    }
+    return binding.root
+  }
 }

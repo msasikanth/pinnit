@@ -35,64 +35,64 @@ data class PinnitItem(
     val isCurrent: Boolean = false
 ) {
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
 
-        other as PinnitItem
+    other as PinnitItem
 
-        if (_id != other._id) return false
-        if (notifKey != other.notifKey) return false
-        if (notifId != other.notifId) return false
-        if (notifIcon != other.notifIcon) return false
-        if (title != other.title) return false
-        if (text != other.text) return false
-        if (messages != other.messages) return false
-        if (packageName != other.packageName) return false
-        if (appLabel != other.appLabel) return false
-        if (postedOn != other.postedOn) return false
-        if (template != other.template) return false
-        if (isPinned != other.isPinned) return false
-        if (isCurrent != other.isCurrent) return false
+    if (_id != other._id) return false
+    if (notifKey != other.notifKey) return false
+    if (notifId != other.notifId) return false
+    if (notifIcon != other.notifIcon) return false
+    if (title != other.title) return false
+    if (text != other.text) return false
+    if (messages != other.messages) return false
+    if (packageName != other.packageName) return false
+    if (appLabel != other.appLabel) return false
+    if (postedOn != other.postedOn) return false
+    if (template != other.template) return false
+    if (isPinned != other.isPinned) return false
+    if (isCurrent != other.isCurrent) return false
 
-        return true
-    }
+    return true
+  }
 
-    fun equalsLastItem(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+  fun equalsLastItem(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
 
-        other as PinnitItem
+    other as PinnitItem
 
-        if (notifKey != other.notifKey) return false
-        if (notifId != other.notifId) return false
-        if (notifIcon != other.notifIcon) return false
-        if (title != other.title) return false
-        if (text != other.text) return false
-        if (messages != other.messages) return false
-        if (packageName != other.packageName) return false
-        if (appLabel != other.appLabel) return false
-        if (template != other.template) return false
-        if (isPinned != other.isPinned) return false
-        if (isCurrent != other.isCurrent) return false
+    if (notifKey != other.notifKey) return false
+    if (notifId != other.notifId) return false
+    if (notifIcon != other.notifIcon) return false
+    if (title != other.title) return false
+    if (text != other.text) return false
+    if (messages != other.messages) return false
+    if (packageName != other.packageName) return false
+    if (appLabel != other.appLabel) return false
+    if (template != other.template) return false
+    if (isPinned != other.isPinned) return false
+    if (isCurrent != other.isCurrent) return false
 
-        return true
-    }
+    return true
+  }
 
-    override fun hashCode(): Int {
-        var result = _id.hashCode()
-        result = 31 * result + notifKey.hashCode()
-        result = 31 * result + notifId
-        result = 31 * result + (notifIcon.hashCode() ?: 0)
-        result = 31 * result + title.hashCode()
-        result = 31 * result + text.hashCode()
-        result = 31 * result + messages.hashCode()
-        result = 31 * result + packageName.hashCode()
-        result = 31 * result + appLabel.hashCode()
-        result = 31 * result + postedOn.hashCode()
-        result = 31 * result + template.hashCode()
-        result = 31 * result + isPinned.hashCode()
-        result = 31 * result + isCurrent.hashCode()
-        return result
-    }
+  override fun hashCode(): Int {
+    var result = _id.hashCode()
+    result = 31 * result + notifKey.hashCode()
+    result = 31 * result + notifId
+    result = 31 * result + notifIcon.hashCode()
+    result = 31 * result + title.hashCode()
+    result = 31 * result + text.hashCode()
+    result = 31 * result + messages.hashCode()
+    result = 31 * result + packageName.hashCode()
+    result = 31 * result + appLabel.hashCode()
+    result = 31 * result + postedOn.hashCode()
+    result = 31 * result + template.hashCode()
+    result = 31 * result + isPinned.hashCode()
+    result = 31 * result + isCurrent.hashCode()
+    return result
+  }
 }

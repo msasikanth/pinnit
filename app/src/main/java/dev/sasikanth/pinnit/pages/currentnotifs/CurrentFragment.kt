@@ -14,26 +14,26 @@ import dev.sasikanth.pinnit.di.injector
 
 class CurrentFragment : Fragment() {
 
-    private val mainViewModel by activityViewModels { injector.mainViewModel }
+  private val mainViewModel by activityViewModels { injector.mainViewModel }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        injector.inject(this)
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    injector.inject(this)
+  }
+
+  override fun onCreateView(
+      inflater: LayoutInflater,
+      container: ViewGroup?,
+      savedInstanceState: Bundle?
+  ): View? {
+    val binding: FragmentCurrentBinding =
+        FragmentCurrentBinding.inflate(layoutInflater, container, false)
+    binding.mainViewModel = mainViewModel
+    binding.notifErrorLayout.errorNotifAction.setOnClickListener {
+      findNavController().navigate(R.id.historyFragment)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding: FragmentCurrentBinding =
-            FragmentCurrentBinding.inflate(layoutInflater, container, false)
-        binding.mainViewModel = mainViewModel
-        binding.notifErrorLayout.errorNotifAction.setOnClickListener {
-            findNavController().navigate(R.id.historyFragment)
-        }
-
-        binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root
-    }
+    binding.lifecycleOwner = viewLifecycleOwner
+    return binding.root
+  }
 }

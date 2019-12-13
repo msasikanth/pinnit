@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-        <variable
-            name="appsController"
-            type="dev.sasikanth.pinnit.pages.apps.AppsEpoxyController" />
-    </data>
+    <variable
+      name="appsController"
+      type="dev.sasikanth.pinnit.pages.apps.AppsEpoxyController" />
+  </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/apps_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+      android:id="@+id/apps_loading"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/apps_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:paddingStart="4dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="4dp"
-            android:paddingBottom="88dp"
-            android:splitMotionEvents="false"
-            android:visibility="gone"
-            app:controller="@{appsController}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:paddingBottomSystemWindowInsets="@{true}"
-            app:paddingLeftSystemWindowInsets="@{true}"
-            app:paddingRightSystemWindowInsets="@{true}"
-            app:spanCount="3"
-            tools:listitem="@layout/app_item_layout" />
+    <com.airbnb.epoxy.EpoxyRecyclerView
+      android:id="@+id/apps_list"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:clipToPadding="false"
+      android:paddingStart="4dp"
+      android:paddingTop="4dp"
+      android:paddingEnd="4dp"
+      android:paddingBottom="88dp"
+      android:splitMotionEvents="false"
+      android:visibility="gone"
+      app:controller="@{appsController}"
+      app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:paddingBottomSystemWindowInsets="@{true}"
+      app:paddingLeftSystemWindowInsets="@{true}"
+      app:paddingRightSystemWindowInsets="@{true}"
+      app:spanCount="3"
+      tools:listitem="@layout/app_item_layout" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

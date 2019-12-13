@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- NIGHT THEME -->
-    <color name="colorPrimary">@color/maroon_600</color>
-    <color name="colorPrimaryVariant">@color/maroon_700</color>
+  <!-- NIGHT THEME -->
+  <color name="colorPrimary">@color/maroon_600</color>
+  <color name="colorPrimaryVariant">@color/maroon_700</color>
 
-    <color name="colorSecondary">@color/maroon_200</color>
+  <color name="colorSecondary">@color/maroon_200</color>
 
-    <color name="colorSurface">@color/maroon_900</color>
-    <color name="colorOnSurface">@android:color/white</color>
+  <color name="colorSurface">@color/maroon_900</color>
+  <color name="colorOnSurface">@android:color/white</color>
 
-    <color name="colorBackground">@color/maroon_1000</color>
-    <color name="colorOnBackground">@android:color/white</color>
+  <color name="colorBackground">@color/maroon_1000</color>
+  <color name="colorOnBackground">@android:color/white</color>
 
-    <!-- 40% Maroon 1000 -->
-    <color name="statusBarColor">#6614000E</color>
+  <!-- 40% Maroon 1000 -->
+  <color name="statusBarColor">#6614000E</color>
 
-    <!-- Color of our ToggleButtonGroup used for dark mode selections -->
-    <color name="colorOutlinedButtonGroup">@color/maroon_150</color>
+  <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+  <color name="colorOutlinedButtonGroup">@color/maroon_150</color>
 
-    <!-- Background underneath notifications -->
-    <color name="colorRowBackground">@android:color/black</color>
+  <!-- Background underneath notifications -->
+  <color name="colorRowBackground">@android:color/black</color>
 
 </resources>

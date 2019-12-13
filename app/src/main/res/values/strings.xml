@@ -1,68 +1,68 @@
 <resources>
-    <string name="app_name">Pinnit</string>
-    <string name="app_version">v%1$s</string>
+  <string name="app_name">Pinnit</string>
+  <string name="app_version">v%1$s</string>
 
-    <string name="notif_permission_dialog_negative_action_DEPRECATED">Close</string>
+  <string name="notif_permission_dialog_negative_action_DEPRECATED">Close</string>
 
-    <string name="channel_pinned">Pinned notifications</string>
+  <string name="channel_pinned">Pinned notifications</string>
 
-    <string name="search">Search</string>
-    <string name="menu">Menu</string>
+  <string name="search">Search</string>
+  <string name="menu">Menu</string>
 
-    <string name="create">Create</string>
-    <string name="clear_history">Clear history</string>
+  <string name="create">Create</string>
+  <string name="clear_history">Clear history</string>
 
   <string name="edit">Edit</string>
-    <string name="dismiss">Dismiss</string>
-    <string name="notification_deleted">Notification deleted</string>
-    <string name="undo">Undo</string>
+  <string name="dismiss">Dismiss</string>
+  <string name="notification_deleted">Notification deleted</string>
+  <string name="undo">Undo</string>
 
-    <string name="no_notifications_title">No notifications</string>
+  <string name="no_notifications_title">No notifications</string>
 
-    <!-- Current page -->
-    <string name="current">Current</string>
-    <string name="no_notifications_current_desc">Looking for a notification?\nTry checking your history.</string>
-    <string name="view_history">View history</string>
+  <!-- Current page -->
+  <string name="current">Current</string>
+  <string name="no_notifications_current_desc">Looking for a notification?\nTry checking your history.</string>
+  <string name="view_history">View history</string>
 
-    <!-- Current | Missing permissions -->
-    <string name="missing_permissions_title">Missing permissions</string>
-    <string name="missing_permissions_desc">
+  <!-- Current | Missing permissions -->
+  <string name="missing_permissions_title">Missing permissions</string>
+  <string name="missing_permissions_desc">
         Pinnit needs your permission to access and display your current notifications.
     </string>
-    <string name="grant_permission">Grant permission</string>
+  <string name="grant_permission">Grant permission</string>
 
-    <!-- Current | No active apps -->
-    <string name="no_active_apps_title">No active apps</string>
-    <string name="no_active_apps_desc">
+  <!-- Current | No active apps -->
+  <string name="no_active_apps_title">No active apps</string>
+  <string name="no_active_apps_desc">
         To get started, select the apps you\'d like Pinnit to read notifications from.
     </string>
 
-    <!-- History page -->
-    <string name="history">History</string>
-    <string name="no_notifications_history_desc">
+  <!-- History page -->
+  <string name="history">History</string>
+  <string name="no_notifications_history_desc">
         If a notification you\'ve recently received is not listed, check whether the app has been enabled in Pinnit.
     </string>
 
-    <string name="clear_history_dialog_title">Clear notification history?</string>
-    <string name="clear_history_dialog_subtitle">This action cannot be undone</string>
+  <string name="clear_history_dialog_title">Clear notification history?</string>
+  <string name="clear_history_dialog_subtitle">This action cannot be undone</string>
 
-    <!-- Apps page -->
-    <string name="your_apps">Your apps</string>
-    <string name="apps_tooltip">Only notifications from apps you select will be displayed by Pinnit.</string>
+  <!-- Apps page -->
+  <string name="your_apps">Your apps</string>
+  <string name="apps_tooltip">Only notifications from apps you select will be displayed by Pinnit.</string>
 
-    <!-- About page-->
-    <string name="about">About</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="questions_or_bugs">Questions or bug reports</string>
-    <string name="contact_support">Contact support</string>
-    <string name="support_subject">Pinnit support : %1$s</string>
-    <string name="send_email">Send email</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="dot_separator">•</string>
+  <!-- About page-->
+  <string name="about">About</string>
+  <string name="privacy_policy">Privacy policy</string>
+  <string name="questions_or_bugs">Questions or bug reports</string>
+  <string name="contact_support">Contact support</string>
+  <string name="support_subject">Pinnit support : %1$s</string>
+  <string name="send_email">Send email</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="dot_separator">•</string>
 
-    <!-- Preferences -->
-    <string name="pref_theme_light">pref_notif_light</string>
-    <string name="pref_theme_dark">pref_notif_dark</string>
-    <string name="option_dark_mode">Dark mode</string>
+  <!-- Preferences -->
+  <string name="pref_theme_light">pref_notif_light</string>
+  <string name="pref_theme_dark">pref_notif_dark</string>
+  <string name="option_dark_mode">Dark mode</string>
 </resources>

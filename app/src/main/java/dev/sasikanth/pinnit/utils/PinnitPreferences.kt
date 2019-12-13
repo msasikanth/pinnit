@@ -13,58 +13,58 @@ class PinnitPreferences
     private val sharedPreferences: SharedPreferences
 ) {
 
-    companion object {
-        const val KEY_THEME = "pref_theme"
-        const val KEY_ALLOWED_APPS = "allowed_apps"
+  companion object {
+    const val KEY_THEME = "pref_theme"
+    const val KEY_ALLOWED_APPS = "allowed_apps"
+  }
+
+  private val defaultThemeValue = context.getString(R.string.pref_theme_light)
+  private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+    when (key) {
+      KEY_THEME -> updateUsingThemePreference()
+    }
+  }
+
+  var themePreference: Theme
+    get() = getThemeForStorageValue(
+        sharedPreferences.getString(KEY_THEME, defaultThemeValue)!!
+    )
+    set(value) {
+      sharedPreferences.edit {
+        putString(KEY_THEME, getStorageKeyForTheme(value))
+      }
     }
 
-    private val defaultThemeValue = context.getString(R.string.pref_theme_light)
-    private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        when (key) {
-            KEY_THEME -> updateUsingThemePreference()
-        }
+  var allowedApps: MutableSet<String>
+    get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, mutableSetOf())?.toMutableSet()!!
+    set(value) {
+      sharedPreferences.edit {
+        putStringSet(KEY_ALLOWED_APPS, value)
+      }
     }
 
-    var themePreference: Theme
-        get() = getThemeForStorageValue(
-            sharedPreferences.getString(KEY_THEME, defaultThemeValue)!!
-        )
-        set(value) {
-            sharedPreferences.edit {
-                putString(KEY_THEME, getStorageKeyForTheme(value))
-            }
-        }
+  init {
+    updateUsingThemePreference()
+    sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+  }
 
-    var allowedApps: MutableSet<String>
-        get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, mutableSetOf())?.toMutableSet()!!
-        set(value) {
-            sharedPreferences.edit {
-                putStringSet(KEY_ALLOWED_APPS, value)
-            }
-        }
+  private fun getStorageKeyForTheme(theme: Theme) = when (theme) {
+    Theme.DARK -> context.getString(R.string.pref_theme_dark)
+    Theme.LIGHT -> context.getString(R.string.pref_theme_light)
+  }
 
-    init {
-        updateUsingThemePreference()
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
-    }
+  private fun getThemeForStorageValue(value: String) = when (value) {
+    context.getString(R.string.pref_theme_dark) -> Theme.DARK
+    else -> Theme.LIGHT
+  }
 
-    private fun getStorageKeyForTheme(theme: Theme) = when (theme) {
-        Theme.DARK -> context.getString(R.string.pref_theme_dark)
-        Theme.LIGHT -> context.getString(R.string.pref_theme_light)
-    }
+  private fun updateUsingThemePreference() = when (themePreference) {
+    Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+  }
 
-    private fun getThemeForStorageValue(value: String) = when (value) {
-        context.getString(R.string.pref_theme_dark) -> Theme.DARK
-        else -> Theme.LIGHT
-    }
-
-    private fun updateUsingThemePreference() = when (themePreference) {
-        Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-    }
-
-    enum class Theme {
-        LIGHT,
-        DARK
-    }
+  enum class Theme {
+    LIGHT,
+    DARK
+  }
 }

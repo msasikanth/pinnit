@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/currentFragment">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_graph.xml"
+  app:startDestination="@id/currentFragment">
 
-    <fragment
-        android:id="@+id/currentFragment"
-        android:name="dev.sasikanth.pinnit.pages.currentnotifs.CurrentFragment"
-        tools:layout="@layout/fragment_current" />
-    <fragment
-        android:id="@+id/historyFragment"
-        android:name="dev.sasikanth.pinnit.pages.historynotifs.HistoryFragment"
-        tools:layout="@layout/fragment_history" />
-    <fragment
-        android:id="@+id/appsFragment"
-        android:name="dev.sasikanth.pinnit.pages.apps.AppsFragment"
-        tools:layout="@layout/fragment_apps"/>
+  <fragment
+    android:id="@+id/currentFragment"
+    android:name="dev.sasikanth.pinnit.pages.currentnotifs.CurrentFragment"
+    tools:layout="@layout/fragment_current" />
+  <fragment
+    android:id="@+id/historyFragment"
+    android:name="dev.sasikanth.pinnit.pages.historynotifs.HistoryFragment"
+    tools:layout="@layout/fragment_history" />
+  <fragment
+    android:id="@+id/appsFragment"
+    android:name="dev.sasikanth.pinnit.pages.apps.AppsFragment"
+    tools:layout="@layout/fragment_apps" />
 </navigation>

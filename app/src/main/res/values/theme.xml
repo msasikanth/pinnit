@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Platform.Pinnit.v23" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/statusBarColor</item>
-        <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
-    </style>
+  <style name="Platform.Pinnit.v23" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="android:statusBarColor">@color/statusBarColor</item>
+    <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
+    <item name="android:navigationBarColor">@android:color/black</item>
+  </style>
 
 
-    <style name="Platform.Pinnit" parent="Platform.Pinnit.v23" />
+  <style name="Platform.Pinnit" parent="Platform.Pinnit.v23" />
 
-    <style name="Platform.Theme.Pinnit" parent="Platform.Pinnit" />
+  <style name="Platform.Theme.Pinnit" parent="Platform.Pinnit" />
 
-    <style name="Base.Theme.Pinnit" parent="Platform.Theme.Pinnit">
+  <style name="Base.Theme.Pinnit" parent="Platform.Theme.Pinnit">
 
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
 
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorOnPrimaryVariant">@color/colorOnPrimaryVariant</item>
+    <item name="colorOnPrimary">@color/colorOnPrimary</item>
+    <item name="colorOnPrimaryVariant">@color/colorOnPrimaryVariant</item>
 
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryRipple">@color/color_secondary_20</item>
+    <item name="colorSecondary">@color/colorSecondary</item>
+    <item name="colorSecondaryRipple">@color/color_secondary_20</item>
 
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
+    <item name="colorSurface">@color/colorSurface</item>
+    <item name="colorOnSurface">@color/colorOnSurface</item>
 
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="colorOnBackground">@color/colorOnBackground</item>
-        <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
+    <item name="android:colorBackground">@color/colorBackground</item>
+    <item name="colorOnBackground">@color/colorOnBackground</item>
+    <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
 
-        <!-- Color of our ToggleButtonGroup used for dark mode selections -->
-        <item name="colorOutlinedButtonGroup">@color/colorOutlinedButtonGroup</item>
+    <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+    <item name="colorOutlinedButtonGroup">@color/colorOutlinedButtonGroup</item>
 
-        <!-- Background underneath notifications -->
-        <item name="colorRowBackground">@color/colorRowBackground</item>
+    <!-- Background underneath notifications -->
+    <item name="colorRowBackground">@color/colorRowBackground</item>
 
-        <item name="colorDivider">@color/colorDivider</item>
+    <item name="colorDivider">@color/colorDivider</item>
 
-        <item name="colorButtonRow">@color/colorButtonRow</item>
-
-
-        <item name="elevationOverlayEnabled">false</item>
-        <item name="elevationOverlayColor">@android:color/transparent</item>
+    <item name="colorButtonRow">@color/colorButtonRow</item>
 
 
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent
-        </item>
+    <item name="elevationOverlayEnabled">false</item>
+    <item name="elevationOverlayColor">@android:color/transparent</item>
 
-        <item name="materialCardViewStyle">@style/Widget.Pinnit.CardView</item>
-        <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
-        <item name="snackbarButtonStyle">@style/Widget.Pinnit.Button.TextButton.Snackbar</item>
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Pinnit.BottomSheetDialog</item>
 
-        <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.Pinnit.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.Pinnit.Body2</item>
-        <item name="textAppearanceButton">@style/TextAppearance.Pinnit.Button</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.Pinnit.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.Pinnit.Subtitle2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.Pinnit.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.Pinnit.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.Pinnit.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.Pinnit.Headline6</item>
-    </style>
+    <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinnit.MediumComponent
+    </item>
 
-    <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
-        <item name="android:windowBackground">@drawable/splash_layout</item>
-        <item name="android:statusBarColor">@color/maroon_700</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">@color/maroon_700</item>
-    </style>
+    <item name="materialCardViewStyle">@style/Widget.Pinnit.CardView</item>
+    <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+    <item name="snackbarButtonStyle">@style/Widget.Pinnit.Button.TextButton.Snackbar</item>
+    <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
+    <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Pinnit.BottomSheetDialog</item>
 
-    <style name="Theme.Pinnit.Main" parent="Base.Theme.Pinnit" />
+    <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
+    <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>
+    <item name="textAppearanceBody1">@style/TextAppearance.Pinnit.Body1</item>
+    <item name="textAppearanceBody2">@style/TextAppearance.Pinnit.Body2</item>
+    <item name="textAppearanceButton">@style/TextAppearance.Pinnit.Button</item>
+    <item name="textAppearanceSubtitle1">@style/TextAppearance.Pinnit.Subtitle1</item>
+    <item name="textAppearanceSubtitle2">@style/TextAppearance.Pinnit.Subtitle2</item>
+    <item name="textAppearanceHeadline3">@style/TextAppearance.Pinnit.Headline3</item>
+    <item name="textAppearanceHeadline4">@style/TextAppearance.Pinnit.Headline4</item>
+    <item name="textAppearanceHeadline5">@style/TextAppearance.Pinnit.Headline5</item>
+    <item name="textAppearanceHeadline6">@style/TextAppearance.Pinnit.Headline6</item>
+  </style>
+
+  <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
+    <item name="android:windowBackground">@drawable/splash_layout</item>
+    <item name="android:statusBarColor">@color/maroon_700</item>
+    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:navigationBarColor">@color/maroon_700</item>
+  </style>
+
+  <style name="Theme.Pinnit.Main" parent="Base.Theme.Pinnit" />
 
 </resources>
