@@ -10,13 +10,13 @@ import javax.inject.Singleton
 @Module
 object DataModule {
 
-    @Provides
-    @Singleton
-    fun providesRoomDatabase(context: Context) = PinnitDatabase.createDatabase(context)
+  @Provides
+  @Singleton
+  fun providesRoomDatabase(context: Context) = PinnitDatabase.createDatabase(context)
 
-    @Provides
-    @Singleton
-    fun providesNotifLocalDataSource(pinnitDatabase: PinnitDatabase) = PinnitLocalDataSource(
-        pinnitDao = pinnitDatabase.pinnitDao
-    )
+  @Provides
+  @Singleton
+  fun providesNotifLocalDataSource(pinnitDatabase: PinnitDatabase) = PinnitLocalDataSource(
+      pinnitDao = pinnitDatabase.pinnitDao
+  )
 }

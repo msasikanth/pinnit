@@ -127,13 +127,13 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8sp"
-                android:layout_marginBottom="8sp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8sp"
                 app:civ_border_color="@android:color/white"
                 app:civ_border_width="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/start_guideline"
                 app:layout_constraintEnd_toStartOf="@id/notif_title"
+                app:layout_constraintStart_toEndOf="@id/start_guideline"
                 app:layout_constraintTop_toBottomOf="@id/notif_info_space"
                 app:layout_constraintVertical_bias="0"
                 app:notifIcon="@{pinnitItem}"
@@ -159,13 +159,13 @@
                 style="@style/TextStyle.Pinnit.Body2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackgroundVariant"
                 android:layout_marginBottom="16sp"
+                android:textColor="?attr/colorOnBackgroundVariant"
                 app:lastBaselineToBottomHeight="12sp"
+                app:layout_constraintBottom_toTopOf="@id/pinnit_image"
                 app:layout_constraintEnd_toStartOf="@id/end_guideline"
                 app:layout_constraintStart_toStartOf="@id/notif_title"
                 app:layout_constraintTop_toBottomOf="@id/notif_title"
-                app:layout_constraintBottom_toTopOf="@id/pinnit_image"
                 app:layout_constraintVertical_bias="0.5"
                 app:notifText="@{pinnitItem}"
                 tools:maxLines="4"
@@ -178,29 +178,29 @@
                 android:layout_marginBottom="24dp"
                 android:src="@drawable/rectangle"
                 android:tint="@color/maroon_900"
-                app:layout_constraintStart_toEndOf="@id/start_guideline"
-                app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/pinnit_button_row"
-                android:visibility="gone" />
+                app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                app:layout_constraintStart_toEndOf="@id/start_guideline" />
 
             <LinearLayout
                 android:id="@+id/pinnit_button_row"
-                android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle"
                 android:backgroundTint="?attr/colorButtonRow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:visibility="gone">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.Pinnit.Button.TextButton"
                     android:id="@+id/pinnit_edit_button"
+                    style="@style/Widget.Pinnit.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/edit"/>
+                    android:text="@string/edit" />
 
             </LinearLayout>
 

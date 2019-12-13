@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Bottom Sheet -->
-    <style name="ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.3</item>
-        <item name="android:colorBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightNavigationBar">@bool/lightNavigationBar</item>
-        <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
-    </style>
+  <!-- Bottom Sheet -->
+  <style name="ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:backgroundDimAmount">0.3</item>
+    <item name="android:colorBackground">@android:color/transparent</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:navigationBarColor">?attr/colorSurface</item>
+    <item name="android:windowLightNavigationBar">@bool/lightNavigationBar</item>
+    <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+  </style>
 </resources>

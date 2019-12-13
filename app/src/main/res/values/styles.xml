@@ -1,107 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Cards -->
-    <style name="Widget.Pinnit.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">?android:attr/colorBackground</item>
-    </style>
+  <!-- Cards -->
+  <style name="Widget.Pinnit.CardView" parent="Widget.MaterialComponents.CardView">
+    <item name="cardBackgroundColor">?android:attr/colorBackground</item>
+  </style>
 
-    <!-- Buttons -->
-    <style name="Widget.Pinnit.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:insetTop">8dp</item>
-        <item name="android:insetBottom">8dp</item>
-        <item name="cornerRadius">@dimen/shape_theming_radius</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:maxHeight">@dimen/button_height</item>
-        <item name="android:minHeight">@dimen/button_height</item>
-        <item name="android:textAppearance">?attr/textAppearanceButton</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="backgroundColor">?attr/colorPrimary</item>
-        <item name="rippleColor">?attr/colorOnPrimary</item>
-        <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
-    </style>
+  <!-- Buttons -->
+  <style name="Widget.Pinnit.Button" parent="Widget.MaterialComponents.Button">
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:insetTop">8dp</item>
+    <item name="android:insetBottom">8dp</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:maxHeight">@dimen/button_height</item>
+    <item name="android:minHeight">@dimen/button_height</item>
+    <item name="android:textAppearance">?attr/textAppearanceButton</item>
+    <item name="android:textColor">?attr/colorOnPrimary</item>
+    <item name="backgroundColor">?attr/colorPrimary</item>
+    <item name="rippleColor">?attr/colorOnPrimary</item>
+    <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
+  </style>
 
-    <style name="Widget.Pinnit.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:maxHeight">@dimen/button_height</item>
-        <item name="android:minHeight">@dimen/button_height</item>
-        <item name="android:textAppearance">?attr/textAppearanceButton</item>
-        <item name="android:textColor">?attr/colorSecondary</item>
-        <item name="rippleColor">?attr/colorSecondaryRipple</item>
-        <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
-    </style>
+  <style name="Widget.Pinnit.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:maxHeight">@dimen/button_height</item>
+    <item name="android:minHeight">@dimen/button_height</item>
+    <item name="android:textAppearance">?attr/textAppearanceButton</item>
+    <item name="android:textColor">?attr/colorSecondary</item>
+    <item name="rippleColor">?attr/colorSecondaryRipple</item>
+    <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
+  </style>
 
-    <style name="Widget.Pinnit.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
-        <item name="android:textColor">?attr/colorSecondary</item>
-        <item name="rippleColor">?attr/colorSecondaryRipple</item>
-        <item name="cornerRadius">@dimen/shape_theming_radius</item>
-    </style>
+  <style name="Widget.Pinnit.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+    <item name="android:textColor">?attr/colorSecondary</item>
+    <item name="rippleColor">?attr/colorSecondaryRipple</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+  </style>
 
-    <style name="Widget.Pinnit.Button.TextButton.Snackbar" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
-        <item name="android:textColor">@color/maroon_200</item>
-        <item name="rippleColor">@color/maroon_200</item>
-        <item name="cornerRadius">@dimen/shape_theming_radius</item>
-    </style>
+  <style name="Widget.Pinnit.Button.TextButton.Snackbar" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+    <item name="android:textColor">@color/maroon_200</item>
+    <item name="rippleColor">@color/maroon_200</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+  </style>
 
-    <style name="Widget.Pinnit.Button.Group.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:insetTop">8dp</item>
-        <item name="android:insetBottom">8dp</item>
-        <item name="android:maxHeight">@dimen/button_height</item>
-        <item name="android:minHeight">@dimen/button_height</item>
-        <item name="backgroundTint">@color/button_group_state</item>
-        <item name="android:textColor">@color/button_group_text_state</item>
-        <item name="strokeWidth">2dp</item>
-        <item name="strokeColor">?attr/colorOutlinedButtonGroup</item>
-        <item name="cornerRadius">@dimen/shape_theming_radius</item>
-        <item name="elevation">0dp</item>
-    </style>
+  <style name="Widget.Pinnit.Button.Group.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:insetTop">8dp</item>
+    <item name="android:insetBottom">8dp</item>
+    <item name="android:maxHeight">@dimen/button_height</item>
+    <item name="android:minHeight">@dimen/button_height</item>
+    <item name="backgroundTint">@color/button_group_state</item>
+    <item name="android:textColor">@color/button_group_text_state</item>
+    <item name="strokeWidth">2dp</item>
+    <item name="strokeColor">?attr/colorOutlinedButtonGroup</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+    <item name="elevation">0dp</item>
+  </style>
 
-    <!-- Alert Dialog -->
-    <style name="ThemeOverlay.Pinnit.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="materialAlertDialogTitleTextStyle">
-            @style/MaterialAlertDialog.Pinnit.Title.Text
-        </item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Pinnit.Body.Text
-        </item>
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
-        </item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
-        </item>
-        <item name="buttonBarStyle">@style/MaterialAlertDialog.Pinnit.ButtonRow
-        </item>
+  <!-- Alert Dialog -->
+  <style name="ThemeOverlay.Pinnit.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <item name="materialAlertDialogTitleTextStyle">
+      @style/MaterialAlertDialog.Pinnit.Title.Text
+    </item>
+    <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Pinnit.Body.Text
+    </item>
+    <item name="buttonBarPositiveButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
+    </item>
+    <item name="buttonBarNegativeButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
+    </item>
+    <item name="buttonBarStyle">@style/MaterialAlertDialog.Pinnit.ButtonRow
+    </item>
 
-    </style>
+  </style>
 
-    <style name="MaterialAlertDialog.Pinnit.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
-    </style>
+  <style name="MaterialAlertDialog.Pinnit.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
+  </style>
 
-    <style name="MaterialAlertDialog.Pinnit.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
-    </style>
+  <style name="MaterialAlertDialog.Pinnit.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
+  </style>
 
-    <style name="MaterialAlertDialog.Pinnit.ButtonRow" parent="">
-        <item name="android:background">@drawable/rectangle</item>
-        <item name="android:backgroundTint">@color/color_secondary_5</item>
-    </style>
+  <style name="MaterialAlertDialog.Pinnit.ButtonRow" parent="">
+    <item name="android:background">@drawable/rectangle</item>
+    <item name="android:backgroundTint">@color/color_secondary_5</item>
+  </style>
 
-    <!-- Bottom Sheet -->
-    <style name="ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.5</item>
-        <item name="android:colorBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
-        <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
-    </style>
+  <!-- Bottom Sheet -->
+  <style name="ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:backgroundDimAmount">0.5</item>
+    <item name="android:colorBackground">@android:color/transparent</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:navigationBarColor">@android:color/black</item>
+    <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+  </style>
 
 </resources>

@@ -16,21 +16,21 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, PreferenceModule::class, DataModule::class])
 interface PinnitAppComponent {
 
-    @Component.Factory
-    interface Factory {
+  @Component.Factory
+  interface Factory {
 
-        fun create(@BindsInstance context: Context): PinnitAppComponent
-    }
+    fun create(@BindsInstance context: Context): PinnitAppComponent
+  }
 
-    // dependencies?
-    val mainViewModel: MainViewModel
-    val appsViewModel: AppsViewModel
+  // dependencies?
+  val mainViewModel: MainViewModel
+  val appsViewModel: AppsViewModel
 
-    // inject into
-    fun inject(mainActivity: MainActivity)
+  // inject into
+  fun inject(mainActivity: MainActivity)
 
-    fun inject(currentFragment: CurrentFragment)
-    fun inject(historyFragment: HistoryFragment)
-    fun inject(appsFragment: AppsFragment)
-    fun inject(pinnitListenerService: PinnitListenerService)
+  fun inject(currentFragment: CurrentFragment)
+  fun inject(historyFragment: HistoryFragment)
+  fun inject(appsFragment: AppsFragment)
+  fun inject(pinnitListenerService: PinnitListenerService)
 }

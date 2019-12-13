@@ -7,14 +7,14 @@ import dev.sasikanth.pinnit.data.Message
 
 class MessageStyleConverter {
 
-    @TypeConverter
-    fun fromMessagesList(messages: List<Message>): String {
-        return Gson().toJson(messages)
-    }
+  @TypeConverter
+  fun fromMessagesList(messages: List<Message>): String {
+    return Gson().toJson(messages)
+  }
 
-    @TypeConverter
-    fun toTemplateStyle(messages: String): List<Message> {
-        val type = object : TypeToken<List<Message>>() {}.type
-        return Gson().fromJson(messages, type)
-    }
+  @TypeConverter
+  fun toTemplateStyle(messages: String): List<Message> {
+    val type = object : TypeToken<List<Message>>() {}.type
+    return Gson().fromJson(messages, type)
+  }
 }

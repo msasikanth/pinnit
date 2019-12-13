@@ -18,82 +18,82 @@ class ItemTouchHelperCallback(
     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 ) {
 
-    private val paint = Paint()
+  private val paint = Paint()
 
-    override fun getSwipeDirs(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
-    ): Int {
-        if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
-            if (viewHolder.isPinned) {
-                return 0
-            }
-        }
-        return super.getSwipeDirs(recyclerView, viewHolder)
+  override fun getSwipeDirs(
+      recyclerView: RecyclerView,
+      viewHolder: RecyclerView.ViewHolder
+  ): Int {
+    if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
+      if (viewHolder.isPinned) {
+        return 0
+      }
+    }
+    return super.getSwipeDirs(recyclerView, viewHolder)
+  }
+
+  override fun onMove(
+      recyclerView: RecyclerView,
+      viewHolder: RecyclerView.ViewHolder,
+      target: RecyclerView.ViewHolder
+  ): Boolean {
+    return false
+  }
+
+  override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+    if (viewHolder.adapterPosition != RecyclerView.NO_POSITION) {
+      if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
+        onItemSwiped(viewHolder.pinnitItem)
+      }
+    }
+  }
+
+  override fun onChildDraw(
+      c: Canvas,
+      recyclerView: RecyclerView,
+      viewHolder: RecyclerView.ViewHolder,
+      dX: Float,
+      dY: Float,
+      actionState: Int,
+      isCurrentlyActive: Boolean
+  ) {
+    val itemView = viewHolder.itemView
+    val iconMarginH = 24.px
+    val colorDrawable = ColorDrawable(
+        context.resolveColor(attrRes = R.attr.colorRowBackground)
+    )
+    val icon = ContextCompat.getDrawable(context, R.drawable.ic_pinnit_delete)
+    val cellHeight = itemView.bottom - itemView.top
+    val iconWidth = icon!!.intrinsicWidth
+    val iconHeight = icon.intrinsicHeight
+    val iconTop = itemView.top + (cellHeight - iconHeight) / 2
+    val iconBottom = iconTop + iconHeight
+
+    val iconLeft: Int
+    val iconRight: Int
+
+    if (dX > 0) {
+      // Right Swipe
+      colorDrawable.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+      iconLeft = iconMarginH
+      iconRight = iconMarginH + iconWidth
+    } else {
+      // Left Swipe
+      colorDrawable.setBounds(
+          itemView.right + dX.toInt(),
+          itemView.top,
+          itemView.right,
+          itemView.bottom
+      )
+      iconLeft = itemView.right - iconMarginH - iconWidth
+      iconRight = itemView.right - iconMarginH
     }
 
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
-    ): Boolean {
-        return false
-    }
+    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        if (viewHolder.adapterPosition != RecyclerView.NO_POSITION) {
-            if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
-                onItemSwiped(viewHolder.pinnitItem)
-            }
-        }
-    }
+    colorDrawable.draw(c)
+    icon.draw(c)
 
-    override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
-    ) {
-        val itemView = viewHolder.itemView
-        val iconMarginH = 24.px
-        val colorDrawable = ColorDrawable(
-            context.resolveColor(attrRes = R.attr.colorRowBackground)
-        )
-        val icon = ContextCompat.getDrawable(context, R.drawable.ic_pinnit_delete)
-        val cellHeight = itemView.bottom - itemView.top
-        val iconWidth = icon!!.intrinsicWidth
-        val iconHeight = icon.intrinsicHeight
-        val iconTop = itemView.top + (cellHeight - iconHeight) / 2
-        val iconBottom = iconTop + iconHeight
-
-        val iconLeft: Int
-        val iconRight: Int
-
-        if (dX > 0) {
-            // Right Swipe
-            colorDrawable.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
-            iconLeft = iconMarginH
-            iconRight = iconMarginH + iconWidth
-        } else {
-            // Left Swipe
-            colorDrawable.setBounds(
-                itemView.right + dX.toInt(),
-                itemView.top,
-                itemView.right,
-                itemView.bottom
-            )
-            iconLeft = itemView.right - iconMarginH - iconWidth
-            iconRight = itemView.right - iconMarginH
-        }
-
-        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-
-        colorDrawable.draw(c)
-        icon.draw(c)
-
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-    }
+    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+  }
 }

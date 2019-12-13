@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/jura_semibold</item>
-        <item>@font/jura_bold</item>
-    </array>
+  <array name="preloaded_fonts" translatable="false">
+    <item>@font/jura_semibold</item>
+    <item>@font/jura_bold</item>
+  </array>
 </resources>

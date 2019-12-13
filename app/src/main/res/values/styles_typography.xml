@@ -1,208 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Headline3 -->
-    <style name="TextAppearance.Pinnit.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="fontFamily">@font/bai_jam_medium</item>
-        <item name="android:textSize">48sp</item>
+  <!-- Headline3 -->
+  <style name="TextAppearance.Pinnit.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+    <item name="fontFamily">@font/bai_jam_medium</item>
+    <item name="android:textSize">48sp</item>
 
-        <item name="lineHeight">64sp</item>
-        <item name="android:letterSpacing">0.0</item>
-    </style>
+    <item name="lineHeight">64sp</item>
+    <item name="android:letterSpacing">0.0</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Headline3" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline3</item>
-        <item name="firstBaselineToTopHeight">52sp</item>
-        <item name="lastBaselineToBottomHeight">16sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Headline3 -->
+  <style name="TextStyle.Pinnit.Headline3" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline3</item>
+    <item name="firstBaselineToTopHeight">52sp</item>
+    <item name="lastBaselineToBottomHeight">16sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Headline3 -->
 
-    <!-- Headline4 -->
-    <style name="TextAppearance.Pinnit.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="fontFamily">@font/bai_jam_semibold</item>
-        <item name="android:textSize">34sp</item>
+  <!-- Headline4 -->
+  <style name="TextAppearance.Pinnit.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+    <item name="fontFamily">@font/bai_jam_semibold</item>
+    <item name="android:textSize">34sp</item>
 
-        <item name="lineHeight">48sp</item>
-        <item name="android:letterSpacing">0.0075</item>
-    </style>
+    <item name="lineHeight">48sp</item>
+    <item name="android:letterSpacing">0.0075</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Headline4" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline4</item>
-        <item name="firstBaselineToTopHeight">36sp</item>
-        <item name="lastBaselineToBottomHeight">12sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Headline4 -->
+  <style name="TextStyle.Pinnit.Headline4" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline4</item>
+    <item name="firstBaselineToTopHeight">36sp</item>
+    <item name="lastBaselineToBottomHeight">12sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Headline4 -->
 
-    <!-- Headline5 -->
-    <style name="TextAppearance.Pinnit.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/jura_semibold</item>
-        <item name="android:textSize">24sp</item>
+  <!-- Headline5 -->
+  <style name="TextAppearance.Pinnit.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+    <item name="fontFamily">@font/jura_semibold</item>
+    <item name="android:textSize">24sp</item>
 
-        <item name="lineHeight">36sp</item>
-        <item name="android:letterSpacing">0.0</item>
-    </style>
+    <item name="lineHeight">36sp</item>
+    <item name="android:letterSpacing">0.0</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Headline5" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline5</item>
-        <item name="firstBaselineToTopHeight">28sp</item>
-        <item name="lastBaselineToBottomHeight">8sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Headline5 -->
+  <style name="TextStyle.Pinnit.Headline5" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline5</item>
+    <item name="firstBaselineToTopHeight">28sp</item>
+    <item name="lastBaselineToBottomHeight">8sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Headline5 -->
 
-    <!-- Headline6 -->
-    <style name="TextAppearance.Pinnit.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/bai_jam_semibold</item>
-        <item name="android:textSize">22sp</item>
+  <!-- Headline6 -->
+  <style name="TextAppearance.Pinnit.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+    <item name="fontFamily">@font/bai_jam_semibold</item>
+    <item name="android:textSize">22sp</item>
 
-        <item name="lineHeight">32sp</item>
-        <item name="android:letterSpacing">0.0</item>
-    </style>
+    <item name="lineHeight">32sp</item>
+    <item name="android:letterSpacing">0.0</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Headline6" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
-        <item name="firstBaselineToTopHeight">24sp</item>
-        <item name="lastBaselineToBottomHeight">8sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Headline6 -->
+  <style name="TextStyle.Pinnit.Headline6" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
+    <item name="firstBaselineToTopHeight">24sp</item>
+    <item name="lastBaselineToBottomHeight">8sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Headline6 -->
 
-    <!-- Subtitle1 -->
-    <style name="TextAppearance.Pinnit.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="fontFamily">@font/bai_jam_semibold</item>
-        <item name="android:textSize">17sp</item>
+  <!-- Subtitle1 -->
+  <style name="TextAppearance.Pinnit.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <item name="fontFamily">@font/bai_jam_semibold</item>
+    <item name="android:textSize">17sp</item>
 
-        <item name="lineHeight">24sp</item>
-        <item name="android:letterSpacing">0.0235</item>
-    </style>
+    <item name="lineHeight">24sp</item>
+    <item name="android:letterSpacing">0.0235</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Subtitle1" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle1</item>
-        <item name="firstBaselineToTopHeight">20sp</item>
-        <item name="lastBaselineToBottomHeight">8sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Subtitle1 -->
+  <style name="TextStyle.Pinnit.Subtitle1" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle1</item>
+    <item name="firstBaselineToTopHeight">20sp</item>
+    <item name="lastBaselineToBottomHeight">8sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Subtitle1 -->
 
-    <!-- Subtitle2 -->
-    <style name="TextAppearance.Pinnit.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="fontFamily">@font/bai_jam_medium</item>
-        <item name="android:textSize">14sp</item>
+  <!-- Subtitle2 -->
+  <style name="TextAppearance.Pinnit.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+    <item name="fontFamily">@font/bai_jam_medium</item>
+    <item name="android:textSize">14sp</item>
 
-        <item name="lineHeight">20sp</item>
-        <item name="android:letterSpacing">0.0357</item>
-    </style>
+    <item name="lineHeight">20sp</item>
+    <item name="android:letterSpacing">0.0357</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Subtitle2" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle2</item>
-        <item name="firstBaselineToTopHeight">16sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Subtitle2 -->
+  <style name="TextStyle.Pinnit.Subtitle2" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Subtitle2</item>
+    <item name="firstBaselineToTopHeight">16sp</item>
+    <item name="lastBaselineToBottomHeight">4sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Subtitle2 -->
 
-    <!-- Button -->
-    <style name="TextAppearance.Pinnit.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/bai_jam_bold</item>
-        <item name="android:textSize">14sp</item>
+  <!-- Button -->
+  <style name="TextAppearance.Pinnit.Button" parent="TextAppearance.MaterialComponents.Button">
+    <item name="fontFamily">@font/bai_jam_bold</item>
+    <item name="android:textSize">14sp</item>
 
-        <item name="lineHeight">24sp</item>
-        <item name="android:letterSpacing">0.07145</item>
-    </style>
+    <item name="lineHeight">24sp</item>
+    <item name="android:letterSpacing">0.07145</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Button" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
-        <item name="firstBaselineToTopHeight">16sp</item>
-        <item name="lastBaselineToBottomHeight">8sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Button -->
+  <style name="TextStyle.Pinnit.Button" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+    <item name="firstBaselineToTopHeight">16sp</item>
+    <item name="lastBaselineToBottomHeight">8sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Button -->
 
-    <!-- Body1 -->
-    <style name="TextAppearance.Pinnit.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/jura_bold</item>
-        <item name="android:textSize">16sp</item>
+  <!-- Body1 -->
+  <style name="TextAppearance.Pinnit.Body1" parent="TextAppearance.MaterialComponents.Body1">
+    <item name="fontFamily">@font/jura_bold</item>
+    <item name="android:textSize">16sp</item>
 
-        <item name="lineHeight">24sp</item>
-        <item name="android:letterSpacing">0.0</item>
-    </style>
+    <item name="lineHeight">24sp</item>
+    <item name="android:letterSpacing">0.0</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Body1" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body1</item>
-        <item name="firstBaselineToTopHeight">20sp</item>
-        <item name="lastBaselineToBottomHeight">8sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Body1 -->
+  <style name="TextStyle.Pinnit.Body1" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body1</item>
+    <item name="firstBaselineToTopHeight">20sp</item>
+    <item name="lastBaselineToBottomHeight">8sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Body1 -->
 
-    <!-- Body2 -->
-    <style name="TextAppearance.Pinnit.Body2" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/jura_bold</item>
-        <item name="android:textSize">14sp</item>
+  <!-- Body2 -->
+  <style name="TextAppearance.Pinnit.Body2" parent="TextAppearance.MaterialComponents.Body2">
+    <item name="fontFamily">@font/jura_bold</item>
+    <item name="android:textSize">14sp</item>
 
-        <item name="lineHeight">20sp</item>
-        <item name="android:letterSpacing">0.0</item>
-    </style>
+    <item name="lineHeight">20sp</item>
+    <item name="android:letterSpacing">0.0</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Body2" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
-        <item name="firstBaselineToTopHeight">16sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Body2 -->
+  <style name="TextStyle.Pinnit.Body2" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
+    <item name="firstBaselineToTopHeight">16sp</item>
+    <item name="lastBaselineToBottomHeight">4sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Body2 -->
 
-    <!-- Caption -->
-    <style name="TextAppearance.Pinnit.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/bai_jam_regular</item>
-        <item name="android:textSize">12sp</item>
+  <!-- Caption -->
+  <style name="TextAppearance.Pinnit.Caption" parent="TextAppearance.MaterialComponents.Caption">
+    <item name="fontFamily">@font/bai_jam_regular</item>
+    <item name="android:textSize">12sp</item>
 
-        <item name="lineHeight">20sp</item>
-        <item name="android:letterSpacing">0.05835</item>
-    </style>
+    <item name="lineHeight">20sp</item>
+    <item name="android:letterSpacing">0.05835</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Caption" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Caption</item>
-        <item name="firstBaselineToTopHeight">12sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Caption -->
+  <style name="TextStyle.Pinnit.Caption" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Caption</item>
+    <item name="firstBaselineToTopHeight">12sp</item>
+    <item name="lastBaselineToBottomHeight">4sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Caption -->
 
-    <!-- Overline 1 -->
-    <style name="TextAppearance.Pinnit.Overline1" parent="TextAppearance.MaterialComponents.Overline">
-        <item name="fontFamily">@font/bai_jam_bold</item>
-        <item name="android:textSize">11sp</item>
+  <!-- Overline 1 -->
+  <style name="TextAppearance.Pinnit.Overline1" parent="TextAppearance.MaterialComponents.Overline">
+    <item name="fontFamily">@font/bai_jam_bold</item>
+    <item name="android:textSize">11sp</item>
 
-        <item name="lineHeight">16sp</item>
-        <item name="android:letterSpacing">0.137</item>
-    </style>
+    <item name="lineHeight">16sp</item>
+    <item name="android:letterSpacing">0.137</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Overline1" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline1</item>
-        <item name="firstBaselineToTopHeight">12sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Overline 1 -->
+  <style name="TextStyle.Pinnit.Overline1" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline1</item>
+    <item name="firstBaselineToTopHeight">12sp</item>
+    <item name="lastBaselineToBottomHeight">4sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Overline 1 -->
 
-    <!-- Overline 2 -->
-    <style name="TextAppearance.Pinnit.Overline2" parent="TextAppearance.MaterialComponents.Overline">
-        <item name="fontFamily">@font/bai_jam_medium</item>
-        <item name="android:textSize">11sp</item>
+  <!-- Overline 2 -->
+  <style name="TextAppearance.Pinnit.Overline2" parent="TextAppearance.MaterialComponents.Overline">
+    <item name="fontFamily">@font/bai_jam_medium</item>
+    <item name="android:textSize">11sp</item>
 
-        <item name="lineHeight">16sp</item>
-        <item name="android:letterSpacing">0.137</item>
-    </style>
+    <item name="lineHeight">16sp</item>
+    <item name="android:letterSpacing">0.137</item>
+  </style>
 
-    <style name="TextStyle.Pinnit.Overline2" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline2</item>
-        <item name="firstBaselineToTopHeight">12sp</item>
-        <item name="lastBaselineToBottomHeight">4sp</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    <!-- Overline 2 -->
+  <style name="TextStyle.Pinnit.Overline2" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline2</item>
+    <item name="firstBaselineToTopHeight">12sp</item>
+    <item name="lastBaselineToBottomHeight">4sp</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+  <!-- Overline 2 -->
 
 </resources>

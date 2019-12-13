@@ -9,7 +9,7 @@ import dagger.Reusable
 @Module
 object AppModule {
 
-    @Provides
-    @Reusable
-    fun providesPackageManager(context: Context): PackageManager = context.packageManager
+  @Provides
+  @Reusable
+  fun providesPackageManager(context: Context): PackageManager = context.packageManager
 }

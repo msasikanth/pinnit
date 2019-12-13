@@ -18,16 +18,16 @@ import dev.sasikanth.pinnit.data.converters.UriTypeConverter
 @Database(entities = [PinnitItem::class], version = 1)
 abstract class PinnitDatabase : RoomDatabase() {
 
-    companion object {
-        fun createDatabase(context: Context): PinnitDatabase {
-            return Room.databaseBuilder(
-                context,
-                PinnitDatabase::class.java,
-                "Notifs.db"
-            ).fallbackToDestructiveMigration()
-                .build()
-        }
+  companion object {
+    fun createDatabase(context: Context): PinnitDatabase {
+      return Room.databaseBuilder(
+          context,
+          PinnitDatabase::class.java,
+          "Notifs.db"
+      ).fallbackToDestructiveMigration()
+          .build()
     }
+  }
 
-    abstract val pinnitDao: PinnitDao
+  abstract val pinnitDao: PinnitDao
 }

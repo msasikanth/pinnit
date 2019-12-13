@@ -12,25 +12,25 @@ import androidx.lifecycle.ViewModelProvider
 inline fun <reified T : ViewModel> FragmentActivity.viewModels(
     crossinline provider: () -> T
 ) = viewModels<T> {
-    object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>) = provider() as T
-    }
+  object : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>) = provider() as T
+  }
 }
 
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T : ViewModel> Fragment.viewModels(
     crossinline provider: () -> T
 ) = viewModels<T> {
-    object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>) = provider() as T
-    }
+  object : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>) = provider() as T
+  }
 }
 
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T : ViewModel> Fragment.activityViewModels(
     crossinline provider: () -> T
 ) = activityViewModels<T> {
-    object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>) = provider() as T
-    }
+  object : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>) = provider() as T
+  }
 }

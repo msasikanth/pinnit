@@ -5,7 +5,7 @@ import android.app.Service
 import androidx.fragment.app.Fragment
 
 interface ComponentProvider {
-    val component: PinnitAppComponent
+  val component: PinnitAppComponent
 }
 
 val Activity.injector get() = (application as ComponentProvider).component
