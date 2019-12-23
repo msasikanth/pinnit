@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.sasikanth.pinnit.data.AppItem
 import dev.sasikanth.pinnit.utils.PinnitPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
