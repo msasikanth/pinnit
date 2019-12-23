@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.data
+package dev.sasikanth.pinnit.pages.apps
 
 import android.graphics.drawable.Drawable
 

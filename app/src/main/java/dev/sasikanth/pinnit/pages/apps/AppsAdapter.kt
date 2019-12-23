@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.AppItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.app_item_layout.*
 
