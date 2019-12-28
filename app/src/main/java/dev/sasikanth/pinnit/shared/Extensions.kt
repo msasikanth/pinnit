@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -126,4 +127,10 @@ inline fun Drawable.asBitmap(): Bitmap {
   draw(canvas)
 
   return bitmap
+}
+
+inline fun View.fullScreen() {
+  systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+      View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 }

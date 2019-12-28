@@ -120,7 +120,7 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
     }
   }
 
-  private class OptionItemSeparator private constructor(private val itemView: View) :
+  private class OptionItemSeparator private constructor(itemView: View) :
       RecyclerView.ViewHolder(itemView) {
 
     companion object {
