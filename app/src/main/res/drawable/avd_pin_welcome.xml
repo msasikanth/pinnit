@@ -1,0 +1,248 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:aapt="http://schemas.android.com/aapt">
+  <aapt:attr name="android:drawable">
+    <vector
+      android:name="pin_welcome"
+      android:width="288dp"
+      android:height="288dp"
+      android:viewportWidth="288"
+      android:viewportHeight="288">
+      <path
+        android:name="background"
+        android:fillColor="#4d0033"
+        android:pathData="M 0 0 L 288 0 L 288 288 L 0 288 Z" />
+      <group
+        android:name="card_back_group"
+        android:pivotX="12"
+        android:pivotY="12"
+        android:translateY="24">
+        <path
+          android:name="card_back"
+          android:fillColor="#4d0033"
+          android:fillType="evenOdd"
+          android:pathData="M 94 58 L 194 58 L 194 106 L 94 106 Z"
+          android:strokeWidth="12"
+          android:strokeColor="#4d0033" />
+      </group>
+      <group
+        android:name="card_middle_group"
+        android:pivotX="12"
+        android:pivotY="12"
+        android:translateY="24">
+        <path
+          android:name="card_middle"
+          android:fillColor="#4d0033"
+          android:fillType="evenOdd"
+          android:pathData="M 66 82 L 222 82 L 222 130 L 66 130 Z"
+          android:strokeWidth="12"
+          android:strokeColor="#4d0033" />
+      </group>
+      <group
+        android:name="pin_and_top_card"
+        android:translateY="-12">
+        <group
+          android:name="card_front_group"
+          android:pivotX="12"
+          android:pivotY="12"
+          android:scaleX="0"
+          android:translateX="132">
+          <path
+            android:name="card_front"
+            android:fillColor="#ffffff"
+            android:fillType="evenOdd"
+            android:pathData="M 34 106 L 254 106 L 254 206 L 34 206 Z"
+            android:strokeWidth="12"
+            android:strokeColor="#4d0033" />
+        </group>
+        <group
+          android:name="strokes"
+          android:translateX="60">
+          <path
+            android:name="card_front_content_1"
+            android:fillColor="#000"
+            android:pathData="M 64 142 L 64 142"
+            android:strokeWidth="12"
+            android:strokeColor="#ffe5f6" />
+          <path
+            android:name="card_front_content_2"
+            android:fillColor="#000"
+            android:pathData="M 64 170 L 64 170"
+            android:strokeWidth="12"
+            android:strokeColor="#ffe5f6" />
+        </group>
+        <group
+          android:name="pin"
+          android:pivotX="12"
+          android:pivotY="12"
+          android:translateX="-40">
+          <path
+            android:name="pin_stroke"
+            android:fillColor="#4d0033"
+            android:fillType="evenOdd"
+            android:pathData="M 228 76 L 228 112 L 216 112 L 216 131.029 L 228 143.029 L 228 176 L 200 176 L 200 224.971 L 184 240 L 168 224.971 L 168 176 L 140 176 L 140 143.029 L 152 131.029 L 152 112 L 140 112 L 140 76 L 228 76 Z"
+            android:strokeWidth="1" />
+          <path
+            android:name="pin_shape"
+            android:fillColor="#ffffff"
+            android:pathData="M 152 88 L 216 88 L 216 100 L 204 100 L 204 136 L 216 148 L 216 164 L 188 164 L 188 220 L 184 224 L 180 220 L 180 164 L 152 164 L 152 148 L 164 136 L 164 100 L 152 100 L 152 88 Z"
+            android:strokeWidth="1" />
+          <path
+            android:name="pin_shadow"
+            android:fillColor="#c787b1"
+            android:pathData="M 188 100 L 188 88 L 216 88 L 216 100 L 204 100 L 204 136 L 216 148 L 216 164 L 188 164 L 188 112 L 164 112 L 164 100 L 188 100 Z M 188 164 L 188 176 L 180 176 L 180 164 L 188 164 Z"
+            android:strokeWidth="1" />
+        </group>
+      </group>
+    </vector>
+  </aapt:attr>
+  <target android:name="card_front_group">
+    <aapt:attr name="android:animation">
+      <set>
+        <objectAnimator
+          android:duration="400"
+          android:interpolator="@android:interpolator/fast_out_slow_in"
+          android:propertyName="scaleX"
+          android:startOffset="300"
+          android:valueFrom="0"
+          android:valueTo="1"
+          android:valueType="floatType" />
+        <objectAnimator
+          android:duration="400"
+          android:interpolator="@android:interpolator/fast_out_slow_in"
+          android:propertyName="translateX"
+          android:startOffset="300"
+          android:valueFrom="132"
+          android:valueTo="0"
+          android:valueType="floatType" />
+      </set>
+    </aapt:attr>
+  </target>
+  <target android:name="pin">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translateX"
+        android:startOffset="300"
+        android:valueFrom="-40"
+        android:valueTo="0"
+        android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="strokes">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translateX"
+        android:startOffset="300"
+        android:valueFrom="100"
+        android:valueTo="0"
+        android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="card_front_content_1">
+    <aapt:attr name="android:animation">
+      <set>
+        <objectAnimator
+          android:duration="450"
+          android:interpolator="@android:interpolator/fast_out_slow_in"
+          android:propertyName="pathData"
+          android:startOffset="450"
+          android:valueFrom="M 64 142 L 64 142"
+          android:valueTo="M 64 142 L 116 142"
+          android:valueType="pathType" />
+        <objectAnimator
+          android:duration="450"
+          android:interpolator="@android:anim/accelerate_interpolator"
+          android:propertyName="strokeColor"
+          android:startOffset="450"
+          android:valueFrom="#ffe5f6"
+          android:valueTo="#4d0033"
+          android:valueType="colorType" />
+      </set>
+    </aapt:attr>
+  </target>
+  <target android:name="card_front_content_2">
+    <aapt:attr name="android:animation">
+      <set>
+        <objectAnimator
+          android:duration="450"
+          android:interpolator="@android:interpolator/fast_out_slow_in"
+          android:propertyName="pathData"
+          android:startOffset="550"
+          android:valueFrom="M 64 170 L 64 170"
+          android:valueTo="M 64 170 L 116 170"
+          android:valueType="pathType" />
+        <objectAnimator
+          android:duration="450"
+          android:interpolator="@android:anim/accelerate_interpolator"
+          android:propertyName="strokeColor"
+          android:startOffset="550"
+          android:valueFrom="#ffe5f6"
+          android:valueTo="#4d0033"
+          android:valueType="colorType" />
+      </set>
+    </aapt:attr>
+  </target>
+  <target android:name="card_middle_group">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translateY"
+        android:startOffset="400"
+        android:valueFrom="24"
+        android:valueTo="0"
+        android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="card_back_group">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translateY"
+        android:startOffset="600"
+        android:valueFrom="24"
+        android:valueTo="0"
+        android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="pin_and_top_card">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="250"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="translateY"
+        android:startOffset="300"
+        android:valueFrom="-12"
+        android:valueTo="0"
+        android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="card_middle">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="50"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="fillColor"
+        android:startOffset="475"
+        android:valueFrom="#4d0033"
+        android:valueTo="#f5d0e9"
+        android:valueType="colorType" />
+    </aapt:attr>
+  </target>
+  <target android:name="card_back">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="50"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="fillColor"
+        android:startOffset="575"
+        android:valueFrom="#4d0033"
+        android:valueTo="#c787b1"
+        android:valueType="colorType" />
+    </aapt:attr>
+  </target>
+</animated-vector>
