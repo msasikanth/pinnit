@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dev.sasikanth.pinnit.MainActivity
 import dev.sasikanth.pinnit.MainViewModel
+import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.pages.apps.AppsFragment
 import dev.sasikanth.pinnit.pages.apps.AppsViewModel
 import dev.sasikanth.pinnit.pages.currentnotifs.CurrentFragment
@@ -32,6 +33,7 @@ interface PinnitAppComponent {
   fun inject(currentFragment: CurrentFragment)
   fun inject(historyFragment: HistoryFragment)
   fun inject(appsFragment: AppsFragment)
+  fun inject(optionsBottomSheet: OptionsBottomSheet)
 
   fun inject(pinnitListenerService: PinnitListenerService)
 }

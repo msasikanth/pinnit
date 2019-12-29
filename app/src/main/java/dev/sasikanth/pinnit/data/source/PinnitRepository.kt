@@ -27,8 +27,8 @@ class PinnitRepository
 
   suspend fun saveNotif(pinnitItem: PinnitItem): Long {
     val lastItemByKey = pinnitDataSource.getNotif(pinnitItem.notifKey)
-    if (lastItemByKey != null) {
-      val isItemMatch = pinnitItem.equalsLastItem(lastItemByKey)
+    if (lastItemByKey is Result.Success) {
+      val isItemMatch = pinnitItem.equalsLastItem(lastItemByKey.data)
       if (isItemMatch) {
         return 0
       }

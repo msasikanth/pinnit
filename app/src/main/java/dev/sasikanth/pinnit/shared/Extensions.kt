@@ -3,7 +3,6 @@ package dev.sasikanth.pinnit.shared
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -26,14 +25,6 @@ val Int.px: Int
 
 val Int.dp: Int
   get() = (this / Resources.getSystem().displayMetrics.density).toInt()
-
-val Context.isNightMode: Boolean
-  get() {
-    return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-      Configuration.UI_MODE_NIGHT_YES -> true
-      else -> false
-    }
-  }
 
 fun Context.dismissNotification(pinnitItem: PinnitItem) {
   val notificationId = pinnitItem.contentHashCode()

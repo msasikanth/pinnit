@@ -1,23 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
-
-  <data>
-
-  </data>
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="?attr/colorSurface"
+  android:orientation="vertical"
+  tools:layout_gravity="bottom">
 
   <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/options_list"
+    android:id="@+id/optionsList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorSurface"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:overScrollMode="never"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:spanCount="1"
+    tools:itemCount="4"
     tools:listitem="@layout/option_item" />
 
-</layout>
+  <include layout="@layout/option_item_separator" />
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/darkModeIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_marginBottom="16dp"
+      android:contentDescription="@null"
+      android:src="@drawable/ic_pinnit_dark_mode"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:tint="@color/option_item" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/darkModeLabel"
+      style="@style/TextStyle.Pinnit.Body1"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="12dp"
+      android:layout_marginBottom="16dp"
+      android:text="@string/option_dark_mode"
+      android:textColor="@color/option_item"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/darkModeIcon"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <com.google.android.material.button.MaterialButtonToggleGroup
+    android:id="@+id/themeButtonGroup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="24dp"
+    app:singleSelection="true">
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/darkModeOn"
+      style="@style/Widget.Pinnit.Button.Group.OutlinedButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/option_dark_mode_on" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/darkModeAuto"
+      style="@style/Widget.Pinnit.Button.Group.OutlinedButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/option_dark_mode_auto" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/darkModeOff"
+      style="@style/Widget.Pinnit.Button.Group.OutlinedButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/option_dark_mode_off" />
+
+  </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</LinearLayout>
