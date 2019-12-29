@@ -54,14 +54,15 @@ class AppsViewModel
   }
 
   fun toggleAppSelection(appItem: AppItem) {
-    val allowedApps = pinnitPreferences.allowedApps
-    pinnitPreferences.allowedApps = allowedApps.apply {
+    val allowedApps = pinnitPreferences.allowedApps.toMutableSet()
+    allowedApps.apply {
       if (contains(appItem.packageName)) {
         remove(appItem.packageName)
       } else {
         add(appItem.packageName)
       }
     }
+    pinnitPreferences.updateAllowedApps(allowedApps)
     loadInstalledApps()
   }
 }

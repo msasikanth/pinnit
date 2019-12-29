@@ -22,6 +22,8 @@ import dev.sasikanth.pinnit.shared.OptionsBottomSheet
 import dev.sasikanth.pinnit.shared.isNightMode
 import dev.sasikanth.pinnit.utils.EventObserver
 import dev.sasikanth.pinnit.utils.PinnitPreferences
+import dev.sasikanth.pinnit.utils.PinnitPreferences.Theme.DARK
+import dev.sasikanth.pinnit.utils.PinnitPreferences.Theme.LIGHT
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -190,9 +192,9 @@ class MainActivity : AppCompatActivity() {
               }
               5 -> {
                 if (isNightMode) {
-                  pinnitPreferences.themePreference = PinnitPreferences.Theme.LIGHT
+                  pinnitPreferences.changeTheme(LIGHT)
                 } else {
-                  pinnitPreferences.themePreference = PinnitPreferences.Theme.DARK
+                  pinnitPreferences.changeTheme(DARK)
                 }
               }
             }
