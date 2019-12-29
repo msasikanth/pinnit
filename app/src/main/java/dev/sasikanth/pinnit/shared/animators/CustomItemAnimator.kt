@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.circularreveal.CircularRevealCompat
 import dev.sasikanth.pinnit.shared.PinnitListAdapter.PinnitItemViewHolder
+import kotlinx.android.synthetic.main.pinnit_item.*
+import kotlin.math.hypot
 
 class CustomItemAnimator : DefaultItemAnimator() {
 
@@ -22,8 +24,9 @@ class CustomItemAnimator : DefaultItemAnimator() {
       pinnitItemViewHolder: PinnitItemViewHolder,
       info: NotifItemInfo
   ): ItemHolderInfo {
-    info.id = pinnitItemViewHolder.pinnitItem?._id ?: 0L
-    info.isPinned = pinnitItemViewHolder.isPinned
+    val pinnitItem = pinnitItemViewHolder.pinnitItem
+    info.id = pinnitItem._id
+    info.isPinned = pinnitItem.isPinned
     return info
   }
 
@@ -77,30 +80,34 @@ class CustomItemAnimator : DefaultItemAnimator() {
       }
 
       try {
-        newHolder.notifPinnedRevealLayout.isVisible = true
+        val itemView = newHolder.itemView
 
-        val cx = newHolder.touchCoordinates[0]
-        val cy = newHolder.touchCoordinates[1]
+        val cx = newHolder.getRevealCx()
+        val cy = newHolder.getRevealCy()
 
-        val viewWidth = newHolder.itemView.width.toFloat()
+        val viewWidth = itemView.width.toFloat()
+        val viewHeight = itemView.height.toFloat()
+        val viewRadius = hypot(viewWidth, viewHeight)
 
         val anim = if (newPinStatus) {
           CircularRevealCompat.createCircularReveal(
-              newHolder.notifPinnedRevealLayout,
+              newHolder.pinnedRevealLayout,
               cx,
               cy,
               0.0f,
-              viewWidth
+              viewRadius
           )
         } else {
           CircularRevealCompat.createCircularReveal(
-              newHolder.notifPinnedRevealLayout,
+              newHolder.pinnedRevealLayout,
               cx,
               cy,
-              viewWidth,
+              viewRadius,
               0.0f
           )
         }
+
+        newHolder.pinnedRevealLayout.isVisible = true
 
         if (newPinStatus) {
           anim.duration = 250
@@ -108,12 +115,12 @@ class CustomItemAnimator : DefaultItemAnimator() {
           anim.addListener(
               onStart = {
                 newHolder.apply {
-                  notifTogglePin.isChecked = true
+                  toggleNotificationPin.isChecked = true
                 }
               },
               onEnd = {
                 newHolder.apply {
-                  newHolder.changeTextColor()
+                  newHolder.updateColorsBasedOnPinStatus()
                   dispatchAnimationFinished(this)
                 }
               }
@@ -124,9 +131,9 @@ class CustomItemAnimator : DefaultItemAnimator() {
           anim.addListener(
               onEnd = {
                 newHolder.apply {
-                  notifPinnedRevealLayout.isVisible = false
-                  notifTogglePin.isChecked = false
-                  newHolder.changeTextColor()
+                  pinnedRevealLayout.isVisible = false
+                  toggleNotificationPin.isChecked = false
+                  newHolder.updateColorsBasedOnPinStatus()
                   dispatchAnimationFinished(this)
                 }
               }

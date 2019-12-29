@@ -17,7 +17,8 @@ class MainViewModel
     private val pinnitRepository: PinnitRepository
 ) : ViewModel() {
 
-  val pinnitList: LiveData<List<PinnitItem>> = pinnitRepository.getNotifs()
+  val pinnitList: LiveData<List<PinnitItem>> = pinnitRepository
+      .getNotifs()
       .asLiveData()
 
   private val _notifAction = MutableLiveData<Event<Unit>>()
@@ -51,10 +52,8 @@ class MainViewModel
   }
 
   fun deleteUnPinnedNotifs() {
-    if (!pinnitList.value.isNullOrEmpty()) {
-      viewModelScope.launch {
-        pinnitRepository.deleteUnPinnedNotifs()
-      }
+    viewModelScope.launch {
+      if (!pinnitList.value.isNullOrEmpty()) pinnitRepository.deleteUnPinnedNotifs()
     }
   }
 

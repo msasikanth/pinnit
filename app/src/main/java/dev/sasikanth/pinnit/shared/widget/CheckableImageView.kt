@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.utils
+package dev.sasikanth.pinnit.shared.widget
 
 import android.content.Context
 import android.os.Parcel
