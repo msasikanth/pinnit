@@ -25,7 +25,7 @@ class PinnitPreferences
     }
   }
 
-  var themePreference: Theme
+  private var themePreference: Theme
     get() = getThemeForStorageValue(
         sharedPreferences.getString(KEY_THEME, defaultThemeValue)!!
     )
@@ -35,8 +35,10 @@ class PinnitPreferences
       }
     }
 
-  var allowedApps: MutableSet<String>
-    get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, mutableSetOf())?.toMutableSet()!!
+  val allowedApps: Set<String>
+    get() = _allowedApps
+  private var _allowedApps: Set<String>
+    get() = sharedPreferences.getStringSet(KEY_ALLOWED_APPS, setOf()).orEmpty()
     set(value) {
       sharedPreferences.edit {
         putStringSet(KEY_ALLOWED_APPS, value)
@@ -46,6 +48,14 @@ class PinnitPreferences
   init {
     updateUsingThemePreference()
     sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+  }
+
+  fun updateAllowedApps(allowedApps: Set<String>) {
+    _allowedApps = allowedApps
+  }
+
+  fun changeTheme(theme: Theme) {
+    themePreference = theme
   }
 
   private fun getStorageKeyForTheme(theme: Theme) = when (theme) {

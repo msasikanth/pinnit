@@ -39,7 +39,7 @@ class PinnitListenerService : NotificationListenerService() {
   private val job = Job()
   private val coroutineContext = Dispatchers.Main
 
-  private val allowedApps: MutableSet<String>
+  private val allowedApps: Set<String>
     get() = pinnitPreferences.allowedApps
 
   private val coroutineScope = CoroutineScope(job + coroutineContext)
