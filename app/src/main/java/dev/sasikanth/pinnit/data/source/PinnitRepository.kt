@@ -21,11 +21,7 @@ class PinnitRepository
     return pinnitDataSource.getPinnedNotifs()
   }
 
-  suspend fun getNotif(id: Long): Result<PinnitItem> {
-    return pinnitDataSource.getNotif(id)
-  }
-
-  suspend fun getNotif(key: String): PinnitItem? {
+  suspend fun getNotif(key: Long): Result<PinnitItem> {
     return pinnitDataSource.getNotif(key)
   }
 

@@ -20,9 +20,9 @@ class PinnitLocalDataSource(
     return pinnitDao.getPinnedNotifications()
   }
 
-  suspend fun getNotif(id: Long): Result<PinnitItem> = withContext(ioDispatcher) {
+  suspend fun getNotif(key: Long): Result<PinnitItem> = withContext(ioDispatcher) {
     return@withContext try {
-      val notifItem = pinnitDao.getNotificationById(id)
+      val notifItem = pinnitDao.getNotificationByKey(key)
       if (notifItem != null) {
         Result.Success(notifItem)
       } else {
@@ -30,14 +30,6 @@ class PinnitLocalDataSource(
       }
     } catch (e: Exception) {
       Result.Error(e)
-    }
-  }
-
-  suspend fun getNotif(key: String): PinnitItem? = withContext(ioDispatcher) {
-    return@withContext try {
-      pinnitDao.getNotificationByKey(key)
-    } catch (e: Exception) {
-      null
     }
   }
 

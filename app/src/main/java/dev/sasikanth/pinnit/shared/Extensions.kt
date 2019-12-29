@@ -59,10 +59,10 @@ fun Context.showPersistentNotif(pinnitItem: PinnitItem) {
     NotificationCompat.Builder(this, getString(R.string.channel_pinned))
         .setSmallIcon(R.drawable.ic_pinnit_notification)
         .setContentTitle(pinnitItem.title)
-        .setContentText(pinnitItem.text)
+        .setContentText(pinnitItem.content)
         .setStyle(
             NotificationCompat.BigTextStyle()
-                .bigText(pinnitItem.text)
+                .bigText(pinnitItem.content)
         )
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setOngoing(true)
@@ -90,7 +90,7 @@ fun Context.showPersistentNotif(pinnitItem: PinnitItem) {
     NotificationCompat.Builder(this, getString(R.string.channel_pinned))
         .setSmallIcon(R.drawable.ic_pinnit_notification)
         .setContentTitle(pinnitItem.title)
-        .setContentText(pinnitItem.text)
+        .setContentText(pinnitItem.content)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setOngoing(true)
   }

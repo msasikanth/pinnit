@@ -17,11 +17,8 @@ interface PinnitDao {
   @Query("SELECT * FROM notifs WHERE is_pinned == 1 ORDER BY posted_on DESC")
   fun getPinnedNotifications(): Flow<List<PinnitItem>>
 
-  @Query("SELECT * FROM notifs WHERE _id == :id ORDER BY posted_on DESC LIMIT 1")
-  suspend fun getNotificationById(id: Long): PinnitItem?
-
   @Query("SELECT * FROM notifs WHERE notif_key == :key ORDER BY posted_on DESC LIMIT 1")
-  suspend fun getNotificationByKey(key: String): PinnitItem?
+  suspend fun getNotificationByKey(key: Long): PinnitItem?
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertNotifItem(pinnitItem: PinnitItem): Long
@@ -29,11 +26,11 @@ interface PinnitDao {
   @Update
   suspend fun updateNotifItem(pinnitItem: PinnitItem): Int
 
-  @Query("UPDATE notifs SET is_pinned = :isPinned WHERE _id == :id")
-  suspend fun updateNotifPinStatus(id: Long, isPinned: Boolean)
+  @Query("UPDATE notifs SET is_pinned = :isPinned WHERE notif_key == :key")
+  suspend fun updateNotifPinStatus(key: Long, isPinned: Boolean)
 
-  @Query("DELETE FROM notifs WHERE _id == :id")
-  suspend fun deleteNotifById(id: Long): Int
+  @Query("DELETE FROM notifs WHERE notif_key == :key")
+  suspend fun deleteNotifById(key: Long): Int
 
   @Query("DELETE FROM notifs")
   suspend fun deleteNotifs()

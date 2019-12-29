@@ -55,7 +55,7 @@ class HistoryFragment : Fragment() {
           }
         },
         pinNotification = { pinnitItem, isPinned ->
-          mainViewModel.pinUnpinNotif(pinnitItem._id, isPinned)
+          mainViewModel.pinUnpinNotif(pinnitItem.notifKey, isPinned)
           if (isPinned) {
             requireContext().showPersistentNotif(pinnitItem)
           } else {
@@ -77,9 +77,9 @@ class HistoryFragment : Fragment() {
 
     val itemTouchHelperCallback = ItemTouchHelperCallback(
         context = requireContext(),
-        onItemSwiped = { notifItem ->
-          notifItem?.let {
-            mainViewModel.deleteNotif(notifId = notifItem._id)
+        onItemSwiped = { pinnitItem ->
+          pinnitItem?.let {
+            mainViewModel.deleteNotif(notifId = pinnitItem.notifKey)
           }
         })
     ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notifHistoryList)
