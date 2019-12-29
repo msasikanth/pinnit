@@ -18,14 +18,12 @@ class ItemTouchHelperCallback(
     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 ) {
 
-  private val paint = Paint()
-
   override fun getSwipeDirs(
       recyclerView: RecyclerView,
       viewHolder: RecyclerView.ViewHolder
   ): Int {
     if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
-      if (viewHolder.isPinned) {
+      if (viewHolder.pinnitItem.isPinned) {
         return 0
       }
     }

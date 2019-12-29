@@ -1,133 +1,156 @@
 package dev.sasikanth.pinnit.shared
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.circularreveal.CircularRevealFrameLayout
+import coil.api.load
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitItem
-import dev.sasikanth.pinnit.databinding.PinnitItemBinding
-import dev.sasikanth.pinnit.utils.CheckableImageView
+import dev.sasikanth.pinnit.data.TemplateStyle
+import dev.sasikanth.pinnit.utils.DateUtils
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.pinnit_item.*
 
-class PinnitListAdapter(private val pinnitAdapterListener: PinnitAdapterListener) :
-    ListAdapter<PinnitItem, RecyclerView.ViewHolder>(PinnitDiffCallback) {
+class PinnitListAdapter(
+    private val pinnitAdapterListener: PinnitAdapterListener
+) : ListAdapter<PinnitItem, RecyclerView.ViewHolder>(PinnitDiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PinnitItemViewHolder.from(parent)
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    return PinnitItemViewHolder.from(parent).apply {
+      toggleNotificationPin.setOnClickListener {
+        pinnitAdapterListener.pinNotifItem(pinnitItem)
+      }
+      itemView.setOnClickListener {
+        pinnitAdapterListener.onPinnitItemClick(pinnitItem)
+      }
+      itemView.setOnLongClickListener {
+        pinnitAdapterListener.pinNotifItem(pinnitItem)
+        return@setOnLongClickListener true
+      }
+    }
+  }
+
+  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    if (holder is PinnitItemViewHolder) {
+      holder.pinnitItem = getItem(position)
+      holder.render()
+    }
+  }
+
+  @SuppressLint("ClickableViewAccessibility")
+  class PinnitItemViewHolder private constructor(
+      override val containerView: View
+  ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+    companion object {
+      fun from(parent: ViewGroup): PinnitItemViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val itemView = layoutInflater.inflate(R.layout.pinnit_item, parent, false)
+        return PinnitItemViewHolder(itemView)
+      }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is PinnitItemViewHolder) {
-            holder.bind(
-                pinnitItem = getItem(position),
-                pinnitAdapterListener = pinnitAdapterListener
-            )
+    private val context: Context = itemView.context
+    private val colorDrawable = ColorDrawable(context.resolveColor(attrRes = R.attr.colorPrimary))
+
+    lateinit var pinnitItem: PinnitItem
+
+    fun render() {
+      pinnedRevealLayout.isVisible = pinnitItem.isPinned
+      toggleNotificationPin.isChecked = pinnitItem.isPinned
+
+      appName.text = pinnitItem.appLabel
+      timestamp.text = DateUtils.getRelativeTime(pinnitItem.postedOn)
+      pinnitIconView.load(pinnitItem.notifIcon) {
+        placeholder(colorDrawable)
+        error(colorDrawable)
+      }
+      pinnitTitleView.text = pinnitItem.title
+
+      val contentViewMessage = if (pinnitItem.template == TemplateStyle.MessagingStyle) {
+        val messagesBuilder = StringBuilder()
+        val lastMessages = pinnitItem.messages.takeLast(5).sortedBy { it.timestamp }
+
+        lastMessages.forEachIndexed { index, message ->
+          val messageText = "${message.senderName}: ${message.message}"
+          if (index == lastMessages.lastIndex) {
+            messagesBuilder.append(messageText)
+          } else {
+            messagesBuilder.appendln(messageText)
+          }
         }
+        messagesBuilder.toString()
+      } else {
+        pinnitItem.text
+      }
+      pinnitContentView.text = contentViewMessage
+
+      updateColorsBasedOnPinStatus()
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    class PinnitItemViewHolder private constructor(private val binding: PinnitItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        companion object {
-            fun from(parent: ViewGroup): PinnitItemViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = PinnitItemBinding.inflate(layoutInflater, parent, false)
-                return PinnitItemViewHolder(binding)
-            }
-        }
-
-        val context = itemView.context
-        val touchCoordinates = floatArrayOf(0f, 0f)
-
-        val pinnitItem: PinnitItem?
-            get() = binding.pinnitItem
-        val isPinned: Boolean
-            get() = pinnitItem?.isPinned ?: false
-
-        val notifPinnedRevealLayout: CircularRevealFrameLayout
-            get() = binding.notifPinnedRevealLayout
-        val notifTogglePin: CheckableImageView
-            get() = binding.notifTogglePin
-
-
-        init {
-            itemView.setOnTouchListener { _, motionEvent ->
-                if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
-                    touchCoordinates[0] = motionEvent.x
-                    touchCoordinates[1] = motionEvent.y
-                }
-                return@setOnTouchListener false
-            }
-
-            binding.notifTogglePin.setOnTouchListener { _, motionEvent ->
-                if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
-                    touchCoordinates[0] = (itemView.width - 28.px).toFloat()
-                    touchCoordinates[1] = 28.px.toFloat()
-                }
-                return@setOnTouchListener false
-            }
-        }
-
-        fun bind(
-            pinnitItem: PinnitItem,
-            pinnitAdapterListener: PinnitAdapterListener
-        ) {
-            binding.pinnitItem = pinnitItem
-            binding.pinnitAdapterListener = pinnitAdapterListener
-            binding.notifRoot.tag = pinnitItem.isPinned
-            binding.executePendingBindings()
-
-            binding.notifPinnedRevealLayout.isVisible = pinnitItem.isPinned
-            binding.notifTogglePin.isChecked = pinnitItem.isPinned
-            changeTextColor()
-        }
-
-        fun changeTextColor() {
-            if (isPinned) {
-                binding.pinnitEditButton.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
-                binding.notifTitle.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
-                binding.notifText.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-                binding.notifAppName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-                binding.notifInfoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-                binding.notifTimestamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-            } else {
-                binding.pinnitEditButton.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
-                binding.notifTitle.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackground))
-                binding.notifText.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
-                binding.notifAppName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
-                binding.notifInfoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
-                binding.notifTimestamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
-            }
-        }
+    fun updateColorsBasedOnPinStatus() {
+      if (pinnitItem.isPinned) {
+        notificationPinnedState()
+      } else {
+        notificationUnPinnedState()
+      }
     }
+
+    fun getRevealCx(): Float {
+      return (toggleNotificationPin.left + toggleNotificationPin.right) / 2f
+    }
+
+    fun getRevealCy(): Float {
+      return (toggleNotificationPin.top + toggleNotificationPin.bottom) / 2f
+    }
+
+    private fun notificationUnPinnedState() {
+      editButton.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
+      pinnitTitleView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackground))
+      pinnitContentView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      appName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      separator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      timestamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+    }
+
+    private fun notificationPinnedState() {
+      editButton.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
+      pinnitTitleView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
+      pinnitContentView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      appName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      separator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      timestamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+    }
+  }
 }
 
 object PinnitDiffCallback : DiffUtil.ItemCallback<PinnitItem>() {
-    override fun areItemsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {
-        return oldItem._id == newItem._id
-    }
+  override fun areItemsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {
+    return oldItem._id == newItem._id
+  }
 
-    override fun areContentsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {
-        return oldItem == newItem
-    }
+  override fun areContentsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {
+    return oldItem == newItem
+  }
 }
 
 class PinnitAdapterListener(
     private val pinNotification: (pinnitItem: PinnitItem, isPinned: Boolean) -> Unit,
     private val onNotificationClicked: (pinnitItem: PinnitItem) -> Unit
 ) {
-    fun onPinnitItemClick(pinnitItem: PinnitItem) {
-        onNotificationClicked(pinnitItem)
-    }
+  fun onPinnitItemClick(pinnitItem: PinnitItem) {
+    onNotificationClicked(pinnitItem)
+  }
 
-    fun pinNotifItem(pinnitItem: PinnitItem): Boolean {
-        pinNotification(pinnitItem, !pinnitItem.isPinned)
-        return true
-    }
+  fun pinNotifItem(pinnitItem: PinnitItem): Boolean {
+    pinNotification(pinnitItem, !pinnitItem.isPinned)
+    return true
+  }
 }

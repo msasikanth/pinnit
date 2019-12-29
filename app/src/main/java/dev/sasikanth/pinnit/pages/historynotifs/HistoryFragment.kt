@@ -35,8 +35,11 @@ class HistoryFragment : Fragment() {
       container: ViewGroup?,
       savedInstanceState: Bundle?
   ): View? {
-    val binding: FragmentHistoryBinding =
-        FragmentHistoryBinding.inflate(inflater, container, false)
+    val binding = FragmentHistoryBinding.inflate(
+        inflater,
+        container,
+        false
+    )
 
     val adapter = PinnitListAdapter(PinnitAdapterListener(
         onNotificationClicked = { notifItem ->
@@ -51,19 +54,18 @@ class HistoryFragment : Fragment() {
             // TODO: Handle exception
           }
         },
-        pinNotification = { notifItem, isPinned ->
-          mainViewModel.pinUnpinNotif(notifItem._id, isPinned)
+        pinNotification = { pinnitItem, isPinned ->
+          mainViewModel.pinUnpinNotif(pinnitItem._id, isPinned)
           if (isPinned) {
-            requireContext().showPersistentNotif(notifItem)
+            requireContext().showPersistentNotif(pinnitItem)
           } else {
-            requireContext().dismissNotification(notifItem.notifId)
+            requireContext().dismissNotification(pinnitItem)
           }
         }
     ))
 
     binding.notifHistoryList.setHasFixedSize(true)
-    binding.notifHistoryList.itemAnimator =
-        CustomItemAnimator()
+    binding.notifHistoryList.itemAnimator = CustomItemAnimator()
     binding.notifHistoryList.adapter = adapter
     binding.notifHistoryList.addItemDecoration(
         DividerItemDecoration(

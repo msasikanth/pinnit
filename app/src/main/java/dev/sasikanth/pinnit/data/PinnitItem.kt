@@ -35,6 +35,21 @@ data class PinnitItem(
     val isCurrent: Boolean = false
 ) {
 
+  fun contentHashCode(): Int {
+    var result = _id.hashCode()
+    result = 31 * result + notifKey.hashCode()
+    result = 31 * result + notifId
+    result = 31 * result + notifIcon.hashCode()
+    result = 31 * result + title.hashCode()
+    result = 31 * result + text.hashCode()
+    result = 31 * result + messages.hashCode()
+    result = 31 * result + packageName.hashCode()
+    result = 31 * result + appLabel.hashCode()
+    result = 31 * result + postedOn.hashCode()
+    result = 31 * result + template.hashCode()
+    return result
+  }
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false

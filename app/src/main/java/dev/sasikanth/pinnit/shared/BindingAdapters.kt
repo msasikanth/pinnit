@@ -1,64 +1,12 @@
 package dev.sasikanth.pinnit.shared
 
-import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
-import coil.api.load
-import coil.transform.CircleCropTransformation
-import com.google.android.material.textview.MaterialTextView
-import de.hdodenhof.circleimageview.CircleImageView
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.PinnitItem
-import dev.sasikanth.pinnit.data.TemplateStyle
-
-@BindingAdapter("notifIcon")
-fun CircleImageView.setNotifIcon(pinnitItem: PinnitItem?) {
-  pinnitItem?.let {
-    val notifIconUri = it.notifIcon
-    if (notifIconUri != null) {
-      val colorDrawable = ColorDrawable(context.resolveColor(attrRes = R.attr.colorPrimary))
-      load(pinnitItem.notifIcon) {
-        transformations(CircleCropTransformation())
-        placeholder(colorDrawable)
-        error(colorDrawable)
-      }
-    }
-  }
-}
-
-@BindingAdapter("notifTitle")
-fun MaterialTextView.setNotifTitle(pinnitItem: PinnitItem?) {
-  pinnitItem?.let {
-    text = pinnitItem.title
-  }
-}
-
-@BindingAdapter("notifText")
-fun MaterialTextView.setNotifText(pinnitItem: PinnitItem?) {
-  pinnitItem?.let { pinnit ->
-    if (pinnit.template == TemplateStyle.MessagingStyle) {
-      val messagesBuilder = StringBuilder()
-      val lastMessages = pinnit.messages.takeLast(5).sortedBy { it.timestamp }
-
-      lastMessages.forEachIndexed { index, message ->
-        val messageText = "${message.senderName}: ${message.message}"
-        if (index == lastMessages.lastIndex) {
-          messagesBuilder.append(messageText)
-        } else {
-          messagesBuilder.appendln(messageText)
-        }
-      }
-
-      text = messagesBuilder.toString()
-    } else {
-      text = pinnit.text
-    }
-  }
-}
 
 @BindingAdapter("srcRes")
 fun ImageView.setImageRes(drawableRes: Int) {

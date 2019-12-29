@@ -35,8 +35,9 @@ val Context.isNightMode: Boolean
     }
   }
 
-fun Context.dismissNotification(notifId: Int) {
-  NotificationManagerCompat.from(this).cancel(notifId)
+fun Context.dismissNotification(pinnitItem: PinnitItem) {
+  val notificationId = pinnitItem.contentHashCode()
+  NotificationManagerCompat.from(this).cancel(notificationId)
 }
 
 fun Context.showPersistentNotif(pinnitItem: PinnitItem) {
@@ -93,8 +94,10 @@ fun Context.showPersistentNotif(pinnitItem: PinnitItem) {
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setOngoing(true)
   }
+
   with(NotificationManagerCompat.from(this)) {
-    notify(pinnitItem.notifId, notificationBuilder.build())
+    val notificationId = pinnitItem.contentHashCode()
+    notify(notificationId, notificationBuilder.build())
   }
 }
 
