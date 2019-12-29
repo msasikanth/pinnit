@@ -16,14 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import dev.sasikanth.pinnit.databinding.ActivityMainBinding
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.di.viewModels
-import dev.sasikanth.pinnit.shared.Option.OptionItem
-import dev.sasikanth.pinnit.shared.Option.OptionSeparator
-import dev.sasikanth.pinnit.shared.OptionsBottomSheet
-import dev.sasikanth.pinnit.shared.isNightMode
+import dev.sasikanth.pinnit.options.OptionItem
+import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.utils.EventObserver
 import dev.sasikanth.pinnit.utils.PinnitPreferences
-import dev.sasikanth.pinnit.utils.PinnitPreferences.Theme.DARK
-import dev.sasikanth.pinnit.utils.PinnitPreferences.Theme.LIGHT
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -115,90 +111,43 @@ class MainActivity : AppCompatActivity() {
     mainViewModel.showOptionsMenu.observe(this, EventObserver {
 
       val currentNotifs = OptionItem(
-          id = 1,
+          id = R.id.currentFragment,
           title = R.string.current,
           icon = R.drawable.sld_current,
           isSelected = navController.currentDestination?.id == R.id.currentFragment
       )
       val historyNotifs = OptionItem(
-          id = 2,
+          id = R.id.historyFragment,
           title = R.string.history,
           icon = R.drawable.sld_history,
           isSelected = navController.currentDestination?.id == R.id.historyFragment
       )
       val apps = OptionItem(
-          id = 3,
+          id = R.id.appsFragment,
           title = R.string.your_apps,
           icon = R.drawable.sld_apps,
           isSelected = navController.currentDestination?.id == R.id.appsFragment
       )
-      val about = OptionItem(4, R.string.about, R.drawable.sld_about)
-      val optionSeparator = OptionSeparator
-      val darkMode = OptionItem(
-          5,
-          R.string.option_dark_mode,
-          R.drawable.ic_pinnit_dark_mode,
-          isNightMode,
-          true
+      val about = OptionItem(
+          R.id.aboutFragment,
+          R.string.about,
+          R.drawable.sld_about
       )
 
       OptionsBottomSheet()
-          .addOption(
-              currentNotifs, historyNotifs, apps, about, optionSeparator, darkMode
+          .addOptions(
+              currentNotifs,
+              historyNotifs,
+              apps,
+              about
           )
-          .setOnOptionSelectedListener(OptionsBottomSheet.OnOptionSelected {
-            when (it.id) {
-              1 -> {
-                navController.navigate(R.id.currentFragment)
-              }
-              2 -> {
-                navController.navigate(R.id.historyFragment)
-              }
-              3 -> {
-                navController.navigate(R.id.appsFragment)
-              }
-              4 -> {
-                val dialog = MaterialAlertDialogBuilder(this).apply {
-                  setView(R.layout.pinnit_about_dialog)
-                }.create()
-
-                if (!dialog.isShowing) {
-                  dialog.show()
-                  dialog.findViewById<AppCompatTextView>(R.id.app_version)?.text =
-                      getString(R.string.app_version, BuildConfig.VERSION_NAME)
-                  dialog.findViewById<MaterialButton>(R.id.contact_support)
-                      ?.setOnClickListener {
-                        val intent = Intent(Intent.ACTION_SEND)
-                        intent.type = "text/plain"
-                        intent.putExtra(
-                            Intent.EXTRA_EMAIL,
-                            arrayOf("contact@msasikanth.com")
-                        )
-                        intent.putExtra(
-                            Intent.EXTRA_SUBJECT,
-                            getString(
-                                R.string.support_subject,
-                                BuildConfig.VERSION_NAME
-                            )
-                        )
-                        startActivity(
-                            Intent.createChooser(
-                                intent,
-                                getString(R.string.send_email)
-                            )
-                        )
-                      }
-                }
-              }
-              5 -> {
-                if (isNightMode) {
-                  pinnitPreferences.changeTheme(LIGHT)
-                } else {
-                  pinnitPreferences.changeTheme(DARK)
-                }
-              }
+          .setOnOptionSelectedListener { optionItem ->
+            if (optionItem.id != R.id.aboutFragment) {
+              navController.navigate(optionItem.id)
+            } else {
+              showAbout()
             }
-          })
+          }
           .show(supportFragmentManager)
     })
 
@@ -217,6 +166,40 @@ class MainActivity : AppCompatActivity() {
         // TODO: Launch create page
       }
     })
+  }
+
+  private fun showAbout() {
+    val dialog = MaterialAlertDialogBuilder(this).apply {
+      setView(R.layout.pinnit_about_dialog)
+    }.create()
+
+    if (!dialog.isShowing) {
+      dialog.show()
+      dialog.findViewById<AppCompatTextView>(R.id.app_version)?.text =
+          getString(R.string.app_version, BuildConfig.VERSION_NAME)
+      dialog.findViewById<MaterialButton>(R.id.contact_support)
+          ?.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(
+                Intent.EXTRA_EMAIL,
+                arrayOf("contact@msasikanth.com")
+            )
+            intent.putExtra(
+                Intent.EXTRA_SUBJECT,
+                getString(
+                    R.string.support_subject,
+                    BuildConfig.VERSION_NAME
+                )
+            )
+            startActivity(
+                Intent.createChooser(
+                    intent,
+                    getString(R.string.send_email)
+                )
+            )
+          }
+    }
   }
 
   override fun onBackPressed() {

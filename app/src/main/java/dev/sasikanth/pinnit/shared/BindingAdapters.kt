@@ -3,33 +3,8 @@ package dev.sasikanth.pinnit.shared
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
-import dev.sasikanth.pinnit.R
-
-@BindingAdapter("srcRes")
-fun ImageView.setImageRes(drawableRes: Int) {
-  setImageResource(drawableRes)
-}
-
-@BindingAdapter("isVisible")
-fun View.setVisibility(isVisible: Boolean) {
-  visibility = if (isVisible) {
-    View.VISIBLE
-  } else {
-    View.GONE
-  }
-}
-
-@BindingAdapter("isOptionSelected")
-fun View.setOptionSelected(isSelected: Boolean) {
-  if (isSelected) {
-    this.setBackgroundResource(R.drawable.option_item_selected)
-  } else {
-    this.background = null
-  }
-}
 
 @BindingAdapter("layoutFullscreen")
 fun View.bindLayoutFullscreen(previousFullscreen: Boolean, fullscreen: Boolean) {

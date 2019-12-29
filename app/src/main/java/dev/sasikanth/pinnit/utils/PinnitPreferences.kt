@@ -18,13 +18,15 @@ class PinnitPreferences
     const val KEY_ALLOWED_APPS = "allowed_apps"
   }
 
-  private val defaultThemeValue = context.getString(R.string.pref_theme_light)
+  private val defaultThemeValue = context.getString(R.string.pref_theme_auto)
   private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
     when (key) {
       KEY_THEME -> updateUsingThemePreference()
     }
   }
 
+  val theme: Theme
+    get() = themePreference
   private var themePreference: Theme
     get() = getThemeForStorageValue(
         sharedPreferences.getString(KEY_THEME, defaultThemeValue)!!
@@ -61,20 +63,24 @@ class PinnitPreferences
   private fun getStorageKeyForTheme(theme: Theme) = when (theme) {
     Theme.DARK -> context.getString(R.string.pref_theme_dark)
     Theme.LIGHT -> context.getString(R.string.pref_theme_light)
+    Theme.AUTO -> context.getString(R.string.pref_theme_auto)
   }
 
   private fun getThemeForStorageValue(value: String) = when (value) {
     context.getString(R.string.pref_theme_dark) -> Theme.DARK
-    else -> Theme.LIGHT
+    context.getString(R.string.pref_theme_light) -> Theme.LIGHT
+    else -> Theme.AUTO
   }
 
   private fun updateUsingThemePreference() = when (themePreference) {
     Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    Theme.AUTO -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
   }
 
   enum class Theme {
     LIGHT,
-    DARK
+    DARK,
+    AUTO
   }
 }

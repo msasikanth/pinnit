@@ -74,7 +74,7 @@
           android:duration="250"
           android:interpolator="@android:interpolator/fast_out_slow_in"
           android:propertyName="fillColor"
-          android:startOffset="175"
+          android:startOffset="150"
           android:valueFrom="?attr/colorOnPrimary"
           android:valueTo="?attr/colorSecondary"
           android:valueType="colorType" />
@@ -88,7 +88,7 @@
           android:duration="130"
           android:interpolator="@android:interpolator/fast_out_slow_in"
           android:propertyName="trimPathEnd"
-          android:startOffset="175"
+          android:startOffset="150"
           android:valueFrom="1"
           android:valueTo="0"
           android:valueType="floatType" />
@@ -96,7 +96,7 @@
           android:duration="250"
           android:interpolator="@android:interpolator/fast_out_slow_in"
           android:propertyName="strokeColor"
-          android:startOffset="175"
+          android:startOffset="150"
           android:valueFrom="?attr/colorOnPrimary"
           android:valueTo="?attr/colorSecondary"
           android:valueType="colorType" />
@@ -109,7 +109,7 @@
         android:duration="250"
         android:interpolator="@android:interpolator/fast_out_slow_in"
         android:propertyName="fillColor"
-        android:startOffset="175"
+        android:startOffset="150"
         android:valueFrom="?attr/colorOnPrimary"
         android:valueTo="?attr/colorSecondary"
         android:valueType="colorType" />
