@@ -25,7 +25,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
       info: NotifItemInfo
   ): ItemHolderInfo {
     val pinnitItem = pinnitItemViewHolder.pinnitItem
-    info.id = pinnitItem._id
+    info.key = pinnitItem.notifKey
     info.isPinned = pinnitItem.isPinned
     return info
   }
@@ -75,7 +75,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
       val oldPinStatus = preInfo.isPinned
       val newPinStatus = postInfo.isPinned
 
-      if (oldPinStatus == newPinStatus || preInfo.id != postInfo.id) {
+      if (oldPinStatus == newPinStatus || preInfo.key != postInfo.key) {
         super.animateChange(oldHolder, newHolder, preInfo, postInfo)
       }
 
@@ -151,7 +151,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
   }
 
   class NotifItemInfo : ItemHolderInfo() {
-    var id: Long = 0L
+    var key: Long = 0L
     var isPinned: Boolean = false
   }
 }

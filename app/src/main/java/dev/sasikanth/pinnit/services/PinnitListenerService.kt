@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import dev.sasikanth.pinnit.data.Message
 import dev.sasikanth.pinnit.data.PinnitItem
+import dev.sasikanth.pinnit.data.Result
 import dev.sasikanth.pinnit.data.TemplateStyle
 import dev.sasikanth.pinnit.data.source.PinnitRepository
 import dev.sasikanth.pinnit.di.injector
@@ -36,34 +37,21 @@ class PinnitListenerService : NotificationListenerService() {
   @Inject
   lateinit var pinnitRepository: PinnitRepository
 
-  private val job = Job()
-  private val coroutineContext = Dispatchers.Main
-
   private val allowedApps: Set<String>
     get() = pinnitPreferences.allowedApps
 
+  private val job = Job()
+  private val coroutineContext = Dispatchers.Main
   private val coroutineScope = CoroutineScope(job + coroutineContext)
 
   override fun onCreate() {
     injector.inject(this)
     super.onCreate()
-    Timber.i("Notification listener service created")
   }
 
   override fun onDestroy() {
     super.onDestroy()
     job.cancel()
-    Timber.i("Notification listener service destroyed")
-  }
-
-  override fun onListenerConnected() {
-    super.onListenerConnected()
-    Timber.i("Notification listener service connected")
-  }
-
-  override fun onListenerDisconnected() {
-    super.onListenerDisconnected()
-    Timber.i("Notification listener service disconnected")
   }
 
   override fun onNotificationPosted(sbn: StatusBarNotification?) {
@@ -157,20 +145,20 @@ class PinnitListenerService : NotificationListenerService() {
               }
             }
 
+            val notificationKey = sbn.notification.hashCode().toLong()
             val notifItem = PinnitItem(
-                _id = 0,
-                notifKey = sbn.key,
+                notifKey = notificationKey,
                 notifId = sbn.id,
                 notifIcon = notificationIconUri,
                 title = title,
-                text = text,
+                content = text,
                 messages = messages,
                 packageName = sbn.packageName,
                 appLabel = appLabel,
                 postedOn = sbn.postTime,
                 template = templateStyle,
                 isPinned = false,
-                isCurrent = false // TODO: Set as current when notification is posted
+                isCurrent = false
             )
             pinnitRepository.saveNotif(notifItem)
           }
@@ -207,7 +195,7 @@ class PinnitListenerService : NotificationListenerService() {
       val picturesStorage = applicationContext
           .getExternalFilesDir(Environment.DIRECTORY_PICTURES)
       val notifIconFile =
-          File(picturesStorage, appInfo.packageName + sbn.key + sbn.hashCode())
+          File(picturesStorage, appInfo.packageName + sbn.notification.getLargeIcon().hashCode())
       val iconDrawable = if (largeIcon != null) {
         largeIcon.loadDrawable(applicationContext)
       } else {

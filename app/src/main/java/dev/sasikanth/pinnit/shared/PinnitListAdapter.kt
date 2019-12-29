@@ -88,7 +88,7 @@ class PinnitListAdapter(
         }
         messagesBuilder.toString()
       } else {
-        pinnitItem.text
+        pinnitItem.content
       }
       pinnitContentView.text = contentViewMessage
 
@@ -133,7 +133,7 @@ class PinnitListAdapter(
 
 object PinnitDiffCallback : DiffUtil.ItemCallback<PinnitItem>() {
   override fun areItemsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {
-    return oldItem._id == newItem._id
+    return oldItem.notifKey == newItem.notifKey
   }
 
   override fun areContentsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {

@@ -32,5 +32,6 @@ interface PinnitAppComponent {
   fun inject(currentFragment: CurrentFragment)
   fun inject(historyFragment: HistoryFragment)
   fun inject(appsFragment: AppsFragment)
+
   fun inject(pinnitListenerService: PinnitListenerService)
 }

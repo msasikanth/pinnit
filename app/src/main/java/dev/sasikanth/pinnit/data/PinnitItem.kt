@@ -7,10 +7,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "notifs")
 data class PinnitItem(
-    @PrimaryKey(autoGenerate = true)
-    val _id: Long = 0L,
+    @PrimaryKey
     @ColumnInfo(name = "notif_key")
-    val notifKey: String,
+    val notifKey: Long,
     @ColumnInfo(name = "notif_id")
     val notifId: Int,
     @ColumnInfo(name = "notif_icon")
@@ -18,7 +17,7 @@ data class PinnitItem(
     @ColumnInfo(name = "title")
     val title: String = "",
     @ColumnInfo(name = "text")
-    val text: String = "",
+    val content: String = "",
     @ColumnInfo(name = "messages")
     val messages: List<Message> = emptyList(),
     @ColumnInfo(name = "package_name")
@@ -35,13 +34,15 @@ data class PinnitItem(
     val isCurrent: Boolean = false
 ) {
 
+  fun removeFromCurrent(): PinnitItem =
+      copy(isCurrent = false)
+
   fun contentHashCode(): Int {
-    var result = _id.hashCode()
-    result = 31 * result + notifKey.hashCode()
+    var result = notifKey.hashCode()
     result = 31 * result + notifId
     result = 31 * result + notifIcon.hashCode()
     result = 31 * result + title.hashCode()
-    result = 31 * result + text.hashCode()
+    result = 31 * result + content.hashCode()
     result = 31 * result + messages.hashCode()
     result = 31 * result + packageName.hashCode()
     result = 31 * result + appLabel.hashCode()
@@ -56,12 +57,11 @@ data class PinnitItem(
 
     other as PinnitItem
 
-    if (_id != other._id) return false
     if (notifKey != other.notifKey) return false
     if (notifId != other.notifId) return false
     if (notifIcon != other.notifIcon) return false
     if (title != other.title) return false
-    if (text != other.text) return false
+    if (content != other.content) return false
     if (messages != other.messages) return false
     if (packageName != other.packageName) return false
     if (appLabel != other.appLabel) return false
@@ -83,7 +83,7 @@ data class PinnitItem(
     if (notifId != other.notifId) return false
     if (notifIcon != other.notifIcon) return false
     if (title != other.title) return false
-    if (text != other.text) return false
+    if (content != other.content) return false
     if (messages != other.messages) return false
     if (packageName != other.packageName) return false
     if (appLabel != other.appLabel) return false
@@ -95,12 +95,11 @@ data class PinnitItem(
   }
 
   override fun hashCode(): Int {
-    var result = _id.hashCode()
-    result = 31 * result + notifKey.hashCode()
+    var result = notifKey.hashCode()
     result = 31 * result + notifId
     result = 31 * result + notifIcon.hashCode()
     result = 31 * result + title.hashCode()
-    result = 31 * result + text.hashCode()
+    result = 31 * result + content.hashCode()
     result = 31 * result + messages.hashCode()
     result = 31 * result + packageName.hashCode()
     result = 31 * result + appLabel.hashCode()
