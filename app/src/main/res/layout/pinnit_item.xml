@@ -45,54 +45,63 @@
       android:orientation="vertical"
       app:layout_constraintGuide_end="24dp" />
 
-    <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/separator"
-      style="@style/TextStyle.Pinnit.Overline1"
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:id="@+id/app_timestamp_holder"
+      android:orientation="horizontal"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginStart="4sp"
-      android:layout_marginEnd="4sp"
-      android:text="@string/dot_separator"
-      app:firstBaselineToTopHeight="16sp"
-      app:lastBaselineToBottomHeight="8sp"
-      app:layout_constraintEnd_toStartOf="@id/timestamp"
-      app:layout_constraintStart_toEndOf="@id/appName"
-      app:layout_constraintTop_toBottomOf="@id/top_guideline" />
-
-    <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/appName"
-      style="@style/TextStyle.Pinnit.Overline1"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="?attr/colorOnBackgroundVariant"
-      app:firstBaselineToTopHeight="16sp"
-      app:lastBaselineToBottomHeight="8sp"
-      app:layout_constraintEnd_toStartOf="@id/separator"
-      app:layout_constraintHorizontal_bias="0"
-      app:layout_constraintHorizontal_chainStyle="packed"
+      android:gravity="center_vertical"
       app:layout_constraintStart_toEndOf="@id/start_guideline"
-      app:layout_constraintTop_toBottomOf="@id/top_guideline"
-      tools:text="App Name" />
-
-    <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/timestamp"
-      style="@style/TextStyle.Pinnit.Overline2"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="?attr/colorOnBackgroundVariant"
-      app:firstBaselineToTopHeight="16sp"
-      app:lastBaselineToBottomHeight="8sp"
       app:layout_constraintEnd_toStartOf="@id/toggle_pin_guideline"
-      app:layout_constraintStart_toEndOf="@id/separator"
-      app:layout_constraintTop_toBottomOf="@id/top_guideline"
-      tools:text="24 minutes ago" />
+      app:layout_constraintTop_toBottomOf="@id/top_guideline">
+
+      <ImageView
+        android:id="@+id/app_small_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_pinnit_apps_selected"
+        android:layout_marginEnd="8dp"
+        android:tint="?attr/colorSecondary" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/appName"
+        style="@style/TextStyle.Pinnit.Overline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorSecondary"
+        app:firstBaselineToTopHeight="16sp"
+        app:lastBaselineToBottomHeight="8sp"
+        tools:text="App Name" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/separator"
+        style="@style/TextStyle.Pinnit.Overline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8sp"
+        android:layout_marginEnd="8sp"
+        android:text="@string/dot_separator"
+        app:firstBaselineToTopHeight="16sp"
+        app:lastBaselineToBottomHeight="8sp"/>
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/timestamp"
+        style="@style/TextStyle.Pinnit.Overline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnBackgroundVariant"
+        app:firstBaselineToTopHeight="16sp"
+        app:lastBaselineToBottomHeight="8sp"
+        tools:text="24 minutes ago" />
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Barrier
       android:id="@+id/info_barrier"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:barrierDirection="bottom"
-      app:constraint_referenced_ids="separator,appName,timestamp" />
+      app:constraint_referenced_ids="app_timestamp_holder" />
 
     <Space
       android:id="@+id/info_space"
