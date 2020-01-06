@@ -56,12 +56,11 @@
       app:layout_constraintTop_toBottomOf="@id/top_guideline">
 
       <ImageView
-        android:id="@+id/app_small_icon"
+        android:id="@+id/appSmallIcon"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:src="@drawable/ic_pinnit_apps_selected"
-        android:layout_marginEnd="8dp"
-        android:tint="?attr/colorSecondary" />
+        android:layout_marginEnd="8dp" />
 
       <com.google.android.material.textview.MaterialTextView
         android:id="@+id/appName"
