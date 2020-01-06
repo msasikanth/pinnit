@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.shared
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -112,15 +113,17 @@ class PinnitListAdapter(
     }
 
     private fun notificationUnPinnedState() {
+      appSmallIcon.imageTintList = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorSecondary))
       editButton.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
       pinnitTitleView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackground))
       pinnitContentView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
-      appName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      appName.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
       separator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
       timestamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
     }
 
     private fun notificationPinnedState() {
+      appSmallIcon.imageTintList = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
       editButton.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
       pinnitTitleView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
       pinnitContentView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
