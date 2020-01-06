@@ -17,20 +17,6 @@
         android:name="mask"
         android:pathData="M 4 0 L 28 0 L 28 28 L 4 28 Z" />
       <path
-        android:name="check_top_left_to_center"
-        android:pathData="M 12.41 4.41 L 15 7"
-        android:strokeWidth="2"
-        android:strokeColor="?attr/colorOnPrimary"
-        android:strokeLineCap="square"
-        android:trimPathEnd="0" />
-      <path
-        android:name="check_center_to_top_right"
-        android:pathData="M 15 7 L 20.59 1.41"
-        android:strokeWidth="2"
-        android:strokeColor="?attr/colorOnPrimary"
-        android:strokeLineCap="square"
-        android:trimPathEnd="0" />
-      <path
         android:name="check_full"
         android:pathData="M 11.705 3.705 L 15 7 L 21.295 0.705"
         android:strokeWidth="2"
@@ -53,7 +39,7 @@
         android:duration="250"
         android:interpolator="@android:interpolator/fast_out_slow_in"
         android:propertyName="translateY"
-        android:startOffset="200"
+        android:startOffset="275"
         android:valueFrom="6"
         android:valueTo="0"
         android:valueType="floatType" />
@@ -88,7 +74,7 @@
           android:duration="130"
           android:interpolator="@android:interpolator/fast_out_slow_in"
           android:propertyName="trimPathEnd"
-          android:startOffset="150"
+          android:startOffset="275"
           android:valueFrom="1"
           android:valueTo="0"
           android:valueType="floatType" />
