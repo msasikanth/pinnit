@@ -3,12 +3,8 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/nav_graph.xml"
-  app:startDestination="@id/currentFragment">
+  app:startDestination="@id/historyFragment">
 
-  <fragment
-    android:id="@+id/currentFragment"
-    android:name="dev.sasikanth.pinnit.pages.currentnotifs.CurrentFragment"
-    tools:layout="@layout/fragment_current" />
   <fragment
     android:id="@+id/historyFragment"
     android:name="dev.sasikanth.pinnit.pages.historynotifs.HistoryFragment"

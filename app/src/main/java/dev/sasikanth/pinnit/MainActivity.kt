@@ -76,13 +76,6 @@ class MainActivity : AppCompatActivity() {
 
     navController.addOnDestinationChangedListener { _, destination, _ ->
       when (destination.id) {
-        R.id.currentFragment -> {
-          binding.apply {
-            appBarLabel.text = getString(R.string.current)
-            bottomAppBar.setPageActionButtonTitle(R.string.create)
-            bottomAppBar.isTooltipVisible(false)
-          }
-        }
         R.id.historyFragment -> {
           binding.apply {
             appBarLabel.text = getString(R.string.history)
@@ -109,13 +102,6 @@ class MainActivity : AppCompatActivity() {
     })
 
     mainViewModel.showOptionsMenu.observe(this, EventObserver {
-
-      val currentNotifs = OptionItem(
-          id = R.id.currentFragment,
-          title = R.string.current,
-          icon = R.drawable.sld_current,
-          isSelected = navController.currentDestination?.id == R.id.currentFragment
-      )
       val historyNotifs = OptionItem(
           id = R.id.historyFragment,
           title = R.string.history,
@@ -136,7 +122,6 @@ class MainActivity : AppCompatActivity() {
 
       OptionsBottomSheet()
           .addOptions(
-              currentNotifs,
               historyNotifs,
               apps,
               about
@@ -199,14 +184,6 @@ class MainActivity : AppCompatActivity() {
                 )
             )
           }
-    }
-  }
-
-  override fun onBackPressed() {
-    if (navController.currentDestination?.id != R.id.currentFragment) {
-      navController.navigate(R.id.currentFragment)
-    } else {
-      super.onBackPressed()
     }
   }
 

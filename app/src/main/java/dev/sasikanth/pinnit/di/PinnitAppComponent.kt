@@ -8,7 +8,6 @@ import dev.sasikanth.pinnit.MainViewModel
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.pages.apps.AppsFragment
 import dev.sasikanth.pinnit.pages.apps.AppsViewModel
-import dev.sasikanth.pinnit.pages.currentnotifs.CurrentFragment
 import dev.sasikanth.pinnit.pages.historynotifs.HistoryFragment
 import dev.sasikanth.pinnit.services.PinnitListenerService
 import javax.inject.Singleton
@@ -30,7 +29,6 @@ interface PinnitAppComponent {
   // inject into
   fun inject(mainActivity: MainActivity)
 
-  fun inject(currentFragment: CurrentFragment)
   fun inject(historyFragment: HistoryFragment)
   fun inject(appsFragment: AppsFragment)
   fun inject(optionsBottomSheet: OptionsBottomSheet)
