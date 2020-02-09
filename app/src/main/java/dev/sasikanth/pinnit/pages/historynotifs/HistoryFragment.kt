@@ -15,8 +15,6 @@ import dev.sasikanth.pinnit.databinding.FragmentHistoryBinding
 import dev.sasikanth.pinnit.di.activityViewModels
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.shared.ItemTouchHelperCallback
-import dev.sasikanth.pinnit.shared.PinnitAdapterListener
-import dev.sasikanth.pinnit.shared.PinnitListAdapter
 import dev.sasikanth.pinnit.shared.animators.CustomItemAnimator
 import dev.sasikanth.pinnit.shared.dismissNotification
 import dev.sasikanth.pinnit.shared.showPersistentNotif
@@ -41,7 +39,7 @@ class HistoryFragment : Fragment() {
         false
     )
 
-    val adapter = PinnitListAdapter(PinnitAdapterListener(
+    val adapter = HistoryAdapter(HistoryAdapterListener(
         onNotificationClicked = { notifItem ->
           try {
             val packageManager = requireActivity().packageManager

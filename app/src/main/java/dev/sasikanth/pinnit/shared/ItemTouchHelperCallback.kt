@@ -2,13 +2,13 @@ package dev.sasikanth.pinnit.shared
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitItem
+import dev.sasikanth.pinnit.pages.historynotifs.HistoryAdapter
 
 class ItemTouchHelperCallback(
     private val context: Context,
@@ -22,7 +22,7 @@ class ItemTouchHelperCallback(
       recyclerView: RecyclerView,
       viewHolder: RecyclerView.ViewHolder
   ): Int {
-    if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
+    if (viewHolder is HistoryAdapter.PinnitItemViewHolder) {
       if (viewHolder.pinnitItem.isPinned) {
         return 0
       }
@@ -40,7 +40,7 @@ class ItemTouchHelperCallback(
 
   override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
     if (viewHolder.adapterPosition != RecyclerView.NO_POSITION) {
-      if (viewHolder is PinnitListAdapter.PinnitItemViewHolder) {
+      if (viewHolder is HistoryAdapter.PinnitItemViewHolder) {
         onItemSwiped(viewHolder.pinnitItem)
       }
     }

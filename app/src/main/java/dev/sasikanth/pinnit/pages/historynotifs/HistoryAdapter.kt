@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.shared
+package dev.sasikanth.pinnit.pages.historynotifs
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,24 +15,25 @@ import coil.api.load
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitItem
 import dev.sasikanth.pinnit.data.TemplateStyle
+import dev.sasikanth.pinnit.shared.resolveColor
 import dev.sasikanth.pinnit.utils.DateUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.pinnit_item.*
 
-class PinnitListAdapter(
-    private val pinnitAdapterListener: PinnitAdapterListener
+class HistoryAdapter(
+    private val historyAdapterListener: HistoryAdapterListener
 ) : ListAdapter<PinnitItem, RecyclerView.ViewHolder>(PinnitDiffCallback) {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return PinnitItemViewHolder.from(parent).apply {
       toggleNotificationPin.setOnClickListener {
-        pinnitAdapterListener.pinNotifItem(pinnitItem)
+        historyAdapterListener.pinNotifItem(pinnitItem)
       }
       itemView.setOnClickListener {
-        pinnitAdapterListener.onPinnitItemClick(pinnitItem)
+        historyAdapterListener.onPinnitItemClick(pinnitItem)
       }
       itemView.setOnLongClickListener {
-        pinnitAdapterListener.pinNotifItem(pinnitItem)
+        historyAdapterListener.pinNotifItem(pinnitItem)
         return@setOnLongClickListener true
       }
     }
@@ -144,7 +145,7 @@ object PinnitDiffCallback : DiffUtil.ItemCallback<PinnitItem>() {
   }
 }
 
-class PinnitAdapterListener(
+class HistoryAdapterListener(
     private val pinNotification: (pinnitItem: PinnitItem, isPinned: Boolean) -> Unit,
     private val onNotificationClicked: (pinnitItem: PinnitItem) -> Unit
 ) {

@@ -7,7 +7,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.circularreveal.CircularRevealCompat
-import dev.sasikanth.pinnit.shared.PinnitListAdapter.PinnitItemViewHolder
+import dev.sasikanth.pinnit.pages.historynotifs.HistoryAdapter.PinnitItemViewHolder
 import kotlinx.android.synthetic.main.pinnit_item.*
 import kotlin.math.hypot
 
