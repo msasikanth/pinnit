@@ -23,6 +23,8 @@ class HistoryFragment : Fragment() {
 
   private val mainViewModel by activityViewModels { injector.mainViewModel }
 
+  private var binding: FragmentHistoryBinding? = null
+
   override fun onAttach(context: Context) {
     super.onAttach(context)
     injector.inject(this)
@@ -33,7 +35,7 @@ class HistoryFragment : Fragment() {
       container: ViewGroup?,
       savedInstanceState: Bundle?
   ): View? {
-    val binding = FragmentHistoryBinding.inflate(
+    binding = FragmentHistoryBinding.inflate(
         inflater,
         container,
         false
@@ -62,10 +64,10 @@ class HistoryFragment : Fragment() {
         }
     ))
 
-    binding.notifHistoryList.setHasFixedSize(true)
-    binding.notifHistoryList.itemAnimator = CustomItemAnimator()
-    binding.notifHistoryList.adapter = adapter
-    binding.notifHistoryList.addItemDecoration(
+    binding!!.notifHistoryList.setHasFixedSize(true)
+    binding!!.notifHistoryList.itemAnimator = CustomItemAnimator()
+    binding!!.notifHistoryList.adapter = adapter
+    binding!!.notifHistoryList.addItemDecoration(
         DividerItemDecoration(
             requireContext(),
             RecyclerView.VERTICAL
@@ -80,17 +82,22 @@ class HistoryFragment : Fragment() {
             mainViewModel.deleteNotif(notifId = pinnitItem.notifKey)
           }
         })
-    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notifHistoryList)
+    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding!!.notifHistoryList)
 
     // TODO: Verify item updates when app is opened
     mainViewModel.pinnitList.observe(viewLifecycleOwner, Observer {
-      binding.notifErrorLayout.errorNotifView.isVisible = it.isNullOrEmpty()
-      binding.notifHistoryList.isVisible = !it.isNullOrEmpty()
+      binding!!.notifErrorLayout.errorNotifView.isVisible = it.isNullOrEmpty()
+      binding!!.notifHistoryList.isVisible = !it.isNullOrEmpty()
 
       adapter.submitList(it)
     })
 
-    binding.lifecycleOwner = viewLifecycleOwner
-    return binding.root
+    binding!!.lifecycleOwner = viewLifecycleOwner
+    return binding!!.root
+  }
+
+  override fun onDestroyView() {
+    binding = null
+    super.onDestroyView()
   }
 }
