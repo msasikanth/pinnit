@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -79,17 +80,31 @@ class MainActivity : AppCompatActivity() {
         R.id.historyFragment -> {
           binding.apply {
             appBarLabel.text = getString(R.string.history)
-            bottomAppBar.setPageActionButtonTitle(R.string.clear_history)
+            bottomAppBar.setPageActionButtonTitle(R.string.create)
             bottomAppBar.isTooltipVisible(false)
+            binding.clearHistory.isVisible = true
           }
         }
         R.id.appsFragment -> {
           binding.apply {
             appBarLabel.text = getString(R.string.your_apps)
             bottomAppBar.isTooltipVisible(true)
+            binding.clearHistory.isVisible = false
           }
         }
       }
+    }
+
+    binding.clearHistory.setOnClickListener {
+      MaterialAlertDialogBuilder(this)
+          .setTitle(getString(R.string.clear_history_dialog_title))
+          .setMessage(getString(R.string.clear_history_dialog_subtitle))
+          .setPositiveButton(R.string.yes) { _, _ ->
+            mainViewModel.deleteUnPinnedNotifs()
+          }
+          .setNegativeButton(R.string.no) { _, _ ->
+          }
+          .show()
     }
 
     mainViewModel.pinnitDeleted.observe(this, EventObserver { notifItem ->
@@ -137,19 +152,7 @@ class MainActivity : AppCompatActivity() {
     })
 
     mainViewModel.notifAction.observe(this, EventObserver {
-      if (navController.currentDestination?.id == R.id.historyFragment) {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.clear_history_dialog_title))
-            .setMessage(getString(R.string.clear_history_dialog_subtitle))
-            .setPositiveButton(R.string.yes) { _, _ ->
-              mainViewModel.deleteUnPinnedNotifs()
-            }
-            .setNegativeButton(R.string.no) { _, _ ->
-            }
-            .show()
-      } else {
-        // TODO: Launch create page
-      }
+      // TODO: Launch create page
     })
   }
 
