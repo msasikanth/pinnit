@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,9 +71,14 @@ class HistoryAdapter(
 
       appName.text = pinnitItem.appLabel
       timestamp.text = DateUtils.getRelativeTime(pinnitItem.postedOn)
-      pinnitIconView.load(pinnitItem.notifIcon) {
-        placeholder(colorDrawable)
-        error(colorDrawable)
+      if (pinnitItem.notifIcon != null && pinnitItem.notifIcon != Uri.EMPTY) {
+        pinnitIconView.isVisible = true
+        pinnitIconView.load(pinnitItem.notifIcon) {
+          placeholder(colorDrawable)
+          error(colorDrawable)
+        }
+      } else {
+        pinnitIconView.isVisible = false
       }
       pinnitTitleView.text = pinnitItem.title
 
