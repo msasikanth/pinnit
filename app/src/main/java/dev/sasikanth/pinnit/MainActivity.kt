@@ -29,10 +29,16 @@ class MainActivity : AppCompatActivity() {
   lateinit var pinnitPreferences: PinnitPreferences
 
   private lateinit var navController: NavController
+  private var notifPermissionDialog: AlertDialog? = null
 
   private val mainViewModel by viewModels { injector.mainViewModel }
-  private val notifPermissionDialog: AlertDialog by lazy {
-    MaterialAlertDialogBuilder(this)
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    setTheme(R.style.Theme_Pinnit_Main)
+    injector.inject(this)
+    super.onCreate(savedInstanceState)
+
+    notifPermissionDialog = MaterialAlertDialogBuilder(this)
         .setTitle(R.string.missing_permissions_title)
         .setMessage(R.string.missing_permissions_desc)
         .setCancelable(false)
@@ -43,30 +49,6 @@ class MainActivity : AppCompatActivity() {
           finish()
         }
         .create()
-  }
-
-  override fun onStart() {
-    super.onStart()
-    if (!isNotificationAccessGiven()) {
-      if (!notifPermissionDialog.isShowing) {
-        notifPermissionDialog.show()
-      }
-    } else {
-      if (notifPermissionDialog.isShowing) {
-        notifPermissionDialog.cancel()
-      }
-    }
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    notifPermissionDialog.cancel()
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    setTheme(R.style.Theme_Pinnit_Main)
-    injector.inject(this)
-    super.onCreate(savedInstanceState)
 
     val binding: ActivityMainBinding =
         DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -188,6 +170,25 @@ class MainActivity : AppCompatActivity() {
             )
           }
     }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    if (!isNotificationAccessGiven()) {
+      if (!notifPermissionDialog!!.isShowing) {
+        notifPermissionDialog!!.show()
+      }
+    } else {
+      if (notifPermissionDialog!!.isShowing) {
+        notifPermissionDialog!!.cancel()
+      }
+    }
+  }
+
+  override fun onDestroy() {
+    notifPermissionDialog!!.cancel()
+    notifPermissionDialog = null
+    super.onDestroy()
   }
 
   private fun isNotificationAccessGiven(): Boolean {
