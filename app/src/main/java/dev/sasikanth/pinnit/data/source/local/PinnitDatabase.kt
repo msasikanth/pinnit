@@ -23,7 +23,7 @@ abstract class PinnitDatabase : RoomDatabase() {
       return Room.databaseBuilder(
           context,
           PinnitDatabase::class.java,
-          "Notifs.db"
+          "pinnit.db"
       ).fallbackToDestructiveMigration()
           .build()
     }
