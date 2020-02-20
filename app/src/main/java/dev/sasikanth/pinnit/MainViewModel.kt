@@ -18,7 +18,7 @@ class MainViewModel
 ) : ViewModel() {
 
   val pinnitList: LiveData<List<PinnitItem>> = pinnitRepository
-      .getNotifs()
+      .notifications()
       .asLiveData()
 
   private val _notifAction = MutableLiveData<Event<Unit>>()
@@ -41,37 +41,34 @@ class MainViewModel
     _notifAction.postValue(Event(Unit))
   }
 
-  fun pinUnpinNotif(notifId: Long, isPinned: Boolean) {
+  fun togglePinStatus(key: Long, isPinned: Boolean) {
     viewModelScope.launch {
-      if (isPinned) {
-        pinnitRepository.pinNotif(notifId)
-      } else {
-        pinnitRepository.unPinNotif(notifId)
-      }
+      pinnitRepository.pinStatus(key, !isPinned)
     }
   }
 
-  fun deleteUnPinnedNotifs() {
+  fun deleteUnPinned() {
     viewModelScope.launch {
-      if (!pinnitList.value.isNullOrEmpty()) pinnitRepository.deleteUnPinnedNotifs()
+      if (!pinnitList.value.isNullOrEmpty()) pinnitRepository.deleteUnPinned()
     }
   }
 
-  fun deleteNotif(notifId: Long) {
+  // TODO (SM): Delete all duplicate notifications?
+  fun deleteNotification(key: Long) {
     viewModelScope.launch {
-      val notifItem = pinnitRepository.getNotif(notifId)
-      if (notifItem is Result.Success) {
-        val deletedRow = pinnitRepository.deleteNotif(notifId)
+      val pinnitItem = pinnitRepository.notification(key)
+      if (pinnitItem is Result.Success) {
+        val deletedRow = pinnitRepository.delete(key)
         if (deletedRow == 1) {
-          _notifDeleted.postValue(Event(notifItem.data))
+          _notifDeleted.postValue(Event(pinnitItem.data))
         }
       }
     }
   }
 
-  fun saveNotif(pinnitItem: PinnitItem) {
+  fun insertNotification(pinnitItem: PinnitItem) {
     viewModelScope.launch {
-      pinnitRepository.saveNotif(pinnitItem)
+      pinnitRepository.insert(pinnitItem)
     }
   }
 }

@@ -13,7 +13,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import dev.sasikanth.pinnit.data.Message
 import dev.sasikanth.pinnit.data.PinnitItem
-import dev.sasikanth.pinnit.data.Result
 import dev.sasikanth.pinnit.data.TemplateStyle
 import dev.sasikanth.pinnit.data.source.PinnitRepository
 import dev.sasikanth.pinnit.di.injector
@@ -24,7 +23,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -145,11 +143,11 @@ class PinnitListenerService : NotificationListenerService() {
               }
             }
 
-            val notificationKey = sbn.notification.hashCode().toLong()
-            val notifItem = PinnitItem(
-                notifKey = notificationKey,
-                notifId = sbn.id,
-                notifIcon = notificationIconUri,
+            val notificationKey = notification.hashCode().toLong()
+            val pinnitItem = PinnitItem(
+                key = notificationKey,
+                id = sbn.id,
+                icon = notificationIconUri,
                 title = title,
                 content = text,
                 messages = messages,
@@ -160,7 +158,7 @@ class PinnitListenerService : NotificationListenerService() {
                 isPinned = false,
                 isCurrent = false
             )
-            pinnitRepository.saveNotif(notifItem)
+            pinnitRepository.insert(pinnitItem)
           }
         }
       }
@@ -194,22 +192,22 @@ class PinnitListenerService : NotificationListenerService() {
     try {
       val picturesStorage = applicationContext
           .getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-      val notifIconFile =
-          File(picturesStorage, appInfo.packageName + sbn.notification.getLargeIcon().hashCode())
-      val iconDrawable = if (largeIcon != null) {
-        largeIcon.loadDrawable(applicationContext)
-      } else {
-        packageManager.getApplicationIcon(appInfo)
-      }
+      val pinnitIconFile = File(
+          picturesStorage,
+          appInfo.packageName + "_image_" + largeIcon.hashCode()
+      )
+      val iconDrawable = largeIcon.loadDrawable(applicationContext)
 
       // If icon does not exists create one, or else return the uri
-      if (notifIconFile.exists().not()) {
+      if (pinnitIconFile.exists().not()) {
         val bitmap = iconDrawable.asBitmap()
-        FileOutputStream(notifIconFile).use {
+
+        FileOutputStream(pinnitIconFile).use {
           bitmap.compress(CompressFormat.WEBP, 100, it)
         }
       }
-      uri = notifIconFile.toUri()
+
+      uri = pinnitIconFile.toUri()
     } catch (e: Exception) {
       // Do nothing
     }

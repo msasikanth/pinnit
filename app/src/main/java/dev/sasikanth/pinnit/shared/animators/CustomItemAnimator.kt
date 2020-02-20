@@ -25,7 +25,7 @@ class CustomItemAnimator : DefaultItemAnimator() {
       info: NotifItemInfo
   ): ItemHolderInfo {
     val pinnitItem = pinnitItemViewHolder.pinnitItem
-    info.key = pinnitItem.notifKey
+    info.key = pinnitItem.key
     info.isPinned = pinnitItem.isPinned
     return info
   }

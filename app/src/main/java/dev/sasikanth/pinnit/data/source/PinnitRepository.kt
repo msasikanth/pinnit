@@ -15,9 +15,9 @@ class PinnitRepository
     private val pinnitDataSource: PinnitLocalDataSource
 ) {
 
-  fun getNotifs(): Flow<List<PinnitItem>> {
+  fun notifications(): Flow<List<PinnitItem>> {
     return pinnitDataSource
-        .getNotifs()
+        .notifications()
         .map {
           return@map it.distinctBy { pinnitItem ->
             PinnitItemDistinct.createFrom(pinnitItem)
@@ -25,44 +25,32 @@ class PinnitRepository
         }
   }
 
-  fun getPinnedNotifs(): Flow<List<PinnitItem>> {
-    return pinnitDataSource.getPinnedNotifs()
+  fun pinnedNotifications(): Flow<List<PinnitItem>> {
+    return pinnitDataSource.pinnedNotifications()
   }
 
-  suspend fun getNotif(key: Long): Result<PinnitItem> {
-    return pinnitDataSource.getNotif(key)
+  suspend fun notification(key: Long): Result<PinnitItem> {
+    return pinnitDataSource.notification(key)
   }
 
-  suspend fun saveNotif(pinnitItem: PinnitItem): Long {
-    val lastItemByKey = pinnitDataSource.getNotif(pinnitItem.notifKey)
+  suspend fun insert(pinnitItem: PinnitItem): Long {
+    val lastItemByKey = pinnitDataSource.notification(pinnitItem.key)
     if (lastItemByKey is Result.Success) {
       val isItemMatch = pinnitItem.equalsLastItem(lastItemByKey.data)
       if (isItemMatch) {
         return 0
       }
     }
-    return pinnitDataSource.saveNotif(pinnitItem)
+    return pinnitDataSource.insert(pinnitItem)
   }
 
-  suspend fun updateNotif(pinnitItem: PinnitItem) {
-    pinnitDataSource.updateNotif(pinnitItem)
+  suspend fun pinStatus(id: Long, isPinned: Boolean) {
+    pinnitDataSource.pinStatus(id, isPinned)
   }
 
-  suspend fun pinNotif(id: Long) {
-    pinnitDataSource.pinNotif(id)
-  }
+  suspend fun delete(key: Long) = pinnitDataSource.delete(key)
 
-  suspend fun unPinNotif(id: Long) {
-    pinnitDataSource.unPinNotif(id)
-  }
-
-  suspend fun deleteNotif(id: Long) = pinnitDataSource.deleteNotif(id)
-
-  suspend fun deleteAllNotifs() {
-    pinnitDataSource.deleteAllNotifs()
-  }
-
-  suspend fun deleteUnPinnedNotifs() {
-    pinnitDataSource.deleteUnPinnedNotifs()
+  suspend fun deleteUnPinned() {
+    pinnitDataSource.deleteUnPinned()
   }
 }

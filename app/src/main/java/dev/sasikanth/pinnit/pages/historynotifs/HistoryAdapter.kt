@@ -71,9 +71,9 @@ class HistoryAdapter(
 
       appName.text = pinnitItem.appLabel
       timestamp.text = DateUtils.getRelativeTime(pinnitItem.postedOn)
-      if (pinnitItem.notifIcon != null && pinnitItem.notifIcon != Uri.EMPTY) {
+      if (pinnitItem.icon != null && pinnitItem.icon != Uri.EMPTY) {
         pinnitIconView.isVisible = true
-        pinnitIconView.load(pinnitItem.notifIcon) {
+        pinnitIconView.load(pinnitItem.icon) {
           placeholder(colorDrawable)
           error(colorDrawable)
         }
@@ -143,7 +143,7 @@ class HistoryAdapter(
 
 object PinnitDiffCallback : DiffUtil.ItemCallback<PinnitItem>() {
   override fun areItemsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {
-    return oldItem.notifKey == newItem.notifKey
+    return oldItem.key == newItem.key
   }
 
   override fun areContentsTheSame(oldItem: PinnitItem, newItem: PinnitItem): Boolean {

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
   lateinit var pinnitPreferences: PinnitPreferences
 
   private lateinit var navController: NavController
-  private var notifPermissionDialog: AlertDialog? = null
+  private var permissionDialog: AlertDialog? = null
 
   private val mainViewModel by viewModels { injector.mainViewModel }
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     injector.inject(this)
     super.onCreate(savedInstanceState)
 
-    notifPermissionDialog = MaterialAlertDialogBuilder(this)
+    permissionDialog = MaterialAlertDialogBuilder(this)
         .setTitle(R.string.missing_permissions_title)
         .setMessage(R.string.missing_permissions_desc)
         .setCancelable(false)
@@ -82,24 +82,24 @@ class MainActivity : AppCompatActivity() {
           .setTitle(getString(R.string.clear_history_dialog_title))
           .setMessage(getString(R.string.clear_history_dialog_subtitle))
           .setPositiveButton(R.string.yes) { _, _ ->
-            mainViewModel.deleteUnPinnedNotifs()
+            mainViewModel.deleteUnPinned()
           }
           .setNegativeButton(R.string.no) { _, _ ->
           }
           .show()
     }
 
-    mainViewModel.pinnitDeleted.observe(this, EventObserver { notifItem ->
+    mainViewModel.pinnitDeleted.observe(this, EventObserver { pinnitItem ->
       Snackbar.make(binding.mainRootView, R.string.notification_deleted, Snackbar.LENGTH_LONG)
           .setAnchorView(binding.bottomAppBar)
           .setAction(R.string.undo) {
-            mainViewModel.saveNotif(notifItem)
+            mainViewModel.insertNotification(pinnitItem)
           }
           .show()
     })
 
     mainViewModel.showOptionsMenu.observe(this, EventObserver {
-      val historyNotifs = OptionItem(
+      val history = OptionItem(
           id = R.id.historyFragment,
           title = R.string.history,
           icon = R.drawable.sld_history,
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 
       OptionsBottomSheet()
           .addOptions(
-              historyNotifs,
+              history,
               apps,
               about
           )
@@ -175,19 +175,19 @@ class MainActivity : AppCompatActivity() {
   override fun onStart() {
     super.onStart()
     if (!isNotificationAccessGiven()) {
-      if (!notifPermissionDialog!!.isShowing) {
-        notifPermissionDialog!!.show()
+      if (!permissionDialog!!.isShowing) {
+        permissionDialog!!.show()
       }
     } else {
-      if (notifPermissionDialog!!.isShowing) {
-        notifPermissionDialog!!.cancel()
+      if (permissionDialog!!.isShowing) {
+        permissionDialog!!.cancel()
       }
     }
   }
 
   override fun onDestroy() {
-    notifPermissionDialog!!.cancel()
-    notifPermissionDialog = null
+    permissionDialog!!.cancel()
+    permissionDialog = null
     super.onDestroy()
   }
 

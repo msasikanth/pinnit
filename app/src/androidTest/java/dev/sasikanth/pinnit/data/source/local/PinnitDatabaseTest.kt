@@ -19,8 +19,8 @@ class PinnitDatabaseTest {
   private lateinit var pinnitDao: PinnitDao
 
   private val pinnitItem = PinnitItem(
-      notifKey = "",
-      notifId = 1402,
+      key = 0,
+      id = 1402,
       packageName = "",
       appLabel = "",
       postedOn = 0L
@@ -37,41 +37,27 @@ class PinnitDatabaseTest {
   }
 
   @Test
-  fun getNotificationById() = runBlocking {
-    val id = pinnitDao.insertNotifItem(pinnitItem)
-    val notification = pinnitDao.getNotificationById(id)
-    assertThat(notification).isNotNull()
-  }
-
-  @Test
-  fun getNotificationByDefaultId() = runBlocking {
-    pinnitDao.insertNotifItem(pinnitItem)
-    val notification = pinnitDao.getNotificationById(0)
-    assertThat(notification).isNull()
-  }
-
-  @Test
   fun getNotificationByKey() = runBlocking {
-    pinnitDao.insertNotifItem(pinnitItem)
-    val notification = pinnitDao.getNotificationByKey(pinnitItem.notifKey)
+    pinnitDao.insert(pinnitItem)
+    val notification = pinnitDao.notification(pinnitItem.key)
     assertThat(notification).isNotNull()
   }
 
   @Test
-  fun deleteNotificationById() = runBlocking {
-    val id = pinnitDao.insertNotifItem(pinnitItem)
-    pinnitDao.deleteNotifById(id)
-    assertThat(pinnitDao.getNotificationById(id)).isNull()
+  fun deleteNotificationByKey() = runBlocking {
+    val key = pinnitDao.insert(pinnitItem)
+    pinnitDao.delete(key)
+    assertThat(pinnitDao.notification(key)).isNull()
   }
 
   @Test
   fun updateNotificationPinStatus() = runBlocking {
-    val id = pinnitDao.insertNotifItem(pinnitItem)
-    val notification = pinnitDao.getNotificationById(id)
+    val key = pinnitDao.insert(pinnitItem)
+    val notification = pinnitDao.notification(key)
     if (notification != null) {
       assertThat(notification.isPinned).isFalse()
-      pinnitDao.updateNotifPinStatus(id, true)
-      val updateNotification = pinnitDao.getNotificationById(id)
+      pinnitDao.pinStatus(key, true)
+      val updateNotification = pinnitDao.notification(key)
       assertThat(updateNotification?.isPinned).isTrue()
     }
   }

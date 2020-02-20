@@ -55,7 +55,7 @@ class HistoryFragment : Fragment() {
           }
         },
         pinNotification = { pinnitItem, isPinned ->
-          mainViewModel.pinUnpinNotif(pinnitItem.notifKey, isPinned)
+          mainViewModel.togglePinStatus(pinnitItem.key, isPinned)
           if (isPinned) {
             requireContext().showPersistentNotif(pinnitItem)
           } else {
@@ -79,7 +79,7 @@ class HistoryFragment : Fragment() {
         context = requireContext(),
         onItemSwiped = { pinnitItem ->
           pinnitItem?.let {
-            mainViewModel.deleteNotif(notifId = pinnitItem.notifKey)
+            mainViewModel.deleteNotification(key = pinnitItem.key)
           }
         })
     ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding!!.notifHistoryList)
