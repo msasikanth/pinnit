@@ -28,10 +28,12 @@ class MainActivity : AppCompatActivity() {
   @Inject
   lateinit var pinnitPreferences: PinnitPreferences
 
-  private lateinit var navController: NavController
+  private val mainViewModel by viewModels { injector.mainViewModel }
+
+  private var binding: ActivityMainBinding? = null
   private var permissionDialog: AlertDialog? = null
 
-  private val mainViewModel by viewModels { injector.mainViewModel }
+  private lateinit var navController: NavController
 
   override fun onCreate(savedInstanceState: Bundle?) {
     setTheme(R.style.Theme_Pinnit_Main)
@@ -50,34 +52,33 @@ class MainActivity : AppCompatActivity() {
         }
         .create()
 
-    val binding: ActivityMainBinding =
-        DataBindingUtil.setContentView(this, R.layout.activity_main)
-    binding.mainViewModel = mainViewModel
-    binding.lifecycleOwner = this
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    binding!!.mainViewModel = mainViewModel
+    binding!!.lifecycleOwner = this
 
     navController = findNavController(R.id.nav_host_fragment)
 
     navController.addOnDestinationChangedListener { _, destination, _ ->
       when (destination.id) {
         R.id.historyFragment -> {
-          binding.apply {
+          binding!!.apply {
             appBarLabel.text = getString(R.string.history)
             bottomAppBar.setPageActionButtonTitle(R.string.create)
             bottomAppBar.isTooltipVisible(false)
-            binding.clearHistory.isVisible = true
+            clearHistory.isVisible = true
           }
         }
         R.id.appsFragment -> {
-          binding.apply {
+          binding!!.apply {
             appBarLabel.text = getString(R.string.your_apps)
             bottomAppBar.isTooltipVisible(true)
-            binding.clearHistory.isVisible = false
+            clearHistory.isVisible = false
           }
         }
       }
     }
 
-    binding.clearHistory.setOnClickListener {
+    binding!!.clearHistory.setOnClickListener {
       MaterialAlertDialogBuilder(this)
           .setTitle(getString(R.string.clear_history_dialog_title))
           .setMessage(getString(R.string.clear_history_dialog_subtitle))
@@ -90,8 +91,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     mainViewModel.pinnitDeleted.observe(this, EventObserver { pinnitItem ->
-      Snackbar.make(binding.mainRootView, R.string.notification_deleted, Snackbar.LENGTH_LONG)
-          .setAnchorView(binding.bottomAppBar)
+      Snackbar.make(binding!!.mainRootView, R.string.notification_deleted, Snackbar.LENGTH_LONG)
+          .setAnchorView(binding!!.bottomAppBar)
           .setAction(R.string.undo) {
             mainViewModel.insertNotification(pinnitItem)
           }
@@ -188,6 +189,7 @@ class MainActivity : AppCompatActivity() {
   override fun onDestroy() {
     permissionDialog!!.cancel()
     permissionDialog = null
+    binding = null
     super.onDestroy()
   }
 
