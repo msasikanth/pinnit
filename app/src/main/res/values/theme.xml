@@ -1,0 +1,39 @@
+<resources>
+
+  <style name="Base.Theme.Pinnit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+
+    <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
+    <item name="colorSecondary">@color/colorSecondary</item>
+
+    <item name="colorSurface">@color/colorSurface</item>
+    <item name="colorOnSurface">@color/colorOnSurface</item>
+
+    <item name="android:colorBackground">@color/colorBackground</item>
+    <item name="colorOnBackground">@color/colorOnBackground</item>
+
+    <item name="elevationOverlayEnabled">false</item>
+    <item name="elevationOverlayColor">@android:color/transparent</item>
+
+    <item name="android:statusBarColor">@color/colorSurface</item>
+    <item name="android:windowLightStatusBar">true</item>
+
+    <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
+    <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>
+    <item name="textAppearanceBody1">@style/TextAppearance.Pinnit.Body1</item>
+    <item name="textAppearanceBody2">@style/TextAppearance.Pinnit.Body2</item>
+    <item name="textAppearanceButton">@style/TextAppearance.Pinnit.Button</item>
+    <item name="textAppearanceSubtitle1">@style/TextAppearance.Pinnit.Subtitle1</item>
+    <item name="textAppearanceSubtitle2">@style/TextAppearance.Pinnit.Subtitle2</item>
+    <item name="textAppearanceHeadline3">@style/TextAppearance.Pinnit.Headline3</item>
+    <item name="textAppearanceHeadline4">@style/TextAppearance.Pinnit.Headline4</item>
+    <item name="textAppearanceHeadline5">@style/TextAppearance.Pinnit.Headline5</item>
+    <item name="textAppearanceHeadline6">@style/TextAppearance.Pinnit.Headline6</item>
+
+  </style>
+
+  <style name="Theme.Pinnit" parent="Base.Theme.Pinnit" />
+
+</resources>

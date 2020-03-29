@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+  compileSdkVersion 29
+  buildToolsVersion "29.0.3"
+
+  defaultConfig {
+    applicationId "dev.sasikanth.pinnit"
+    minSdkVersion 23
+    targetSdkVersion 29
+    versionCode 1
+    versionName "1.0.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+  }
+  kotlinOptions {
+    jvmTarget = 1.8
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+  implementation "androidx.appcompat:appcompat:$versions.appCompat"
+  implementation "androidx.core:core-ktx:$versions.coreKtx"
+
+  implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+
+  implementation "com.google.android.material:material:$versions.material"
+
+  testImplementation "junit:junit:$versions.junit"
+  androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
+}
