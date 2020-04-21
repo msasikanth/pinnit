@@ -10,7 +10,8 @@ buildscript {
       junit           : '4.13',
       extJunit        : '1.1.1',
       espressoCore    : '3.2.0',
-      navigation      : '2.2.2'
+      navigation      : '2.2.2',
+      leakCanary      : '2.2',
   ]
   repositories {
     google()
