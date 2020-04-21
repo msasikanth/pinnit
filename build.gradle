@@ -9,7 +9,8 @@ buildscript {
       material        : '1.1.0',
       junit           : '4.13',
       extJunit        : '1.1.1',
-      espressoCore    : '3.2.0'
+      espressoCore    : '3.2.0',
+      navigation      : '2.2.2'
   ]
   repositories {
     google()
@@ -19,6 +20,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:3.6.3'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+    classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
   }
 }
 
