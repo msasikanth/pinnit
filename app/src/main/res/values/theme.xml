@@ -14,6 +14,8 @@
     <item name="android:colorBackground">@color/colorBackground</item>
     <item name="colorOnBackground">@color/colorOnBackground</item>
 
+    <item name="colorDivider">@color/colorDivider</item>
+
     <item name="elevationOverlayEnabled">false</item>
     <item name="elevationOverlayColor">@android:color/transparent</item>
 

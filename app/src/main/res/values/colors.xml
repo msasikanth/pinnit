@@ -35,4 +35,6 @@
   <!-- Background underneath notifications -->
   <color name="colorRowBackground">@color/maroon_100</color>
 
+  <color name="colorDivider">@color/color_on_background_15</color>
+
 </resources>
