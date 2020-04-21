@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dev.sasikanth.pinnit.activity.PinnitBottomBar xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:layout_gravity="bottom"
+  tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-</dev.sasikanth.pinnit.activity.PinnitBottomBar>
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/topGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_begin="8dp" />
+
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/bottomGuideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_end="8dp" />
+
+  <ImageView
+    android:id="@+id/navigationIcon"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:background="@drawable/bottom_bar_item_ripple"
+    android:clickable="true"
+    android:contentDescription="@null"
+    android:focusable="true"
+    android:padding="16dp"
+    app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+    app:layout_constraintEnd_toStartOf="@id/contentActionButton"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/topGuideline"
+    tools:src="@drawable/ic_pinnit_dark_mode" />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/contentActionButton"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:visibility="visible"
+    app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+    app:layout_constraintEnd_toStartOf="@id/actionIcon"
+    app:layout_constraintStart_toEndOf="@id/navigationIcon"
+    app:layout_constraintTop_toBottomOf="@id/topGuideline"
+    tools:text="CREATE" />
+
+  <ImageView
+    android:id="@+id/actionIcon"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:background="@drawable/bottom_bar_item_ripple"
+    android:clickable="true"
+    android:contentDescription="@null"
+    android:focusable="true"
+    android:padding="16dp"
+    app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/contentActionButton"
+    app:layout_constraintTop_toBottomOf="@id/topGuideline"
+    tools:src="@drawable/ic_pinnit_about" />
+
+  <View
+    android:id="@+id/divider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@drawable/rectangle"
+    android:backgroundTint="?attr/colorDivider"
+    app:layout_constraintBottom_toTopOf="@id/topGuideline"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0" />
+
+</merge>

@@ -22,6 +22,8 @@
     <item name="android:statusBarColor">@color/colorSurface</item>
     <item name="android:windowLightStatusBar">true</item>
 
+    <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+
     <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
     <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>
     <item name="textAppearanceBody1">@style/TextAppearance.Pinnit.Body1</item>

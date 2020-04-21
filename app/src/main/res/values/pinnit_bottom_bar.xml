@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="PinnitBottomBar">
+    <attr name="navigationIcon" format="reference" />
+    <attr name="contentActionText" format="reference" />
+    <attr name="actionIcon" format="reference" />
+  </declare-styleable>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Buttons -->
+  <style name="Widget.Pinnit.Button" parent="Widget.MaterialComponents.Button">
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:insetTop">8dp</item>
+    <item name="android:insetBottom">8dp</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:maxHeight">@dimen/button_height</item>
+    <item name="android:minHeight">@dimen/button_height</item>
+    <item name="android:textAppearance">?attr/textAppearanceButton</item>
+    <item name="android:textColor">?attr/colorOnPrimary</item>
+    <item name="backgroundColor">?attr/colorPrimary</item>
+    <item name="rippleColor">?attr/colorOnPrimary</item>
+    <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
+  </style>
+</resources>
