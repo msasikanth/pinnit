@@ -19,7 +19,7 @@
     <item name="elevationOverlayEnabled">false</item>
     <item name="elevationOverlayColor">@android:color/transparent</item>
 
-    <item name="android:statusBarColor">@color/colorSurface</item>
+    <item name="android:statusBarColor">@color/statusBarColor</item>
     <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
 
     <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
