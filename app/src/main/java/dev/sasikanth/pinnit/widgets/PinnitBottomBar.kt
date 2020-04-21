@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.activity
+package dev.sasikanth.pinnit.widgets
 
 import android.content.Context
 import android.util.AttributeSet

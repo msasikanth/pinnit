@@ -6,7 +6,7 @@
   android:layout_height="match_parent"
   tools:context=".activity.MainActivity">
 
-  <dev.sasikanth.pinnit.activity.PinnitBottomBar
+  <dev.sasikanth.pinnit.widgets.PinnitBottomBar
     android:id="@+id/bottomBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
