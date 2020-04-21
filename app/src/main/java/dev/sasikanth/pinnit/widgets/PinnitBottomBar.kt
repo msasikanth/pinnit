@@ -6,7 +6,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.getResourceIdOrThrow
+import androidx.core.view.updatePadding
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.utils.donOnApplyWindowInsets
 import kotlinx.android.synthetic.main.pinnit_bottom_bar.view.*
 
 class PinnitBottomBar @JvmOverloads
@@ -33,6 +35,10 @@ constructor(
       mContentActionText = getResourceIdOrThrow(R.styleable.PinnitBottomBar_contentActionText)
       mActionIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_actionIcon)
       recycle()
+    }
+
+    donOnApplyWindowInsets { view, windowInsets, initialPadding ->
+      view.updatePadding(bottom = initialPadding.bottom + windowInsets.systemWindowInsetBottom)
     }
   }
 
