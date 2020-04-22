@@ -76,4 +76,5 @@ dependencies {
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
   androidTestImplementation "com.google.truth:truth:$versions.truth"
+  kaptAndroidTest "com.google.dagger:dagger-compiler:$versions.dagger"
 }
