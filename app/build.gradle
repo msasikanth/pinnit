@@ -56,6 +56,9 @@ dependencies {
 
   implementation "com.jakewharton.threetenabp:threetenabp:$versions.threeten"
 
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
 
