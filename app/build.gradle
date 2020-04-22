@@ -61,7 +61,9 @@ dependencies {
 
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
+  testImplementation "com.google.truth:truth:$versions.truth"
 
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
+  androidTestImplementation "com.google.truth:truth:$versions.truth"
 }
