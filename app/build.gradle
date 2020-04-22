@@ -59,6 +59,9 @@ dependencies {
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
 
+  implementation "com.google.dagger:dagger:$versions.dagger"
+  kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
