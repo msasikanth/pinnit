@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 29
@@ -49,7 +50,13 @@ dependencies {
 
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 
+  implementation "androidx.room:room-runtime:$versions.room"
+  implementation "androidx.room:room-ktx:$versions.room"
+  kapt "androidx.room:room-compiler:$versions.room"
+
   testImplementation "junit:junit:$versions.junit"
+  testImplementation "androidx.room:room-testing:$versions.room"
+
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
 }
