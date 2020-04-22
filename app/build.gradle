@@ -54,6 +54,8 @@ dependencies {
   implementation "androidx.room:room-ktx:$versions.room"
   kapt "androidx.room:room-compiler:$versions.room"
 
+  implementation "com.jakewharton.threetenabp:threetenabp:$versions.threeten"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
 

@@ -13,6 +13,7 @@ buildscript {
       navigation      : '2.2.2',
       leakCanary      : '2.2',
       room            : '2.2.5',
+      threeten        : '1.2.3',
   ]
   repositories {
     google()
