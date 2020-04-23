@@ -58,4 +58,34 @@ class NotificationsRepositoryAndroidTest {
     // then
     assertThat(savedNotification).isEqualTo(expectedNotification)
   }
+
+  @Test
+  fun toggling_notification_pin_status_should_work_correctly() = runBlocking {
+    // given
+    val notificationUuid = UUID.fromString("76dde7cb-2d17-46c0-b523-3ea01eb1565e")
+    val notification = PinnitNotification(
+      uuid = notificationUuid,
+      title = "Notification Title",
+      content = "Notification Content",
+      isPinned = false,
+      createdAt = Instant.now(clock),
+      updatedAt = Instant.now(clock),
+      deletedAt = null
+    )
+
+    // when
+    notificationRepository.save(
+      title = notification.title,
+      content = notification.content,
+      isPinned = notification.isPinned,
+      uuid = notification.uuid
+    )
+    notificationRepository.toggleNotificationPinStatus(notification)
+
+    // then
+    val expectedNotification = notification.copy(
+      isPinned = true
+    )
+    assertThat(notificationRepository.notification(notificationUuid)).isEqualTo(expectedNotification)
+  }
 }

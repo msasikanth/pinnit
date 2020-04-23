@@ -31,4 +31,13 @@ class NotificationRepository @Inject constructor(
     notificationDao.save(listOf(notification))
     return notification
   }
+
+  suspend fun notification(uuid: UUID): PinnitNotification {
+    return notificationDao.notification(uuid)
+  }
+
+  suspend fun toggleNotificationPinStatus(notification: PinnitNotification) {
+    val newPinStatus = !notification.isPinned
+    notificationDao.updatePinStatus(notification.uuid, newPinStatus)
+  }
 }

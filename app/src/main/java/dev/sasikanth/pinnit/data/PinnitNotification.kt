@@ -39,5 +39,8 @@ data class PinnitNotification(
     """
     )
     fun notifications(): Flow<List<PinnitNotification>>
+
+    @Query("SELECT * FROM PinnitNotification WHERE uuid = :uuid LIMIT 1")
+    suspend fun notification(uuid: UUID): PinnitNotification
   }
 }
