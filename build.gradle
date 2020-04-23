@@ -19,6 +19,7 @@ buildscript {
       dagger          : '2.27',
       lifecycle       : '2.2.0',
       arch            : '2.1.0',
+      mockito         : '2.2.0',
   ]
   repositories {
     google()

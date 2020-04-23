@@ -78,6 +78,7 @@ dependencies {
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
   testImplementation "androidx.arch.core:core-testing:$versions.arch"
+  testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
 
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
