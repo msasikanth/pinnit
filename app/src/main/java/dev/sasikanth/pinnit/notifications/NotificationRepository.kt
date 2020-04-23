@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.notifications
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.utils.UtcClock
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.Instant
 import java.util.UUID
 import javax.inject.Inject
@@ -32,6 +33,10 @@ class NotificationRepository @Inject constructor(
     return notification
   }
 
+  suspend fun save(notifications: List<PinnitNotification>) {
+    notificationDao.save(notifications)
+  }
+
   suspend fun notification(uuid: UUID): PinnitNotification {
     return notificationDao.notification(uuid)
   }
@@ -39,5 +44,9 @@ class NotificationRepository @Inject constructor(
   suspend fun toggleNotificationPinStatus(notification: PinnitNotification) {
     val newPinStatus = !notification.isPinned
     notificationDao.updatePinStatus(notification.uuid, newPinStatus)
+  }
+
+  fun notifications(): Flow<List<PinnitNotification>> {
+    return notificationDao.notifications()
   }
 }
