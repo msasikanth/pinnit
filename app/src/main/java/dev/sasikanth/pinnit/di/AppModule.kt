@@ -5,6 +5,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dev.sasikanth.pinnit.data.AppDatabase
+import dev.sasikanth.pinnit.utils.UtcClock
 
 @Module
 object AppModule {
@@ -15,4 +16,8 @@ object AppModule {
     return Room.databaseBuilder(application, AppDatabase::class.java, "pinnit-db")
       .build()
   }
+
+  @AppScope
+  @Provides
+  fun providesUtcClock(): UtcClock = UtcClock()
 }
