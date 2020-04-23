@@ -172,4 +172,28 @@ class NotificationsRepositoryAndroidTest {
         )
       )
   }
+
+  @Test
+  fun updating_a_notification_should_work_correctly() = runBlocking {
+    // given
+    val notificationUuid = UUID.fromString("3dd26618-66ad-4538-a9b7-50240af81535")
+    val notification = PinnitNotification(
+      uuid = notificationUuid,
+      title = "Original Title",
+      createdAt = Instant.now(clock),
+      updatedAt = Instant.now(clock)
+    )
+
+    val updatedNotification = notification.copy(
+      title = "Updated Title"
+    )
+
+    // when
+    notificationRepository.save(listOf(notification))
+    notificationRepository.updateNotification(updatedNotification)
+
+    // then
+    assertThat(notificationRepository.notification(notificationUuid))
+      .isEqualTo(updatedNotification)
+  }
 }
