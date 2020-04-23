@@ -55,11 +55,16 @@ dependencies {
   implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
   implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 
-  debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
-
   implementation "androidx.room:room-runtime:$versions.room"
   implementation "androidx.room:room-ktx:$versions.room"
   kapt "androidx.room:room-compiler:$versions.room"
+
+  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+  implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+  implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
+  implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+
+  debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 
   implementation "com.jakewharton.threetenabp:threetenabp:$versions.threeten"
 
@@ -72,6 +77,7 @@ dependencies {
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
+  testImplementation "androidx.arch.core:core-testing:$versions.arch"
 
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"

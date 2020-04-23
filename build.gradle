@@ -17,6 +17,8 @@ buildscript {
       coroutines      : '1.3.5',
       truth           : '1.0.1',
       dagger          : '2.27',
+      lifecycle       : '2.2.0',
+      arch            : '2.1.0',
   ]
   repositories {
     google()
