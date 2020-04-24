@@ -24,7 +24,7 @@ class NotificationsScreenUiRenderTest {
   }
 
   @Test
-  fun `show notifications if notifications are not empty`() {
+  fun `show notifications and hide notification error if notifications are not empty`() {
     // given
     val notifications = listOf(
       TestData.notification(
@@ -36,6 +36,7 @@ class NotificationsScreenUiRenderTest {
     uiRender.render(defaultModel.onNotificationsLoaded(notifications))
 
     // then
+    verify(ui).hideNotificationsEmptyError()
     verify(ui).showNotifications(notifications)
     verifyNoMoreInteractions(ui)
   }
