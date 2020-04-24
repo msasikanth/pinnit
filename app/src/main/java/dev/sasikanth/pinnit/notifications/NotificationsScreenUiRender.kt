@@ -6,6 +6,7 @@ interface NotificationsScreenUi {
   fun showNotifications(notifications: List<PinnitNotification>)
   fun showNotificationsEmptyError()
   fun hideNotificationsEmptyError()
+  fun hideNotifications()
 }
 
 class NotificationsScreenUiRender(
@@ -21,6 +22,7 @@ class NotificationsScreenUiRender(
       ui.hideNotificationsEmptyError()
       ui.showNotifications(model.notifications)
     } else {
+      ui.hideNotifications()
       ui.showNotificationsEmptyError()
     }
   }
