@@ -189,4 +189,25 @@ class NotificationsRepositoryAndroidTest {
     assertThat(notificationRepository.notification(notificationUuid))
       .isEqualTo(updatedNotification)
   }
+
+  @Test
+  fun deleting_a_notification_should_work_correctly() = runBlocking {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("f6a082c4-0384-484f-94ca-80533b19cf47"),
+      createdAt = Instant.now(clock).minus(1, ChronoUnit.DAYS),
+      updatedAt = Instant.now(clock).minus(1, ChronoUnit.DAYS)
+    )
+
+    val deletedNotification = notification.copy(
+      deletedAt = Instant.now(clock)
+    )
+
+    // when
+    notificationRepository.deleteNotification(notification)
+
+    // then
+    assertThat(notificationRepository.notification(notification.uuid))
+      .isEqualTo(deletedNotification)
+  }
 }
