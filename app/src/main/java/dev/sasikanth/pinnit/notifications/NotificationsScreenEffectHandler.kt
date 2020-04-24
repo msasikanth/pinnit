@@ -31,6 +31,9 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is OpenNotificationEditor -> {
         uiActions.openNotificationEditor(effect.notificationUuid)
       }
+      is ToggleNotificationPinStatus -> {
+        notificationRepository.updateNotification(effect.notification)
+      }
     }
   }
 }

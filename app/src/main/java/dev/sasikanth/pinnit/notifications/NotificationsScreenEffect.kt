@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.notifications
 
+import dev.sasikanth.pinnit.data.PinnitNotification
 import java.util.UUID
 
 sealed class NotificationsScreenEffect
@@ -7,3 +8,5 @@ sealed class NotificationsScreenEffect
 object LoadNotifications : NotificationsScreenEffect()
 
 data class OpenNotificationEditor(val notificationUuid: UUID) : NotificationsScreenEffect()
+
+data class ToggleNotificationPinStatus(val notification: PinnitNotification) : NotificationsScreenEffect()
