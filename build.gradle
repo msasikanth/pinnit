@@ -20,6 +20,7 @@ buildscript {
       lifecycle       : '2.2.0',
       arch            : '2.1.0',
       mockito         : '2.2.0',
+      assistedInject  : '0.5.2',
   ]
   repositories {
     google()

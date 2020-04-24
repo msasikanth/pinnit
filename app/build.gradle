@@ -86,6 +86,9 @@ dependencies {
   implementation "com.google.dagger:dagger:$versions.dagger"
   kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
+  implementation "com.squareup.inject:assisted-inject-annotations-dagger2:$versions.assistedInject"
+  kapt "com.squareup.inject:assisted-inject-processor-dagger2:$versions.assistedInject"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
