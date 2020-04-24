@@ -11,7 +11,10 @@ import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.UtcClock
 
 @Module(
-  includes = [NotificationModule::class]
+  includes = [
+    NotificationModule::class,
+    AssistedInjectModule::class
+  ]
 )
 object AppModule {
 

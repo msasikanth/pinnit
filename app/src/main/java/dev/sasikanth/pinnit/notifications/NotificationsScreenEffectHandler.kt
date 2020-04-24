@@ -1,17 +1,24 @@
 package dev.sasikanth.pinnit.notifications
 
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class NotificationsScreenEffectHandler @Inject constructor(
+class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
-  dispatcherProvider: DispatcherProvider
+  private val dispatcherProvider: DispatcherProvider,
+  @Assisted private val uiActions: NotificationsScreenUiActions
 ) : CoroutineConnectable<NotificationsScreenEffect, NotificationsScreenEvent>(dispatcherProvider.main) {
+
+  @AssistedInject.Factory
+  interface Factory {
+    fun create(uiActions: NotificationsScreenUiActions): NotificationsScreenEffectHandler
+  }
 
   override suspend fun handler(effect: NotificationsScreenEffect, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
     when (effect) {
@@ -20,6 +27,9 @@ class NotificationsScreenEffectHandler @Inject constructor(
         notificationsFlow
           .onEach { dispatchEvent(NotificationsLoaded(it)) }
           .launchIn(this)
+      }
+      is OpenNotificationEditor -> {
+        uiActions.openNotificationEditor(effect.notificationUuid)
       }
     }
   }

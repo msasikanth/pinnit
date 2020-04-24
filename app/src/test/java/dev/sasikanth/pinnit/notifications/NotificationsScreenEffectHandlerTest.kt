@@ -12,6 +12,7 @@ import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -32,9 +33,11 @@ class NotificationsScreenEffectHandlerTest {
 
   private val notificationRepository = mock<NotificationRepository>()
   private val testDispatcherProvider = TestDispatcherProvider()
+  private val uiActions = mock<NotificationsScreenUiActions>()
   private val effectHandler = NotificationsScreenEffectHandler(
     notificationRepository,
-    testDispatcherProvider
+    testDispatcherProvider,
+    uiActions
   )
 
   @Before
@@ -75,5 +78,28 @@ class NotificationsScreenEffectHandlerTest {
     verifyZeroInteractions(uiActions)
 
     consumer.assertValues(NotificationsLoaded(notifications))
+  }
+
+  @Test
+  fun `when open edit screen effect is received, then open the edit page`() = runBlocking {
+    // given
+    val notificationUuid = UUID.fromString("220c2037-94ba-44ef-8f83-5c232f01288f")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      createdAt = Instant.now(utcClock),
+      updatedAt = Instant.now(utcClock)
+    )
+
+    whenever(notificationRepository.notification(notificationUuid)) doReturn notification
+
+    // when
+    connection.accept(OpenNotificationEditor(notificationUuid))
+
+    // then
+    verify(uiActions).openNotificationEditor(notificationUuid)
+    verifyNoMoreInteractions(uiActions)
+    verifyZeroInteractions(notificationRepository)
+
+    consumer.assertValues()
   }
 }

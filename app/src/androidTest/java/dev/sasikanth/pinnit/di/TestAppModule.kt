@@ -13,7 +13,10 @@ import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Module(
-  includes = [NotificationModule::class]
+  includes = [
+    NotificationModule::class,
+    AssistedInjectModule::class
+  ]
 )
 object TestAppModule {
 
