@@ -97,6 +97,7 @@ dependencies {
   testImplementation "com.google.truth:truth:$versions.truth"
   testImplementation "androidx.arch.core:core-testing:$versions.arch"
   testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
   testImplementation "com.spotify.mobius:mobius-test:$versions.mobius"
 
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
