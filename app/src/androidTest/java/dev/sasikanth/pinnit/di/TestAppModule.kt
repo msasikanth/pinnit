@@ -6,8 +6,11 @@ import dagger.Module
 import dagger.Provides
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.notifications.NotificationModule
+import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
+import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Module(
   includes = [NotificationModule::class]
@@ -29,4 +32,9 @@ object TestAppModule {
 
   @Provides
   fun providesUtcClock(testUtcClock: TestUtcClock): UtcClock = testUtcClock
+
+  @AppScope
+  @Provides
+  @ExperimentalCoroutinesApi
+  fun providesDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
 }
