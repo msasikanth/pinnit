@@ -4,6 +4,7 @@ import dev.sasikanth.pinnit.data.PinnitNotification
 
 interface NotificationsScreenUi {
   fun showNotifications(notifications: List<PinnitNotification>)
+  fun showNotificationsEmptyError()
 }
 
 class NotificationsScreenUiRender(
@@ -17,6 +18,8 @@ class NotificationsScreenUiRender(
 
     if (model.notifications.isNotEmpty()) {
       ui.showNotifications(model.notifications)
+    } else {
+      ui.showNotificationsEmptyError()
     }
   }
 }

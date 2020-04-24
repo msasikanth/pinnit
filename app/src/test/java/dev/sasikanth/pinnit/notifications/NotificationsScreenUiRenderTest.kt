@@ -39,4 +39,14 @@ class NotificationsScreenUiRenderTest {
     verify(ui).showNotifications(notifications)
     verifyNoMoreInteractions(ui)
   }
+
+  @Test
+  fun `show notifications error if notifications are empty`() {
+    // when
+    uiRender.render(defaultModel.onNotificationsLoaded(emptyList()))
+
+    // then
+    verify(ui).showNotificationsEmptyError()
+    verifyNoMoreInteractions(ui)
+  }
 }
