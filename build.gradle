@@ -21,6 +21,7 @@ buildscript {
       arch            : '2.1.0',
       mockito         : '2.2.0',
       assistedInject  : '0.5.2',
+      mobius          : '1.4.0-beta5',
   ]
   repositories {
     google()

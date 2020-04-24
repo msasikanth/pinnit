@@ -89,11 +89,15 @@ dependencies {
   implementation "com.squareup.inject:assisted-inject-annotations-dagger2:$versions.assistedInject"
   kapt "com.squareup.inject:assisted-inject-processor-dagger2:$versions.assistedInject"
 
+  implementation "com.spotify.mobius:mobius-core:$versions.mobius"
+  implementation "com.spotify.mobius:mobius-android:$versions.mobius"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
   testImplementation "androidx.arch.core:core-testing:$versions.arch"
   testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
+  testImplementation "com.spotify.mobius:mobius-test:$versions.mobius"
 
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
