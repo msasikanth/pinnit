@@ -34,6 +34,9 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is ToggleNotificationPinStatus -> {
         notificationRepository.updateNotification(effect.notification)
       }
+      is DeleteNotification -> {
+        notificationRepository.deleteNotification(effect.notification)
+      }
     }
   }
 }

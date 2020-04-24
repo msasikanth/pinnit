@@ -124,4 +124,24 @@ class NotificationsScreenEffectHandlerTest {
 
     consumer.assertValues()
   }
+
+  @Test
+  fun `when delete notification effect is received, then delete notification`() = runBlocking {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("34727623-c572-455f-8e37-b1df3baca79e"),
+      createdAt = Instant.now(utcClock).minus(1, ChronoUnit.DAYS),
+      updatedAt = Instant.now(utcClock)
+    )
+
+    // when
+    connection.accept(DeleteNotification(notification))
+
+    // then
+    verify(notificationRepository, times(1)).deleteNotification(notification)
+    verifyNoMoreInteractions(notificationRepository)
+    verifyZeroInteractions(uiActions)
+
+    consumer.assertValues()
+  }
 }
