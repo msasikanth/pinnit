@@ -3,10 +3,10 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/main_nav_graph"
-  app:startDestination="@id/notificationsFragment">
+  app:startDestination="@id/notificationsScreen">
   <fragment
-    android:id="@+id/notificationsFragment"
-    android:name="dev.sasikanth.pinnit.notifications.NotificationsFragment"
+    android:id="@+id/notificationsScreen"
+    android:name="dev.sasikanth.pinnit.notifications.NotificationsScreen"
     android:label="@string/toolbar_title_notifications"
     tools:layout="@layout/fragment_notifications" />
 </navigation>

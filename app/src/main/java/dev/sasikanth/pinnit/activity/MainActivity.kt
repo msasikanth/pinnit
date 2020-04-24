@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, _ ->
-    if (destination.id == R.id.notificationsFragment) {
+    if (destination.id == R.id.notificationsScreen) {
       toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
     }
   }
