@@ -6,6 +6,12 @@ import com.spotify.mobius.Init
 
 class NotificationsScreenInit : Init<NotificationsScreenModel, NotificationsScreenEffect> {
   override fun init(model: NotificationsScreenModel): First<NotificationsScreenModel, NotificationsScreenEffect> {
-    return first(model, setOf(LoadNotifications))
+    val effects = if (model.notificationsQueried.not()) {
+      setOf(LoadNotifications)
+    } else {
+      emptySet()
+    }
+
+    return first(model, effects)
   }
 }
