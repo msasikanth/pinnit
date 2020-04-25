@@ -2,10 +2,13 @@ package dev.sasikanth.pinnit.widgets
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.getResourceIdOrThrow
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.utils.donOnApplyWindowInsets
@@ -18,22 +21,18 @@ constructor(
   defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-  @DrawableRes
-  private var mNavigationIcon: Int = 0
-
-  @StringRes
-  private var mContentActionText: Int = 0
-
-  @DrawableRes
-  private var mActionIcon: Int = 0
-
   init {
     inflate(context, R.layout.pinnit_bottom_bar, this)
 
     context.theme.obtainStyledAttributes(attrs, R.styleable.PinnitBottomBar, defStyleAttr, 0).apply {
-      mNavigationIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_navigationIcon)
-      mContentActionText = getResourceIdOrThrow(R.styleable.PinnitBottomBar_contentActionText)
-      mActionIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_actionIcon)
+      val mNavigationIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_navigationIcon)
+      val mContentActionText = getResourceIdOrThrow(R.styleable.PinnitBottomBar_contentActionText)
+      val mActionIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_actionIcon)
+
+      setNavigationIcon(mNavigationIcon)
+      setContentActionText(mContentActionText)
+      setActionIcon(mActionIcon)
+
       recycle()
     }
 
@@ -42,30 +41,46 @@ constructor(
     }
   }
 
-  override fun onFinishInflate() {
-    super.onFinishInflate()
-    if (isInEditMode) return
-
-    navigationIcon.setImageResource(mNavigationIcon)
-    contentActionButton.setText(mContentActionText)
-    actionIcon.setImageResource(mActionIcon)
+  fun setNavigationIcon(@DrawableRes navigationIcon: Int?) {
+    if (navigationIcon != null) {
+      this.navigationIcon.isVisible = true
+      this.navigationIcon.setImageResource(navigationIcon)
+    } else {
+      this.navigationIcon.isGone = true
+    }
   }
 
-  fun setNavigationIcon(@DrawableRes navigationIcon: Int) {
-    mNavigationIcon = navigationIcon
-    invalidate()
-    requestLayout()
+  fun setContentActionText(@StringRes contentActionText: Int?) {
+    if (contentActionText != null) {
+      this.contentActionButton.isVisible = true
+      this.contentActionButton.setText(contentActionText)
+    } else {
+      this.contentActionButton.isGone = true
+    }
   }
 
-  fun setContentActionText(@StringRes contentActionText: Int) {
-    mContentActionText = contentActionText
-    invalidate()
-    requestLayout()
+  fun setActionIcon(@DrawableRes actionIcon: Int?) {
+    if (actionIcon != null) {
+      this.actionIcon.isVisible = true
+      this.actionIcon.setImageResource(actionIcon)
+    } else {
+      this.actionIcon.isGone = true
+    }
   }
 
-  fun setActionIcon(@DrawableRes actionIcon: Int) {
-    mActionIcon = actionIcon
-    invalidate()
-    requestLayout()
+  fun setContentActionEnabled(isEnabled: Boolean) {
+    contentActionButton.isEnabled = isEnabled
+  }
+
+  fun setNavigationOnClickListener(listener: ((View) -> Unit)?) {
+    navigationIcon.setOnClickListener(listener)
+  }
+
+  fun setContentActionOnClickListener(listener: ((View) -> Unit)?) {
+    contentActionButton.setOnClickListener(listener)
+  }
+
+  fun setActionOnClickListener(listener: ((View) -> Unit)?) {
+    actionIcon.setOnClickListener(listener)
   }
 }

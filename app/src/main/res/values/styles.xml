@@ -12,7 +12,7 @@
     <item name="android:minHeight">@dimen/button_height</item>
     <item name="android:textAppearance">?attr/textAppearanceButton</item>
     <item name="android:textColor">?attr/colorOnPrimary</item>
-    <item name="backgroundColor">?attr/colorPrimary</item>
+    <item name="backgroundTint">@color/content_action_background</item>
     <item name="rippleColor">?attr/colorOnPrimary</item>
     <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
   </style>
