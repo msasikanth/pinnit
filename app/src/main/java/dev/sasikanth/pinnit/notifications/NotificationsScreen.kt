@@ -18,6 +18,7 @@ import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.utils.UtcClock
@@ -70,6 +71,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
         RecyclerView.VERTICAL
       )
     )
+    notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
 
     val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {
       viewModel.dispatchEvent(NotificationSwiped(it))

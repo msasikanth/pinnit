@@ -5,6 +5,7 @@
     <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
 
     <item name="colorOnPrimary">@color/colorOnPrimary</item>
+    <item name="colorOnPrimaryVariant">@color/colorOnPrimaryVariant</item>
 
     <item name="colorSecondary">@color/colorSecondary</item>
 

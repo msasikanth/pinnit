@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <attr name="colorOnPrimaryVariant" format="color" />
   <attr name="colorDivider" format="color" />
   <attr name="colorOnBackgroundVariant" format="color" />
   <attr name="colorRowBackground" format="color" />

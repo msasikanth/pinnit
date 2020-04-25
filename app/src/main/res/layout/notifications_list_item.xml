@@ -9,7 +9,14 @@
   app:cardElevation="1dp"
   app:rippleColor="@android:color/transparent">
 
-  <dev.sasikanth.pinnit.widgets.CircularRevealConstraintLayout
+  <com.google.android.material.circularreveal.CircularRevealFrameLayout
+    android:id="@+id/notificationRevealLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:visibility="gone" />
+
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/notificationContentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -108,7 +115,6 @@
       android:contentDescription="@null"
       android:focusable="true"
       android:src="@drawable/asld_pin_unpin"
-      android:tint="?attr/colorSecondary"
       app:layout_constraintEnd_toStartOf="@id/endGuideline"
       app:layout_constraintHorizontal_bias="1"
       app:layout_constraintTop_toBottomOf="@id/topGuideline" />
@@ -163,6 +169,6 @@
       tools:maxLines="4"
       tools:text="@tools:sample/lorem/random" />
 
-  </dev.sasikanth.pinnit.widgets.CircularRevealConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
