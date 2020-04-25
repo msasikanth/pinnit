@@ -107,7 +107,7 @@
       android:clickable="true"
       android:contentDescription="@null"
       android:focusable="true"
-      android:src="@drawable/avd_pin_to_pinned"
+      android:src="@drawable/asld_pin_unpin"
       android:tint="?attr/colorSecondary"
       app:layout_constraintEnd_toStartOf="@id/endGuideline"
       app:layout_constraintHorizontal_bias="1"
