@@ -51,6 +51,9 @@ android {
   }
   kotlinOptions {
     jvmTarget = 1.8
+
+    // Enabling experimental coroutines APIs
+    freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
   }
   androidExtensions {
     experimental = true

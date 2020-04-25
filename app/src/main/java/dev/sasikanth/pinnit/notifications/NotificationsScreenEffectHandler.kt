@@ -4,11 +4,9 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.utils.DispatcherProvider
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-@ExperimentalCoroutinesApi
 class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,

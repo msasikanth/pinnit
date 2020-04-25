@@ -1,10 +1,8 @@
 package dev.sasikanth.pinnit.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 
-@ExperimentalCoroutinesApi
 class TestDispatcherProvider : DispatcherProvider {
 
   private val testCoroutineDispatcher = TestCoroutineDispatcher()

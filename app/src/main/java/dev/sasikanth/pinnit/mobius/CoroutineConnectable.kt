@@ -5,7 +5,6 @@ import com.spotify.mobius.Connection
 import com.spotify.mobius.functions.Consumer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
@@ -21,7 +20,6 @@ abstract class CoroutineConnectable<I, O>(
 
   abstract suspend fun handler(effect: I, dispatchEvent: (O) -> Unit)
 
-  @ExperimentalCoroutinesApi
   override fun connect(output: Consumer<O>): Connection<I> {
     val job = Job()
     val scope = CoroutineScope(coroutineContext + job)

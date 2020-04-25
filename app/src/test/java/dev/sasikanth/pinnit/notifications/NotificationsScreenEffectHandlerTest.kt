@@ -12,7 +12,6 @@ import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -23,7 +22,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
 import java.util.UUID
 
-@ExperimentalCoroutinesApi
 class NotificationsScreenEffectHandlerTest {
 
   private val utcClock = TestUtcClock().apply {

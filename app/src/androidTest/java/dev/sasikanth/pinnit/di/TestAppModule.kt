@@ -10,7 +10,6 @@ import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.UtcClock
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Module(
   includes = [
@@ -38,6 +37,5 @@ object TestAppModule {
 
   @AppScope
   @Provides
-  @ExperimentalCoroutinesApi
   fun providesDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
 }
