@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.notifications
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import java.util.UUID
 
 sealed class NotificationsScreenEvent
 
@@ -9,3 +10,5 @@ data class NotificationsLoaded(val notifications: List<PinnitNotification>) : No
 data class NotificationSwiped(val notification: PinnitNotification) : NotificationsScreenEvent()
 
 data class TogglePinStatusClicked(val notification: PinnitNotification) : NotificationsScreenEvent()
+
+data class NotificationClicked(val notificationUuid: UUID) : NotificationsScreenEvent()

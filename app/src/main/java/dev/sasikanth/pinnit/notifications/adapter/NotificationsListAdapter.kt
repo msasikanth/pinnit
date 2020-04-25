@@ -16,7 +16,8 @@ import org.threeten.bp.Instant
 
 class NotificationsListAdapter(
   utcClock: UtcClock,
-  private val onToggleNotificationPinClicked: (PinnitNotification) -> Unit
+  private val onToggleNotificationPinClicked: (PinnitNotification) -> Unit,
+  private val onNotificationClicked: (PinnitNotification) -> Unit
 ) : ListAdapter<PinnitNotification, RecyclerView.ViewHolder>(NotificationsDiffCallback) {
 
   private val now = Instant.now(utcClock)
@@ -28,6 +29,10 @@ class NotificationsListAdapter(
       togglePinIcon.setOnClickListener {
         togglePinIcon.isChecked = !togglePinIcon.isChecked
         onToggleNotificationPinClicked(currentList[adapterPosition])
+      }
+
+      itemView.setOnClickListener {
+        onNotificationClicked(currentList[adapterPosition])
       }
     }
   }

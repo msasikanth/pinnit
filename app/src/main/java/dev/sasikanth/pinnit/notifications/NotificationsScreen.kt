@@ -62,9 +62,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    adapter = NotificationsListAdapter(utcClock) { notification ->
-      viewModel.dispatchEvent(TogglePinStatusClicked(notification))
-    }
+    adapter = NotificationsListAdapter(utcClock, ::onToggleNotificationPinClicked, ::onNotificationClicked)
     notificationsRecyclerView.adapter = adapter
     notificationsRecyclerView.addItemDecoration(
       DividerItemDecoration(
@@ -109,5 +107,13 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   override fun hideNotifications() {
     notificationsRecyclerView.isGone = true
     adapter.submitList(null)
+  }
+
+  private fun onToggleNotificationPinClicked(notification: PinnitNotification) {
+    viewModel.dispatchEvent(TogglePinStatusClicked(notification))
+  }
+
+  private fun onNotificationClicked(notification: PinnitNotification) {
+    viewModel.dispatchEvent(NotificationClicked(notification.uuid))
   }
 }
