@@ -41,10 +41,11 @@
     android:id="@+id/notificationsRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="88dp"
     android:visibility="gone"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:listitem="@layout/notifications_list_item"
-    tools:visibility="visible"
-    android:paddingBottom="88dp"/>
+    tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
