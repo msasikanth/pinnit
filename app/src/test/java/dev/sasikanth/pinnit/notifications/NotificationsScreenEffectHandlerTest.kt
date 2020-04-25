@@ -29,15 +29,15 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   private val consumer = RecordingConsumer<NotificationsScreenEvent>()
+  private val viewActionsConsumer = RecordingConsumer<NotificationScreenViewEffect>()
   private lateinit var connection: Connection<NotificationsScreenEffect>
 
   private val notificationRepository = mock<NotificationRepository>()
   private val testDispatcherProvider = TestDispatcherProvider()
-  private val uiActions = mock<NotificationsScreenUiActions>()
   private val effectHandler = NotificationsScreenEffectHandler(
     notificationRepository,
     testDispatcherProvider,
-    uiActions
+    viewActionsConsumer
   )
 
   @Before
@@ -75,9 +75,9 @@ class NotificationsScreenEffectHandlerTest {
     // then
     verify(notificationRepository).notifications()
     verifyNoMoreInteractions(notificationRepository)
-    verifyZeroInteractions(uiActions)
 
     consumer.assertValues(NotificationsLoaded(notifications))
+    viewActionsConsumer.assertValues()
   }
 
   @Test
@@ -96,11 +96,10 @@ class NotificationsScreenEffectHandlerTest {
     connection.accept(OpenNotificationEditor(notificationUuid))
 
     // then
-    verify(uiActions).openNotificationEditor(notificationUuid)
-    verifyNoMoreInteractions(uiActions)
     verifyZeroInteractions(notificationRepository)
 
     consumer.assertValues()
+    viewActionsConsumer.assertValues(OpenNotificationEditorViewEffect(notificationUuid))
   }
 
   @Test
@@ -118,9 +117,9 @@ class NotificationsScreenEffectHandlerTest {
     // then
     verify(notificationRepository, times(1)).updateNotification(notification)
     verifyNoMoreInteractions(notificationRepository)
-    verifyZeroInteractions(uiActions)
 
     consumer.assertValues()
+    viewActionsConsumer.assertValues()
   }
 
   @Test
@@ -138,8 +137,8 @@ class NotificationsScreenEffectHandlerTest {
     // then
     verify(notificationRepository, times(1)).deleteNotification(notification)
     verifyNoMoreInteractions(notificationRepository)
-    verifyZeroInteractions(uiActions)
 
     consumer.assertValues()
+    viewActionsConsumer.assertValues()
   }
 }

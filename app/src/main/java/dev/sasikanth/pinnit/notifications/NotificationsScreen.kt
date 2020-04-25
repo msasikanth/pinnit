@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.spotify.mobius.Mobius
+import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
@@ -20,10 +20,9 @@ import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.fragment_notifications.*
-import java.util.UUID
 import javax.inject.Inject
 
-class NotificationsScreen : Fragment(R.layout.fragment_notifications), NotificationsScreenUi, NotificationsScreenUiActions {
+class NotificationsScreen : Fragment(R.layout.fragment_notifications), NotificationsScreenUi {
 
   @Inject
   lateinit var utcClock: UtcClock
@@ -33,24 +32,20 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   private val uiRender = NotificationsScreenUiRender(this)
 
-  private val loop by lazy {
-    Mobius.loop(
-      NotificationsScreenUpdate(),
-      effectHandler.create(this)
-    )
-  }
-
   private val adapter by lazy {
     NotificationsListAdapter.create(utcClock)
   }
 
-  private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, Nothing> by viewModels {
+  private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect> by viewModels {
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, Nothing>(
-          Function {
-            loop
+        return MobiusLoopViewModel.create<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect>(
+          Function { viewEffectConsumer ->
+            loop(
+              NotificationsScreenUpdate(),
+              effectHandler.create(viewEffectConsumer)
+            )
           },
           NotificationsScreenModel.default(),
           NotificationsScreenInit()
@@ -78,6 +73,14 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.models.observe(viewLifecycleOwner, Observer { model ->
       uiRender.render(model)
     })
+
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
+      when (it) {
+        is OpenNotificationEditorViewEffect -> {
+          // TODO : Handle open notification editor
+        }
+      }
+    })
   }
 
   override fun showNotifications(notifications: List<PinnitNotification>) {
@@ -98,9 +101,5 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   override fun hideNotifications() {
     notificationsRecyclerView.isGone = true
     adapter.submitList(null)
-  }
-
-  override fun openNotificationEditor(notificationUuid: UUID) {
-    // TODO: Open notificaiton editor
   }
 }

@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.notifications
 
+import com.spotify.mobius.functions.Consumer
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
@@ -10,12 +11,12 @@ import kotlinx.coroutines.flow.onEach
 class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,
-  @Assisted private val uiActions: NotificationsScreenUiActions
+  @Assisted private val viewEffectConsumer: Consumer<NotificationScreenViewEffect>
 ) : CoroutineConnectable<NotificationsScreenEffect, NotificationsScreenEvent>(dispatcherProvider.main) {
 
   @AssistedInject.Factory
   interface Factory {
-    fun create(uiActions: NotificationsScreenUiActions): NotificationsScreenEffectHandler
+    fun create(viewEffectConsumer: Consumer<NotificationScreenViewEffect>): NotificationsScreenEffectHandler
   }
 
   override suspend fun handler(effect: NotificationsScreenEffect, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
@@ -27,7 +28,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
           .launchIn(this)
       }
       is OpenNotificationEditor -> {
-        uiActions.openNotificationEditor(effect.notificationUuid)
+        viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notificationUuid))
       }
       is ToggleNotificationPinStatus -> {
         notificationRepository.updateNotification(effect.notification)
