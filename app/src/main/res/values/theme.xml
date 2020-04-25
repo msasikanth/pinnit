@@ -15,6 +15,9 @@
     <item name="colorOnBackground">@color/colorOnBackground</item>
     <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
 
+    <!-- Background underneath notifications -->
+    <item name="colorRowBackground">@color/colorRowBackground</item>
+
     <item name="colorDivider">@color/colorDivider</item>
 
     <item name="elevationOverlayEnabled">false</item>

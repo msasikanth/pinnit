@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
@@ -17,6 +18,7 @@ import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.fragment_notifications.*
@@ -69,6 +71,11 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
         RecyclerView.VERTICAL
       )
     )
+
+    val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {
+      viewModel.dispatchEvent(NotificationSwiped(it))
+    }
+    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(notificationsRecyclerView)
 
     viewModel.models.observe(viewLifecycleOwner, Observer { model ->
       uiRender.render(model)

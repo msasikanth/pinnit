@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.utils
 
+import android.content.res.Resources
 import android.view.View
 import android.view.WindowInsets
 
@@ -27,3 +28,10 @@ data class InitialPadding(
 private fun recordInitialPadding(view: View) = InitialPadding(
   view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom
 )
+
+val Int.px: Int
+  get() = (Resources.getSystem().displayMetrics.density * this).toInt()
+
+val Int.dp: Int
+  get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+

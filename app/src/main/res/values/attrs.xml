@@ -2,4 +2,5 @@
 <resources>
   <attr name="colorDivider" format="color" />
   <attr name="colorOnBackgroundVariant" format="color" />
+  <attr name="colorRowBackground" format="color" />
 </resources>
