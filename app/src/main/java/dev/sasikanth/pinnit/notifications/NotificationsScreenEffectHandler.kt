@@ -31,7 +31,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
         viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notificationUuid))
       }
       is ToggleNotificationPinStatus -> {
-        notificationRepository.updateNotification(effect.notification)
+        notificationRepository.toggleNotificationPinStatus(effect.notification)
       }
       is DeleteNotification -> {
         notificationRepository.deleteNotification(effect.notification)

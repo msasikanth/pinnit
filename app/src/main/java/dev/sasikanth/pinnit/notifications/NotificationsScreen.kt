@@ -32,11 +32,9 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   @Inject
   lateinit var effectHandler: NotificationsScreenEffectHandler.Factory
 
-  private val uiRender = NotificationsScreenUiRender(this)
+  private lateinit var adapter: NotificationsListAdapter
 
-  private val adapter by lazy {
-    NotificationsListAdapter.create(utcClock)
-  }
+  private val uiRender = NotificationsScreenUiRender(this)
 
   private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect> by viewModels {
     object : ViewModelProvider.Factory {
@@ -64,6 +62,9 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
+    adapter = NotificationsListAdapter(utcClock) { notification ->
+      viewModel.dispatchEvent(TogglePinStatusClicked(notification))
+    }
     notificationsRecyclerView.adapter = adapter
     notificationsRecyclerView.addItemDecoration(
       DividerItemDecoration(

@@ -10,6 +10,7 @@ class NotificationsScreenUpdate : Update<NotificationsScreenModel, Notifications
     return when (event) {
       is NotificationsLoaded -> next(model.onNotificationsLoaded(event.notifications))
       is NotificationSwiped -> dispatch(setOf(DeleteNotification(event.notification)))
+      is TogglePinStatusClicked -> dispatch(setOf(ToggleNotificationPinStatus(event.notification)))
     }
   }
 }

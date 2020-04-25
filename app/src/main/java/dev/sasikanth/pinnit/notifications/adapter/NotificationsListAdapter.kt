@@ -14,23 +14,20 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.notifications_list_item.*
 import org.threeten.bp.Instant
 
-class NotificationsListAdapter private constructor(
-  private val now: Instant
+class NotificationsListAdapter(
+  utcClock: UtcClock,
+  private val onToggleNotificationPinClicked: (PinnitNotification) -> Unit
 ) : ListAdapter<PinnitNotification, RecyclerView.ViewHolder>(NotificationsDiffCallback) {
 
-  companion object {
-    fun create(utcClock: UtcClock): NotificationsListAdapter {
-      val now = Instant.now(utcClock)
-      return NotificationsListAdapter(now)
-    }
-  }
+  private val now = Instant.now(utcClock)
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     val context = parent.context
     val view = LayoutInflater.from(context).inflate(R.layout.notifications_list_item, parent, false)
     return NotificationViewHolder(view).apply {
       togglePinIcon.setOnClickListener {
-        // TODO: Handle pin icon click
+        togglePinIcon.isChecked = !togglePinIcon.isChecked
+        onToggleNotificationPinClicked(currentList[adapterPosition])
       }
     }
   }
@@ -52,6 +49,8 @@ class NotificationsListAdapter private constructor(
         now.toEpochMilli(),
         SECOND_IN_MILLIS
       )
+
+      togglePinIcon.isChecked = notification.isPinned
     }
   }
 }

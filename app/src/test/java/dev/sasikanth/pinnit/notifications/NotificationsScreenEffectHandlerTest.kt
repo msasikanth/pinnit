@@ -115,7 +115,7 @@ class NotificationsScreenEffectHandlerTest {
     connection.accept(ToggleNotificationPinStatus(notification))
 
     // then
-    verify(notificationRepository, times(1)).updateNotification(notification)
+    verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
     verifyNoMoreInteractions(notificationRepository)
 
     consumer.assertValues()
