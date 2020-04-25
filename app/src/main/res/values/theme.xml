@@ -13,6 +13,7 @@
 
     <item name="android:colorBackground">@color/colorBackground</item>
     <item name="colorOnBackground">@color/colorOnBackground</item>
+    <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
 
     <item name="colorDivider">@color/colorDivider</item>
 

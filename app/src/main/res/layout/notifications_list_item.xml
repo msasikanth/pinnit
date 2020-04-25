@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/notificationCard"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  app:cardCornerRadius="0dp"
+  app:cardElevation="1dp"
+  app:rippleColor="@android:color/transparent">
+
+  <dev.sasikanth.pinnit.widgets.CircularRevealConstraintLayout
+    android:id="@+id/notificationContentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/topGuideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/startGuideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/endGuideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/bottomGuideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_end="24dp" />
+
+    <ImageView
+      android:id="@+id/appIcon"
+      android:layout_width="18dp"
+      android:layout_height="18dp"
+      android:contentDescription="@null"
+      android:src="@drawable/ic_pinnit_app_icon"
+      android:tint="?attr/colorSecondary"
+      app:layout_constraintBottom_toBottomOf="@id/appName"
+      app:layout_constraintEnd_toStartOf="@id/appName"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintHorizontal_chainStyle="packed"
+      app:layout_constraintStart_toEndOf="@id/startGuideline"
+      app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/appName"
+      style="@style/TextStyle.Pinnit.Overline1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="@string/app_name"
+      android:textColor="?attr/colorSecondary"
+      app:firstBaselineToTopHeight="16sp"
+      app:lastBaselineToBottomHeight="8sp"
+      app:layout_constraintEnd_toStartOf="@id/infoSeparator"
+      app:layout_constraintStart_toEndOf="@id/appIcon"
+      app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/infoSeparator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="@string/dot_separator"
+      app:firstBaselineToTopHeight="16sp"
+      app:lastBaselineToBottomHeight="8sp"
+      app:layout_constraintEnd_toStartOf="@id/timeStamp"
+      app:layout_constraintStart_toEndOf="@id/appName"
+      app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/timeStamp"
+      style="@style/TextStyle.Pinnit.Overline2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:textColor="?attr/colorOnBackgroundVariant"
+      app:firstBaselineToTopHeight="16sp"
+      app:lastBaselineToBottomHeight="8sp"
+      app:layout_constraintEnd_toStartOf="@id/togglePinIcon"
+      app:layout_constraintStart_toEndOf="@id/infoSeparator"
+      app:layout_constraintTop_toBottomOf="@id/topGuideline"
+      tools:text="14M AGO" />
+
+    <ImageView
+      android:id="@+id/togglePinIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:clickable="true"
+      android:contentDescription="@null"
+      android:focusable="true"
+      android:src="@drawable/avd_pin_to_pinned"
+      android:tint="?attr/colorSecondary"
+      app:layout_constraintEnd_toStartOf="@id/endGuideline"
+      app:layout_constraintHorizontal_bias="1"
+      app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+    <androidx.constraintlayout.widget.Barrier
+      android:id="@+id/infoBarrier"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="bottom"
+      app:constraint_referenced_ids="appIcon, appName, infoSeparator, timeStamp, togglePinIcon" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/personImageView"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_marginTop="6dp"
+      android:layout_marginEnd="16dp"
+      android:visibility="gone"
+      app:civ_border_color="@android:color/white"
+      app:civ_border_width="1dp"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+      app:layout_constraintEnd_toStartOf="@id/titleTextView"
+      app:layout_constraintStart_toEndOf="@id/startGuideline"
+      app:layout_constraintTop_toBottomOf="@id/infoBarrier"
+      app:layout_constraintVertical_bias="0"
+      tools:src="?attr/colorSecondary" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/titleTextView"
+      style="@style/TextStyle.Pinnit.Subtitle1"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="6dp"
+      android:layout_marginEnd="8dp"
+      android:textColor="?attr/colorOnBackground"
+      app:layout_constraintBottom_toTopOf="@id/contentTextView"
+      app:layout_constraintEnd_toEndOf="@id/endGuideline"
+      app:layout_constraintStart_toEndOf="@id/personImageView"
+      app:layout_constraintTop_toBottomOf="@id/infoBarrier"
+      tools:text="Notification Title" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/contentTextView"
+      style="@style/TextStyle.Pinnit.Body2"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:textColor="?attr/colorOnBackgroundVariant"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+      app:layout_constraintEnd_toEndOf="@id/titleTextView"
+      app:layout_constraintStart_toStartOf="@id/titleTextView"
+      app:layout_constraintTop_toBottomOf="@id/titleTextView"
+      tools:maxLines="4"
+      tools:text="@tools:sample/lorem/random" />
+
+  </dev.sasikanth.pinnit.widgets.CircularRevealConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

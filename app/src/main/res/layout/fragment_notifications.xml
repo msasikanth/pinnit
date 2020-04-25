@@ -43,6 +43,7 @@
     android:layout_height="match_parent"
     android:visibility="gone"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:listitem="@layout/notifications_list_item"
     tools:visibility="visible"
     android:paddingBottom="88dp"/>
 
