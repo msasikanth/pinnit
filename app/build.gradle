@@ -92,6 +92,8 @@ dependencies {
   implementation "com.spotify.mobius:mobius-core:$versions.mobius"
   implementation "com.spotify.mobius:mobius-android:$versions.mobius"
 
+  implementation "de.hdodenhof:circleimageview:$versions.circleImageView"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
