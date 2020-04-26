@@ -112,7 +112,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_about)
 
     requireActivity().bottomBar.setNavigationOnClickListener {
-      OptionsBottomSheet().show(requireActivity().supportFragmentManager, OptionsBottomSheet.TAG)
+      OptionsBottomSheet.show(requireActivity().supportFragmentManager)
     }
     requireActivity().bottomBar.setContentActionOnClickListener {
       openNotificationEditor()

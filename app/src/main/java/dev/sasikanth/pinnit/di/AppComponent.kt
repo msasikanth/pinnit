@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
+import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import javax.inject.Scope
 
 @AppScope
@@ -18,6 +19,7 @@ interface AppComponent {
 
   fun inject(target: NotificationsScreen)
   fun inject(target: EditorScreen)
+  fun inject(target: OptionsBottomSheet)
 }
 
 @Scope
