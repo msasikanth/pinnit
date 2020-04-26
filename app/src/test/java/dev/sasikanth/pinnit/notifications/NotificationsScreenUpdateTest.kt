@@ -104,4 +104,26 @@ class NotificationsScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when undo delete is clicked, then undo deleted notification`() {
+    val notification = TestData.notification(
+      uuid = UUID.fromString("0fdb4088-a12e-47e6-8d42-d5b553edd3b1"),
+      createdAt = Instant.now(utcClock),
+      updatedAt = Instant.now(utcClock),
+      deletedAt = Instant.now(utcClock)
+    )
+    val notifications = listOf(notification)
+    val model = defaultModel.onNotificationsLoaded(notifications)
+
+    updateSpec
+      .given(model)
+      .whenEvent(UndoNotificationDelete(notification.uuid))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(UndoDeletedNotification(notification.uuid) as NotificationsScreenEffect)
+        )
+      )
+  }
 }

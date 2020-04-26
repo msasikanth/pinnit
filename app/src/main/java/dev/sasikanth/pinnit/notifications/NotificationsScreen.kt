@@ -114,7 +114,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
           Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
             .setAnchorView(requireActivity().bottomBar)
             .setAction(R.string.undo) {
-              // TODO: Undo deleted notification
+              viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
             }
             .show()
         }
