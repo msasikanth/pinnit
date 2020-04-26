@@ -1,6 +1,8 @@
 package dev.sasikanth.pinnit.editor
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
@@ -18,11 +20,13 @@ import java.util.UUID
 
 class EditorScreenEffectHandlerTest {
 
+  private val viewEffectConsumer = RecordingConsumer<EditorScreenViewEffect>()
   private val repository = mock<NotificationRepository>()
   private val dispatcherProvider = TestDispatcherProvider()
   private val effectHandler = EditorScreenEffectHandler(
     repository,
-    dispatcherProvider
+    dispatcherProvider,
+    viewEffectConsumer
   )
 
   private val consumer = RecordingConsumer<EditorScreenEvent>()
@@ -56,5 +60,26 @@ class EditorScreenEffectHandlerTest {
     verifyNoMoreInteractions(repository)
 
     consumer.assertValues(NotificationLoaded(notification))
+  }
+
+  @Test
+  fun `when save and close effect is received, then save the notification and close editor`() = runBlocking {
+    // given
+    val title = "Notification Title"
+    val content = "This is content"
+
+    // when
+    connection.accept(SaveNotificationAndCloseEditor(title, content))
+
+    // then
+    verify(repository).save(
+      title = eq(title),
+      content = eq(content),
+      isPinned = eq(true),
+      uuid = any()
+    )
+    verifyNoMoreInteractions(repository)
+
+    viewEffectConsumer.assertValues(CloseEditor)
   }
 }

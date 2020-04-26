@@ -17,7 +17,7 @@ class NotificationRepository @Inject constructor(
   suspend fun save(
     title: String,
     content: String? = null,
-    isPinned: Boolean = false,
+    isPinned: Boolean = true,
     uuid: UUID = UUID.randomUUID()
   ): PinnitNotification {
     val notification = PinnitNotification(
