@@ -101,7 +101,7 @@
       android:textColor="?attr/colorOnBackgroundVariant"
       app:firstBaselineToTopHeight="16sp"
       app:lastBaselineToBottomHeight="8sp"
-      app:layout_constraintEnd_toStartOf="@id/togglePinIcon"
+      app:layout_constraintEnd_toStartOf="@id/endGuideline"
       app:layout_constraintStart_toEndOf="@id/infoSeparator"
       app:layout_constraintTop_toBottomOf="@id/topGuideline"
       tools:text="14M AGO" />
@@ -110,28 +110,27 @@
       android:id="@+id/togglePinIcon"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:background="?attr/selectableItemBackgroundBorderless"
       android:clickable="true"
-      android:contentDescription="@null"
       android:focusable="true"
-      android:src="@drawable/asld_pin_unpin"
-      app:layout_constraintEnd_toStartOf="@id/endGuideline"
-      app:layout_constraintHorizontal_bias="1"
-      app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+      android:padding="16dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/asld_pin_unpin" />
 
     <androidx.constraintlayout.widget.Barrier
       android:id="@+id/infoBarrier"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:barrierDirection="bottom"
-      app:constraint_referenced_ids="appIcon, appName, infoSeparator, timeStamp, togglePinIcon" />
+      app:constraint_referenced_ids="appIcon, appName, infoSeparator, timeStamp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
       android:id="@+id/personImageView"
       android:layout_width="40dp"
       android:layout_height="40dp"
-      android:layout_marginTop="6dp"
+      android:layout_marginTop="12dp"
       android:layout_marginEnd="16dp"
+      android:src="?attr/colorSecondary"
       android:visibility="gone"
       app:civ_border_color="@android:color/white"
       app:civ_border_width="1dp"
@@ -147,11 +146,11 @@
       style="@style/TextStyle.Pinnit.Subtitle1"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="6dp"
+      android:layout_marginTop="12dp"
       android:layout_marginEnd="8dp"
       android:textColor="?attr/colorOnBackground"
       app:layout_constraintBottom_toTopOf="@id/contentTextView"
-      app:layout_constraintEnd_toEndOf="@id/endGuideline"
+      app:layout_constraintEnd_toStartOf="@id/togglePinIcon"
       app:layout_constraintStart_toEndOf="@id/personImageView"
       app:layout_constraintTop_toBottomOf="@id/infoBarrier"
       tools:text="Notification Title" />
@@ -163,7 +162,7 @@
       android:layout_height="wrap_content"
       android:textColor="?attr/colorOnBackgroundVariant"
       app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
-      app:layout_constraintEnd_toEndOf="@id/titleTextView"
+      app:layout_constraintEnd_toStartOf="@id/endGuideline"
       app:layout_constraintStart_toStartOf="@id/titleTextView"
       app:layout_constraintTop_toBottomOf="@id/titleTextView"
       tools:maxLines="4"
