@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:id="@+id/darkModeOption"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:orientation="horizontal"
+    android:paddingStart="24dp"
+    android:paddingEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_marginBottom="16dp"
+      android:contentDescription="@null"
+      android:src="@drawable/ic_pinnit_dark_mode" />
+
+    <com.google.android.material.textview.MaterialTextView
+      style="@style/TextStyle.Pinnit.Body1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="12dp"
+      android:layout_marginBottom="16dp"
+      android:text="@string/option_item_dark_mode" />
+
+  </LinearLayout>
+
+  <com.google.android.material.button.MaterialButtonToggleGroup
+    android:id="@+id/themeButtonGroup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/darkModeOption"
+    app:singleSelection="true">
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/darkModeOn"
+      style="@style/Widget.Pinnit.Button.Group.OutlinedButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/option_dark_mode_on" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/darkModeAuto"
+      style="@style/Widget.Pinnit.Button.Group.OutlinedButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/option_dark_mode_auto" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/darkModeOff"
+      style="@style/Widget.Pinnit.Button.Group.OutlinedButton"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/option_dark_mode_off" />
+
+  </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,9 @@
     <!-- Background underneath notifications -->
     <item name="colorRowBackground">@color/colorRowBackground</item>
 
+    <!-- Color of our ToggleButtonGroup used for dark mode selections -->
+    <item name="colorOutlinedButtonGroup">@color/colorOutlinedButtonGroup</item>
+
     <item name="colorDivider">@color/colorDivider</item>
 
     <item name="elevationOverlayEnabled">false</item>
@@ -27,7 +30,9 @@
     <item name="android:statusBarColor">@color/statusBarColor</item>
     <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
 
+    <item name="materialCardViewStyle">@style/Widget.Pinnit.CardView</item>
     <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+    <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Pinnit.BottomSheetDialog</item>
 
     <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
     <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>

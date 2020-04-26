@@ -4,4 +4,5 @@
   <attr name="colorDivider" format="color" />
   <attr name="colorOnBackgroundVariant" format="color" />
   <attr name="colorRowBackground" format="color" />
+  <attr name="colorOutlinedButtonGroup" format="color" />
 </resources>
