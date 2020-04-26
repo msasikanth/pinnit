@@ -23,6 +23,7 @@ import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
+import dev.sasikanth.pinnit.system.NotificationUtil
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
@@ -148,6 +149,13 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   private fun onToggleNotificationPinClicked(notification: PinnitNotification) {
     viewModel.dispatchEvent(TogglePinStatusClicked(notification))
+    if (notification.isPinned) {
+      // Since it's already pinned, dismiss the notification
+      NotificationUtil.dismissNotification(requireContext(), notification)
+    } else {
+      // Since it's not pinned, show the notification
+      NotificationUtil.showNotification(requireContext(), notification)
+    }
   }
 
   private fun onNotificationClicked(notification: PinnitNotification) {

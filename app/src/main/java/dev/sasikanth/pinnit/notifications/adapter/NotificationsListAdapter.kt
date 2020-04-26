@@ -69,6 +69,7 @@ class NotificationsListAdapter(
 
       titleTextView.text = notification.title
       contentTextView.text = notification.content
+      contentTextView.isVisible = notification.content.isNullOrBlank().not()
 
       timeStamp.text = DateUtils.getRelativeTimeSpanString(
         notification.updatedAt.toEpochMilli(),
