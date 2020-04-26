@@ -210,4 +210,26 @@ class NotificationsRepositoryAndroidTest {
     assertThat(notificationRepository.notification(notification.uuid))
       .isEqualTo(deletedNotification)
   }
+
+  @Test
+  fun undo_a_notification_delete_should_work_correctly() = runBlocking {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("f6a082c4-0384-484f-94ca-80533b19cf47"),
+      createdAt = Instant.now(clock).minus(1, ChronoUnit.DAYS),
+      updatedAt = Instant.now(clock).minus(1, ChronoUnit.DAYS),
+      deletedAt = Instant.now(clock)
+    )
+
+    val undidNotification = notification.copy(
+      deletedAt = null
+    )
+
+    // when
+    notificationRepository.undoNotificationDelete(notification)
+
+    // then
+    assertThat(notificationRepository.notification(notification.uuid))
+      .isEqualTo(undidNotification)
+  }
 }

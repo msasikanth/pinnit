@@ -64,4 +64,11 @@ class NotificationRepository @Inject constructor(
     )
     notificationDao.save(listOf(deletedNotification))
   }
+
+  suspend fun undoNotificationDelete(notification: PinnitNotification) {
+    val undidNotification = notification.copy(
+      deletedAt = null
+    )
+    notificationDao.save(listOf(undidNotification))
+  }
 }
