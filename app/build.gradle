@@ -82,6 +82,8 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
   implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
 
+  implementation "androidx.preference:preference-ktx:$versions.preference"
+
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 
   implementation "com.jakewharton.threetenabp:threetenabp:$versions.threeten"

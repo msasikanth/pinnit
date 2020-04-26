@@ -23,6 +23,7 @@ buildscript {
       assistedInject  : '0.5.2',
       mobius          : '1.4.0-beta5',
       circleImageView : '3.1.0',
+      preference      : '1.1.1',
   ]
   repositories {
     google()
