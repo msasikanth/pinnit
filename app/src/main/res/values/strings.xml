@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">pinnit</string>
+  <string name="app_name">Pinnit</string>
   <string name="create">Create</string>
 
   <string name="toolbar_title_notifications">Notifications</string>
