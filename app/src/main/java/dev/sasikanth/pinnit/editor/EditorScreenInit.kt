@@ -6,10 +6,12 @@ import com.spotify.mobius.Init
 
 class EditorScreenInit : Init<EditorScreenModel, EditorScreenEffect> {
   override fun init(model: EditorScreenModel): First<EditorScreenModel, EditorScreenEffect> {
-    return if (model.notificationUuid != null) {
-      first(model, setOf(LoadNotification(model.notificationUuid)))
-    } else {
-      first(model)
+    if (model.title == null) {
+      if (model.notificationUuid != null) {
+        return first(model, setOf(LoadNotification(model.notificationUuid)))
+      }
     }
+
+    return first(model)
   }
 }

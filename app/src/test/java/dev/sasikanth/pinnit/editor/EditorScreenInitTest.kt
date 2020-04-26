@@ -40,4 +40,19 @@ class EditorScreenInitTest {
         )
       )
   }
+
+  @Test
+  fun `when screen is restored and notification is already loaded, then do nothing`() {
+    val defaultModel = EditorScreenModel.default(UUID.fromString("62e52dce-7359-43a8-959a-cd256b9321a7"))
+      .titleChanged("Notification Title")
+
+    initSpec
+      .whenInit(defaultModel)
+      .then(
+        assertThatFirst(
+          hasModel(defaultModel),
+          hasNoEffects()
+        )
+      )
+  }
 }
