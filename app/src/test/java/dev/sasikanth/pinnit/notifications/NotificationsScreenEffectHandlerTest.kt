@@ -141,4 +141,29 @@ class NotificationsScreenEffectHandlerTest {
     consumer.assertValues()
     viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
   }
+
+  @Test
+  fun `when undo deleted notification effect is received, then undo the delete`() = runBlocking {
+    // given
+    val notificationUuid = UUID.fromString("f3d50ff2-5e92-4d46-b5b9-53bbe770ef9c")
+    val notification = TestData.notification(
+      uuid = UUID.fromString("34727623-c572-455f-8e37-b1df3baca79e"),
+      createdAt = Instant.now(utcClock).minus(1, ChronoUnit.DAYS),
+      updatedAt = Instant.now(utcClock),
+      deletedAt = Instant.now(utcClock)
+    )
+
+    whenever(notificationRepository.notification(notificationUuid)) doReturn notification
+
+    // when
+    connection.accept(UndoDeletedNotification(notificationUuid))
+
+    // then
+    verify(notificationRepository, times(1)).notification(notificationUuid)
+    verify(notificationRepository, times(1)).undoNotificationDelete(notification)
+    verifyNoMoreInteractions(notificationRepository)
+
+    consumer.assertValues()
+    viewActionsConsumer.assertValues()
+  }
 }

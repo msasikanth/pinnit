@@ -12,3 +12,5 @@ data class OpenNotificationEditor(val notificationUuid: UUID) : NotificationsScr
 data class ToggleNotificationPinStatus(val notification: PinnitNotification) : NotificationsScreenEffect()
 
 data class DeleteNotification(val notification: PinnitNotification) : NotificationsScreenEffect()
+
+data class UndoDeletedNotification(val notificationUuid: UUID) : NotificationsScreenEffect()

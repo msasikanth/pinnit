@@ -37,6 +37,10 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
         notificationRepository.deleteNotification(effect.notification)
         viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
       }
+      is UndoDeletedNotification -> {
+        val notification = notificationRepository.notification(effect.notificationUuid)
+        notificationRepository.undoNotificationDelete(notification)
+      }
     }
   }
 }
