@@ -7,10 +7,18 @@ import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.data.PinnitPreferences
+import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.utils.donOnApplyWindowInsets
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+  // Injecting this to trigger the init
+  // function of PinnitPreferences to update theme
+  @Inject
+  lateinit var pinnitPreferences: PinnitPreferences
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -25,6 +33,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    injector.inject(this)
     super.onCreate(savedInstanceState)
 
     mainRoot.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
