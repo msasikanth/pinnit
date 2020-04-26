@@ -16,7 +16,7 @@ data class EditorScreenModel(
     )
   }
 
-  fun titleChanged(title: String): EditorScreenModel {
+  fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
   }
 
