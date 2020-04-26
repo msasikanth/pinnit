@@ -1,7 +1,9 @@
 package dev.sasikanth.pinnit.notifications
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,10 +15,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
+import dev.sasikanth.pinnit.BuildConfig
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.injector
@@ -118,7 +123,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       openNotificationEditor()
     }
     requireActivity().bottomBar.setActionOnClickListener {
-      // TODO: Show about app
+      showAbout()
     }
   }
 
@@ -170,5 +175,39 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       )
 
     findNavController().navigate(navDirections)
+  }
+
+  private fun showAbout() {
+    val dialog = MaterialAlertDialogBuilder(requireContext()).apply {
+      setView(R.layout.pinnit_about_dialog)
+    }.create()
+
+    if (!dialog.isShowing) {
+      dialog.show()
+      dialog.findViewById<AppCompatTextView>(R.id.app_version)?.text =
+        getString(R.string.app_version, BuildConfig.VERSION_NAME)
+      dialog.findViewById<MaterialButton>(R.id.contact_support)
+        ?.setOnClickListener {
+          val intent = Intent(Intent.ACTION_SEND)
+          intent.type = "text/plain"
+          intent.putExtra(
+            Intent.EXTRA_EMAIL,
+            arrayOf("contact@msasikanth.com")
+          )
+          intent.putExtra(
+            Intent.EXTRA_SUBJECT,
+            getString(
+              R.string.support_subject,
+              BuildConfig.VERSION_NAME
+            )
+          )
+          startActivity(
+            Intent.createChooser(
+              intent,
+              getString(R.string.send_email)
+            )
+          )
+        }
+    }
   }
 }

@@ -1,5 +1,7 @@
 <resources>
   <string name="app_name">Pinnit</string>
+  <string name="app_version">v%1$s</string>
+
   <string name="create">Create</string>
 
   <string name="toolbar_title_notifications">Notifications</string>
@@ -13,10 +15,22 @@
 
   <string name="option_item_dark_mode">Dark mode</string>
 
+  <!-- Preferences -->
   <string name="pref_theme_light" translatable="false">pref_notif_light</string>
   <string name="pref_theme_dark" translatable="false">pref_notif_dark</string>
   <string name="pref_theme_auto" translatable="false">pref_notif_auto</string>
   <string name="option_dark_mode_on">on</string>
   <string name="option_dark_mode_auto">auto</string>
   <string name="option_dark_mode_off">off</string>
+
+  <!-- About -->
+  <string name="about">About</string>
+  <string name="privacy_policy">Privacy policy</string>
+  <string name="questions_or_bugs">Questions or bug reports?</string>
+  <string name="contact_support">Contact support</string>
+  <string name="support_subject">Pinnit support : %1$s</string>
+  <string name="send_email">Send email</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+
 </resources>

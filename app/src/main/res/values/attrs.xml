@@ -5,4 +5,5 @@
   <attr name="colorOnBackgroundVariant" format="color" />
   <attr name="colorRowBackground" format="color" />
   <attr name="colorOutlinedButtonGroup" format="color" />
+  <attr name="colorSecondaryRipple" format="color" />
 </resources>

@@ -8,6 +8,7 @@
     <item name="colorOnPrimaryVariant">@color/colorOnPrimaryVariant</item>
 
     <item name="colorSecondary">@color/colorSecondary</item>
+    <item name="colorSecondaryRipple">@color/color_secondary_20</item>
 
     <item name="colorSurface">@color/colorSurface</item>
     <item name="colorOnSurface">@color/colorOnSurface</item>
@@ -33,6 +34,7 @@
     <item name="materialCardViewStyle">@style/Widget.Pinnit.CardView</item>
     <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
     <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Pinnit.BottomSheetDialog</item>
+    <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
 
     <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
     <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>

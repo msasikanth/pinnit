@@ -38,6 +38,13 @@
     <item name="elevation">0dp</item>
   </style>
 
+  <style name="Widget.Pinnit.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+    <item name="android:textColor">?attr/colorSecondary</item>
+    <item name="rippleColor">?attr/colorSecondaryRipple</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+  </style>
+
   <!-- Bottom Sheet -->
   <style name="ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
     <item name="android:statusBarColor">@android:color/transparent</item>
@@ -47,5 +54,34 @@
     <item name="android:windowIsFloating">false</item>
     <item name="android:navigationBarColor">@android:color/black</item>
     <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
+  </style>
+
+  <!-- Alert Dialog -->
+  <style name="ThemeOverlay.Pinnit.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <item name="materialAlertDialogTitleTextStyle">
+      @style/MaterialAlertDialog.Pinnit.Title.Text
+    </item>
+    <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Pinnit.Body.Text
+    </item>
+    <item name="buttonBarPositiveButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
+    </item>
+    <item name="buttonBarNegativeButtonStyle">@style/Widget.Pinnit.Button.TextButton.Dialog
+    </item>
+    <item name="buttonBarStyle">@style/MaterialAlertDialog.Pinnit.ButtonRow
+    </item>
+
+  </style>
+
+  <style name="MaterialAlertDialog.Pinnit.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Headline6</item>
+  </style>
+
+  <style name="MaterialAlertDialog.Pinnit.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Body2</item>
+  </style>
+
+  <style name="MaterialAlertDialog.Pinnit.ButtonRow" parent="">
+    <item name="android:background">@drawable/rectangle</item>
+    <item name="android:backgroundTint">@color/color_secondary_5</item>
   </style>
 </resources>
