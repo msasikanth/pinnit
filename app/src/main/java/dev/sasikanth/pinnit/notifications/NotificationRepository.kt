@@ -37,11 +37,12 @@ class NotificationRepository @Inject constructor(
     notificationDao.save(notifications)
   }
 
-  suspend fun updateNotification(notification: PinnitNotification) {
+  suspend fun updateNotification(notification: PinnitNotification): PinnitNotification {
     val updatedNotification = notification.copy(
       updatedAt = Instant.now(utcClock)
     )
     notificationDao.save(listOf(updatedNotification))
+    return updatedNotification
   }
 
   suspend fun notification(uuid: UUID): PinnitNotification {
