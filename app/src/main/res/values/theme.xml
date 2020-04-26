@@ -1,6 +1,16 @@
 <resources>
 
-  <style name="Base.Theme.Pinnit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+  <style name="Platform.Pinnit.v23" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="android:statusBarColor">@color/statusBarColor</item>
+    <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
+    <item name="android:navigationBarColor">@android:color/black</item>
+  </style>
+
+  <style name="Platform.Pinnit" parent="Platform.Pinnit.v23" />
+
+  <style name="Platform.Theme.Pinnit" parent="Platform.Pinnit" />
+
+  <style name="Base.Theme.Pinnit" parent="Platform.Theme.Pinnit">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
 
@@ -27,9 +37,6 @@
 
     <item name="elevationOverlayEnabled">false</item>
     <item name="elevationOverlayColor">@android:color/transparent</item>
-
-    <item name="android:statusBarColor">@color/statusBarColor</item>
-    <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
 
     <item name="materialCardViewStyle">@style/Widget.Pinnit.CardView</item>
     <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>

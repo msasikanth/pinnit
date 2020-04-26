@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Platform.Pinnit.v29" parent="Platform.Pinnit.v27">
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:navigationBarColor">?attr/colorSurface</item>
+  </style>
+
+  <style name="Platform.Pinnit" parent="Platform.Pinnit.v29" />
+</resources>
