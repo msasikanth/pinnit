@@ -25,10 +25,26 @@ class EditorScreenUpdateTest {
       .whenEvent(NotificationLoaded(notification))
       .then(
         assertThatNext(
-          hasModel(defaultModel
-            .titleChanged(notification.title)
-            .contentChanged(notification.content)
+          hasModel(
+            defaultModel
+              .titleChanged(notification.title)
+              .contentChanged(notification.content)
           ),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when title changes and is not empty, then update ui`() {
+    val title = "Title"
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(TitleChanged(title))
+      .then(
+        assertThatNext(
+          hasModel(defaultModel.titleChanged(title)),
           hasNoEffects()
         )
       )

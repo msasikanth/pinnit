@@ -6,11 +6,15 @@ import com.spotify.mobius.Update
 
 class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorScreenEffect> {
   override fun update(model: EditorScreenModel, event: EditorScreenEvent): Next<EditorScreenModel, EditorScreenEffect> {
-    when (event) {
+    return when (event) {
       is NotificationLoaded -> {
         val updatedModel = model.titleChanged(event.notification.title)
           .contentChanged(event.notification.content)
-        return next(updatedModel)
+        next(updatedModel)
+      }
+
+      is TitleChanged -> {
+        next(model.titleChanged(event.title))
       }
     }
   }
