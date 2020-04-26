@@ -4,4 +4,5 @@ interface EditorScreenUi {
   fun setTitle(notificationTitle: String)
   fun setContent(notificationContent: String?)
   fun enableSave()
+  fun disableSave()
 }

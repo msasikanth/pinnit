@@ -17,6 +17,8 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
 
       if (!model.title.isBlank()) {
         ui.enableSave()
+      } else {
+        ui.disableSave()
       }
     }
   }
