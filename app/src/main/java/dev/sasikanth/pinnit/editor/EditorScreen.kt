@@ -17,6 +17,7 @@ import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.system.NotificationUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import java.util.UUID
@@ -79,7 +80,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
       when (it) {
-        CloseEditor -> {
+        is CloseEditor -> {
+          if (it.notification.isPinned) {
+            NotificationUtil.showNotification(requireContext(), it.notification)
+          }
           closeEditor()
         }
 

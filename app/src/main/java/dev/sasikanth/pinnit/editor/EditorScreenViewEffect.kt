@@ -1,8 +1,10 @@
 package dev.sasikanth.pinnit.editor
 
+import dev.sasikanth.pinnit.data.PinnitNotification
+
 sealed class EditorScreenViewEffect
 
-object CloseEditor : EditorScreenViewEffect()
+data class CloseEditor(val notification: PinnitNotification) : EditorScreenViewEffect()
 
 data class SetTitle(val title: String) : EditorScreenViewEffect()
 
