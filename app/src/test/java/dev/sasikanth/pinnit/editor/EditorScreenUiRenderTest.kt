@@ -15,6 +15,7 @@ class EditorScreenUiRenderTest {
   @Test
   fun `when notification is being fetched, then do nothing`() {
     // given
+    val title = ""
     val model = EditorScreenModel.default(null)
       .titleChanged(null)
 
@@ -23,27 +24,6 @@ class EditorScreenUiRenderTest {
 
     // then
     verifyZeroInteractions(ui)
-  }
-
-  @Test
-  fun `when notification is fetch, then update ui`() {
-    // given
-    val notificationUuid = UUID.fromString("ad9e2ac7-9c12-4f5a-baba-460cacc65dc8")
-    val notificationTitle = "Notification Title"
-    val notificationContent = "Notification Content"
-
-    val model = EditorScreenModel.default(notificationUuid)
-      .titleChanged(notificationTitle)
-      .contentChanged(notificationContent)
-
-    // then
-    uiRender.render(model)
-
-    // then
-    verify(ui).setTitle(notificationTitle)
-    verify(ui).setContent(notificationContent)
-    verify(ui).enableSave()
-    verifyNoMoreInteractions(ui)
   }
 
   @Test
@@ -58,8 +38,6 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
-    verify(ui).setTitle(notificationTitle)
-    verify(ui).setContent(null)
     verify(ui).enableSave()
     verifyNoMoreInteractions(ui)
   }
@@ -76,8 +54,6 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
-    verify(ui).setTitle(title)
-    verify(ui).setContent(null)
     verify(ui).disableSave()
     verifyNoMoreInteractions(ui)
   }

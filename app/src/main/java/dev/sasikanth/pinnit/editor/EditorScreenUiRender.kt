@@ -12,10 +12,7 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
     }
 
     valueChangedCallback.pass(model) {
-      ui.setTitle(model.title.orEmpty())
-      ui.setContent(model.content)
-
-      if (!model.title.isBlank()) {
+      if (!model.title.isNullOrBlank()) {
         ui.enableSave()
       } else {
         ui.disableSave()
