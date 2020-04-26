@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     mainRoot.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
-    appBarLayout.donOnApplyWindowInsets { view, windowInsets, initialPadding ->
+    toolbar.donOnApplyWindowInsets { view, windowInsets, initialPadding ->
       view.updatePadding(top = windowInsets.systemWindowInsetTop + initialPadding.top)
     }
     setSupportActionBar(toolbar)
