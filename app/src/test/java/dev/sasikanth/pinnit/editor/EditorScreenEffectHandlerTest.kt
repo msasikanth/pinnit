@@ -60,6 +60,7 @@ class EditorScreenEffectHandlerTest {
     verifyNoMoreInteractions(repository)
 
     consumer.assertValues(NotificationLoaded(notification))
+    viewEffectConsumer.assertValues()
   }
 
   @Test
@@ -80,6 +81,36 @@ class EditorScreenEffectHandlerTest {
     )
     verifyNoMoreInteractions(repository)
 
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(CloseEditor)
+  }
+
+  @Test
+  fun `when update and close effect is received, then update the notification and close editor`() = runBlocking {
+    // given
+    val notificationUuid = UUID.fromString("4e91382a-d5c3-44a7-8ee3-fa15a4ec69b4")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Notification Title"
+    )
+
+    val updatedTitle = "Updated Title"
+    val updatedNotification = notification
+      .copy(
+        title = updatedTitle
+      )
+
+    whenever(repository.notification(notificationUuid)) doReturn notification
+
+    // when
+    connection.accept(UpdateNotificationAndCloseEditor(notificationUuid, updatedTitle, null))
+
+    // then
+    verify(repository).notification(notificationUuid)
+    verify(repository).updateNotification(updatedNotification)
+    verifyNoMoreInteractions(repository)
+
+    consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditor)
   }
 }

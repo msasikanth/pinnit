@@ -23,6 +23,16 @@ class EditorScreenEffectHandler @Inject constructor(
         notificationRepository.save(effect.title, effect.content)
         viewEffectConsumer.accept(CloseEditor)
       }
+
+      is UpdateNotificationAndCloseEditor -> {
+        val notification = notificationRepository.notification(effect.notificationUuid)
+        val updatedNotification = notification.copy(
+          title = effect.title,
+          content = effect.content
+        )
+        notificationRepository.updateNotification(updatedNotification)
+        viewEffectConsumer.accept(CloseEditor)
+      }
     }
   }
 }
