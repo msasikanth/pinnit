@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.di
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
+import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
 import javax.inject.Scope
 
@@ -16,6 +17,7 @@ interface AppComponent {
   }
 
   fun inject(target: NotificationsScreen)
+  fun inject(target: EditorScreen)
 }
 
 @Scope

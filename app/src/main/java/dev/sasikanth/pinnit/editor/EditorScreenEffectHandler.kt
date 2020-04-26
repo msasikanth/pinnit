@@ -1,16 +1,22 @@
 package dev.sasikanth.pinnit.editor
 
 import com.spotify.mobius.functions.Consumer
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.DispatcherProvider
-import javax.inject.Inject
 
-class EditorScreenEffectHandler @Inject constructor(
+class EditorScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,
-  private val viewEffectConsumer: Consumer<EditorScreenViewEffect>
+  @Assisted private val viewEffectConsumer: Consumer<EditorScreenViewEffect>
 ) : CoroutineConnectable<EditorScreenEffect, EditorScreenEvent>(dispatcherProvider.main) {
+
+  @AssistedInject.Factory
+  interface Factory {
+    fun create(viewEffectConsumer: Consumer<EditorScreenViewEffect>): EditorScreenEffectHandler
+  }
 
   override suspend fun handler(effect: EditorScreenEffect, dispatchEvent: (EditorScreenEvent) -> Unit) {
     when (effect) {
