@@ -7,3 +7,5 @@ sealed class EditorScreenEvent
 data class NotificationLoaded(val notification: PinnitNotification) : EditorScreenEvent()
 
 data class TitleChanged(val title: String) : EditorScreenEvent()
+
+object SaveClicked : EditorScreenEvent()

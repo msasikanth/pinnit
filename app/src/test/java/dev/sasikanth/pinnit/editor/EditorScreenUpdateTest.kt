@@ -1,7 +1,9 @@
 package dev.sasikanth.pinnit.editor
 
+import com.spotify.mobius.test.NextMatchers.hasEffects
 import com.spotify.mobius.test.NextMatchers.hasModel
 import com.spotify.mobius.test.NextMatchers.hasNoEffects
+import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
@@ -46,6 +48,41 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasModel(defaultModel.titleChanged(title)),
           hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when save is clicked and notification uuid is not present, then save the notification`() {
+    val model = EditorScreenModel
+      .default(null)
+      .titleChanged("Title")
+      .contentChanged("Content")
+
+    updateSpec
+      .given(model)
+      .whenEvent(SaveClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(SaveNotificationAndCloseEditor(model.title!!, model.content) as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when save is clicked and notification uuid is present, then update the notification`() {
+    val model = defaultModel
+      .titleChanged("Title")
+      .contentChanged("Content")
+
+    updateSpec
+      .given(model)
+      .whenEvent(SaveClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(UpdateNotificationAndCloseEditor(notificationUuid, model.title!!, model.content) as EditorScreenEffect)
         )
       )
   }
