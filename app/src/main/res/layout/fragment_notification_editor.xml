@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".editor.EditorScreen">
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.card.MaterialCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clickable="false"
+      app:cardCornerRadius="0dp"
+      app:cardElevation="1dp">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/topGuideline"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/startGuideline"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_begin="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/endGuideline"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_end="16dp" />
+
+        <ImageView
+          android:id="@+id/appIcon"
+          android:layout_width="18dp"
+          android:layout_height="18dp"
+          android:contentDescription="@null"
+          android:src="@drawable/ic_pinnit_app_icon"
+          android:tint="?attr/colorSecondary"
+          app:layout_constraintBottom_toBottomOf="@id/appName"
+          app:layout_constraintEnd_toStartOf="@id/appName"
+          app:layout_constraintHorizontal_bias="0"
+          app:layout_constraintHorizontal_chainStyle="packed"
+          app:layout_constraintStart_toEndOf="@id/startGuideline"
+          app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/appName"
+          style="@style/TextStyle.Pinnit.Overline1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:text="@string/app_name"
+          android:textColor="?attr/colorSecondary"
+          app:firstBaselineToTopHeight="16sp"
+          app:lastBaselineToBottomHeight="8sp"
+          app:layout_constraintEnd_toStartOf="@id/endGuideline"
+          app:layout_constraintStart_toEndOf="@id/appIcon"
+          app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+        <androidx.constraintlayout.widget.Barrier
+          android:id="@+id/infoBarrier"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:barrierDirection="bottom"
+          app:constraint_referenced_ids="appIcon, appName" />
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/titleEditText"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"
+          android:hint="@string/editor_title_hint"
+          android:inputType="textCapSentences"
+          android:textAppearance="@style/TextAppearance.Pinnit.Subtitle1"
+          app:layout_constraintEnd_toStartOf="@id/endGuideline"
+          app:layout_constraintStart_toEndOf="@id/startGuideline"
+          app:layout_constraintTop_toBottomOf="@id/infoBarrier" />
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/contentEditText"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          android:backgroundTint="@android:color/transparent"
+          android:hint="@string/editor_content_hint"
+          android:inputType="textCapSentences"
+          android:textAppearance="@style/TextAppearance.Pinnit.Body2"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@id/endGuideline"
+          app:layout_constraintStart_toEndOf="@id/startGuideline"
+          app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
@@ -22,7 +24,9 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.utils.UtcClock
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import java.util.UUID
 import javax.inject.Inject
 
 class NotificationsScreen : Fragment(R.layout.fragment_notifications), NotificationsScreenUi {
@@ -60,6 +64,16 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     injector.inject(this)
   }
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+    reenterTransition = backward
+
+    val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+    exitTransition = forward
+  }
+
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
@@ -85,10 +99,31 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
       when (it) {
         is OpenNotificationEditorViewEffect -> {
-          // TODO : Handle open notification editor
+          openNotificationEditor(uuid = it.notificationUuid)
         }
       }
     })
+
+    requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_pinnit_dark_mode)
+    requireActivity().bottomBar.setContentActionEnabled(true)
+    requireActivity().bottomBar.setContentActionText(R.string.create)
+    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_about)
+
+    requireActivity().bottomBar.setNavigationOnClickListener {
+      // TODO: Handle dark mode
+    }
+    requireActivity().bottomBar.setContentActionOnClickListener {
+      openNotificationEditor()
+    }
+    requireActivity().bottomBar.setActionOnClickListener {
+      // TODO: Show about app
+    }
+  }
+
+  override fun onDestroyView() {
+    notificationsRecyclerView.adapter = null
+    notificationsRecyclerView.itemAnimator = null
+    super.onDestroyView()
   }
 
   override fun showNotifications(notifications: List<PinnitNotification>) {
@@ -117,5 +152,14 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   private fun onNotificationClicked(notification: PinnitNotification) {
     viewModel.dispatchEvent(NotificationClicked(notification.uuid))
+  }
+
+  private fun openNotificationEditor(uuid: UUID? = null) {
+    val navDirections = NotificationsScreenDirections
+      .actionNotificationsScreenToEditorScreen(
+        uuid = uuid?.toString()
+      )
+
+    findNavController().navigate(navDirections)
   }
 }

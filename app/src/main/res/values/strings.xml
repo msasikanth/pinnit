@@ -5,4 +5,8 @@
   <string name="toolbar_title_notifications">Notifications</string>
   <string name="no_notifications">No notifications</string>
   <string name="dot_separator">•</string>
+  <string name="toolbar_title_create">Create</string>
+  <string name="save_and_pin">save and pin</string>
+  <string name="editor_title_hint">Title</string>
+  <string name="editor_content_hint">Description</string>
 </resources>

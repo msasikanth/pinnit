@@ -12,7 +12,9 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.Pinnit"
     tools:ignore="AllowBackup">
-    <activity android:name=".activity.MainActivity">
+    <activity
+      android:name=".activity.MainActivity"
+      android:windowSoftInputMode="adjustResize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

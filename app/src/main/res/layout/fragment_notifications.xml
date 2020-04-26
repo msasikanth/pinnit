@@ -29,6 +29,7 @@
     android:layout_marginStart="72dp"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="72dp"
+    android:layout_marginBottom="88dp"
     android:text="@string/no_notifications"
     android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -40,11 +41,13 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/notificationsRecyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="0dp"
     android:clipToPadding="false"
     android:paddingBottom="88dp"
     android:visibility="gone"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
     tools:listitem="@layout/notifications_list_item"
     tools:visibility="visible" />
 
