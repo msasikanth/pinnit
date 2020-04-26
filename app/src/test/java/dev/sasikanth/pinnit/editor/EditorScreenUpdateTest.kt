@@ -53,6 +53,21 @@ class EditorScreenUpdateTest {
   }
 
   @Test
+  fun `when content changes, then update ui`() {
+    val content = "Content"
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(ContentChanged(content))
+      .then(
+        assertThatNext(
+          hasModel(defaultModel.contentChanged(content)),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
   fun `when save is clicked and notification uuid is not present, then save the notification`() {
     val model = EditorScreenModel
       .default(null)

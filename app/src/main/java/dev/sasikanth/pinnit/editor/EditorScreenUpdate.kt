@@ -18,6 +18,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
         next(model.titleChanged(event.title))
       }
 
+      is ContentChanged -> {
+        next(model.contentChanged(event.content))
+      }
+
       is SaveClicked -> {
         val effect = if (model.notificationUuid == null) {
           SaveNotificationAndCloseEditor(model.title!!, model.content)
