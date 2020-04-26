@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.di
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
+import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
@@ -17,6 +18,7 @@ interface AppComponent {
     fun create(@BindsInstance application: Application): AppComponent
   }
 
+  fun inject(target: MainActivity)
   fun inject(target: NotificationsScreen)
   fun inject(target: EditorScreen)
   fun inject(target: OptionsBottomSheet)

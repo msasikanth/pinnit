@@ -48,6 +48,13 @@
 
   </style>
 
-  <style name="Theme.Pinnit" parent="Base.Theme.Pinnit" />
+  <style name="Theme.Pinnit" parent="Base.Theme.Pinnit">
+    <item name="android:windowBackground">@drawable/splash_layout</item>
+    <item name="android:statusBarColor">@color/maroon_700</item>
+    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:navigationBarColor">@color/maroon_700</item>
+  </style>
+
+  <style name="Theme.Pinnit.Main" parent="Base.Theme.Pinnit" />
 
 </resources>
