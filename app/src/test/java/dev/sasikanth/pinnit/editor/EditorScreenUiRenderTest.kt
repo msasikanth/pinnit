@@ -42,6 +42,25 @@ class EditorScreenUiRenderTest {
     // then
     verify(ui).setTitle(notificationTitle)
     verify(ui).setContent(notificationContent)
+    verify(ui).enableSave()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when title is not blank, then enable save`() {
+    val notificationUuid = UUID.fromString("ad9e2ac7-9c12-4f5a-baba-460cacc65dc8")
+    val notificationTitle = "Notification Title"
+
+    val model = EditorScreenModel.default(notificationUuid)
+      .titleChanged(notificationTitle)
+
+    // then
+    uiRender.render(model)
+
+    // then
+    verify(ui).setTitle(notificationTitle)
+    verify(ui).setContent(null)
+    verify(ui).enableSave()
     verifyNoMoreInteractions(ui)
   }
 }
