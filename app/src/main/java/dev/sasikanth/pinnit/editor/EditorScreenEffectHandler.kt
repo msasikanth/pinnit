@@ -17,6 +17,8 @@ class EditorScreenEffectHandler @Inject constructor(
       is LoadNotification -> {
         val notification = notificationRepository.notification(effect.uuid)
         dispatchEvent(NotificationLoaded(notification))
+        viewEffectConsumer.accept(SetTitle(notification.title))
+        viewEffectConsumer.accept(SetContent(notification.content))
       }
 
       is SaveNotificationAndCloseEditor -> {
