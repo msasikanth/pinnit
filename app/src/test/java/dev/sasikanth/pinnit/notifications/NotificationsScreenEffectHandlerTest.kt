@@ -123,7 +123,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when delete notification effect is received, then delete notification`() = runBlocking {
+  fun `when delete notification effect is received, then delete notification and show undo option`() = runBlocking {
     // given
     val notification = TestData.notification(
       uuid = UUID.fromString("34727623-c572-455f-8e37-b1df3baca79e"),
@@ -139,6 +139,6 @@ class NotificationsScreenEffectHandlerTest {
     verifyNoMoreInteractions(notificationRepository)
 
     consumer.assertValues()
-    viewActionsConsumer.assertValues()
+    viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
   }
 }

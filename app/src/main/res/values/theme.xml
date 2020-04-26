@@ -42,6 +42,7 @@
     <item name="materialButtonStyle">@style/Widget.Pinnit.Button</item>
     <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Pinnit.BottomSheetDialog</item>
     <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
+    <item name="snackbarButtonStyle">@style/Widget.Pinnit.Button.TextButton.Snackbar</item>
 
     <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
     <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>

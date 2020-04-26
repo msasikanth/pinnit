@@ -35,6 +35,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       }
       is DeleteNotification -> {
         notificationRepository.deleteNotification(effect.notification)
+        viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
       }
     }
   }

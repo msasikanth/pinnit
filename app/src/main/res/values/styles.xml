@@ -45,6 +45,13 @@
     <item name="cornerRadius">@dimen/shape_theming_radius</item>
   </style>
 
+  <style name="Widget.Pinnit.Button.TextButton.Snackbar" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Button</item>
+    <item name="android:textColor">@color/maroon_200</item>
+    <item name="rippleColor">@color/maroon_200</item>
+    <item name="cornerRadius">@dimen/shape_theming_radius</item>
+  </style>
+
   <!-- Bottom Sheet -->
   <style name="ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
     <item name="android:statusBarColor">@android:color/transparent</item>

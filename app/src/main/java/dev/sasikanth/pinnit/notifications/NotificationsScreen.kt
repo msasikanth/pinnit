@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
@@ -103,10 +104,19 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       uiRender.render(model)
     })
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
-      when (it) {
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer { viewEffect ->
+      when (viewEffect) {
         is OpenNotificationEditorViewEffect -> {
-          openNotificationEditor(uuid = it.notificationUuid)
+          openNotificationEditor(uuid = viewEffect.notificationUuid)
+        }
+
+        is UndoNotificationDeleteViewEffect -> {
+          Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
+            .setAnchorView(requireActivity().bottomBar)
+            .setAction(R.string.undo) {
+              // TODO: Undo deleted notification
+            }
+            .show()
         }
       }
     })
