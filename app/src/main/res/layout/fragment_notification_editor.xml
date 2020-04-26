@@ -99,7 +99,7 @@
           android:layout_marginBottom="16dp"
           android:backgroundTint="@android:color/transparent"
           android:hint="@string/editor_content_hint"
-          android:inputType="textCapSentences"
+          android:inputType="textCapSentences|textMultiLine"
           android:textAppearance="@style/TextAppearance.Pinnit.Body2"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toStartOf="@id/endGuideline"
