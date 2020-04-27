@@ -1,16 +1,19 @@
 package dev.sasikanth.pinnit.data
 
+import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.Instant
 import java.util.UUID
 
 @Entity
+@Parcelize
 data class PinnitNotification(
   @PrimaryKey val uuid: UUID,
   val title: String,
@@ -19,7 +22,7 @@ data class PinnitNotification(
   val createdAt: Instant,
   val updatedAt: Instant,
   val deletedAt: Instant? = null
-) {
+) : Parcelable {
 
   @Dao
   interface RoomDao {
