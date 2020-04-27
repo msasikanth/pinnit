@@ -126,13 +126,11 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun titleEditTextConfig() {
-    titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
+    titleEditText.requestFocus()
+    val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+    imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
 
-    if (args.notification == null) {
-      titleEditText.requestFocus()
-      val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-      imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
-    }
+    titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
   }
 
   private fun contentEditTextConfig() {
