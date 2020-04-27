@@ -3,7 +3,9 @@ package dev.sasikanth.pinnit.system
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -32,23 +34,35 @@ object NotificationUtil {
   private fun buildSystemNotification(context: Context, notification: PinnitNotification): Notification {
     val content = notification.content.orEmpty()
 
-    val pendingIntent = NavDeepLinkBuilder(context)
+    val editorPendingIntent = NavDeepLinkBuilder(context)
       .setGraph(R.navigation.main_nav_graph)
       .setDestination(R.id.editorScreen)
       .setArguments(EditorScreenArgs(notification).toBundle())
       .createPendingIntent()
 
+    val unpinIntent = Intent(context, UnpinNotificationReceiver::class.java).apply {
+      action = UnpinNotificationReceiver.ACTION_UNPIN
+      putExtra(UnpinNotificationReceiver.EXTRA_NOTIFICATION_UUID, notification.uuid.toString())
+    }
+    val unpinPendingIntent = PendingIntent.getBroadcast(
+      context,
+      notification.uuid.hashCode(),
+      unpinIntent,
+      PendingIntent.FLAG_UPDATE_CURRENT
+    )
+
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)
       .setSmallIcon(R.drawable.ic_pinnit_notification)
       .setContentTitle(notification.title)
       .setContentText(content)
-      .setContentIntent(pendingIntent)
+      .setContentIntent(editorPendingIntent)
       .setPriority(NotificationCompat.PRIORITY_LOW)
       .setStyle(
         NotificationCompat.BigTextStyle().bigText(
           notification.content
         )
       )
+      .addAction(R.drawable.ic_pinnit_pin, context.getString(R.string.unpin), unpinPendingIntent)
       .setOngoing(true)
 
     return builder.build()

@@ -37,4 +37,5 @@
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="undo">Undo</string>
+  <string name="unpin">Unpin</string>
 </resources>

@@ -35,6 +35,15 @@
       </intent-filter>
     </service>
 
+    <receiver
+      android:name=".system.UnpinNotificationReceiver"
+      android:enabled="true"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="dev.sasikanth.pinnit.system.action.NotificationUnpin" />
+      </intent-filter>
+    </receiver>
+
   </application>
 
 </manifest>
