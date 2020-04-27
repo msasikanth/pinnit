@@ -98,7 +98,7 @@
           android:id="@+id/contentEditText"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
+          android:layout_marginBottom="24dp"
           android:backgroundTint="@color/edit_text_background_tint"
           android:hint="@string/editor_content_hint"
           android:inputType="textCapSentences|textMultiLine"
