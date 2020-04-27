@@ -35,7 +35,7 @@ object NotificationUtil {
     val pendingIntent = NavDeepLinkBuilder(context)
       .setGraph(R.navigation.main_nav_graph)
       .setDestination(R.id.editorScreen)
-      .setArguments(EditorScreenArgs(notification.uuid.toString()).toBundle())
+      .setArguments(EditorScreenArgs(notification).toBundle())
       .createPendingIntent()
 
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)

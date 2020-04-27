@@ -11,7 +11,7 @@ class NotificationsScreenUpdate : Update<NotificationsScreenModel, Notifications
       is NotificationsLoaded -> next(model.onNotificationsLoaded(event.notifications))
       is NotificationSwiped -> dispatch(setOf(DeleteNotification(event.notification)))
       is TogglePinStatusClicked -> dispatch(setOf(ToggleNotificationPinStatus(event.notification)))
-      is NotificationClicked -> dispatch(setOf(OpenNotificationEditor(event.notificationUuid)))
+      is NotificationClicked -> dispatch(setOf(OpenNotificationEditor(event.notification)))
       is UndoNotificationDelete -> dispatch(setOf(UndoDeletedNotification(event.notificationUuid)))
     }
   }

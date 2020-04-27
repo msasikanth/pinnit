@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitPreferences
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.utils.donOnApplyWindowInsets
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -27,14 +28,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
       }
       R.id.editorScreen -> {
-        // If there is a notification uuid is present
-        // we will be showing the edit title or else we show
-        // create title
-        val notificationUuid = arguments?.getString("uuid")
-        if (notificationUuid == null) {
-          toolbarTitleTextView.text = getString(R.string.toolbar_title_create)
-        } else {
-          toolbarTitleTextView.text = getString(R.string.toolbar_title_edit)
+        if (arguments != null) {
+          // If there is a notification present
+          // we will be showing the edit title or else we show
+          // create title
+          val editorScreenArgs = EditorScreenArgs.fromBundle(arguments)
+          if (editorScreenArgs.notification == null) {
+            toolbarTitleTextView.text = getString(R.string.toolbar_title_create)
+          } else {
+            toolbarTitleTextView.text = getString(R.string.toolbar_title_edit)
+          }
         }
       }
     }

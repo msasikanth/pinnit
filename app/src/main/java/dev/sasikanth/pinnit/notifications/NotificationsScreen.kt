@@ -12,9 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -34,7 +32,6 @@ import dev.sasikanth.pinnit.system.NotificationUtil
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
-import java.util.UUID
 import javax.inject.Inject
 
 class NotificationsScreen : Fragment(R.layout.fragment_notifications), NotificationsScreenUi {
@@ -103,7 +100,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer { viewEffect ->
       when (viewEffect) {
         is OpenNotificationEditorViewEffect -> {
-          openNotificationEditor(uuid = viewEffect.notificationUuid)
+          openNotificationEditor(notification = viewEffect.notification)
         }
 
         is UndoNotificationDeleteViewEffect -> {
@@ -171,13 +168,13 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   }
 
   private fun onNotificationClicked(notification: PinnitNotification) {
-    viewModel.dispatchEvent(NotificationClicked(notification.uuid))
+    viewModel.dispatchEvent(NotificationClicked(notification))
   }
 
-  private fun openNotificationEditor(uuid: UUID? = null) {
+  private fun openNotificationEditor(notification: PinnitNotification? = null) {
     val navDirections = NotificationsScreenDirections
       .actionNotificationsScreenToEditorScreen(
-        uuid = uuid?.toString()
+        notification = notification
       )
 
     findNavController().navigate(navDirections)

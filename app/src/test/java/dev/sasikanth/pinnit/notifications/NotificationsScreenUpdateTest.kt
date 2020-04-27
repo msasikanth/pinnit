@@ -96,11 +96,11 @@ class NotificationsScreenUpdateTest {
 
     updateSpec
       .given(model)
-      .whenEvent(NotificationClicked(notification.uuid))
+      .whenEvent(NotificationClicked(notification))
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(OpenNotificationEditor(notification.uuid) as NotificationsScreenEffect)
+          hasEffects(OpenNotificationEditor(notification) as NotificationsScreenEffect)
         )
       )
   }

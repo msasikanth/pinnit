@@ -20,7 +20,6 @@ import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.system.NotificationUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
-import java.util.UUID
 import javax.inject.Inject
 
 class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScreenUi {
@@ -36,11 +35,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val notificationUuid = if (args.uuid != null) {
-          UUID.fromString(args.uuid)
-        } else {
-          null
-        }
+        val notificationUuid = args.notification?.uuid
 
         return MobiusLoopViewModel.create<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect>(
           Function { viewEffectConsumer ->
@@ -129,7 +124,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   private fun titleEditTextConfig() {
     titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
 
-    if (args.uuid == null) {
+    if (args.notification == null) {
       titleEditText.requestFocus()
       val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
       imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)

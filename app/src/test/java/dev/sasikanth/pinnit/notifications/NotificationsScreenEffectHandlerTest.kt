@@ -90,16 +90,14 @@ class NotificationsScreenEffectHandlerTest {
       updatedAt = Instant.now(utcClock)
     )
 
-    whenever(notificationRepository.notification(notificationUuid)) doReturn notification
-
     // when
-    connection.accept(OpenNotificationEditor(notificationUuid))
+    connection.accept(OpenNotificationEditor(notification))
 
     // then
     verifyZeroInteractions(notificationRepository)
 
     consumer.assertValues()
-    viewActionsConsumer.assertValues(OpenNotificationEditorViewEffect(notificationUuid))
+    viewActionsConsumer.assertValues(OpenNotificationEditorViewEffect(notification))
   }
 
   @Test

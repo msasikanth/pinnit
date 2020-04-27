@@ -7,7 +7,7 @@ sealed class NotificationsScreenEffect
 
 object LoadNotifications : NotificationsScreenEffect()
 
-data class OpenNotificationEditor(val notificationUuid: UUID) : NotificationsScreenEffect()
+data class OpenNotificationEditor(val notification: PinnitNotification) : NotificationsScreenEffect()
 
 data class ToggleNotificationPinStatus(val notification: PinnitNotification) : NotificationsScreenEffect()
 
