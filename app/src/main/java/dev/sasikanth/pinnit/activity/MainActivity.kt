@@ -21,13 +21,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
   lateinit var pinnitPreferences: PinnitPreferences
 
   private var navController: NavController? = null
-  private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, _ ->
+  private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
     when (destination.id) {
       R.id.notificationsScreen -> {
         toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
       }
       R.id.editorScreen -> {
-        toolbarTitleTextView.text = getString(R.string.toolbar_title_create)
+        // If there is a notification uuid is present
+        // we will be showing the edit title or else we show
+        // create title
+        val notificationUuid = arguments?.getString("uuid")
+        if (notificationUuid == null) {
+          toolbarTitleTextView.text = getString(R.string.toolbar_title_create)
+        } else {
+          toolbarTitleTextView.text = getString(R.string.toolbar_title_edit)
+        }
       }
     }
   }
