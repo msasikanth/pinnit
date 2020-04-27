@@ -87,12 +87,6 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
     adapter = NotificationsListAdapter(utcClock, ::onToggleNotificationPinClicked, ::onNotificationClicked)
     notificationsRecyclerView.adapter = adapter
-    notificationsRecyclerView.addItemDecoration(
-      DividerItemDecoration(
-        requireContext(),
-        RecyclerView.VERTICAL
-      )
-    )
     notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
 
     val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {

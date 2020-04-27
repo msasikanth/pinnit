@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   app:cardCornerRadius="0dp"
-  app:cardElevation="1dp"
+  app:cardElevation="0dp"
   app:rippleColor="@android:color/transparent">
 
   <com.google.android.material.circularreveal.CircularRevealFrameLayout
@@ -169,5 +169,11 @@
       tools:text="@tools:sample/lorem/random" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_gravity="bottom"
+    android:background="@drawable/divider" />
 
 </com.google.android.material.card.MaterialCardView>
