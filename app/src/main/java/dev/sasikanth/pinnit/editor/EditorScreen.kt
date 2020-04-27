@@ -90,7 +90,11 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
     requireActivity().bottomBar.setContentActionEnabled(false)
-    requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
+    if (args.notification?.isPinned == true) {
+      requireActivity().bottomBar.setContentActionText(R.string.save)
+    } else {
+      requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
+    }
     requireActivity().bottomBar.setActionIcon(null)
 
     requireActivity().bottomBar.setNavigationOnClickListener {
