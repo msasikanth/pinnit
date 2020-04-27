@@ -36,19 +36,20 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
-          app:layout_constraintGuide_begin="24dp" />
+          app:layout_constraintGuide_begin="20dp" />
 
         <androidx.constraintlayout.widget.Guideline
           android:id="@+id/endGuideline"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
-          app:layout_constraintGuide_end="16dp" />
+          app:layout_constraintGuide_end="20dp" />
 
         <ImageView
           android:id="@+id/appIcon"
           android:layout_width="18dp"
           android:layout_height="18dp"
+          android:layout_marginStart="4dp"
           android:contentDescription="@null"
           android:src="@drawable/ic_pinnit_app_icon"
           android:tint="?attr/colorSecondary"
