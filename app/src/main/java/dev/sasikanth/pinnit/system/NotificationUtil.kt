@@ -44,6 +44,11 @@ object NotificationUtil {
       .setContentText(content)
       .setContentIntent(pendingIntent)
       .setPriority(NotificationCompat.PRIORITY_LOW)
+      .setStyle(
+        NotificationCompat.BigTextStyle().bigText(
+          notification.content
+        )
+      )
       .setOngoing(true)
 
     return builder.build()
