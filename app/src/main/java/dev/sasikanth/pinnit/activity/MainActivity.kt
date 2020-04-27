@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
+    appBarLayout.setExpanded(true, true)
     when (destination.id) {
       R.id.notificationsScreen -> {
         toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
