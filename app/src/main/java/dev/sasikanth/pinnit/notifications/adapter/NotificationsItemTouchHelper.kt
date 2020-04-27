@@ -20,6 +20,11 @@ class NotificationsItemTouchHelper(
   private val onItemSwiped: (notification: PinnitNotification) -> Unit
 ) : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {
 
+  private val colorDrawable = ColorDrawable(
+    context.resolveColor(attrRes = R.attr.colorRowBackground)
+  )
+  private val icon = ContextCompat.getDrawable(context, R.drawable.ic_pinnit_delete)
+
   override fun isItemViewSwipeEnabled(): Boolean {
     return true
   }
@@ -70,10 +75,6 @@ class NotificationsItemTouchHelper(
   ) {
     val itemView = viewHolder.itemView
     val iconMarginH = 24.px
-    val colorDrawable = ColorDrawable(
-      context.resolveColor(attrRes = R.attr.colorRowBackground)
-    )
-    val icon = ContextCompat.getDrawable(context, R.drawable.ic_pinnit_delete)
     val cellHeight = itemView.bottom - itemView.top
     val iconWidth = icon!!.intrinsicWidth
     val iconHeight = icon.intrinsicHeight
