@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="toolbar_title_notifications">Notificações</string>
+  <string name="no_notifications">Sem notificações</string>
+  <string name="editor_title_hint">Título</string>
+  <string name="editor_content_hint">Descrição</string>
+  <string name="channel_name">Notificações fixadas</string>
+  <string name="notification_deleted">Notificação deletada</string>
+
+  <string name="toolbar_title_create">Criar</string>
+  <string name="toolbar_title_edit">Editar</string>
+
+  <string name="create">Criar</string>
+  <string name="save_and_pin">Salvar e fixar</string>
+  <string name="save">Salvar</string>
+
+  <string name="option_item_dark_mode">Modo noturno</string>
+
+  <!-- Preferences -->
+  <string name="option_dark_mode_on">Ativado</string>
+  <string name="option_dark_mode_auto">Auto</string>
+  <string name="option_dark_mode_off">Desativado</string>
+
+  <!-- About -->
+  <string name="about">Sobre</string>
+  <string name="privacy_policy">Política de privacidade</string>
+  <string name="questions_or_bugs">Questões?</string>
+  <string name="contact_support">Contatar suporte</string>
+  <string name="send_email">Enviar email</string>
+  <string name="yes">Sim</string>
+  <string name="no">Não</string>
+  <string name="undo">Desfazer</string>
+</resources>
