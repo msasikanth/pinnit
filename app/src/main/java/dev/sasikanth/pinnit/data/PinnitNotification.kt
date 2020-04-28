@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.data
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Insert
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.Instant
 import java.util.UUID
 
+@Keep
 @Entity
 @Parcelize
 data class PinnitNotification(
