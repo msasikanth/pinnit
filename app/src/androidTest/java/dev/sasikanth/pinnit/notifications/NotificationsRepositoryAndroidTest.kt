@@ -5,10 +5,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.TestPinnitApp
+import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +29,9 @@ class NotificationsRepositoryAndroidTest {
   @Inject
   lateinit var clock: TestUtcClock
 
+  @Inject
+  lateinit var appDatabase: AppDatabase
+
   @Before
   fun setup() {
     ApplicationProvider.getApplicationContext<TestPinnitApp>()
@@ -34,6 +39,15 @@ class NotificationsRepositoryAndroidTest {
       .also { it.inject(this) }
 
     clock.setDate(LocalDate.parse("2020-02-14"))
+  }
+
+  @After
+  fun teardown() {
+    // TODO(SM-29 APR): Clear individual table
+    // Since it's just one table right now, we can directly
+    // clear the database tables. But it's better to clear
+    // individual table in tests
+    appDatabase.clearAllTables()
   }
 
   @Test
@@ -231,5 +245,44 @@ class NotificationsRepositoryAndroidTest {
     // then
     assertThat(notificationRepository.notification(notification.uuid))
       .isEqualTo(undidNotification)
+  }
+
+  @Test
+  fun getting_pinned_notifications_should_work_correctly() = runBlocking {
+    // given
+    val pinnedNotificationInPast = TestData.notification(
+      title = "Pinned notification in past",
+      isPinned = true,
+      createdAt = Instant.now(clock).minus(1, ChronoUnit.DAYS),
+      updatedAt = Instant.now(clock).minus(1, ChronoUnit.DAYS)
+    )
+
+    val notificationNow = TestData.notification(
+      title = "Notification now",
+      isPinned = false,
+      createdAt = Instant.now(clock),
+      updatedAt = Instant.now(clock)
+    )
+
+    val pinnedNotificationNow = TestData.notification(
+      title = "Pinned notification now",
+      isPinned = true,
+      createdAt = Instant.now(clock),
+      updatedAt = Instant.now(clock)
+    )
+
+    notificationRepository.save(listOf(pinnedNotificationInPast, notificationNow, pinnedNotificationNow))
+
+    // when
+    val pinnedNotifications = notificationRepository.pinnedNotifications()
+
+    // then
+    assertThat(pinnedNotifications)
+      .isEqualTo(
+        listOf(
+          pinnedNotificationNow,
+          pinnedNotificationInPast
+        )
+      )
   }
 }

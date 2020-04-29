@@ -45,6 +45,16 @@ data class PinnitNotification(
     )
     fun notifications(): Flow<List<PinnitNotification>>
 
+    @Query(
+      """
+        SELECT *
+        FROM PinnitNotification
+        WHERE deletedAt IS NULL AND isPinned = 1
+        ORDER BY updatedAt DESC
+      """
+    )
+    suspend fun pinnedNotifications(): List<PinnitNotification>
+
     @Query("SELECT * FROM PinnitNotification WHERE uuid = :uuid LIMIT 1")
     suspend fun notification(uuid: UUID): PinnitNotification
   }
