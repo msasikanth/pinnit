@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.system
+package dev.sasikanth.pinnit.background.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.Log
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.system.NotificationUtil
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
 import javax.inject.Inject
@@ -36,7 +37,7 @@ class UnpinNotificationReceiver : BroadcastReceiver() {
           notification
         }
         NotificationUtil.dismissNotification(context, notification)
-      } catch (e: NullPointerException) {
+      } catch (e: RuntimeException) {
         Log.e(TAG, "Cannot find the notification, it might already be unpinned.")
       }
     }

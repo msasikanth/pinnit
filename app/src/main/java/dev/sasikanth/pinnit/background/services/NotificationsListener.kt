@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.services
+package dev.sasikanth.pinnit.background.services
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification

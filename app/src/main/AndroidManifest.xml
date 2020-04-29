@@ -27,7 +27,7 @@
       android:windowSoftInputMode="adjustResize" />
 
     <service
-      android:name=".services.NotificationsListener"
+      android:name=".background.services.NotificationsListener"
       android:exported="false"
       android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
       <intent-filter>
@@ -36,7 +36,7 @@
     </service>
 
     <receiver
-      android:name=".system.UnpinNotificationReceiver"
+      android:name=".background.receivers.UnpinNotificationReceiver"
       android:enabled="true"
       android:exported="false">
       <intent-filter>

@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 

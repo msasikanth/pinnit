@@ -7,7 +7,7 @@ import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
-import dev.sasikanth.pinnit.system.UnpinNotificationReceiver
+import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import javax.inject.Scope
 
 @AppScope
