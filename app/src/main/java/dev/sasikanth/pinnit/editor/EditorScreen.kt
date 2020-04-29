@@ -17,7 +17,7 @@ import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
-import dev.sasikanth.pinnit.system.NotificationUtil
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import javax.inject.Inject

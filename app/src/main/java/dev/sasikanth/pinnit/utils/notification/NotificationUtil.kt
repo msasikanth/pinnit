@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit.system
+package dev.sasikanth.pinnit.utils.notification
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -21,7 +21,8 @@ object NotificationUtil {
 
   fun showNotification(context: Context, pinnitNotification: PinnitNotification) {
     createNotificationChannel(context)
-    val notification = buildSystemNotification(context, pinnitNotification)
+    val notification =
+      buildSystemNotification(context, pinnitNotification)
 
     with(NotificationManagerCompat.from(context)) {
       notify(pinnitNotification.uuid.hashCode(), notification)

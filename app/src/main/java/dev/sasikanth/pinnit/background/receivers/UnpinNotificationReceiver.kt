@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.notifications.NotificationRepository
-import dev.sasikanth.pinnit.system.NotificationUtil
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
 import javax.inject.Inject

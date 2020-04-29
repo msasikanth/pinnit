@@ -28,7 +28,7 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
-import dev.sasikanth.pinnit.system.NotificationUtil
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
