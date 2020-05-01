@@ -8,39 +8,41 @@ import com.spotify.mobius.Update
 class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorScreenEffect> {
   override fun update(model: EditorScreenModel, event: EditorScreenEvent): Next<EditorScreenModel, EditorScreenEffect> {
     return when (event) {
-      is NotificationLoaded -> {
-        val updatedModel = model.titleChanged(event.notification.title)
-          .contentChanged(event.notification.content)
-        next(updatedModel)
-      }
+      is NotificationLoaded -> notificationLoaded(model, event)
 
-      is TitleChanged -> {
-        next(model.titleChanged(event.title))
-      }
+      is TitleChanged -> next(model.titleChanged(event.title))
 
-      is ContentChanged -> {
-        next(model.contentChanged(event.content))
-      }
+      is ContentChanged -> next(model.contentChanged(event.content))
 
-      is SaveClicked -> {
-        val effect = if (model.notification == null) {
-          SaveNotificationAndCloseEditor(model.title!!, model.content)
-        } else {
-          UpdateNotificationAndCloseEditor(model.notification.uuid, model.title!!, model.content)
-        }
-        return dispatch(setOf(effect))
-      }
+      is SaveClicked -> saveClicked(model)
 
-      BackClicked -> {
-        if (model.isTitleAndContentChanged) {
-          return dispatch(setOf(ShowConfirmExitEditor))
-        }
-        dispatch(setOf(CloseEditor))
-      }
+      BackClicked -> backClicked(model)
 
-      ConfirmedExit -> {
-        dispatch(setOf(CloseEditor))
-      }
+      ConfirmedExit -> dispatch(setOf(CloseEditor))
     }
+  }
+
+  private fun notificationLoaded(model: EditorScreenModel, event: NotificationLoaded): Next<EditorScreenModel, EditorScreenEffect> {
+    val updatedModel = model.titleChanged(event.notification.title)
+      .contentChanged(event.notification.content)
+    return next(updatedModel)
+  }
+
+  private fun saveClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {
+    val effect = if (model.notification == null) {
+      SaveNotificationAndCloseEditor(model.title!!, model.content)
+    } else {
+      UpdateNotificationAndCloseEditor(model.notification.uuid, model.title!!, model.content)
+    }
+
+    return dispatch(setOf(effect))
+  }
+
+  private fun backClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {
+    if (model.isTitleAndContentChanged) {
+      return dispatch(setOf(ShowConfirmExitEditor))
+    }
+
+    return dispatch(setOf(CloseEditor))
   }
 }
