@@ -4,10 +4,10 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dev.sasikanth.pinnit.activity.MainActivity
+import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
-import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import javax.inject.Scope
 
 @AppScope
@@ -28,5 +28,5 @@ interface AppComponent {
 }
 
 @Scope
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class AppScope
