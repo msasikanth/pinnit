@@ -6,8 +6,12 @@ import android.content.Intent
 import android.util.Log
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
@@ -26,24 +30,32 @@ class UnpinNotificationReceiver : BroadcastReceiver() {
   @Inject
   lateinit var notificationUtil: NotificationUtil
 
+  @Inject
+  lateinit var dispatcherProvider: DispatcherProvider
+
+  private val job = SupervisorJob()
+  private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    Log.d(TAG, "Failed to unpin the notification.", throwable)
+  }
+  private val mainScope by lazy {
+    CoroutineScope(job + dispatcherProvider.main + coroutineExceptionHandler)
+  }
+
   override fun onReceive(context: Context?, intent: Intent?) {
-    val asyncResult = goAsync()
     val notificationUuid = intent?.getStringExtra(EXTRA_NOTIFICATION_UUID)
 
     if (context != null && intent != null && intent.action == ACTION_UNPIN && notificationUuid != null) {
       context.injector.inject(this)
+      val asyncResult = goAsync()
 
-      try {
-        val notification = runBlocking {
-          val notification = repository.notification(UUID.fromString(notificationUuid))
-          repository.toggleNotificationPinStatus(notification)
-          notification
-        }
+      mainScope.launch {
+        val notification = repository.notification(UUID.fromString(notificationUuid))
+        repository.toggleNotificationPinStatus(notification)
+
         notificationUtil.dismissNotification(notification)
-      } catch (e: RuntimeException) {
-        Log.e(TAG, "Cannot find the notification, it might already be unpinned.")
+
+        asyncResult.finish()
       }
     }
-    asyncResult.finish()
   }
 }
