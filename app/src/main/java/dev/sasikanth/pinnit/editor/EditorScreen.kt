@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
@@ -61,6 +63,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
     returnTransition = backward
+
+    requireActivity().onBackPressedDispatcher.addCallback(this) {
+      viewModel.dispatchEvent(BackClicked)
+    }
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -81,7 +87,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         }
 
         ShowConfirmExitEditorDialog -> {
-          // TODO: Show confirm exit editor dialog
+          showConfirmExitDialog()
         }
       }
     })
@@ -96,7 +102,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().bottomBar.setActionIcon(null)
 
     requireActivity().bottomBar.setNavigationOnClickListener {
-      closeEditor()
+      viewModel.dispatchEvent(BackClicked)
     }
     requireActivity().bottomBar.setContentActionOnClickListener {
       viewModel.dispatchEvent(SaveClicked)
@@ -133,5 +139,17 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   private fun contentEditTextConfig() {
     contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
+  }
+
+  private fun showConfirmExitDialog() {
+    MaterialAlertDialogBuilder(requireContext())
+      .setTitle(getString(R.string.confirm_editor_exit_title))
+      .setPositiveButton(R.string.confirm_editor_exit_positive_action) { _, _ ->
+        // TODO: Handle confirm exit positive action
+      }
+      .setNegativeButton(R.string.confirm_editor_exit_negative_action) { _, _ ->
+        // NO-OP
+      }
+      .show()
   }
 }

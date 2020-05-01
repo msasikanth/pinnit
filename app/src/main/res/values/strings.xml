@@ -38,4 +38,9 @@
   <string name="no">No</string>
   <string name="undo">Undo</string>
   <string name="unpin">Unpin</string>
+
+  <!-- Confirm Editor Exit-->
+  <string name="confirm_editor_exit_title">Discard changes?</string>
+  <string name="confirm_editor_exit_positive_action">Yes</string>
+  <string name="confirm_editor_exit_negative_action">No</string>
 </resources>
