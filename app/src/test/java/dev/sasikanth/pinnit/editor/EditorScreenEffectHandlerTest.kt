@@ -14,13 +14,16 @@ import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.util.UUID
 
 class EditorScreenEffectHandlerTest {
+
+  private val testScope = TestCoroutineScope()
 
   private val viewEffectConsumer = RecordingConsumer<EditorScreenViewEffect>()
   private val repository = mock<NotificationRepository>()
@@ -47,7 +50,7 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when load notification effect is received, then load the notification`() = runBlocking {
+  fun `when load notification effect is received, then load the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("b44624c8-0535-4743-a97b-d0350fd446c2")
     val notification = TestData.notification(
@@ -68,7 +71,7 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when save and close effect is received, then save the notification and close editor`() = runBlocking {
+  fun `when save and close effect is received, then save the notification and close editor`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("9610e5b7-6894-4da9-965a-048abf568247")
     val title = "Notification Title"
@@ -102,7 +105,7 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when update and close effect is received, then update the notification and close editor`() = runBlocking {
+  fun `when update and close effect is received, then update the notification and close editor`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("4e91382a-d5c3-44a7-8ee3-fa15a4ec69b4")
     val notification = TestData.notification(

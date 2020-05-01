@@ -14,7 +14,8 @@ import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -28,6 +29,8 @@ class NotificationsScreenEffectHandlerTest {
   private val utcClock = TestUtcClock().apply {
     setDate(LocalDate.parse("2020-02-14"))
   }
+
+  private val testScope = TestCoroutineScope()
 
   private val consumer = RecordingConsumer<NotificationsScreenEvent>()
   private val viewActionsConsumer = RecordingConsumer<NotificationScreenViewEffect>()
@@ -84,7 +87,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when open edit screen effect is received, then open the edit page`() = runBlocking {
+  fun `when open edit screen effect is received, then open the edit page`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("220c2037-94ba-44ef-8f83-5c232f01288f")
     val notification = TestData.notification(
@@ -104,7 +107,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when toggle pin status effect is received, then update the notification pin status`() = runBlocking {
+  fun `when toggle pin status effect is received, then update the notification pin status`() = testScope.runBlockingTest {
     // given
     val notification = TestData.notification(
       uuid = UUID.fromString("ff73fd70-852f-4833-bc9c-a6f67b2e66f0"),
@@ -127,7 +130,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when toggle pin status effect is received and notification is pinned, then update the notification pin status`() = runBlocking {
+  fun `when toggle pin status effect is received and notification is pinned, then update the notification pin status`() = testScope.runBlockingTest {
     // given
     val notification = TestData.notification(
       uuid = UUID.fromString("ff73fd70-852f-4833-bc9c-a6f67b2e66f0"),
@@ -151,7 +154,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when delete notification effect is received, then delete notification and show undo option`() = runBlocking {
+  fun `when delete notification effect is received, then delete notification and show undo option`() = testScope.runBlockingTest {
     // given
     val notification = TestData.notification(
       uuid = UUID.fromString("34727623-c572-455f-8e37-b1df3baca79e"),
@@ -171,7 +174,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when undo deleted notification effect is received, then undo the delete`() = runBlocking {
+  fun `when undo deleted notification effect is received, then undo the delete`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("f3d50ff2-5e92-4d46-b5b9-53bbe770ef9c")
     val notification = TestData.notification(
@@ -196,7 +199,7 @@ class NotificationsScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when check notifications visibility effect is received, then check notifications visibility`() = runBlocking {
+  fun `when check notifications visibility effect is received, then check notifications visibility`() = testScope.runBlockingTest {
     // given
     val notification1 = TestData.notification(
       uuid = UUID.fromString("199ec75d-938d-4481-97db-ba9124cb7d75"),
