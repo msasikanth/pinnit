@@ -8,6 +8,7 @@ import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 
 class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
@@ -24,6 +25,8 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
   override suspend fun handler(effect: NotificationsScreenEffect, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
     when (effect) {
       LoadNotifications -> loadNotifications(dispatchEvent)
+
+      CheckNotificationsVisibility -> checkNotificationsVisibility()
 
       is OpenNotificationEditor -> viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notification))
 
@@ -66,5 +69,16 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
   private suspend fun undoDeleteNotification(effect: UndoDeletedNotification) {
     val notification = notificationRepository.notification(effect.notificationUuid)
     notificationRepository.undoNotificationDelete(notification)
+  }
+
+  /**
+   * We will check for notifications visibility only at start, so it's fine
+   * to get the Flow as list.
+   */
+  private suspend fun checkNotificationsVisibility() {
+    val notifications = notificationRepository.pinnedNotifications()
+    withContext(dispatcherProvider.default) {
+      notificationUtil.checkNotificationsVisibility(notifications)
+    }
   }
 }

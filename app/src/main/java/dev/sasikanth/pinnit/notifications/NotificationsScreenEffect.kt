@@ -14,3 +14,5 @@ data class ToggleNotificationPinStatus(val notification: PinnitNotification) : N
 data class DeleteNotification(val notification: PinnitNotification) : NotificationsScreenEffect()
 
 data class UndoDeletedNotification(val notificationUuid: UUID) : NotificationsScreenEffect()
+
+object CheckNotificationsVisibility : NotificationsScreenEffect()

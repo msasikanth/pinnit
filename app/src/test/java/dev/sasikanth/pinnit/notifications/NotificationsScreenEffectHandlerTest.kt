@@ -194,4 +194,30 @@ class NotificationsScreenEffectHandlerTest {
     consumer.assertValues()
     viewActionsConsumer.assertValues()
   }
+
+  @Test
+  fun `when check notifications visibility effect is received, then check notifications visibility`() = runBlocking {
+    // given
+    val notification1 = TestData.notification(
+      uuid = UUID.fromString("199ec75d-938d-4481-97db-ba9124cb7d75"),
+      title = "Notification 1",
+      isPinned = true
+    )
+
+    val pinnedNotifications = listOf(notification1)
+
+    whenever(notificationRepository.pinnedNotifications()) doReturn pinnedNotifications
+
+    // when
+    connection.accept(CheckNotificationsVisibility)
+
+    // then
+    verify(notificationRepository).pinnedNotifications()
+    verifyNoMoreInteractions(notificationRepository)
+    verify(notificationUtil).checkNotificationsVisibility(pinnedNotifications)
+    verifyNoMoreInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewActionsConsumer.assertValues()
+  }
 }
