@@ -23,38 +23,48 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
 
   override suspend fun handler(effect: NotificationsScreenEffect, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
     when (effect) {
-      LoadNotifications -> {
-        val notificationsFlow = notificationRepository.notifications()
-        notificationsFlow
-          .onEach { dispatchEvent(NotificationsLoaded(it)) }
-          .launchIn(this)
-      }
-      is OpenNotificationEditor -> {
-        viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notification))
-      }
-      is ToggleNotificationPinStatus -> {
-        val notification = effect.notification
-        // We are doing is before to avoid waiting for the I/O
-        // actions to be completed and also to avoid changing the
-        // `toggleNotificationPinStatus` method to return the
-        // notification.
-        if (notification.isPinned) {
-          // If already pinned, then dismiss the notification
-          notificationUtil.dismissNotification(notification)
-        } else {
-          // If already is not pinned, then show the notification and pin it
-          notificationUtil.showNotification(notification)
-        }
-        notificationRepository.toggleNotificationPinStatus(notification)
-      }
-      is DeleteNotification -> {
-        notificationRepository.deleteNotification(effect.notification)
-        viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
-      }
-      is UndoDeletedNotification -> {
-        val notification = notificationRepository.notification(effect.notificationUuid)
-        notificationRepository.undoNotificationDelete(notification)
-      }
+      LoadNotifications -> loadNotifications(dispatchEvent)
+
+      is OpenNotificationEditor -> viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notification))
+
+      is ToggleNotificationPinStatus -> toggleNotificationPinStatus(effect)
+
+      is DeleteNotification -> deleteNotification(effect)
+
+      is UndoDeletedNotification -> undoDeleteNotification(effect)
     }
+  }
+
+  private fun loadNotifications(dispatchEvent: (NotificationsScreenEvent) -> Unit) {
+    val notificationsFlow = notificationRepository.notifications()
+    notificationsFlow
+      .onEach { dispatchEvent(NotificationsLoaded(it)) }
+      .launchIn(this)
+  }
+
+  private suspend fun toggleNotificationPinStatus(effect: ToggleNotificationPinStatus) {
+    val notification = effect.notification
+    // We are doing is before to avoid waiting for the I/O
+    // actions to be completed and also to avoid changing the
+    // `toggleNotificationPinStatus` method to return the
+    // notification.
+    if (notification.isPinned) {
+      // If already pinned, then dismiss the notification
+      notificationUtil.dismissNotification(notification)
+    } else {
+      // If already is not pinned, then show the notification and pin it
+      notificationUtil.showNotification(notification)
+    }
+    notificationRepository.toggleNotificationPinStatus(notification)
+  }
+
+  private suspend fun deleteNotification(effect: DeleteNotification) {
+    notificationRepository.deleteNotification(effect.notification)
+    viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
+  }
+
+  private suspend fun undoDeleteNotification(effect: UndoDeletedNotification) {
+    val notification = notificationRepository.notification(effect.notificationUuid)
+    notificationRepository.undoNotificationDelete(notification)
   }
 }
