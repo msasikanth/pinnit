@@ -2,7 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 sealed class EditorScreenViewEffect
 
-object CloseEditor : EditorScreenViewEffect()
+object CloseEditorView : EditorScreenViewEffect()
 
 data class SetTitle(val title: String) : EditorScreenViewEffect()
 

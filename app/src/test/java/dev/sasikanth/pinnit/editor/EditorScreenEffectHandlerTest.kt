@@ -97,7 +97,7 @@ class EditorScreenEffectHandlerTest {
     verifyNoMoreInteractions(notificationUtil)
 
     consumer.assertValues()
-    viewEffectConsumer.assertValues(CloseEditor)
+    viewEffectConsumer.assertValues(CloseEditorView)
   }
 
   @Test
@@ -130,6 +130,6 @@ class EditorScreenEffectHandlerTest {
     verifyNoMoreInteractions(notificationUtil)
 
     consumer.assertValues()
-    viewEffectConsumer.assertValues(CloseEditor)
+    viewEffectConsumer.assertValues(CloseEditorView)
   }
 }

@@ -74,7 +74,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
       when (it) {
-        CloseEditor -> {
+        CloseEditorView -> {
           closeEditor()
         }
 

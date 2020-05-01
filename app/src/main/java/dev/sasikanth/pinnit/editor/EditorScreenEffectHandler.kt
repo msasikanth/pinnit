@@ -32,7 +32,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       is SaveNotificationAndCloseEditor -> {
         val notification = notificationRepository.save(effect.title, effect.content)
         notificationUtil.showNotification(notification)
-        viewEffectConsumer.accept(CloseEditor)
+        viewEffectConsumer.accept(CloseEditorView)
       }
 
       is UpdateNotificationAndCloseEditor -> {
@@ -43,7 +43,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
         )
         val notificationUpdated = notificationRepository.updateNotification(updatedNotification)
         notificationUtil.showNotification(notificationUpdated)
-        viewEffectConsumer.accept(CloseEditor)
+        viewEffectConsumer.accept(CloseEditorView)
       }
     }
   }
