@@ -22,37 +22,42 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
   override suspend fun handler(effect: EditorScreenEffect, dispatchEvent: (EditorScreenEvent) -> Unit) {
     when (effect) {
-      is LoadNotification -> {
-        val notification = notificationRepository.notification(effect.uuid)
-        dispatchEvent(NotificationLoaded(notification))
-        viewEffectConsumer.accept(SetTitle(notification.title))
-        viewEffectConsumer.accept(SetContent(notification.content))
-      }
+      is LoadNotification -> loadNotification(effect, dispatchEvent)
 
-      is SaveNotificationAndCloseEditor -> {
-        val notification = notificationRepository.save(effect.title, effect.content)
-        notificationUtil.showNotification(notification)
-        viewEffectConsumer.accept(CloseEditorView)
-      }
+      is SaveNotificationAndCloseEditor -> saveNotificationAndCloseEditor(effect)
 
-      is UpdateNotificationAndCloseEditor -> {
-        val notification = notificationRepository.notification(effect.notificationUuid)
-        val updatedNotification = notification.copy(
-          title = effect.title,
-          content = effect.content
-        )
-        val notificationUpdated = notificationRepository.updateNotification(updatedNotification)
-        notificationUtil.showNotification(notificationUpdated)
-        viewEffectConsumer.accept(CloseEditorView)
-      }
+      is UpdateNotificationAndCloseEditor -> updateNotificationAndCloseEditor(effect)
 
-      CloseEditor -> {
-        viewEffectConsumer.accept(CloseEditorView)
-      }
+      CloseEditor -> viewEffectConsumer.accept(CloseEditorView)
 
-      ShowConfirmExitEditor -> {
-        viewEffectConsumer.accept(ShowConfirmExitEditorDialog)
-      }
+      ShowConfirmExitEditor -> viewEffectConsumer.accept(ShowConfirmExitEditorDialog)
     }
+  }
+
+  private suspend fun updateNotificationAndCloseEditor(effect: UpdateNotificationAndCloseEditor) {
+    val notification = notificationRepository.notification(effect.notificationUuid)
+    val updatedNotification = notification.copy(
+      title = effect.title,
+      content = effect.content
+    )
+    val notificationUpdated = notificationRepository.updateNotification(updatedNotification)
+    notificationUtil.showNotification(notificationUpdated)
+    viewEffectConsumer.accept(CloseEditorView)
+  }
+
+  private suspend fun saveNotificationAndCloseEditor(effect: SaveNotificationAndCloseEditor) {
+    val notification = notificationRepository.save(effect.title, effect.content)
+    notificationUtil.showNotification(notification)
+    viewEffectConsumer.accept(CloseEditorView)
+  }
+
+  private suspend fun loadNotification(
+    effect: LoadNotification,
+    dispatchEvent: (EditorScreenEvent) -> Unit
+  ) {
+    val notification = notificationRepository.notification(effect.uuid)
+    dispatchEvent(NotificationLoaded(notification))
+    viewEffectConsumer.accept(SetTitle(notification.title))
+    viewEffectConsumer.accept(SetContent(notification.content))
   }
 }
