@@ -14,14 +14,13 @@ class EditorScreenUpdateTest {
 
   private val updateSpec = UpdateSpec(EditorScreenUpdate())
   private val notificationUuid = UUID.fromString("87722f77-865a-4df3-8c82-9d1c7b3fd5bb")
-  private val defaultModel = EditorScreenModel.default(notificationUuid)
+  private val notification = TestData.notification(
+    uuid = notificationUuid
+  )
+  private val defaultModel = EditorScreenModel.default(notification)
 
   @Test
   fun `when notification is loaded, then update the ui`() {
-    val notification = TestData.notification(
-      uuid = notificationUuid
-    )
-
     updateSpec
       .given(defaultModel)
       .whenEvent(NotificationLoaded(notification))

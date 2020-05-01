@@ -1,16 +1,16 @@
 package dev.sasikanth.pinnit.editor
 
-import java.util.UUID
+import dev.sasikanth.pinnit.data.PinnitNotification
 
 data class EditorScreenModel(
-  val notificationUuid: UUID?,
+  val notification: PinnitNotification?,
   val title: String?,
   val content: String?
 ) {
 
   companion object {
-    fun default(uuid: UUID?) = EditorScreenModel(
-      notificationUuid = uuid,
+    fun default(notification: PinnitNotification?) = EditorScreenModel(
+      notification = notification,
       title = null,
       content = null
     )

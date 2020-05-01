@@ -23,10 +23,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       }
 
       is SaveClicked -> {
-        val effect = if (model.notificationUuid == null) {
+        val effect = if (model.notification == null) {
           SaveNotificationAndCloseEditor(model.title!!, model.content)
         } else {
-          UpdateNotificationAndCloseEditor(model.notificationUuid, model.title!!, model.content)
+          UpdateNotificationAndCloseEditor(model.notification.uuid, model.title!!, model.content)
         }
         return dispatch(setOf(effect))
       }

@@ -34,8 +34,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val notificationUuid = args.notification?.uuid
-
         return MobiusLoopViewModel.create<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect>(
           Function { viewEffectConsumer ->
             Mobius.loop(
@@ -43,7 +41,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
               effectHandler.create(viewEffectConsumer)
             )
           },
-          EditorScreenModel.default(uuid = notificationUuid),
+          EditorScreenModel.default(notification = args.notification),
           EditorScreenInit()
         ) as T
       }
