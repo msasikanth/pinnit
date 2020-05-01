@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
@@ -128,6 +129,19 @@ class EditorScreenEffectHandlerTest {
 
     verify(notificationUtil).showNotification(updatedNotification)
     verifyNoMoreInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(CloseEditorView)
+  }
+
+  @Test
+  fun `when close editor effect is received, then close the editor view`() {
+    // when
+    connection.accept(CloseEditor)
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)

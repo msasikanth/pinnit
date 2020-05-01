@@ -74,13 +74,17 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
       when (it) {
+        is SetTitle -> titleEditText.setText(it.title)
+
+        is SetContent -> contentEditText.setText(it.content)
+
         CloseEditorView -> {
           closeEditor()
         }
 
-        is SetTitle -> titleEditText.setText(it.title)
-
-        is SetContent -> contentEditText.setText(it.content)
+        ShowConfirmExitEditorDialog -> {
+          // TODO: Show confirm exit editor dialog
+        }
       }
     })
 

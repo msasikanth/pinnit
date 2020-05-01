@@ -45,6 +45,10 @@ class EditorScreenEffectHandler @AssistedInject constructor(
         notificationUtil.showNotification(notificationUpdated)
         viewEffectConsumer.accept(CloseEditorView)
       }
+
+      CloseEditor -> {
+        viewEffectConsumer.accept(CloseEditorView)
+      }
     }
   }
 }
