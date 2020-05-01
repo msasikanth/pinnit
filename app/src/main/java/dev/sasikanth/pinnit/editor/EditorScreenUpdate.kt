@@ -37,6 +37,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
         }
         dispatch(setOf(CloseEditor))
       }
+
+      ConfirmedExit -> {
+        dispatch(setOf(CloseEditor))
+      }
     }
   }
 }

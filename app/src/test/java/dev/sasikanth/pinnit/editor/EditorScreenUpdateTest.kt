@@ -140,4 +140,21 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when confirmed exit is clicked, then close editor`() {
+    updateSpec
+      .given(defaultModel)
+      .whenEvents(
+        TitleChanged("Updated Title"),
+        BackClicked,
+        ConfirmedExit
+      )
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CloseEditor as EditorScreenEffect)
+        )
+      )
+  }
 }

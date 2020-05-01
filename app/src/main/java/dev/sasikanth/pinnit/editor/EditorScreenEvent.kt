@@ -13,3 +13,5 @@ data class ContentChanged(val content: String?) : EditorScreenEvent()
 object SaveClicked : EditorScreenEvent()
 
 object BackClicked : EditorScreenEvent()
+
+object ConfirmedExit : EditorScreenEvent()

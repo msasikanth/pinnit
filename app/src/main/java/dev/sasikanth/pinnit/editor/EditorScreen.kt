@@ -145,7 +145,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     MaterialAlertDialogBuilder(requireContext())
       .setTitle(getString(R.string.confirm_editor_exit_title))
       .setPositiveButton(R.string.confirm_editor_exit_positive_action) { _, _ ->
-        // TODO: Handle confirm exit positive action
+        viewModel.dispatchEvent(ConfirmedExit)
       }
       .setNegativeButton(R.string.confirm_editor_exit_negative_action) { _, _ ->
         // NO-OP
