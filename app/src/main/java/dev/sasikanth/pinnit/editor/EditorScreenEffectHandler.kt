@@ -49,6 +49,10 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       CloseEditor -> {
         viewEffectConsumer.accept(CloseEditorView)
       }
+
+      ShowConfirmExitEditor -> {
+        viewEffectConsumer.accept(ShowConfirmExitEditorDialog)
+      }
     }
   }
 }

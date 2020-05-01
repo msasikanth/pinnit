@@ -146,4 +146,17 @@ class EditorScreenEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)
   }
+
+  @Test
+  fun `when show confirm exit effect is received, then show confirm exit dialog`() {
+    // when
+    connection.accept(ShowConfirmExitEditor)
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(ShowConfirmExitEditorDialog)
+  }
 }
