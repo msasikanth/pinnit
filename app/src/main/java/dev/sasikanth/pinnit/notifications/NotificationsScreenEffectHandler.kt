@@ -5,12 +5,14 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.utils.DispatcherProvider
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,
+  private val notificationUtil: NotificationUtil,
   @Assisted private val viewEffectConsumer: Consumer<NotificationScreenViewEffect>
 ) : CoroutineConnectable<NotificationsScreenEffect, NotificationsScreenEvent>(dispatcherProvider.main) {
 
@@ -31,7 +33,19 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
         viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notification))
       }
       is ToggleNotificationPinStatus -> {
-        notificationRepository.toggleNotificationPinStatus(effect.notification)
+        val notification = effect.notification
+        // We are doing is before to avoid waiting for the I/O
+        // actions to be completed and also to avoid changing the
+        // `toggleNotificationPinStatus` method to return the
+        // notification.
+        if (notification.isPinned) {
+          // If already pinned, then dismiss the notification
+          notificationUtil.dismissNotification(notification)
+        } else {
+          // If already is not pinned, then show the notification and pin it
+          notificationUtil.showNotification(notification)
+        }
+        notificationRepository.toggleNotificationPinStatus(notification)
       }
       is DeleteNotification -> {
         notificationRepository.deleteNotification(effect.notification)

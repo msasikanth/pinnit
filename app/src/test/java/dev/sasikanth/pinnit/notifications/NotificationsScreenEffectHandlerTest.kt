@@ -12,6 +12,7 @@ import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -34,9 +35,11 @@ class NotificationsScreenEffectHandlerTest {
 
   private val notificationRepository = mock<NotificationRepository>()
   private val testDispatcherProvider = TestDispatcherProvider()
+  private val notificationUtil = mock<NotificationUtil>()
   private val effectHandler = NotificationsScreenEffectHandler(
     notificationRepository,
     testDispatcherProvider,
+    notificationUtil,
     viewActionsConsumer
   )
 
@@ -115,6 +118,33 @@ class NotificationsScreenEffectHandlerTest {
     // then
     verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
     verifyNoMoreInteractions(notificationRepository)
+
+    verify(notificationUtil).showNotification(notification)
+    verifyNoMoreInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewActionsConsumer.assertValues()
+  }
+
+  @Test
+  fun `when toggle pin status effect is received and notification is pinned, then update the notification pin status`() = runBlocking {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("ff73fd70-852f-4833-bc9c-a6f67b2e66f0"),
+      createdAt = Instant.now(utcClock),
+      updatedAt = Instant.now(utcClock),
+      isPinned = true
+    )
+
+    // when
+    connection.accept(ToggleNotificationPinStatus(notification))
+
+    // then
+    verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
+    verifyNoMoreInteractions(notificationRepository)
+
+    verify(notificationUtil).dismissNotification(notification)
+    verifyNoMoreInteractions(notificationUtil)
 
     consumer.assertValues()
     viewActionsConsumer.assertValues()
