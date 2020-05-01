@@ -21,7 +21,7 @@ class NotificationsScreenInitTest {
       .then(
         assertThatFirst(
           hasModel(defaultModel),
-          hasEffects(LoadNotifications as NotificationsScreenEffect)
+          hasEffects(LoadNotifications, CheckNotificationsVisibility)
         )
       )
   }
