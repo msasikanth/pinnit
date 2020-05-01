@@ -26,6 +26,9 @@ data class PinnitNotification(
   val deletedAt: Instant? = null
 ) : Parcelable {
 
+  fun equalsTitleAndContent(title: String?, content: String?) =
+    this.title == title.orEmpty() && this.content.orEmpty() == content.orEmpty()
+
   @Dao
   interface RoomDao {
 
