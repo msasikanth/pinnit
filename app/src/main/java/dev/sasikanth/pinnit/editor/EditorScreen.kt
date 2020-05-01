@@ -17,6 +17,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
+import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
 import kotlinx.android.synthetic.main.activity_main.*
@@ -125,6 +126,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       }
       contentEditTextConfig()
     }
+
+    editorScrollView.applySystemWindowInsetsToPadding(bottom = true)
   }
 
   private fun closeEditor() {

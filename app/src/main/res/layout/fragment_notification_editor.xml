@@ -2,23 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/editorRoot"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".editor.EditorScreen">
 
   <androidx.core.widget.NestedScrollView
+    android:id="@+id/editorScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingBottom="88dp">
 
     <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:clickable="false"
       app:cardCornerRadius="0dp"
-      app:cardElevation="1dp">
+      app:cardElevation="0dp">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -88,7 +90,7 @@
           android:layout_marginTop="12dp"
           android:backgroundTint="@color/edit_text_background_tint"
           android:hint="@string/editor_title_hint"
-          android:inputType="textCapSentences"
+          android:inputType="textCapSentences|textMultiLine"
           android:textAppearance="@style/TextAppearance.Pinnit.Headline6"
           app:layout_constraintEnd_toStartOf="@id/endGuideline"
           app:layout_constraintStart_toEndOf="@id/startGuideline"
@@ -109,6 +111,12 @@
           app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/divider" />
 
     </com.google.android.material.card.MaterialCardView>
 
