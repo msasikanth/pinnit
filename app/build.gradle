@@ -103,6 +103,8 @@ dependencies {
 
   implementation "de.hdodenhof:circleimageview:$versions.circleImageView"
 
+  implementation "dev.chrisbanes:insetter-ktx:$versions.insetter"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"

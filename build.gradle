@@ -24,6 +24,7 @@ buildscript {
       mobius          : '1.4.0-beta5',
       circleImageView : '3.1.0',
       preference      : '1.1.1',
+      insetter        : '0.2.2',
   ]
   repositories {
     google()
