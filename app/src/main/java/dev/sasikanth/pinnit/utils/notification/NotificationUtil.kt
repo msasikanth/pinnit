@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.getSystemService
 import androidx.navigation.NavDeepLinkBuilder
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
@@ -27,6 +28,7 @@ class NotificationUtil @Inject constructor(
   }
 
   private val notificationManager = NotificationManagerCompat.from(context)
+  private val systemNotificationManager = context.getSystemService<NotificationManager>()
 
   fun showNotification(pinnitNotification: PinnitNotification) {
     createNotificationChannel()
@@ -40,6 +42,34 @@ class NotificationUtil @Inject constructor(
 
   fun dismissNotification(pinnitNotification: PinnitNotification) {
     notificationManager.cancel(pinnitNotification.uuid.hashCode())
+  }
+
+  /**
+   * This will check for system notification visibility of pinned notifications. If the
+   * notification is not visible for a pinned pinnit notification. It will show the system
+   * notification for it.
+   *
+   * We are doing this because of certain system actions that will remove the notification
+   * from system tray.
+   *
+   * - When app is updated: This will stop the app causing the system notifications
+   * to be dismissed.
+   * - When app is force stopped: This will cause the system notifications to be dismissed
+   *
+   * When those scenarios happen, we want the app to re-show the system notifications when
+   * app is opened again.
+   */
+  fun checkNotificationsVisibility(pinnedNotifications: List<PinnitNotification>) {
+    if (systemNotificationManager != null) {
+      val activeNotifications = systemNotificationManager.activeNotifications
+      for (notification in pinnedNotifications) {
+        val id = notification.uuid.hashCode()
+        val isNotificationVisible = activeNotifications.any { it.id == id }
+        if (isNotificationVisible.not()) {
+          showNotification(notification)
+        }
+      }
+    }
   }
 
   private fun buildSystemNotification(notification: PinnitNotification): Notification {
