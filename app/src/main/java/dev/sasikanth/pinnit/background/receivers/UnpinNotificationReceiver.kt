@@ -23,6 +23,9 @@ class UnpinNotificationReceiver : BroadcastReceiver() {
   @Inject
   lateinit var repository: NotificationRepository
 
+  @Inject
+  lateinit var notificationUtil: NotificationUtil
+
   override fun onReceive(context: Context?, intent: Intent?) {
     val asyncResult = goAsync()
     val notificationUuid = intent?.getStringExtra(EXTRA_NOTIFICATION_UUID)
@@ -36,7 +39,7 @@ class UnpinNotificationReceiver : BroadcastReceiver() {
           repository.toggleNotificationPinStatus(notification)
           notification
         }
-        NotificationUtil.dismissNotification(context, notification)
+        notificationUtil.dismissNotification(notification)
       } catch (e: RuntimeException) {
         Log.e(TAG, "Cannot find the notification, it might already be unpinned.")
       }

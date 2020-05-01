@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.utils.notification
 
+import android.app.Application
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,33 +12,42 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
+import javax.inject.Inject
 
-object NotificationUtil {
+class NotificationUtil @Inject constructor(
+  private val context: Application
+) {
 
-  private const val CHANNEL_ID = "pinned_notifications"
+  companion object {
+    private const val CHANNEL_ID = "dev.sasikanth.pinnit.utils.notification:NotificationUtil:pinned_notifications"
+  }
 
-  fun showNotification(context: Context, pinnitNotification: PinnitNotification) {
-    createNotificationChannel(context)
+  private val notificationManager = NotificationManagerCompat.from(context)
+
+  fun showNotification(pinnitNotification: PinnitNotification) {
+    createNotificationChannel()
     val notification =
-      buildSystemNotification(context, pinnitNotification)
+      buildSystemNotification(pinnitNotification)
 
-    with(NotificationManagerCompat.from(context)) {
+    with(notificationManager) {
       notify(pinnitNotification.uuid.hashCode(), notification)
     }
   }
 
-  fun dismissNotification(context: Context, pinnitNotification: PinnitNotification) {
-    NotificationManagerCompat.from(context).cancel(pinnitNotification.uuid.hashCode())
+  fun dismissNotification(pinnitNotification: PinnitNotification) {
+    notificationManager.cancel(pinnitNotification.uuid.hashCode())
   }
 
-  private fun buildSystemNotification(context: Context, notification: PinnitNotification): Notification {
+  private fun buildSystemNotification(notification: PinnitNotification): Notification {
     val content = notification.content.orEmpty()
 
     val editorPendingIntent = NavDeepLinkBuilder(context)
       .setGraph(R.navigation.main_nav_graph)
+      .setComponentName(MainActivity::class.java)
       .setDestination(R.id.editorScreen)
       .setArguments(EditorScreenArgs(notification).toBundle())
       .createPendingIntent()
@@ -70,7 +80,7 @@ object NotificationUtil {
     return builder.build()
   }
 
-  private fun createNotificationChannel(context: Context) {
+  private fun createNotificationChannel() {
     // Create the NotificationChannel, but only on API 26+ because
     // the NotificationChannel class is new and not in the support library
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

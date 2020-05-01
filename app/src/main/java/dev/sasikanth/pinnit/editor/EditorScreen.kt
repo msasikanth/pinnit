@@ -27,6 +27,9 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   @Inject
   lateinit var effectHandler: EditorScreenEffectHandler.Factory
 
+  @Inject
+  lateinit var notificationUtil: NotificationUtil
+
   private val args by navArgs<EditorScreenArgs>()
 
   private val uiRender = EditorScreenUiRender(this)
@@ -77,7 +80,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       when (it) {
         is CloseEditor -> {
           if (it.notification.isPinned) {
-            NotificationUtil.showNotification(requireContext(), it.notification)
+            notificationUtil.showNotification(it.notification)
           }
           closeEditor()
         }

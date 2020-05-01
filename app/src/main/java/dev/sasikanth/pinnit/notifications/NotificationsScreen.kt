@@ -28,8 +28,8 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
-import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import dev.sasikanth.pinnit.utils.UtcClock
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import javax.inject.Inject
@@ -41,6 +41,9 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   @Inject
   lateinit var effectHandler: NotificationsScreenEffectHandler.Factory
+
+  @Inject
+  lateinit var notificationUtil: NotificationUtil
 
   private lateinit var adapter: NotificationsListAdapter
 
@@ -160,10 +163,10 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.dispatchEvent(TogglePinStatusClicked(notification))
     if (notification.isPinned) {
       // Since it's already pinned, dismiss the notification
-      NotificationUtil.dismissNotification(requireContext(), notification)
+      notificationUtil.dismissNotification(notification)
     } else {
       // Since it's not pinned, show the notification
-      NotificationUtil.showNotification(requireContext(), notification)
+      notificationUtil.showNotification(notification)
     }
   }
 
