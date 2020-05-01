@@ -76,11 +76,17 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       uiRender.render(model)
     })
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
-      when (it) {
-        is SetTitle -> titleEditText.setText(it.title)
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer { viewEffect ->
+      when (viewEffect) {
+        is SetTitle -> {
+          titleEditText.setText(viewEffect.title)
+          titleEditTextConfig(viewEffect.title)
+        }
 
-        is SetContent -> contentEditText.setText(it.content)
+        is SetContent -> {
+          contentEditText.setText(viewEffect.content)
+          contentEditTextConfig()
+        }
 
         CloseEditorView -> {
           closeEditor()
@@ -108,8 +114,17 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       viewModel.dispatchEvent(SaveClicked)
     }
 
-    titleEditTextConfig()
-    contentEditTextConfig()
+    /*
+        When in create mode, we wont receive set title and set content.
+        Because we will not load any notification. So we check if notification
+        is null to say EditorScreen is in create mode.
+     */
+    if (args.notification == null) {
+      titleEditText.post {
+        titleEditTextConfig()
+      }
+      contentEditTextConfig()
+    }
   }
 
   private fun closeEditor() {
@@ -129,8 +144,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().bottomBar.setContentActionEnabled(false)
   }
 
-  private fun titleEditTextConfig() {
+  private fun titleEditTextConfig(title: String? = null) {
     titleEditText.requestFocus()
+    titleEditText.setSelection(title?.length ?: 0)
+
     val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
 
