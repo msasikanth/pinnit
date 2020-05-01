@@ -12,6 +12,7 @@ import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -23,9 +24,11 @@ class EditorScreenEffectHandlerTest {
   private val viewEffectConsumer = RecordingConsumer<EditorScreenViewEffect>()
   private val repository = mock<NotificationRepository>()
   private val dispatcherProvider = TestDispatcherProvider()
+  private val notificationUtil = mock<NotificationUtil>()
   private val effectHandler = EditorScreenEffectHandler(
     repository,
     dispatcherProvider,
+    notificationUtil,
     viewEffectConsumer
   )
 
@@ -90,6 +93,9 @@ class EditorScreenEffectHandlerTest {
     )
     verifyNoMoreInteractions(repository)
 
+    verify(notificationUtil).showNotification(notification)
+    verifyNoMoreInteractions(notificationUtil)
+
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditor(notification))
   }
@@ -119,6 +125,9 @@ class EditorScreenEffectHandlerTest {
     verify(repository).notification(notificationUuid)
     verify(repository).updateNotification(updatedNotification)
     verifyNoMoreInteractions(repository)
+
+    verify(notificationUtil).showNotification(updatedNotification)
+    verifyNoMoreInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditor(updatedNotification))

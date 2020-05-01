@@ -6,10 +6,12 @@ import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.DispatcherProvider
+import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 
 class EditorScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,
+  private val notificationUtil: NotificationUtil,
   @Assisted private val viewEffectConsumer: Consumer<EditorScreenViewEffect>
 ) : CoroutineConnectable<EditorScreenEffect, EditorScreenEvent>(dispatcherProvider.main) {
 
@@ -29,7 +31,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
       is SaveNotificationAndCloseEditor -> {
         val notification = notificationRepository.save(effect.title, effect.content)
-        println(notification)
+        notificationUtil.showNotification(notification)
         viewEffectConsumer.accept(CloseEditor(notification))
       }
 
@@ -40,6 +42,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
           content = effect.content
         )
         val notificationUpdated = notificationRepository.updateNotification(updatedNotification)
+        notificationUtil.showNotification(notificationUpdated)
         viewEffectConsumer.accept(CloseEditor(notificationUpdated))
       }
     }

@@ -17,7 +17,6 @@ import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
-import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import javax.inject.Inject
@@ -26,9 +25,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   @Inject
   lateinit var effectHandler: EditorScreenEffectHandler.Factory
-
-  @Inject
-  lateinit var notificationUtil: NotificationUtil
 
   private val args by navArgs<EditorScreenArgs>()
 
@@ -79,9 +75,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer {
       when (it) {
         is CloseEditor -> {
-          if (it.notification.isPinned) {
-            notificationUtil.showNotification(it.notification)
-          }
           closeEditor()
         }
 
