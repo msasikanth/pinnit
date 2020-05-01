@@ -100,4 +100,28 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when back is clicked and title and content are not changed, then close editor`() {
+    val notificationTitle = "Title"
+    val notificationContent = "Content"
+    val notification = TestData.notification(
+      uuid = UUID.fromString("33605259-a4b2-4fc7-b4a6-90cf75215777"),
+      title = notificationTitle,
+      content = notificationContent
+    )
+    val model = EditorScreenModel.default(notification)
+      .titleChanged(notificationTitle)
+      .contentChanged(notificationContent)
+
+    updateSpec
+      .given(model)
+      .whenEvent(BackClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CloseEditor as EditorScreenEffect)
+        )
+      )
+  }
 }

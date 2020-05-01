@@ -30,6 +30,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
         }
         return dispatch(setOf(effect))
       }
+
+      BackClicked -> {
+        dispatch(setOf(CloseEditor))
+      }
     }
   }
 }
