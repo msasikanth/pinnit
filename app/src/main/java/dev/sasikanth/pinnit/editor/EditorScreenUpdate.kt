@@ -32,6 +32,9 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       }
 
       BackClicked -> {
+        if (model.isTitleAndContentChanged) {
+          return dispatch(setOf(ShowConfirmExitEditor))
+        }
         dispatch(setOf(CloseEditor))
       }
     }

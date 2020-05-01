@@ -124,4 +124,20 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when back is clicked and title and content are changed, then show confirm exit editor`() {
+    updateSpec
+      .given(defaultModel)
+      .whenEvents(
+        TitleChanged("Updated Title"),
+        BackClicked
+      )
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowConfirmExitEditor as EditorScreenEffect)
+        )
+      )
+  }
 }
