@@ -162,4 +162,17 @@ class EditorScreenEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowConfirmExitEditorDialog)
   }
+
+  @Test
+  fun `when set empty title and content effect is received, then set empty title and content`() {
+    // when
+    connection.accept(SetEmptyTitleAndContent)
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(SetTitle(null), SetContent(null))
+  }
 }

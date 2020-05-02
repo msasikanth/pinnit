@@ -31,6 +31,11 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       CloseEditor -> viewEffectConsumer.accept(CloseEditorView)
 
       ShowConfirmExitEditor -> viewEffectConsumer.accept(ShowConfirmExitEditorDialog)
+
+      SetEmptyTitleAndContent -> {
+        viewEffectConsumer.accept(SetTitle(null))
+        viewEffectConsumer.accept(SetContent(null))
+      }
     }
   }
 

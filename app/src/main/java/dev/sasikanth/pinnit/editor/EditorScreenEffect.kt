@@ -13,3 +13,5 @@ data class UpdateNotificationAndCloseEditor(val notificationUuid: UUID, val titl
 object CloseEditor : EditorScreenEffect()
 
 object ShowConfirmExitEditor : EditorScreenEffect()
+
+object SetEmptyTitleAndContent : EditorScreenEffect()
