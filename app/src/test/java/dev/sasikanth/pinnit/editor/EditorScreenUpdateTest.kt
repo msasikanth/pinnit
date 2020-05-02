@@ -160,4 +160,22 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when delete notification is clicked, then mark notification as deleted`() {
+    val model = defaultModel
+      .notificationLoaded(notification)
+      .titleChanged(notification.title)
+      .contentChanged(notification.content)
+
+    updateSpec
+      .given(model)
+      .whenEvent(DeleteNotificationClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(DeleteNotification(notification) as EditorScreenEffect)
+        )
+      )
+  }
 }
