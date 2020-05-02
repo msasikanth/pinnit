@@ -80,13 +80,11 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer { viewEffect ->
       when (viewEffect) {
         is SetTitle -> {
-          titleEditText.setText(viewEffect.title)
-          titleEditTextConfig(viewEffect.title)
+          setTitleText(viewEffect.title)
         }
 
         is SetContent -> {
-          contentEditText.setText(viewEffect.content)
-          contentEditTextConfig()
+          setContentText(viewEffect.content)
         }
 
         CloseEditorView -> {
@@ -112,6 +110,22 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     }
 
     editorScrollView.applySystemWindowInsetsToPadding(bottom = true)
+
+    titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
+    contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
+  }
+
+  private fun setTitleText(title: String?) {
+    titleEditText.setText(title)
+    titleEditText.requestFocus()
+    titleEditText.setSelection(title?.length ?: 0)
+
+    val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+    imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
+  }
+
+  private fun setContentText(content: String?) {
+    contentEditText.setText(content)
   }
 
   private fun closeEditor() {
@@ -137,20 +151,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   override fun renderSaveAndPinActionButtonText() {
     requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
-  }
-
-  private fun titleEditTextConfig(title: String? = null) {
-    titleEditText.requestFocus()
-    titleEditText.setSelection(title?.length ?: 0)
-
-    val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-    imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
-
-    titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
-  }
-
-  private fun contentEditTextConfig() {
-    contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
   }
 
   private fun showConfirmExitDialog() {
