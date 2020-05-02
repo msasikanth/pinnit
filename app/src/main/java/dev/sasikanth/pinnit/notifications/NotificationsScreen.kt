@@ -166,7 +166,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   private fun openNotificationEditor(notification: PinnitNotification? = null) {
     val navDirections = NotificationsScreenDirections
       .actionNotificationsScreenToEditorScreen(
-        notification = notification
+        notificationUuid = notification?.uuid?.toString()
       )
 
     findNavController().navigate(navDirections)

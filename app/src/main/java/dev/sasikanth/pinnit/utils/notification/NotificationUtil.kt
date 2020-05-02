@@ -79,7 +79,7 @@ class NotificationUtil @Inject constructor(
       .setGraph(R.navigation.main_nav_graph)
       .setComponentName(MainActivity::class.java)
       .setDestination(R.id.editorScreen)
-      .setArguments(EditorScreenArgs(notification).toBundle())
+      .setArguments(EditorScreenArgs(notification.uuid.toString()).toBundle())
       .createPendingIntent()
 
     val unpinIntent = Intent(context, UnpinNotificationReceiver::class.java).apply {

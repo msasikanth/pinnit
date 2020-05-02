@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
           // we will be showing the edit title or else we show
           // create title
           val editorScreenArgs = EditorScreenArgs.fromBundle(arguments)
-          if (editorScreenArgs.notification == null) {
+          if (editorScreenArgs.notificationUuid == null) {
             toolbarTitleTextView.text = getString(R.string.toolbar_title_create)
           } else {
             toolbarTitleTextView.text = getString(R.string.toolbar_title_edit)

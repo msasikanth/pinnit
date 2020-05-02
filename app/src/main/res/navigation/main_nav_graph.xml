@@ -19,9 +19,8 @@
     android:label="fragment_notification_editor"
     tools:layout="@layout/fragment_notification_editor" >
     <argument
-      android:name="notification"
-      app:argType="dev.sasikanth.pinnit.data.PinnitNotification"
-      app:nullable="true"
-      android:defaultValue="@null" />
+      android:name="notificationUuid"
+      app:argType="string"
+      app:nullable="true" />
   </fragment>
 </navigation>

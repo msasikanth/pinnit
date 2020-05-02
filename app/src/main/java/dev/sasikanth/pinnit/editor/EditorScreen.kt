@@ -22,6 +22,7 @@ import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
+import java.util.UUID
 import javax.inject.Inject
 
 class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScreenUi {
@@ -37,6 +38,11 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        val notificationUuid = if (args.notificationUuid != null) {
+          UUID.fromString(args.notificationUuid)
+        } else {
+          null
+        }
         return MobiusLoopViewModel.create<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect>(
           Function { viewEffectConsumer ->
             Mobius.loop(
@@ -44,7 +50,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
               effectHandler.create(viewEffectConsumer)
             )
           },
-          EditorScreenModel.default(notificationUuid = args.notification?.uuid),
+          EditorScreenModel.default(notificationUuid = notificationUuid),
           EditorScreenInit()
         ) as T
       }
