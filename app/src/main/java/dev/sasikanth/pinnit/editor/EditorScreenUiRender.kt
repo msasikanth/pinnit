@@ -14,6 +14,10 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
         ui.renderSaveAndPinActionButtonText()
       }
 
+      if (model.isNotificationLoaded) {
+        ui.showDeleteButton()
+      }
+
       if (!model.title.isNullOrBlank()) {
         ui.enableSave()
       } else {

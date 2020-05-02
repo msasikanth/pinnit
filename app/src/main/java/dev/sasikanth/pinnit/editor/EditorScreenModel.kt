@@ -33,6 +33,9 @@ data class EditorScreenModel(
   val isNotificationPinned: Boolean
     get() = notification?.isPinned ?: false
 
+  val isNotificationLoaded: Boolean
+    get() = notification != null
+
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
   }

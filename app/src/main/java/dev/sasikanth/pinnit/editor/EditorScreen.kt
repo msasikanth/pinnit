@@ -119,6 +119,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
     contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
+
+    requireActivity().bottomBar.setActionOnClickListener { viewModel.dispatchEvent(DeleteNotificationClicked) }
   }
 
   private fun setTitleText(title: String?) {
@@ -157,6 +159,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   override fun renderSaveAndPinActionButtonText() {
     requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
+  }
+
+  override fun showDeleteButton() {
+    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
   }
 
   private fun showConfirmExitDialog() {

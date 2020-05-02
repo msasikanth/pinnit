@@ -15,7 +15,7 @@ class EditorScreenUiRenderTest {
   private val notificationUuid = UUID.fromString("62f36ab9-9a54-481a-9db7-c856766975ce")
 
   @Test
-  fun `when no notification is present, then show save and pin action button text`() {
+  fun `when no notification is present, then update ui`() {
     // given
     val model = EditorScreenModel.default(null)
       .titleChanged(null)
@@ -30,7 +30,28 @@ class EditorScreenUiRenderTest {
   }
 
   @Test
-  fun `when notification is already pinned, then show save action button text and enable save`() {
+  fun `when notification is present, then update ui`() {
+    // given
+    val notification = TestData.notification(
+      uuid = notificationUuid
+    )
+    val model = EditorScreenModel.default(notificationUuid)
+      .notificationLoaded(notification)
+      .titleChanged(notification.title)
+      .contentChanged(notification.content)
+
+    // when
+    uiRender.render(model)
+
+    // then
+    verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).showDeleteButton()
+    verify(ui).enableSave()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when notification is present & pinned, then update ui`() {
     // given
     val notification = TestData.notification(
       uuid = notificationUuid,
@@ -46,6 +67,7 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).renderSaveActionButtonText()
+    verify(ui).showDeleteButton()
     verify(ui).enableSave()
     verifyNoMoreInteractions(ui)
   }

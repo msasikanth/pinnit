@@ -5,4 +5,5 @@ interface EditorScreenUi {
   fun disableSave()
   fun renderSaveActionButtonText()
   fun renderSaveAndPinActionButtonText()
+  fun showDeleteButton()
 }
