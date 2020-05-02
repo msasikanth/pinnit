@@ -3,7 +3,7 @@ package dev.sasikanth.pinnit.editor
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import dev.sasikanth.pinnit.TestData
 import org.junit.Test
 import java.util.UUID
 
@@ -15,7 +15,7 @@ class EditorScreenUiRenderTest {
   private val notificationUuid = UUID.fromString("62f36ab9-9a54-481a-9db7-c856766975ce")
 
   @Test
-  fun `when notification is being fetched or no notification is present, then do nothing`() {
+  fun `when notification is being fetched or no notification is present, then show save and pin action button text`() {
     // given
     val model = EditorScreenModel.default(null)
       .titleChanged(null)
@@ -24,7 +24,29 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
-    verifyZeroInteractions(ui)
+    verify(ui).renderSaveAndPinActionButtonText()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when notification is already pinned, then show save action button text and enable save`() {
+    // given
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Notification Title",
+      isPinned = true
+    )
+    val model = EditorScreenModel.default(notificationUuid)
+      .notificationLoaded(notification)
+      .titleChanged(notification.title)
+
+    // when
+    uiRender.render(model)
+
+    // then
+    verify(ui).renderSaveActionButtonText()
+    verify(ui).enableSave()
+    verifyNoMoreInteractions(ui)
   }
 
   @Test
@@ -39,6 +61,7 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).enableSave()
+    verify(ui).renderSaveAndPinActionButtonText()
     verifyNoMoreInteractions(ui)
   }
 
@@ -54,6 +77,7 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).disableSave()
+    verify(ui).renderSaveAndPinActionButtonText()
     verifyNoMoreInteractions(ui)
   }
 }

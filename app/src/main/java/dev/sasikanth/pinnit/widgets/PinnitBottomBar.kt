@@ -47,10 +47,19 @@ constructor(
     }
   }
 
-  fun setContentActionText(@StringRes contentActionText: Int?) {
+  fun setContentActionText(@StringRes contentActionTextRes: Int?) {
+    if (contentActionTextRes != null) {
+      this.contentActionButton.isVisible = true
+      this.contentActionButton.setText(contentActionTextRes)
+    } else {
+      this.contentActionButton.isGone = true
+    }
+  }
+
+  fun setContentActionText(contentActionText: String?) {
     if (contentActionText != null) {
       this.contentActionButton.isVisible = true
-      this.contentActionButton.setText(contentActionText)
+      this.contentActionButton.text = contentActionText
     } else {
       this.contentActionButton.isGone = true
     }

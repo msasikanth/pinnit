@@ -101,11 +101,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
     requireActivity().bottomBar.setContentActionEnabled(false)
-    if (args.notification?.isPinned == true) {
-      requireActivity().bottomBar.setContentActionText(R.string.save)
-    } else {
-      requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
-    }
+    requireActivity().bottomBar.setContentActionText(contentActionText = null)
     requireActivity().bottomBar.setActionIcon(null)
 
     requireActivity().bottomBar.setNavigationOnClickListener {
@@ -145,6 +141,14 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   override fun disableSave() {
     requireActivity().bottomBar.setContentActionEnabled(false)
+  }
+
+  override fun renderSaveActionButtonText() {
+    requireActivity().bottomBar.setContentActionText(R.string.save)
+  }
+
+  override fun renderSaveAndPinActionButtonText() {
+    requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
   }
 
   private fun titleEditTextConfig(title: String? = null) {
