@@ -38,20 +38,19 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
-          app:layout_constraintGuide_begin="20dp" />
+          app:layout_constraintGuide_begin="24dp" />
 
         <androidx.constraintlayout.widget.Guideline
           android:id="@+id/endGuideline"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
-          app:layout_constraintGuide_end="20dp" />
+          app:layout_constraintGuide_end="24dp" />
 
         <ImageView
           android:id="@+id/appIcon"
           android:layout_width="18dp"
           android:layout_height="18dp"
-          android:layout_marginStart="4dp"
           android:contentDescription="@null"
           android:src="@drawable/ic_pinnit_app_icon"
           android:tint="?attr/colorSecondary"
@@ -83,40 +82,58 @@
           app:barrierDirection="bottom"
           app:constraint_referenced_ids="appIcon, appName" />
 
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/titleEditText"
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/titleInputLayout"
+          style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginTop="12dp"
-          android:backgroundTint="@color/edit_text_background_tint"
-          android:hint="@string/editor_title_hint"
-          android:inputType="textCapSentences|textMultiLine"
-          android:textAppearance="@style/TextAppearance.Pinnit.Headline6"
+          app:counterMaxLength="72"
           app:layout_constraintEnd_toStartOf="@id/endGuideline"
           app:layout_constraintStart_toEndOf="@id/startGuideline"
-          app:layout_constraintTop_toBottomOf="@id/infoBarrier" />
+          app:layout_constraintTop_toBottomOf="@id/infoBarrier">
 
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/contentEditText"
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/titleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/editor_title_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="72"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:textAppearance="@style/TextAppearance.Pinnit.Headline6"
+            tools:text="@tools:sample/lorem/random" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/contentInputLayout"
+          style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginBottom="24dp"
-          android:backgroundTint="@color/edit_text_background_tint"
-          android:hint="@string/editor_content_hint"
-          android:inputType="textCapSentences|textMultiLine"
-          android:textAppearance="@style/TextAppearance.Pinnit.Body1"
+          app:counterMaxLength="400"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toStartOf="@id/endGuideline"
           app:layout_constraintStart_toEndOf="@id/startGuideline"
-          app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+          app:layout_constraintTop_toBottomOf="@id/titleInputLayout">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/editor_content_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="400"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:textAppearance="@style/TextAppearance.Pinnit.Body1"
+            tools:text="@tools:sample/lorem/random" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
       </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/divider" />
 
     </com.google.android.material.card.MaterialCardView>
 

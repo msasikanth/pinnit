@@ -91,4 +91,24 @@
     <item name="android:background">@drawable/rectangle</item>
     <item name="android:backgroundTint">@color/color_secondary_5</item>
   </style>
+
+  <!-- TextInput -->
+  <style name="Widget.Pinnit.TextInputLayout.FilledBox.Dense" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+    <item name="materialThemeOverlay">@style/ThemeOverlay.Pinnit.TextInputEditText.FilledBox.Dense</item>
+    <item name="boxBackgroundColor">@android:color/transparent</item>
+    <item name="boxCollapsedPaddingTop">0dp</item>
+    <item name="boxStrokeColor">@color/edit_text_stroke_color</item>
+    <item name="counterEnabled">true</item>
+    <item name="hintEnabled">false</item>
+  </style>
+
+  <style name="ThemeOverlay.Pinnit.TextInputEditText.FilledBox.Dense" parent="ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox.Dense">
+    <item name="editTextStyle">@style/Widget.Pinnit.TextInputEditText.FilledBox.Dense</item>
+  </style>
+
+  <style name="Widget.Pinnit.TextInputEditText.FilledBox.Dense" parent="Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:paddingBottom">8dp</item>
+  </style>
+
 </resources>
