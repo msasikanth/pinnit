@@ -25,6 +25,7 @@ android {
     testInstrumentationRunner "dev.sasikanth.pinnit.AndroidTestRunner"
 
     vectorDrawables.useSupportLibrary = true
+    archivesBaseName = "pinnit-v${versionName}"
   }
 
   sourceSets {
