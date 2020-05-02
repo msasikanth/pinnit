@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.editor
 
+import dev.sasikanth.pinnit.data.PinnitNotification
 import java.util.UUID
 
 sealed class EditorScreenEffect
@@ -15,3 +16,5 @@ object CloseEditor : EditorScreenEffect()
 object ShowConfirmExitEditor : EditorScreenEffect()
 
 object SetEmptyTitleAndContent : EditorScreenEffect()
+
+data class DeleteNotification(val notification: PinnitNotification) : EditorScreenEffect()

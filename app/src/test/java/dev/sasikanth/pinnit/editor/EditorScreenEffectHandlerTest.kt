@@ -176,4 +176,25 @@ class EditorScreenEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues(SetTitle(null), SetContent(null))
   }
+
+  @Test
+  fun `when delete notification effect is received, then delete the notification`() = testScope.runBlockingTest {
+    // give
+    val notification = TestData.notification(
+      uuid = UUID.fromString("0e51b71a-2bec-49eb-bbec-1e5d1b74e643")
+    )
+
+    // when
+    connection.accept(DeleteNotification(notification))
+
+    // then
+    verify(repository).toggleNotificationPinStatus(notification)
+    verify(repository).deleteNotification(notification)
+    verifyNoMoreInteractions(repository)
+    verify(notificationUtil).dismissNotification(notification)
+    verifyNoMoreInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(CloseEditorView)
+  }
 }

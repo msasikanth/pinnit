@@ -36,7 +36,25 @@ class EditorScreenEffectHandler @AssistedInject constructor(
         viewEffectConsumer.accept(SetTitle(null))
         viewEffectConsumer.accept(SetContent(null))
       }
+
+      is DeleteNotification -> deleteNotification(effect)
     }
+  }
+
+  private suspend fun loadNotification(
+    effect: LoadNotification,
+    dispatchEvent: (EditorScreenEvent) -> Unit
+  ) {
+    val notification = notificationRepository.notification(effect.uuid)
+    dispatchEvent(NotificationLoaded(notification))
+    viewEffectConsumer.accept(SetTitle(notification.title))
+    viewEffectConsumer.accept(SetContent(notification.content))
+  }
+
+  private suspend fun saveNotificationAndCloseEditor(effect: SaveNotificationAndCloseEditor) {
+    val notification = notificationRepository.save(effect.title, effect.content)
+    notificationUtil.showNotification(notification)
+    viewEffectConsumer.accept(CloseEditorView)
   }
 
   private suspend fun updateNotificationAndCloseEditor(effect: UpdateNotificationAndCloseEditor) {
@@ -52,19 +70,13 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     viewEffectConsumer.accept(CloseEditorView)
   }
 
-  private suspend fun saveNotificationAndCloseEditor(effect: SaveNotificationAndCloseEditor) {
-    val notification = notificationRepository.save(effect.title, effect.content)
-    notificationUtil.showNotification(notification)
-    viewEffectConsumer.accept(CloseEditorView)
-  }
-
-  private suspend fun loadNotification(
-    effect: LoadNotification,
-    dispatchEvent: (EditorScreenEvent) -> Unit
+  private suspend fun deleteNotification(
+    effect: DeleteNotification
   ) {
-    val notification = notificationRepository.notification(effect.uuid)
-    dispatchEvent(NotificationLoaded(notification))
-    viewEffectConsumer.accept(SetTitle(notification.title))
-    viewEffectConsumer.accept(SetContent(notification.content))
+    val notification = effect.notification
+    notificationRepository.toggleNotificationPinStatus(notification)
+    notificationRepository.deleteNotification(notification)
+    notificationUtil.dismissNotification(notification)
+    viewEffectConsumer.accept(CloseEditorView)
   }
 }
