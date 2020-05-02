@@ -30,6 +30,9 @@ data class EditorScreenModel(
       return notification?.equalsTitleAndContent(title, content)?.not() ?: (!title.isNullOrBlank() || !content.isNullOrBlank())
     }
 
+  val isNotificationPinned: Boolean
+    get() = notification?.isPinned ?: false
+
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
   }
