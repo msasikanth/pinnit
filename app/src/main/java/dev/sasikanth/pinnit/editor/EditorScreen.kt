@@ -111,18 +111,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       viewModel.dispatchEvent(SaveClicked)
     }
 
-    /*
-        When in create mode, we wont receive set title and set content.
-        Because we will not load any notification. So we check if notification
-        is null to say EditorScreen is in create mode.
-     */
-    if (args.notification == null) {
-      titleEditText.post {
-        titleEditTextConfig()
-      }
-      contentEditTextConfig()
-    }
-
     editorScrollView.applySystemWindowInsetsToPadding(bottom = true)
   }
 

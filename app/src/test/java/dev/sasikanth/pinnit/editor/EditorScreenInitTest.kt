@@ -5,6 +5,7 @@ import com.spotify.mobius.test.FirstMatchers.hasModel
 import com.spotify.mobius.test.FirstMatchers.hasNoEffects
 import com.spotify.mobius.test.InitSpec
 import com.spotify.mobius.test.InitSpec.assertThatFirst
+import dev.sasikanth.pinnit.TestData
 import org.junit.Test
 import java.util.UUID
 
@@ -28,8 +29,23 @@ class EditorScreenInitTest {
   }
 
   @Test
-  fun `when screen is created and notification uuid is not present, then do nothing`() {
+  fun `when screen is created and notification uuid is not present and title and content is null, then set empty title and content`() {
     val defaultModel = EditorScreenModel.default(null)
+
+    initSpec
+      .whenInit(defaultModel)
+      .then(
+        assertThatFirst(
+          hasModel(defaultModel),
+          hasEffects(SetEmptyTitleAndContent as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when screen is restored and notification uuid is not present and title or content is not null then do nothing`() {
+    val defaultModel = EditorScreenModel.default(null)
+      .titleChanged("Notification Title")
 
     initSpec
       .whenInit(defaultModel)
@@ -43,8 +59,14 @@ class EditorScreenInitTest {
 
   @Test
   fun `when screen is restored and notification is already loaded, then do nothing`() {
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Notification Title"
+    )
+
     val defaultModel = EditorScreenModel.default(notificationUuid)
-      .titleChanged("Notification Title")
+      .notificationLoaded(notification)
+      .titleChanged(notification.title)
 
     initSpec
       .whenInit(defaultModel)
