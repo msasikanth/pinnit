@@ -165,6 +165,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
   }
 
+  override fun hideDeleteButton() {
+    requireActivity().bottomBar.setActionIcon(null)
+  }
+
   private fun showConfirmExitDialog() {
     MaterialAlertDialogBuilder(requireContext())
       .setTitle(getString(R.string.confirm_editor_exit_title))

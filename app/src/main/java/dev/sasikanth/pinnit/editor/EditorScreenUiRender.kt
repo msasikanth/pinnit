@@ -16,6 +16,8 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
 
       if (model.isNotificationLoaded) {
         ui.showDeleteButton()
+      } else {
+        ui.hideDeleteButton()
       }
 
       if (!model.title.isNullOrBlank()) {

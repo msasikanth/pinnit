@@ -25,6 +25,7 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).hideDeleteButton()
     verify(ui).disableSave()
     verifyNoMoreInteractions(ui)
   }
@@ -84,6 +85,7 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).enableSave()
+    verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
     verifyNoMoreInteractions(ui)
   }
@@ -100,6 +102,7 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).disableSave()
+    verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
     verifyNoMoreInteractions(ui)
   }
