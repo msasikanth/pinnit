@@ -49,3 +49,9 @@ allprojects {
 task clean(type: Delete) {
   delete rootProject.buildDir
 }
+
+ext {
+  // query git for the commit count to automate versioning.
+  gitCommitCount = 100 +
+      Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
+}

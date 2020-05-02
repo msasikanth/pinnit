@@ -19,7 +19,7 @@ android {
     applicationId "dev.sasikanth.pinnit"
     minSdkVersion 23
     targetSdkVersion 29
-    versionCode 1
+    versionCode rootProject.gitCommitCount
     versionName "1.0.0"
 
     testInstrumentationRunner "dev.sasikanth.pinnit.AndroidTestRunner"
