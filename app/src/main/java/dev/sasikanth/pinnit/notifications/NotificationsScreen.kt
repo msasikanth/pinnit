@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -62,6 +63,11 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       }
     }
   }
+  private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+    override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+      notificationsRecyclerView.smoothScrollToPosition(0)
+    }
+  }
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
@@ -84,6 +90,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     super.onActivityCreated(savedInstanceState)
 
     adapter = NotificationsListAdapter(utcClock, ::onToggleNotificationPinClicked, ::onNotificationClicked)
+    adapter.registerAdapterDataObserver(adapterDataObserver)
     notificationsRecyclerView.adapter = adapter
     notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
 
@@ -130,6 +137,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   }
 
   override fun onDestroyView() {
+    adapter.unregisterAdapterDataObserver(adapterDataObserver)
     notificationsRecyclerView.adapter = null
     notificationsRecyclerView.itemAnimator = null
     super.onDestroyView()
