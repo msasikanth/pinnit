@@ -1,16 +1,19 @@
 package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import java.util.UUID
 
 data class EditorScreenModel(
+  val notificationUuid: UUID?,
   val notification: PinnitNotification?,
   val title: String?,
   val content: String?
 ) {
 
   companion object {
-    fun default(notification: PinnitNotification?) = EditorScreenModel(
-      notification = notification,
+    fun default(notificationUuid: UUID?) = EditorScreenModel(
+      notificationUuid = notificationUuid,
+      notification = null,
       title = null,
       content = null
     )
@@ -33,5 +36,9 @@ data class EditorScreenModel(
 
   fun contentChanged(content: String?): EditorScreenModel {
     return copy(content = content)
+  }
+
+  fun notificationLoaded(notification: PinnitNotification): EditorScreenModel {
+    return copy(notification = notification)
   }
 }

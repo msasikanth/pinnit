@@ -17,7 +17,7 @@ class EditorScreenUpdateTest {
   private val notification = TestData.notification(
     uuid = notificationUuid
   )
-  private val defaultModel = EditorScreenModel.default(notification)
+  private val defaultModel = EditorScreenModel.default(notificationUuid)
 
   @Test
   fun `when notification is loaded, then update the ui`() {
@@ -28,6 +28,7 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasModel(
             defaultModel
+              .notificationLoaded(notification)
               .titleChanged(notification.title)
               .contentChanged(notification.content)
           ),
@@ -85,8 +86,9 @@ class EditorScreenUpdateTest {
   }
 
   @Test
-  fun `when save is clicked and notification uuid is present, then update the notification`() {
+  fun `when save is clicked and notification is present, then update the notification`() {
     val model = defaultModel
+      .notificationLoaded(notification)
       .titleChanged("Title")
       .contentChanged("Content")
 
@@ -110,7 +112,8 @@ class EditorScreenUpdateTest {
       title = notificationTitle,
       content = notificationContent
     )
-    val model = EditorScreenModel.default(notification)
+    val model = EditorScreenModel.default(notificationUuid)
+      .notificationLoaded(notification)
       .titleChanged(notificationTitle)
       .contentChanged(notificationContent)
 

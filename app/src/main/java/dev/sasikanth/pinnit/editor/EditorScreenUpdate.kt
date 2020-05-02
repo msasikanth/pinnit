@@ -23,7 +23,9 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
   }
 
   private fun notificationLoaded(model: EditorScreenModel, event: NotificationLoaded): Next<EditorScreenModel, EditorScreenEffect> {
-    val updatedModel = model.titleChanged(event.notification.title)
+    val updatedModel = model
+      .notificationLoaded(event.notification)
+      .titleChanged(event.notification.title)
       .contentChanged(event.notification.content)
     return next(updatedModel)
   }

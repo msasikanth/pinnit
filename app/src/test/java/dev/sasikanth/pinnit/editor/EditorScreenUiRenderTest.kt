@@ -4,7 +4,6 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import dev.sasikanth.pinnit.TestData
 import org.junit.Test
 import java.util.UUID
 
@@ -14,12 +13,9 @@ class EditorScreenUiRenderTest {
   private val uiRender = EditorScreenUiRender(ui)
 
   private val notificationUuid = UUID.fromString("62f36ab9-9a54-481a-9db7-c856766975ce")
-  private val notification = TestData.notification(
-    uuid = notificationUuid
-  )
 
   @Test
-  fun `when notification is being fetched, then do nothing`() {
+  fun `when notification is being fetched or no notification is present, then do nothing`() {
     // given
     val model = EditorScreenModel.default(null)
       .titleChanged(null)
@@ -35,7 +31,7 @@ class EditorScreenUiRenderTest {
   fun `when title is not blank, then enable save`() {
     val notificationTitle = "Notification Title"
 
-    val model = EditorScreenModel.default(notification)
+    val model = EditorScreenModel.default(notificationUuid)
       .titleChanged(notificationTitle)
 
     // then
@@ -50,7 +46,7 @@ class EditorScreenUiRenderTest {
   fun `when title is blank, then disable save`() {
     val title = ""
 
-    val model = EditorScreenModel.default(notification)
+    val model = EditorScreenModel.default(notificationUuid)
       .titleChanged(title)
 
     // then

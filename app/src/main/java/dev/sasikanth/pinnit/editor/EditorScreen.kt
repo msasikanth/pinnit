@@ -44,7 +44,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
               effectHandler.create(viewEffectConsumer)
             )
           },
-          EditorScreenModel.default(notification = args.notification),
+          EditorScreenModel.default(notificationUuid = args.notification?.uuid),
           EditorScreenInit()
         ) as T
       }
