@@ -95,7 +95,7 @@
   <!-- TextInput -->
   <style name="Widget.Pinnit.TextInputLayout.FilledBox.Dense" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
     <item name="materialThemeOverlay">@style/ThemeOverlay.Pinnit.TextInputEditText.FilledBox.Dense</item>
-    <item name="boxBackgroundColor">@android:color/transparent</item>
+    <item name="boxBackgroundColor">?android:attr/colorBackground</item>
     <item name="boxCollapsedPaddingTop">0dp</item>
     <item name="boxStrokeColor">@color/edit_text_stroke_color</item>
     <item name="counterEnabled">true</item>
