@@ -116,7 +116,8 @@ class EditorScreenEffectHandlerTest {
     val updatedTitle = "Updated Title"
     val updatedNotification = notification
       .copy(
-        title = updatedTitle
+        title = updatedTitle,
+        isPinned = true
       )
 
     whenever(repository.notification(notificationUuid)) doReturn notification
