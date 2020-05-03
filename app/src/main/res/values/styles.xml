@@ -76,7 +76,7 @@
     </item>
     <item name="buttonBarStyle">@style/MaterialAlertDialog.Pinnit.ButtonRow
     </item>
-
+    <item name="android:backgroundDimAmount">@integer/alertDialogBackgroundDimAmount</item>
   </style>
 
   <style name="MaterialAlertDialog.Pinnit.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
