@@ -100,6 +100,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         ShowConfirmExitEditorDialog -> {
           showConfirmExitDialog()
         }
+
+        ShowConfirmDeleteDialog -> {
+          showConfirmDeleteDialog()
+        }
       }
     })
 
@@ -176,6 +180,19 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         viewModel.dispatchEvent(ConfirmedExit)
       }
       .setNegativeButton(R.string.confirm_editor_exit_negative_action) { _, _ ->
+        // NO-OP
+      }
+      .show()
+  }
+
+  private fun showConfirmDeleteDialog() {
+    MaterialAlertDialogBuilder(requireContext())
+      .setTitle(R.string.confirm_delete_notification_title)
+      .setMessage(R.string.confirm_delete_notification_desc)
+      .setPositiveButton(R.string.confirm_delete_notification_positive_action) { _, _ ->
+        // TODO: Confirm delete notification
+      }
+      .setNegativeButton(R.string.confirm_delete_notification_negative_action) { _, _ ->
         // NO-OP
       }
       .show()

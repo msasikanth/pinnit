@@ -197,4 +197,17 @@ class EditorScreenEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)
   }
+
+  @Test
+  fun `when show confirm delete effect is received, then display the confirm delete dialog`() {
+    // when
+    connection.accept(ShowConfirmDelete)
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(ShowConfirmDeleteDialog)
+  }
 }

@@ -38,6 +38,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       }
 
       is DeleteNotification -> deleteNotification(effect)
+
+      ShowConfirmDelete -> viewEffectConsumer.accept(ShowConfirmDeleteDialog)
     }
   }
 

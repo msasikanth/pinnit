@@ -43,4 +43,8 @@
   <string name="confirm_editor_exit_title">Discard changes?</string>
   <string name="confirm_editor_exit_positive_action">Yes</string>
   <string name="confirm_editor_exit_negative_action">No</string>
+  <string name="confirm_delete_notification_title">Delete notification?</string>
+  <string name="confirm_delete_notification_desc">This action cannot be undone.</string>
+  <string name="confirm_delete_notification_positive_action">Yes</string>
+  <string name="confirm_delete_notification_negative_action">No</string>
 </resources>
