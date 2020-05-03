@@ -12,7 +12,7 @@
     android:layout_width="80dp"
     android:layout_height="80dp"
     android:contentDescription="@null"
-    android:src="@drawable/illustration_pinnit_no_notifications"
+    android:src="@drawable/illustration_pinnit_pin"
     android:visibility="gone"
     app:layout_constraintBottom_toTopOf="@id/noNotificationsTextView"
     app:layout_constraintEnd_toEndOf="parent"
