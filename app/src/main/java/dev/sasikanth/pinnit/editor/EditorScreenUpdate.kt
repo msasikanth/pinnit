@@ -20,7 +20,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       ConfirmedExit -> dispatch(setOf(CloseEditor))
 
-      DeleteNotificationClicked -> dispatch(setOf(DeleteNotification(model.notification!!)))
+      DeleteNotificationClicked -> dispatch(setOf(ShowConfirmDelete))
 
       ConfirmDeleteNotification -> dispatch(setOf(DeleteNotification(model.notification!!)))
     }
