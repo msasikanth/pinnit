@@ -3,6 +3,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="dev.sasikanth.pinnit">
 
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
   <application
     android:name=".PinnitApp"
     android:allowBackup="true"
@@ -51,6 +53,12 @@
       android:exported="false">
       <intent-filter>
         <action android:name="dev.sasikanth.pinnit.system.action.NotificationUnpin" />
+      </intent-filter>
+    </receiver>
+
+    <receiver android:name=".background.receivers.BootCompletedReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
       </intent-filter>
     </receiver>
 
