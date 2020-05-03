@@ -190,7 +190,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       .setTitle(R.string.confirm_delete_notification_title)
       .setMessage(R.string.confirm_delete_notification_desc)
       .setPositiveButton(R.string.confirm_delete_notification_positive_action) { _, _ ->
-        // TODO: Confirm delete notification
+        viewModel.dispatchEvent(ConfirmDeleteNotification)
       }
       .setNegativeButton(R.string.confirm_delete_notification_negative_action) { _, _ ->
         // NO-OP

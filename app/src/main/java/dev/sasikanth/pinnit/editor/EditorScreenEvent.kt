@@ -17,3 +17,5 @@ object BackClicked : EditorScreenEvent()
 object ConfirmedExit : EditorScreenEvent()
 
 object DeleteNotificationClicked : EditorScreenEvent()
+
+object ConfirmDeleteNotification : EditorScreenEvent()
