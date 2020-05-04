@@ -193,7 +193,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
           intent.type = "text/plain"
           intent.putExtra(
             Intent.EXTRA_EMAIL,
-            arrayOf("contact@msasikanth.com")
+            arrayOf("contact@sasikanth.dev")
           )
           intent.putExtra(
             Intent.EXTRA_SUBJECT,
