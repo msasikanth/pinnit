@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
@@ -122,6 +123,11 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     editorScrollView.applySystemWindowInsetsToPadding(bottom = true)
 
     titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
+    titleEditText.imeOptions = EditorInfo.IME_ACTION_NEXT
+    titleEditText.inputType = EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES or EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE
+    titleEditText.setHorizontallyScrolling(false)
+    titleEditText.maxLines = 5
+
     contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
 
     requireActivity().bottomBar.setActionOnClickListener { viewModel.dispatchEvent(DeleteNotificationClicked) }
