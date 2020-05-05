@@ -16,7 +16,7 @@ class ShortcutReceiverActivity : AppCompatActivity() {
       .setComponentName(MainActivity::class.java)
       .setDestination(R.id.editorScreen)
       .setGraph(R.navigation.main_nav_graph)
-      .setArguments(EditorScreenArgs(notificationUuid = null).toBundle())
+      .setArguments(EditorScreenArgs().toBundle())
       .createTaskStackBuilder()
       .startActivities()
 

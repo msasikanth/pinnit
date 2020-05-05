@@ -8,7 +8,7 @@
     android:id="@+id/notificationsScreen"
     android:name="dev.sasikanth.pinnit.notifications.NotificationsScreen"
     android:label="@string/toolbar_title_notifications"
-    tools:layout="@layout/fragment_notifications" >
+    tools:layout="@layout/fragment_notifications">
     <action
       android:id="@+id/action_notificationsScreen_to_editorScreen"
       app:destination="@id/editorScreen" />
@@ -17,9 +17,10 @@
     android:id="@+id/editorScreen"
     android:name="dev.sasikanth.pinnit.editor.EditorScreen"
     android:label="fragment_notification_editor"
-    tools:layout="@layout/fragment_notification_editor" >
+    tools:layout="@layout/fragment_notification_editor">
     <argument
       android:name="notificationUuid"
+      android:defaultValue="@null"
       app:argType="string"
       app:nullable="true" />
   </fragment>
