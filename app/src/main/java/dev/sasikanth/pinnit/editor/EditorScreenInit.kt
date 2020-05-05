@@ -12,13 +12,7 @@ class EditorScreenInit : Init<EditorScreenModel, EditorScreenEffect> {
         return first(model, setOf(LoadNotification(model.notificationUuid)))
       }
     } else {
-      // During create we will have title and content as null
-      // to prevent setting an empty title and content during restore
-      // and overriding any text that is entered. We check if both title and content
-      // are null before setting the empty title and content
-      if (model.title == null && model.content == null) {
-        return first(model, setOf(SetEmptyTitleAndContent))
-      }
+      return first(model, setOf(SetTitleAndContent(model.title, model.content)))
     }
 
     return first(model)

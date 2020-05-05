@@ -37,22 +37,7 @@ class EditorScreenInitTest {
       .then(
         assertThatFirst(
           hasModel(defaultModel),
-          hasEffects(SetEmptyTitleAndContent as EditorScreenEffect)
-        )
-      )
-  }
-
-  @Test
-  fun `when screen is restored and notification uuid is not present and title or content is not null then do nothing`() {
-    val defaultModel = EditorScreenModel.default(null)
-      .titleChanged("Notification Title")
-
-    initSpec
-      .whenInit(defaultModel)
-      .then(
-        assertThatFirst(
-          hasModel(defaultModel),
-          hasNoEffects()
+          hasEffects(SetTitleAndContent(defaultModel.title, defaultModel.content) as EditorScreenEffect)
         )
       )
   }
