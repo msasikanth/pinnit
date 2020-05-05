@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     super.onCreate(savedInstanceState)
 
     mainRoot.setEdgeToEdgeSystemUiFlags()
-    toolbar.applySystemWindowInsetsToPadding(top = true)
+    toolbar.applySystemWindowInsetsToPadding(top = true, right = true, left = true)
     setSupportActionBar(toolbar)
 
     navController = findNavController(R.id.nav_host_fragment_container)

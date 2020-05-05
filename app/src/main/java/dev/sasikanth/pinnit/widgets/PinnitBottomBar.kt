@@ -35,7 +35,7 @@ constructor(
       recycle()
     }
 
-    applySystemWindowInsetsToPadding(bottom = true)
+    applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
   }
 
   fun setNavigationIcon(@DrawableRes navigationIcon: Int?) {

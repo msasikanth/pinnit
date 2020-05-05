@@ -21,6 +21,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Function
+import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.BuildConfig
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitNotification
@@ -91,6 +92,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     adapter.registerAdapterDataObserver(adapterDataObserver)
     notificationsRecyclerView.adapter = adapter
     notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
+    notificationsRecyclerView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
 
     val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {
       viewModel.dispatchEvent(NotificationSwiped(it))

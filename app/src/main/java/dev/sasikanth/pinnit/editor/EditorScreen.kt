@@ -120,7 +120,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       viewModel.dispatchEvent(SaveClicked)
     }
 
-    editorScrollView.applySystemWindowInsetsToPadding(bottom = true)
+    editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
 
     titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
     titleEditText.imeOptions = EditorInfo.IME_ACTION_NEXT
