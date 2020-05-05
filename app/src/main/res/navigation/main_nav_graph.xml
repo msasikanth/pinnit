@@ -23,5 +23,10 @@
       android:defaultValue="@null"
       app:argType="string"
       app:nullable="true" />
+    <argument
+      android:name="notificationContent"
+      app:argType="string"
+      app:nullable="true"
+      android:defaultValue="@null" />
   </fragment>
 </navigation>

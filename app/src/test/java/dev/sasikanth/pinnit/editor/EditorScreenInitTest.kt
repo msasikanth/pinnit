@@ -16,7 +16,7 @@ class EditorScreenInitTest {
 
   @Test
   fun `when screen is created and notification uuid is present, then fetch notification`() {
-    val defaultModel = EditorScreenModel.default(notificationUuid)
+    val defaultModel = EditorScreenModel.default(notificationUuid, null)
 
     initSpec
       .whenInit(defaultModel)
@@ -30,7 +30,7 @@ class EditorScreenInitTest {
 
   @Test
   fun `when screen is created and notification uuid is not present and title and content is null, then set empty title and content`() {
-    val defaultModel = EditorScreenModel.default(null)
+    val defaultModel = EditorScreenModel.default(null, null)
 
     initSpec
       .whenInit(defaultModel)
@@ -49,7 +49,7 @@ class EditorScreenInitTest {
       title = "Notification Title"
     )
 
-    val defaultModel = EditorScreenModel.default(notificationUuid)
+    val defaultModel = EditorScreenModel.default(notificationUuid, null)
       .notificationLoaded(notification)
       .titleChanged(notification.title)
 
