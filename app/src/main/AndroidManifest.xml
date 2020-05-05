@@ -21,12 +21,20 @@
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+
+      <meta-data
+        android:name="android.app.shortcuts"
+        android:resource="@xml/shortcuts" />
     </activity>
 
     <activity
       android:name=".activity.MainActivity"
       android:theme="@style/Theme.Pinnit.Main"
       android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".ShortcutReceiverActivity"
+      android:taskAffinity="" />
 
     <service
       android:name=".background.services.NotificationsListener"
