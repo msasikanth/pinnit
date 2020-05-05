@@ -210,4 +210,20 @@ class EditorScreenEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowConfirmDeleteDialog)
   }
+
+  @Test
+  fun `when set title and content effect is received, then set title and content`() {
+    // given
+    val notificationContent = "Notification Content"
+
+    // when
+    connection.accept(SetTitleAndContent(null, notificationContent))
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(SetTitle(null), SetContent(notificationContent))
+  }
 }
