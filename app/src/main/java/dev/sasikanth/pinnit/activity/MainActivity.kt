@@ -7,18 +7,11 @@ import androidx.navigation.findNavController
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.PinnitPreferences
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
-  // Injecting this to trigger the init
-  // function of PinnitPreferences to update theme
-  @Inject
-  lateinit var pinnitPreferences: PinnitPreferences
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->

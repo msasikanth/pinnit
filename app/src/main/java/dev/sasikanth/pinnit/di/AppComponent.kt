@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.di
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
+import dev.sasikanth.pinnit.PinnitApp
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.background.receivers.BootCompletedReceiver
 import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
@@ -20,11 +21,13 @@ interface AppComponent {
     fun create(@BindsInstance application: Application): AppComponent
   }
 
+  fun inject(target: PinnitApp)
+
   fun inject(target: MainActivity)
   fun inject(target: NotificationsScreen)
   fun inject(target: EditorScreen)
-  fun inject(target: OptionsBottomSheet)
 
+  fun inject(target: OptionsBottomSheet)
   fun inject(target: UnpinNotificationReceiver)
   fun inject(target: BootCompletedReceiver)
 }
