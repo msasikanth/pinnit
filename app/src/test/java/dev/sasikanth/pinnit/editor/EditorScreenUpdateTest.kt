@@ -32,7 +32,7 @@ class EditorScreenUpdateTest {
               .titleChanged(notification.title)
               .contentChanged(notification.content)
           ),
-          hasNoEffects()
+          hasEffects(SetTitleAndContent(notification.title, notification.content) as EditorScreenEffect)
         )
       )
   }

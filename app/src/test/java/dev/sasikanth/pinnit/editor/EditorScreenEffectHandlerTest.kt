@@ -67,7 +67,6 @@ class EditorScreenEffectHandlerTest {
     verifyNoMoreInteractions(repository)
 
     consumer.assertValues(NotificationLoaded(notification))
-    viewEffectConsumer.assertValues(SetTitle(notification.title), SetContent(notification.content))
   }
 
   @Test

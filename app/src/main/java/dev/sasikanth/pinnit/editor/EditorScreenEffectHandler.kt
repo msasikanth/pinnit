@@ -54,8 +54,6 @@ class EditorScreenEffectHandler @AssistedInject constructor(
   ) {
     val notification = notificationRepository.notification(effect.uuid)
     dispatchEvent(NotificationLoaded(notification))
-    viewEffectConsumer.accept(SetTitle(notification.title))
-    viewEffectConsumer.accept(SetContent(notification.content))
   }
 
   private suspend fun saveNotificationAndCloseEditor(effect: SaveNotificationAndCloseEditor) {

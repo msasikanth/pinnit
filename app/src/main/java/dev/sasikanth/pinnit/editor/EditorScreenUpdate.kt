@@ -31,7 +31,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       .notificationLoaded(event.notification)
       .titleChanged(event.notification.title)
       .contentChanged(event.notification.content)
-    return next(updatedModel)
+    return next(updatedModel, setOf(SetTitleAndContent(event.notification.title, event.notification.content)))
   }
 
   private fun saveClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {
