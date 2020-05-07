@@ -17,8 +17,6 @@ object CloseEditor : EditorScreenEffect()
 
 object ShowConfirmExitEditor : EditorScreenEffect()
 
-object SetEmptyTitleAndContent : EditorScreenEffect()
-
 data class DeleteNotification(val notification: PinnitNotification) : EditorScreenEffect()
 
 object ShowConfirmDelete : EditorScreenEffect()

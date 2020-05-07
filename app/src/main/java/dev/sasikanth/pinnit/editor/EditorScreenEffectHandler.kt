@@ -24,27 +24,19 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     when (effect) {
       is LoadNotification -> loadNotification(effect, dispatchEvent)
 
+      is SetTitleAndContent -> setTitleAndContent(effect)
+
       is SaveNotificationAndCloseEditor -> saveNotificationAndCloseEditor(effect)
 
       is UpdateNotificationAndCloseEditor -> updateNotificationAndCloseEditor(effect)
 
-      CloseEditor -> viewEffectConsumer.accept(CloseEditorView)
-
       ShowConfirmExitEditor -> viewEffectConsumer.accept(ShowConfirmExitEditorDialog)
 
-      SetEmptyTitleAndContent -> {
-        viewEffectConsumer.accept(SetTitle(null))
-        viewEffectConsumer.accept(SetContent(null))
-      }
-
-      is DeleteNotification -> deleteNotification(effect)
+      CloseEditor -> viewEffectConsumer.accept(CloseEditorView)
 
       ShowConfirmDelete -> viewEffectConsumer.accept(ShowConfirmDeleteDialog)
 
-      is SetTitleAndContent -> {
-        viewEffectConsumer.accept(SetTitle(effect.title))
-        viewEffectConsumer.accept(SetContent(effect.content))
-      }
+      is DeleteNotification -> deleteNotification(effect)
     }
   }
 
@@ -54,6 +46,11 @@ class EditorScreenEffectHandler @AssistedInject constructor(
   ) {
     val notification = notificationRepository.notification(effect.uuid)
     dispatchEvent(NotificationLoaded(notification))
+  }
+
+  private fun setTitleAndContent(effect: SetTitleAndContent) {
+    viewEffectConsumer.accept(SetTitle(effect.title))
+    viewEffectConsumer.accept(SetContent(effect.content))
   }
 
   private suspend fun saveNotificationAndCloseEditor(effect: SaveNotificationAndCloseEditor) {

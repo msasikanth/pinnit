@@ -164,19 +164,6 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when set empty title and content effect is received, then set empty title and content`() {
-    // when
-    connection.accept(SetEmptyTitleAndContent)
-
-    // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
-
-    consumer.assertValues()
-    viewEffectConsumer.assertValues(SetTitle(null), SetContent(null))
-  }
-
-  @Test
   fun `when delete notification effect is received, then delete the notification`() = testScope.runBlockingTest {
     // give
     val notification = TestData.notification(
