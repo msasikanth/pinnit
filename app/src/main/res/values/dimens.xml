@@ -2,4 +2,10 @@
 <resources>
   <dimen name="button_height">56dp</dimen>
   <dimen name="shape_theming_radius">2dp</dimen>
+
+  <!-- QS popup dialog -->
+  <dimen name="qs_popup_margin_top">144dp</dimen>
+  <dimen name="qs_popup_margin_bottom">144dp</dimen>
+  <dimen name="qs_popup_margin_end">32dp</dimen>
+  <dimen name="qs_popup_margin_start">32dp</dimen>
 </resources>

@@ -42,6 +42,10 @@
       </intent-filter>
     </activity>
 
+    <activity
+      android:name=".activity.QsPopupActivity"
+      android:theme="@style/Theme.Pinnit.QsPopup" />
+
     <service
       android:name=".background.services.NotificationsListener"
       android:exported="false"

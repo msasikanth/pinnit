@@ -47,4 +47,7 @@
   <string name="confirm_delete_notification_desc">This action cannot be undone.</string>
   <string name="confirm_delete_notification_positive_action">Yes</string>
   <string name="confirm_delete_notification_negative_action">No</string>
+
+  <!-- QS Popup -->
+  <string name="qs_popup_open_app">Open App</string>
 </resources>

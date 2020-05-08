@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- QS popup dialog -->
+  <dimen name="qs_popup_margin_top">32dp</dimen>
+  <dimen name="qs_popup_margin_bottom">32dp</dimen>
+  <dimen name="qs_popup_margin_end">144dp</dimen>
+  <dimen name="qs_popup_margin_start">144dp</dimen>
+</resources>
