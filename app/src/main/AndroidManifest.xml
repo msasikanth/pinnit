@@ -43,7 +43,7 @@
     </activity>
 
     <activity
-      android:name=".activity.QsPopupActivity"
+      android:name=".qspopup.QsPopupActivity"
       android:theme="@style/Theme.Pinnit.QsPopup" />
 
     <service
