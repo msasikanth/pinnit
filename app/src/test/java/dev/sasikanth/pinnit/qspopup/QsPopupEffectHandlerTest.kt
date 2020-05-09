@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
@@ -23,12 +24,14 @@ class QsPopupEffectHandlerTest {
 
   private val utcClock = TestUtcClock()
   private val consumer = RecordingConsumer<QsPopupEvent>()
+  private val viewEffectConsumer = RecordingConsumer<QsPopupViewEffect>()
 
   private val notificationRepository = mock<NotificationRepository>()
 
   private val effectHandler = QsPopupEffectHandler(
     dispatcherProvider = TestDispatcherProvider(),
-    notificationRepository = notificationRepository
+    notificationRepository = notificationRepository,
+    viewEffectConsumer = viewEffectConsumer
   )
 
   private lateinit var connection: Connection<QsPopupEffect>
@@ -70,5 +73,25 @@ class QsPopupEffectHandlerTest {
     verifyNoMoreInteractions(notificationRepository)
 
     consumer.assertValues(NotificationsLoaded(notifications))
+  }
+
+  @Test
+  fun `when open edit screen effect is received, then open the edit page`() {
+    // given
+    val notificationUuid = UUID.fromString("220c2037-94ba-44ef-8f83-5c232f01288f")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      createdAt = Instant.now(utcClock),
+      updatedAt = Instant.now(utcClock)
+    )
+
+    // when
+    connection.accept(OpenNotificationEditor(notification))
+
+    // then
+    verifyZeroInteractions(notificationRepository)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(OpenNotificationEditorViewEffect(notification))
   }
 }
