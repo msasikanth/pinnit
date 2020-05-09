@@ -9,7 +9,10 @@ class QsPopupUpdate : Update<QsPopupModel, QsPopupEvent, QsPopupEffect> {
   override fun update(model: QsPopupModel, event: QsPopupEvent): Next<QsPopupModel, QsPopupEffect> {
     return when (event) {
       is NotificationsLoaded -> next(model.onNotificationsLoaded(notifications = event.notifications))
+
       is NotificationClicked -> dispatch(setOf(OpenNotificationEditor(event.notification)))
+
+      is TogglePinStatusClicked -> dispatch(setOf(ToggleNotificationPinStatus(event.notification)))
     }
   }
 }
