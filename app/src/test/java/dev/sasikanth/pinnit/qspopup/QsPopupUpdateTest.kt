@@ -34,4 +34,25 @@ class QsPopupUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification is clicked, then open notification editor`() {
+    val notification = TestData.notification(
+      uuid = UUID.fromString("0fdb4088-a12e-47e6-8d42-d5b553edd3b1"),
+      createdAt = Instant.now(utcClock),
+      updatedAt = Instant.now(utcClock)
+    )
+    val notifications = listOf(notification)
+    val model = defaultModel.onNotificationsLoaded(notifications)
+
+    updateSpec
+      .given(model)
+      .whenEvent(NotificationClicked(notification))
+      .then(
+        UpdateSpec.assertThatNext(
+          NextMatchers.hasNoModel(),
+          NextMatchers.hasEffects(OpenNotificationEditor(notification) as QsPopupEffect)
+        )
+      )
+  }
 }
