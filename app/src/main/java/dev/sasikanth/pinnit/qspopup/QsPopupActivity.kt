@@ -130,6 +130,6 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
   }
 
   private fun onNotificationClicked(notification: PinnitNotification) {
-    // TODO: Open notification editor view
+    viewModel.dispatchEvent(NotificationClicked(notification))
   }
 }
