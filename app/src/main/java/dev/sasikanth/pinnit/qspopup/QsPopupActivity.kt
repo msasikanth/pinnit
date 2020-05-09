@@ -32,22 +32,22 @@ import javax.inject.Inject
 class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi {
 
   @Inject
-  lateinit var effectHandler: QsPopupEffectHandler
+  lateinit var effectHandler: QsPopupEffectHandler.Factory
 
   @Inject
   lateinit var utcClock: UtcClock
 
   private val uiRender = QsPopupUiRenderer(this)
 
-  private val viewModel: MobiusLoopViewModel<QsPopupModel, QsPopupEvent, QsPopupEffect, Nothing> by viewModels {
+  private val viewModel: MobiusLoopViewModel<QsPopupModel, QsPopupEvent, QsPopupEffect, QsPopupViewEffect> by viewModels {
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create<QsPopupModel, QsPopupEvent, QsPopupEffect, Nothing>(
-          Function {
+        return MobiusLoopViewModel.create<QsPopupModel, QsPopupEvent, QsPopupEffect, QsPopupViewEffect>(
+          Function { viewEffectConsumer ->
             loop(
               QsPopupUpdate(),
-              effectHandler
+              effectHandler.create(viewEffectConsumer)
             )
           },
           QsPopupModel.default(),
@@ -75,6 +75,12 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
       uiRender.render(model)
     })
 
+    viewModel.viewEffects.setObserver(this, Observer { viewEffect ->
+      when (viewEffect) {
+        is OpenNotificationEditorViewEffect -> openNotificationEditorView(viewEffect.notification)
+      }
+    })
+
     backgroundRoot.setOnClickListener { finish() }
 
     openAppButton.setOnClickListener {
@@ -85,14 +91,18 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
     }
 
     createNotificationButton.setOnClickListener {
-      NavDeepLinkBuilder(this)
-        .setComponentName(MainActivity::class.java)
-        .setGraph(R.navigation.main_nav_graph)
-        .setDestination(R.id.editorScreen)
-        .setArguments(EditorScreenArgs().toBundle())
-        .createTaskStackBuilder()
-        .startActivities()
+      openNotificationEditorView()
     }
+  }
+
+  private fun openNotificationEditorView(notification: PinnitNotification? = null) {
+    NavDeepLinkBuilder(this)
+      .setComponentName(MainActivity::class.java)
+      .setGraph(R.navigation.main_nav_graph)
+      .setDestination(R.id.editorScreen)
+      .setArguments(EditorScreenArgs(notificationUuid = notification?.uuid?.toString()).toBundle())
+      .createTaskStackBuilder()
+      .startActivities()
   }
 
   override fun showNotifications(notifications: List<PinnitNotification>) {
