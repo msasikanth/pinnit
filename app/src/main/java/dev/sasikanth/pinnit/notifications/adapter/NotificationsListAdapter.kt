@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.notifications.adapter
 
 import android.content.res.ColorStateList
 import android.text.format.DateUtils
+import android.text.format.DateUtils.FORMAT_ABBREV_RELATIVE
 import android.text.format.DateUtils.SECOND_IN_MILLIS
 import android.view.LayoutInflater
 import android.view.View
@@ -74,7 +75,8 @@ class NotificationsListAdapter(
       timeStamp.text = DateUtils.getRelativeTimeSpanString(
         notification.updatedAt.toEpochMilli(),
         now.toEpochMilli(),
-        SECOND_IN_MILLIS
+        SECOND_IN_MILLIS,
+        FORMAT_ABBREV_RELATIVE
       )
 
       togglePinIcon.isChecked = notification.isPinned
