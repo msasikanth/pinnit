@@ -55,4 +55,25 @@ class QsPopupUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when toggle notification pin status is clicked, then change the pin status`() {
+    val notification = TestData.notification(
+      uuid = UUID.fromString("0fdb4088-a12e-47e6-8d42-d5b553edd3b1"),
+      createdAt = Instant.now(utcClock),
+      updatedAt = Instant.now(utcClock)
+    )
+    val notifications = listOf(notification)
+    val model = defaultModel.onNotificationsLoaded(notifications)
+
+    updateSpec
+      .given(model)
+      .whenEvent(TogglePinStatusClicked(notification))
+      .then(
+        UpdateSpec.assertThatNext(
+          NextMatchers.hasNoModel(),
+          NextMatchers.hasEffects(ToggleNotificationPinStatus(notification) as QsPopupEffect)
+        )
+      )
+  }
 }

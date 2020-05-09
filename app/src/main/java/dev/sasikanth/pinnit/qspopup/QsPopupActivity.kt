@@ -126,7 +126,7 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
   }
 
   private fun onToggleNotificationPinClicked(notification: PinnitNotification) {
-    // TODO: Toggle notification pin status
+    viewModel.dispatchEvent(TogglePinStatusClicked(notification))
   }
 
   private fun onNotificationClicked(notification: PinnitNotification) {
