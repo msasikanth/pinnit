@@ -10,6 +10,7 @@ import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
+import dev.sasikanth.pinnit.qspopup.QsPopupActivity
 import javax.inject.Scope
 
 @AppScope
@@ -24,6 +25,7 @@ interface AppComponent {
   fun inject(target: PinnitApp)
 
   fun inject(target: MainActivity)
+  fun inject(target: QsPopupActivity)
   fun inject(target: NotificationsScreen)
   fun inject(target: EditorScreen)
 
