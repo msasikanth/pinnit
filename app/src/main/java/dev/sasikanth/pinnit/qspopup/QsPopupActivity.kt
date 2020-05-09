@@ -1,10 +1,11 @@
-package dev.sasikanth.pinnit.activity
+package dev.sasikanth.pinnit.qspopup
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavDeepLinkBuilder
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import kotlinx.android.synthetic.main.activity_qs_popup.*
 
