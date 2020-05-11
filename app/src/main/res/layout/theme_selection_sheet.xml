@@ -41,7 +41,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="24dp"
     android:layout_marginEnd="24dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="16dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -74,5 +74,13 @@
       android:text="@string/option_dark_mode_off" />
 
   </com.google.android.material.button.MaterialButtonToggleGroup>
+
+  <View
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@drawable/divider"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
