@@ -50,7 +50,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      app:layout_constraintGuide_end="20dp" />
+      app:layout_constraintGuide_end="24dp" />
 
     <ImageView
       android:id="@+id/appIcon"
@@ -129,8 +129,9 @@
     <de.hdodenhof.circleimageview.CircleImageView
       android:id="@+id/personImageView"
       android:layout_width="40dp"
-      android:layout_height="40dp"
-      android:layout_marginTop="12dp"
+      android:layout_height="48dp"
+      android:paddingTop="8dp"
+      android:layout_marginTop="8dp"
       android:layout_marginEnd="16dp"
       android:src="?attr/colorSecondary"
       android:visibility="gone"
@@ -148,9 +149,10 @@
       style="@style/TextStyle.Pinnit.Subtitle1"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="12dp"
+      android:layout_marginTop="8dp"
       android:layout_marginEnd="8dp"
       android:textColor="?attr/colorOnBackground"
+      android:translationY="4sp"
       app:layout_constraintBottom_toTopOf="@id/contentTextView"
       app:layout_constraintEnd_toStartOf="@id/togglePinIcon"
       app:layout_constraintStart_toEndOf="@id/personImageView"
