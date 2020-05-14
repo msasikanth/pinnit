@@ -86,6 +86,7 @@ class NotificationsListAdapter(
       } else {
         colorsForNotificationUnPinned()
       }
+      divider.isSelected = notification.isPinned
     }
 
     private fun getRevealCx(): Float {
