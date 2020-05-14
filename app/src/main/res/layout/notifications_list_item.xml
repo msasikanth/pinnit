@@ -175,9 +175,10 @@
   </androidx.constraintlayout.widget.ConstraintLayout>
 
   <View
+    android:id="@+id/divider"
     android:layout_width="match_parent"
     android:layout_height="1dp"
     android:layout_gravity="bottom"
-    android:background="@drawable/divider" />
+    android:background="@drawable/notification_divider" />
 
 </com.google.android.material.card.MaterialCardView>
