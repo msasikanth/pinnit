@@ -122,4 +122,9 @@
     <item name="android:paddingBottom">8dp</item>
   </style>
 
+  <!-- Snackbar -->
+  <style name="Widget.Pinnit.Snackbar.FullWidth" parent="Widget.MaterialComponents.Snackbar.FullWidth">
+    <item name="elevation">0dp</item>
+  </style>
+
 </resources>

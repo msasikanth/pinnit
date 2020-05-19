@@ -11,6 +11,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.utils.dp
 import kotlinx.android.synthetic.main.pinnit_bottom_bar.view.*
 
 class PinnitBottomBar @JvmOverloads
@@ -35,6 +36,9 @@ constructor(
       recycle()
     }
 
+    // Adding Z-axis so that the snackbar will start
+    // coming up behind the bottom bar
+    translationZ = 4.dp.toFloat()
     applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
   }
 
