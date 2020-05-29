@@ -66,10 +66,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+    val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true)
     enterTransition = forward
 
-    val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+    val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false)
     returnTransition = backward
 
     requireActivity().onBackPressedDispatcher.addCallback(this) {

@@ -78,10 +78,10 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+    val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false)
     reenterTransition = backward
 
-    val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+    val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true)
     exitTransition = forward
   }
 
