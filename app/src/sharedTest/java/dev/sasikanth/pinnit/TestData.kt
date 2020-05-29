@@ -1,7 +1,7 @@
 package dev.sasikanth.pinnit
 
 import dev.sasikanth.pinnit.data.PinnitNotification
-import org.threeten.bp.Instant
+import java.time.Instant
 import java.util.UUID
 
 object TestData {

@@ -1,11 +1,11 @@
 package dev.sasikanth.pinnit.utils
 
-import org.threeten.bp.Clock
-import org.threeten.bp.Duration
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZoneOffset.UTC
+import java.time.Clock
+import java.time.Duration
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZoneOffset.UTC
 
 class TestUtcClock(instant: Instant) : UtcClock() {
 

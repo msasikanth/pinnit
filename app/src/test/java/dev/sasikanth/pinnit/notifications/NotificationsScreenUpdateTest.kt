@@ -9,8 +9,8 @@ import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import org.junit.Test
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
+import java.time.Instant
+import java.time.LocalDate
 import java.util.UUID
 
 class NotificationsScreenUpdateTest {

@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.flow.Flow
-import org.threeten.bp.Instant
+import java.time.Instant
 import java.util.UUID
 
 @Keep

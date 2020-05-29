@@ -1,8 +1,8 @@
 package dev.sasikanth.pinnit.utils
 
-import org.threeten.bp.Clock
-import org.threeten.bp.Instant
-import org.threeten.bp.ZoneId
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 
 open class UtcClock : Clock() {
 

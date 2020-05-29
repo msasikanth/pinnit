@@ -4,7 +4,7 @@ import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.coroutines.flow.Flow
-import org.threeten.bp.Instant
+import java.time.Instant
 import java.util.UUID
 import javax.inject.Inject
 

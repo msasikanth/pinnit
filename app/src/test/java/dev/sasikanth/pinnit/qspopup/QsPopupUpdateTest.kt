@@ -5,7 +5,7 @@ import com.spotify.mobius.test.UpdateSpec
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import org.junit.Test
-import org.threeten.bp.Instant
+import java.time.Instant
 import java.util.UUID
 
 class QsPopupUpdateTest {

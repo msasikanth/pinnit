@@ -19,9 +19,9 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.temporal.ChronoUnit
+import java.time.Instant
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 import java.util.UUID
 
 class NotificationsScreenEffectHandlerTest {

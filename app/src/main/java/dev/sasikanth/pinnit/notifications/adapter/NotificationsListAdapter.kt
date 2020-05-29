@@ -19,7 +19,7 @@ import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.notifications_list_item.*
-import org.threeten.bp.Instant
+import java.time.Instant
 import kotlin.math.hypot
 
 class NotificationsListAdapter(

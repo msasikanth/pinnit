@@ -92,8 +92,6 @@ dependencies {
 
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 
-  implementation "com.jakewharton.threetenabp:threetenabp:$versions.threeten"
-
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
 

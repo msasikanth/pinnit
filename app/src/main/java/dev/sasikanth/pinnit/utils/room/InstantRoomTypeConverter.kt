@@ -1,7 +1,7 @@
 package dev.sasikanth.pinnit.utils.room
 
 import androidx.room.TypeConverter
-import org.threeten.bp.Instant
+import java.time.Instant
 
 class InstantRoomTypeConverter {
 
