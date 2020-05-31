@@ -81,6 +81,12 @@
       </intent-filter>
     </receiver>
 
+    <receiver android:name=".background.receivers.AppUpdateReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+      </intent-filter>
+    </receiver>
+
   </application>
 
 </manifest>

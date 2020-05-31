@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dev.sasikanth.pinnit.PinnitApp
 import dev.sasikanth.pinnit.activity.MainActivity
+import dev.sasikanth.pinnit.background.receivers.AppUpdateReceiver
 import dev.sasikanth.pinnit.background.receivers.BootCompletedReceiver
 import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.editor.EditorScreen
@@ -32,6 +33,7 @@ interface AppComponent {
   fun inject(target: OptionsBottomSheet)
   fun inject(target: UnpinNotificationReceiver)
   fun inject(target: BootCompletedReceiver)
+  fun inject(target: AppUpdateReceiver)
 }
 
 @Scope
