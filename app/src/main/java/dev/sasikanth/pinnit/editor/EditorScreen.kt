@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 import android.content.Context
 import android.os.Bundle
+import android.text.util.Linkify
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
@@ -23,6 +24,7 @@ import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.util.UUID
 import javax.inject.Inject
 
@@ -145,6 +147,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun configContentEditText() {
+    contentEditText.movementMethod = BetterLinkMovementMethod.getInstance()
     contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
   }
 
@@ -159,6 +162,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   private fun setContentText(content: String?) {
     contentEditText.setText(content)
+    Linkify.addLinks(contentEditText, Linkify.WEB_URLS)
   }
 
   private fun closeEditor() {
