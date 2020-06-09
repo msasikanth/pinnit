@@ -21,7 +21,7 @@ buildscript {
       arch                 : '2.1.0',
       mockito              : '2.2.0',
       assistedInject       : '0.5.2',
-      mobius               : '1.4.0',
+      mobius               : '1.5.0',
       circleImageView      : '3.1.0',
       preference           : '1.1.1',
       insetter             : '0.2.2',
