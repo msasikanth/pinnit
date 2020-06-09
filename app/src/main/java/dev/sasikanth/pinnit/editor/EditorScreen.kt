@@ -80,6 +80,16 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
+    configBottomBar()
+    configTitleEditText()
+    configContentEditText()
+
+    viewModelObservers()
+
+    editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
+  }
+
+  private fun viewModelObservers() {
     viewModel.models.observe(viewLifecycleOwner, Observer { model ->
       uiRender.render(model)
     })
@@ -107,7 +117,9 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         }
       }
     })
+  }
 
+  private fun configBottomBar() {
     requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
     requireActivity().bottomBar.setContentActionEnabled(false)
     requireActivity().bottomBar.setContentActionText(contentActionText = null)
@@ -119,18 +131,21 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().bottomBar.setContentActionOnClickListener {
       viewModel.dispatchEvent(SaveClicked)
     }
+    requireActivity().bottomBar.setActionOnClickListener {
+      viewModel.dispatchEvent(DeleteNotificationClicked)
+    }
+  }
 
-    editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
-
+  private fun configTitleEditText() {
     titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
     titleEditText.imeOptions = EditorInfo.IME_ACTION_NEXT
     titleEditText.inputType = EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES or EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE
     titleEditText.setHorizontallyScrolling(false)
     titleEditText.maxLines = 5
+  }
 
+  private fun configContentEditText() {
     contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
-
-    requireActivity().bottomBar.setActionOnClickListener { viewModel.dispatchEvent(DeleteNotificationClicked) }
   }
 
   private fun setTitleText(title: String?) {
