@@ -35,6 +35,12 @@
   <string name="questions_or_bugs">Questions or bug reports?</string>
   <string name="contact_support">Contact support</string>
   <string name="support_subject" translatable="false">Pinnit support : %1$s</string>
+  <string name="support_content" translatable="false">-- Device Information --\n
+    Manufacturer: %1$s\n
+    Model: %2$s\n
+    SDK: %3$s\n
+    \n
+  </string>
   <string name="send_email">Send email</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>

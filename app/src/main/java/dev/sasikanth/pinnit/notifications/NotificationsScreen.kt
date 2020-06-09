@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.notifications
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isGone
@@ -199,10 +200,12 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   private fun sendSupportEmail() {
     val emailAddresses = arrayOf(getString(R.string.dev_email_address))
     val emailSubject = getString(R.string.support_subject, BuildConfig.VERSION_NAME)
+    val deviceInfo = getString(R.string.support_content, Build.MANUFACTURER, Build.MODEL, Build.VERSION.SDK_INT.toString())
     val intent = Intent(Intent.ACTION_SENDTO).apply {
       data = Uri.parse("mailto:")
       putExtra(Intent.EXTRA_EMAIL, emailAddresses)
       putExtra(Intent.EXTRA_SUBJECT, emailSubject)
+      putExtra(Intent.EXTRA_TEXT, deviceInfo)
     }
 
     startActivity(
