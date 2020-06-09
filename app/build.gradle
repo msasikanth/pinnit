@@ -108,6 +108,8 @@ dependencies {
 
   implementation "dev.chrisbanes:insetter-ktx:$versions.insetter"
 
+  implementation "me.saket:better-link-movement-method:$versions.betterLinkMovement"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
