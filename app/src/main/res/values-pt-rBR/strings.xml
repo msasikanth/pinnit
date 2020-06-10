@@ -40,4 +40,5 @@
   <string name="confirm_delete_notification_desc">Essa ação não pode ser desfeita.</string>
   <string name="confirm_delete_notification_positive_action">Sim</string>
   <string name="confirm_delete_notification_negative_action">Não</string>
+  <string name="qs_popup_open_app">Abrir app</string>
 </resources>
