@@ -32,9 +32,7 @@
       android:theme="@style/Theme.Pinnit.Main"
       android:windowSoftInputMode="adjustResize" />
 
-    <activity
-      android:name=".ShortcutReceiverActivity"
-      android:taskAffinity="">
+    <activity android:name=".ShortcutReceiverActivity">
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
         <category android:name="android.intent.category.DEFAULT" />
