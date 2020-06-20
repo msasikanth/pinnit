@@ -16,9 +16,11 @@ import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import javax.inject.Inject
 
+@AppScope
 class NotificationUtil @Inject constructor(
   private val context: Application
 ) {
