@@ -23,7 +23,7 @@ buildscript {
       mobius               : '1.5.2',
       circleImageView      : '3.1.0',
       preference           : '1.1.1',
-      insetter             : '0.2.2',
+      insetter             : '0.3.0',
       coreLibraryDesugaring: '1.0.5',
       betterLinkMovement   : '2.2.0',
   ]
