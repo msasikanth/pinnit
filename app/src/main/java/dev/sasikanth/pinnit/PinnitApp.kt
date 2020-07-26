@@ -9,8 +9,6 @@ import javax.inject.Inject
 
 class PinnitApp : Application(), ComponentProvider {
 
-  // Injecting this to trigger the init
-  // function of PinnitPreferences to update theme
   @Inject
   lateinit var pinnitPreferences: PinnitPreferences
 
@@ -21,5 +19,6 @@ class PinnitApp : Application(), ComponentProvider {
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
+    pinnitPreferences.initTheme()
   }
 }

@@ -38,8 +38,11 @@ constructor(
     }
 
   init {
-    updateUsingThemePreference()
     sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+  }
+
+  fun initTheme() {
+    updateUsingThemePreference()
   }
 
   fun changeTheme(theme: Theme) {
