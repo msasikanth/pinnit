@@ -124,6 +124,7 @@
 
   <!-- Snackbar -->
   <style name="Widget.Pinnit.Snackbar.FullWidth" parent="Widget.MaterialComponents.Snackbar.FullWidth">
+    <item name="android:background">?attr/colorOnSurface</item>
     <item name="elevation">0dp</item>
   </style>
 
