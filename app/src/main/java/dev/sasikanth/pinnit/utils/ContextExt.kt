@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
+// Source: https://github.com/afollestad/material-dialogs/blob/66582d9993bcf55bfea873b4bf484a429ce3df36/core/src/main/java/com/afollestad/materialdialogs/utils/MDUtil.kt#L103
 @ColorInt
 fun Context.resolveColor(
   @ColorRes colorRes: Int? = null,
