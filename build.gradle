@@ -26,6 +26,7 @@ buildscript {
       insetter             : '0.3.0',
       coreLibraryDesugaring: '1.0.5',
       betterLinkMovement   : '2.2.0',
+      turbine              : '0.1.1'
   ]
   repositories {
     google()

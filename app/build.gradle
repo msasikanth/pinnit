@@ -57,6 +57,7 @@ android {
 
     // Enabling experimental coroutines APIs
     freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
   }
   androidExtensions {
     experimental = true
@@ -120,5 +121,6 @@ dependencies {
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
   androidTestImplementation "com.google.truth:truth:$versions.truth"
+  androidTestImplementation "app.cash.turbine:turbine:$versions.turbine"
   kaptAndroidTest "com.google.dagger:dagger-compiler:$versions.dagger"
 }
