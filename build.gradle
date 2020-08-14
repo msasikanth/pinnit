@@ -2,8 +2,8 @@
 
 buildscript {
   ext.versions = [
-      kotlin               : '1.3.72',
-      appCompat            : '1.1.0',
+      kotlin               : '1.4.0',
+      appCompat            : '1.2.0',
       coreKtx              : '1.3.1',
       constraintLayout     : '1.1.3',
       material             : '1.2.0',
@@ -23,8 +23,8 @@ buildscript {
       mobius               : '1.5.2',
       circleImageView      : '3.1.0',
       preference           : '1.1.1',
-      insetter             : '0.3.0',
-      coreLibraryDesugaring: '1.0.5',
+      insetter             : '0.3.1',
+      coreLibraryDesugaring: '1.0.10',
       betterLinkMovement   : '2.2.0',
       turbine              : '0.1.1'
   ]
