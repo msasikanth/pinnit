@@ -90,6 +90,8 @@ dependencies {
 
   implementation "androidx.preference:preference-ktx:$versions.preference"
 
+  implementation "androidx.work:work-runtime-ktx:$versions.workManager"
+
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
@@ -122,5 +124,6 @@ dependencies {
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
   androidTestImplementation "com.google.truth:truth:$versions.truth"
   androidTestImplementation "app.cash.turbine:turbine:$versions.turbine"
+  androidTestImplementation "androidx.work:work-testing:$versions.workManager"
   kaptAndroidTest "com.google.dagger:dagger-compiler:$versions.dagger"
 }
