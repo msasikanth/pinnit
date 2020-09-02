@@ -5,6 +5,7 @@
   android:id="@+id/editorRoot"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="?android:attr/colorBackground"
   tools:context=".editor.EditorScreen">
 
   <androidx.core.widget.NestedScrollView
@@ -15,128 +16,119 @@
     android:clipToPadding="false"
     android:paddingBottom="88dp">
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:clickable="false"
-      app:cardCornerRadius="0dp"
-      app:cardElevation="0dp">
+      android:layout_height="match_parent">
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+      <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="24dp" />
 
-        <androidx.constraintlayout.widget.Guideline
-          android:id="@+id/topGuideline"
-          android:layout_width="wrap_content"
+      <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+      <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+      <ImageView
+        android:id="@+id/appIcon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_pinnit_app_icon"
+        app:layout_constraintBottom_toBottomOf="@id/appName"
+        app:layout_constraintEnd_toStartOf="@id/appName"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/topGuideline"
+        app:tint="?attr/colorSecondary" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/appName"
+        style="@style/TextStyle.Pinnit.Overline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/app_name"
+        android:textColor="?attr/colorSecondary"
+        app:firstBaselineToTopHeight="16sp"
+        app:lastBaselineToBottomHeight="8sp"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toEndOf="@id/appIcon"
+        app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+
+      <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/infoBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="appIcon, appName" />
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleInputLayout"
+        style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:nextFocusDown="@id/contentInputLayout"
+        app:counterMaxLength="72"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/infoBarrier">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/titleEditText"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          app:layout_constraintGuide_begin="24dp" />
+          android:hint="@string/editor_title_hint"
+          android:inputType="textCapSentences|textMultiLine"
+          android:maxLength="72"
+          android:paddingStart="0dp"
+          android:paddingEnd="0dp"
+          android:textAppearance="@style/TextAppearance.Pinnit.Headline6"
+          tools:text="@tools:sample/lorem/random" />
 
-        <androidx.constraintlayout.widget.Guideline
-          android:id="@+id/startGuideline"
-          android:layout_width="wrap_content"
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contentInputLayout"
+        style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:counterMaxLength="400"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/titleInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/contentEditText"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_constraintGuide_begin="24dp" />
+          android:hint="@string/editor_content_hint"
+          android:inputType="textCapSentences|textMultiLine"
+          android:maxLength="400"
+          android:paddingStart="0dp"
+          android:paddingEnd="0dp"
+          android:textAppearance="@style/TextAppearance.Pinnit.Body1"
+          tools:text="@tools:sample/lorem/random" />
 
-        <androidx.constraintlayout.widget.Guideline
-          android:id="@+id/endGuideline"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_constraintGuide_end="24dp" />
+      </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-          android:id="@+id/appIcon"
-          android:layout_width="18dp"
-          android:layout_height="18dp"
-          android:contentDescription="@null"
-          android:src="@drawable/ic_pinnit_app_icon"
-          android:tint="?attr/colorSecondary"
-          app:layout_constraintBottom_toBottomOf="@id/appName"
-          app:layout_constraintEnd_toStartOf="@id/appName"
-          app:layout_constraintHorizontal_bias="0"
-          app:layout_constraintHorizontal_chainStyle="packed"
-          app:layout_constraintStart_toEndOf="@id/startGuideline"
-          app:layout_constraintTop_toBottomOf="@id/topGuideline" />
-
-        <com.google.android.material.textview.MaterialTextView
-          android:id="@+id/appName"
-          style="@style/TextStyle.Pinnit.Overline1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="8dp"
-          android:text="@string/app_name"
-          android:textColor="?attr/colorSecondary"
-          app:firstBaselineToTopHeight="16sp"
-          app:lastBaselineToBottomHeight="8sp"
-          app:layout_constraintEnd_toStartOf="@id/endGuideline"
-          app:layout_constraintStart_toEndOf="@id/appIcon"
-          app:layout_constraintTop_toBottomOf="@id/topGuideline" />
-
-        <androidx.constraintlayout.widget.Barrier
-          android:id="@+id/infoBarrier"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:barrierDirection="bottom"
-          app:constraint_referenced_ids="appIcon, appName" />
-
-        <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/titleInputLayout"
-          style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="12dp"
-          android:nextFocusDown="@id/contentInputLayout"
-          app:counterMaxLength="72"
-          app:layout_constraintEnd_toStartOf="@id/endGuideline"
-          app:layout_constraintStart_toEndOf="@id/startGuideline"
-          app:layout_constraintTop_toBottomOf="@id/infoBarrier">
-
-          <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/titleEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/editor_title_hint"
-            android:inputType="textCapSentences|textMultiLine"
-            android:maxLength="72"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            android:textAppearance="@style/TextAppearance.Pinnit.Headline6"
-            tools:text="@tools:sample/lorem/random" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/contentInputLayout"
-          style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="24dp"
-          app:counterMaxLength="400"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@id/endGuideline"
-          app:layout_constraintStart_toEndOf="@id/startGuideline"
-          app:layout_constraintTop_toBottomOf="@id/titleInputLayout">
-
-          <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/contentEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/editor_content_hint"
-            android:inputType="textCapSentences|textMultiLine"
-            android:maxLength="400"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            android:textAppearance="@style/TextAppearance.Pinnit.Body1"
-            tools:text="@tools:sample/lorem/random" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
   </androidx.core.widget.NestedScrollView>
 

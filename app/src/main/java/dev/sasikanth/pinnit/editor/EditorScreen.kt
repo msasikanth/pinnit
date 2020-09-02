@@ -9,7 +9,6 @@ import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,7 +17,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Function
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
@@ -47,7 +45,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
           null
         }
         return MobiusLoopViewModel.create<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect>(
-          Function { viewEffectConsumer ->
+          { viewEffectConsumer ->
             Mobius.loop(
               EditorScreenUpdate(),
               effectHandler.create(viewEffectConsumer)
@@ -92,11 +90,11 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun viewModelObservers() {
-    viewModel.models.observe(viewLifecycleOwner, Observer { model ->
+    viewModel.models.observe(viewLifecycleOwner, { model ->
       uiRender.render(model)
     })
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer { viewEffect ->
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
       when (viewEffect) {
         is SetTitle -> {
           setTitleText(viewEffect.title)

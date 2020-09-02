@@ -1,7 +1,6 @@
 package dev.sasikanth.pinnit.data
 
 import android.app.Application
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit

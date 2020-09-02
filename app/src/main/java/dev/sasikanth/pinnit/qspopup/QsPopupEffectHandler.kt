@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class QsPopupEffectHandler @AssistedInject constructor(
-  private val dispatcherProvider: DispatcherProvider,
+  dispatcherProvider: DispatcherProvider,
   private val notificationRepository: NotificationRepository,
   private val notificationUtil: NotificationUtil,
   @Assisted private val viewEffectConsumer: Consumer<QsPopupViewEffect>
