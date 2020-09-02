@@ -5,19 +5,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
@@ -77,24 +82,17 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     injector.inject(this)
   }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-    reenterTransition = backward
-
-    val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-    exitTransition = forward
-  }
-
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
+
+    postponeEnterTransition()
 
     adapter = NotificationsListAdapter(utcClock, ::onToggleNotificationPinClicked, ::onNotificationClicked)
     adapter.registerAdapterDataObserver(adapterDataObserver)
     notificationsRecyclerView.adapter = adapter
     notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
     notificationsRecyclerView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
+    notificationsRecyclerView.doOnPreDraw { startPostponedEnterTransition() }
 
     val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {
       viewModel.dispatchEvent(NotificationSwiped(it))
@@ -108,6 +106,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
         is OpenNotificationEditorViewEffect -> {
           openNotificationEditor(
             notification = viewEffect.notification,
+            navigatorExtras = null,
             editorTransition = SharedAxis
           )
         }
@@ -134,6 +133,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     requireActivity().bottomBar.setContentActionOnClickListener {
       openNotificationEditor(
         notification = null,
+        navigatorExtras = null,
         editorTransition = SharedAxis
       )
     }
@@ -173,12 +173,17 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.dispatchEvent(TogglePinStatusClicked(notification))
   }
 
-  private fun onNotificationClicked(notification: PinnitNotification) {
-    viewModel.dispatchEvent(NotificationClicked(notification))
+  private fun onNotificationClicked(view: View, notification: PinnitNotification) {
+    openNotificationEditor(
+      notification = notification,
+      navigatorExtras = FragmentNavigatorExtras(view to view.transitionName),
+      editorTransition = EditorTransition.ContainerTransform(view.transitionName)
+    )
   }
 
   private fun openNotificationEditor(
     notification: PinnitNotification?,
+    navigatorExtras: Navigator.Extras?,
     editorTransition: EditorTransition
   ) {
     val navDirections = NotificationsScreenDirections
@@ -187,7 +192,24 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
         editorTransition = editorTransition
       )
 
-    findNavController().navigate(navDirections)
+    if (navigatorExtras != null) {
+      // In order to display the content behind when the
+      // container transform is expanding
+      exitTransition = Hold()
+
+      findNavController().navigate(navDirections, navigatorExtras)
+    } else {
+      val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
+        duration = 300
+      }
+      reenterTransition = backward
+
+      val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
+        duration = 300
+      }
+      exitTransition = forward
+      findNavController().navigate(navDirections)
+    }
   }
 
   private fun showAbout() {

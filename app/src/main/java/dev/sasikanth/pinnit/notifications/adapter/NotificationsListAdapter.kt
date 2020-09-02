@@ -25,7 +25,7 @@ import kotlin.math.hypot
 class NotificationsListAdapter(
   utcClock: UtcClock,
   private val onToggleNotificationPinClicked: (PinnitNotification) -> Unit,
-  private val onNotificationClicked: (PinnitNotification) -> Unit
+  private val onNotificationClicked: (View, PinnitNotification) -> Unit
 ) : ListAdapter<PinnitNotification, RecyclerView.ViewHolder>(NotificationsDiffCallback) {
 
   private val now = Instant.now(utcClock)
@@ -39,7 +39,7 @@ class NotificationsListAdapter(
       }
 
       itemView.setOnClickListener {
-        onNotificationClicked(currentList[adapterPosition])
+        onNotificationClicked(it, currentList[adapterPosition])
       }
     }
   }
@@ -87,6 +87,8 @@ class NotificationsListAdapter(
         colorsForNotificationUnPinned()
       }
       divider.isSelected = notification.isPinned
+
+      itemView.transitionName = "notification_view_${notification.hashCode()}"
     }
 
     private fun getRevealCx(): Float {

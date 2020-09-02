@@ -38,5 +38,5 @@
   <color name="colorDivider">@color/color_on_background_15</color>
   <color name="colorOnBackgroundVariant">@color/color_on_background_70</color>
 
-
+  <color name="containerTransformScrim">#80000000</color>
 </resources>

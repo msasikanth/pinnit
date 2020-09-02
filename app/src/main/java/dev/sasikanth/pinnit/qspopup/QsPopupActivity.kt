@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.qspopup
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -137,7 +138,7 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
     viewModel.dispatchEvent(TogglePinStatusClicked(notification))
   }
 
-  private fun onNotificationClicked(notification: PinnitNotification) {
+  private fun onNotificationClicked(view: View, notification: PinnitNotification) {
     viewModel.dispatchEvent(NotificationClicked(notification))
   }
 }
