@@ -26,6 +26,8 @@ import dev.sasikanth.pinnit.BuildConfig
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.editor.EditorTransition
+import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
@@ -104,7 +106,10 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
       when (viewEffect) {
         is OpenNotificationEditorViewEffect -> {
-          openNotificationEditor(notification = viewEffect.notification)
+          openNotificationEditor(
+            notification = viewEffect.notification,
+            editorTransition = SharedAxis
+          )
         }
 
         is UndoNotificationDeleteViewEffect -> {
@@ -127,7 +132,10 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       OptionsBottomSheet.show(requireActivity().supportFragmentManager)
     }
     requireActivity().bottomBar.setContentActionOnClickListener {
-      openNotificationEditor()
+      openNotificationEditor(
+        notification = null,
+        editorTransition = SharedAxis
+      )
     }
     requireActivity().bottomBar.setActionOnClickListener {
       showAbout()
@@ -169,10 +177,14 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     viewModel.dispatchEvent(NotificationClicked(notification))
   }
 
-  private fun openNotificationEditor(notification: PinnitNotification? = null) {
+  private fun openNotificationEditor(
+    notification: PinnitNotification?,
+    editorTransition: EditorTransition
+  ) {
     val navDirections = NotificationsScreenDirections
       .actionNotificationsScreenToEditorScreen(
-        notificationUuid = notification?.uuid?.toString()
+        notificationUuid = notification?.uuid?.toString(),
+        editorTransition = editorTransition
       )
 
     findNavController().navigate(navDirections)

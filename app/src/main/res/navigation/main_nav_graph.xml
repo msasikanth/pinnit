@@ -25,8 +25,11 @@
       app:nullable="true" />
     <argument
       android:name="notificationContent"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null" />
+      app:nullable="true" />
+    <argument
+      android:name="editorTransition"
+      app:argType="dev.sasikanth.pinnit.editor.EditorTransition" />
   </fragment>
 </navigation>

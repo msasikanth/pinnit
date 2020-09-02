@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavDeepLinkBuilder
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
+import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 
 class ShortcutReceiverActivity : AppCompatActivity() {
 
@@ -13,13 +14,17 @@ class ShortcutReceiverActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
 
     val receivedText = intent.getStringExtra(EXTRA_TEXT)
+    val editorScreenArgs = EditorScreenArgs(
+      notificationContent = receivedText,
+      editorTransition = SharedAxis
+    ).toBundle()
 
     // Launch the deep link to editor page
     NavDeepLinkBuilder(this)
       .setComponentName(MainActivity::class.java)
       .setDestination(R.id.editorScreen)
       .setGraph(R.navigation.main_nav_graph)
-      .setArguments(EditorScreenArgs(notificationContent = receivedText).toBundle())
+      .setArguments(editorScreenArgs)
       .createTaskStackBuilder()
       .startActivities()
 
