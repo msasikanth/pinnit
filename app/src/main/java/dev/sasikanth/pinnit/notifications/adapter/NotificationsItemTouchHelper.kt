@@ -15,7 +15,7 @@ import dev.sasikanth.pinnit.utils.px
 import dev.sasikanth.pinnit.utils.resolveColor
 
 class NotificationsItemTouchHelper(
-  private val context: Context,
+  context: Context,
   private val adapter: NotificationsListAdapter,
   private val onItemSwiped: (notification: PinnitNotification) -> Unit
 ) : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {

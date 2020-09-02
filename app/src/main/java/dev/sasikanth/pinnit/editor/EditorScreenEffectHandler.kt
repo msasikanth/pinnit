@@ -10,7 +10,7 @@ import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 
 class EditorScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
-  private val dispatcherProvider: DispatcherProvider,
+  dispatcherProvider: DispatcherProvider,
   private val notificationUtil: NotificationUtil,
   @Assisted private val viewEffectConsumer: Consumer<EditorScreenViewEffect>
 ) : CoroutineConnectable<EditorScreenEffect, EditorScreenEvent>(dispatcherProvider.main) {

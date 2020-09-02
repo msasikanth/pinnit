@@ -6,13 +6,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDeepLinkBuilder
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Function
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.data.PinnitNotification
@@ -44,7 +42,7 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return MobiusLoopViewModel.create<QsPopupModel, QsPopupEvent, QsPopupEffect, QsPopupViewEffect>(
-          Function { viewEffectConsumer ->
+          { viewEffectConsumer ->
             loop(
               QsPopupUpdate(),
               effectHandler.create(viewEffectConsumer)
@@ -71,11 +69,11 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
     qsPopupNotificationsRecyclerView.adapter = adapter
     qsPopupNotificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
 
-    viewModel.models.observe(this, Observer { model ->
+    viewModel.models.observe(this, { model ->
       uiRender.render(model)
     })
 
-    viewModel.viewEffects.setObserver(this, Observer { viewEffect ->
+    viewModel.viewEffects.setObserver(this, { viewEffect ->
       when (viewEffect) {
         is OpenNotificationEditorViewEffect -> openNotificationEditorView(viewEffect.notification)
       }

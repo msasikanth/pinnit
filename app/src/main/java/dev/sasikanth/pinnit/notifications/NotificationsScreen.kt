@@ -10,7 +10,6 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Function
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.BuildConfig
 import dev.sasikanth.pinnit.R
@@ -54,7 +52,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return MobiusLoopViewModel.create<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect>(
-          Function { viewEffectConsumer ->
+          { viewEffectConsumer ->
             loop(
               NotificationsScreenUpdate(),
               effectHandler.create(viewEffectConsumer)
@@ -101,11 +99,9 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     }
     ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(notificationsRecyclerView)
 
-    viewModel.models.observe(viewLifecycleOwner, Observer { model ->
-      uiRender.render(model)
-    })
+    viewModel.models.observe(viewLifecycleOwner, uiRender::render)
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, Observer { viewEffect ->
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
       when (viewEffect) {
         is OpenNotificationEditorViewEffect -> {
           openNotificationEditor(notification = viewEffect.notification)
