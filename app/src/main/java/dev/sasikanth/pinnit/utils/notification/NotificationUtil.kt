@@ -18,6 +18,7 @@ import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
+import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import javax.inject.Inject
 
 @AppScope
@@ -76,12 +77,16 @@ class NotificationUtil @Inject constructor(
 
   private fun buildSystemNotification(notification: PinnitNotification): Notification {
     val content = notification.content.orEmpty()
+    val editorScreenArgs = EditorScreenArgs(
+      notificationUuid = notification.uuid.toString(),
+      editorTransition = SharedAxis
+    ).toBundle()
 
     val editorPendingIntent = NavDeepLinkBuilder(context)
       .setGraph(R.navigation.main_nav_graph)
       .setComponentName(MainActivity::class.java)
       .setDestination(R.id.editorScreen)
-      .setArguments(EditorScreenArgs(notification.uuid.toString()).toBundle())
+      .setArguments(editorScreenArgs)
       .createPendingIntent()
 
     val unpinIntent = Intent(context, UnpinNotificationReceiver::class.java).apply {

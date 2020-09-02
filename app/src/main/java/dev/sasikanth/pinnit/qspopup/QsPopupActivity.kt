@@ -16,6 +16,7 @@ import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
+import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.utils.UtcClock
@@ -75,7 +76,9 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
 
     viewModel.viewEffects.setObserver(this, { viewEffect ->
       when (viewEffect) {
-        is OpenNotificationEditorViewEffect -> openNotificationEditorView(viewEffect.notification)
+        is OpenNotificationEditorViewEffect -> openNotificationEditorView(
+          notification = viewEffect.notification
+        )
       }
     })
 
@@ -89,16 +92,23 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
     }
 
     createNotificationButton.setOnClickListener {
-      openNotificationEditorView()
+      openNotificationEditorView(notification = null)
     }
   }
 
-  private fun openNotificationEditorView(notification: PinnitNotification? = null) {
+  private fun openNotificationEditorView(
+    notification: PinnitNotification?
+  ) {
     NavDeepLinkBuilder(this)
       .setComponentName(MainActivity::class.java)
       .setGraph(R.navigation.main_nav_graph)
       .setDestination(R.id.editorScreen)
-      .setArguments(EditorScreenArgs(notificationUuid = notification?.uuid?.toString()).toBundle())
+      .setArguments(
+        EditorScreenArgs(
+          notificationUuid = notification?.uuid?.toString(),
+          editorTransition = SharedAxis
+        ).toBundle()
+      )
       .createTaskStackBuilder()
       .startActivities()
   }
