@@ -18,4 +18,6 @@
 
   <!-- Background underneath notifications -->
   <color name="colorRowBackground">@android:color/black</color>
+
+  <color name="containerTransformScrim">#CC000000</color>
 </resources>

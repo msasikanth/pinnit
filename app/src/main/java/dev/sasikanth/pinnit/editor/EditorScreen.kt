@@ -14,12 +14,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialContainerTransform.FADE_MODE_OUT
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.editor.EditorTransition.ContainerTransform
+import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
+import dev.sasikanth.pinnit.utils.resolveColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
@@ -32,6 +37,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   lateinit var effectHandler: EditorScreenEffectHandler.Factory
 
   private val args by navArgs<EditorScreenArgs>()
+  private val editorTransition by lazy { args.editorTransition }
 
   private val uiRender = EditorScreenUiRender(this)
 
@@ -66,15 +72,34 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-    enterTransition = forward
-
-    val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-    returnTransition = backward
+    when (editorTransition) {
+      is SharedAxis -> sharedAxisTransition()
+      is ContainerTransform -> containerTransformTransition()
+    }
 
     requireActivity().onBackPressedDispatcher.addCallback(this) {
       viewModel.dispatchEvent(BackClicked)
     }
+  }
+
+  private fun containerTransformTransition() {
+    sharedElementEnterTransition = MaterialContainerTransform().apply {
+      drawingViewId = R.id.nav_host_fragment_container
+      scrimColor = requireContext().resolveColor(colorRes = R.color.containerTransformScrim)
+      fadeMode = FADE_MODE_OUT
+    }
+  }
+
+  private fun sharedAxisTransition() {
+    val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
+      duration = 300
+    }
+    enterTransition = forward
+
+    val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
+      duration = 300
+    }
+    returnTransition = backward
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -86,6 +111,9 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     viewModelObservers()
 
+    if (editorTransition is ContainerTransform) {
+      editorRoot.transitionName = (editorTransition as ContainerTransform).transitionName
+    }
     editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
   }
 
@@ -154,8 +182,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     titleEditText.requestFocus()
     titleEditText.setSelection(title?.length ?: 0)
 
-    val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-    imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
+    titleEditText.postDelayed({
+      val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+      imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
+    }, 250)
   }
 
   private fun setContentText(content: String?) {
