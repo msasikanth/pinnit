@@ -103,14 +103,6 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
     viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
       when (viewEffect) {
-        is OpenNotificationEditorViewEffect -> {
-          openNotificationEditor(
-            notification = viewEffect.notification,
-            navigatorExtras = null,
-            editorTransition = SharedAxis
-          )
-        }
-
         is UndoNotificationDeleteViewEffect -> {
           Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
             .setAnchorView(requireActivity().bottomBar)

@@ -28,8 +28,6 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
 
       CheckNotificationsVisibility -> checkNotificationsVisibility()
 
-      is OpenNotificationEditor -> viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notification))
-
       is ToggleNotificationPinStatus -> toggleNotificationPinStatus(effect)
 
       is DeleteNotification -> deleteNotification(effect)
