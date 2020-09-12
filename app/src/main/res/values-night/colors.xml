@@ -16,8 +16,5 @@
   <!-- Color of our ToggleButtonGroup used for dark mode selections -->
   <color name="colorOutlinedButtonGroup">@color/maroon_150</color>
 
-  <!-- Background underneath notifications -->
-  <color name="colorRowBackground">@android:color/black</color>
-
   <color name="containerTransformScrim">#CC000000</color>
 </resources>
