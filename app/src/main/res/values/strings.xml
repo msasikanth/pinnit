@@ -58,4 +58,13 @@
 
   <!-- QS Popup -->
   <string name="qs_popup_open_app">Open App</string>
+
+  <!-- OEM Warning Dialog -->
+  <string name="oem_warning_title">Warning regarding your device’s manufacturer</string>
+  <string name="oem_warning_subtitle">
+    Some manufacturers are known for aggressively closing apps in the background. While Pinnit does not run in the background, if the app is forceably shut down, Pinnit notifications will be dismissed from your panel and will only return once the app is launched again.
+    \n
+    \nTo avoid this, visit the link below and follow the instructions.
+  </string>
+  <string name="oem_warning_show_instructions">show instructions</string>
 </resources>

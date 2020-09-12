@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="24dp">
+
+  <ImageView
+    android:id="@+id/warningImageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="@null"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/ic_pinnit_warning" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/warningTitleTextView"
+    style="@style/TextStyle.Pinnit.Headline6"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="@string/oem_warning_title"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/warningImageView" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/warningSubtitleTextView"
+    style="@style/TextStyle.Pinnit.Subtitle2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:text="@string/oem_warning_subtitle"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/warningTitleTextView" />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/showInstructionsButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:text="@string/oem_warning_show_instructions"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/warningSubtitleTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
