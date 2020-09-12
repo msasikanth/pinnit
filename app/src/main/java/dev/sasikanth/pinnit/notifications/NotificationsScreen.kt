@@ -1,12 +1,8 @@
 package dev.sasikanth.pinnit.notifications
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -19,16 +15,14 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius.loop
 import com.spotify.mobius.android.MobiusLoopViewModel
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
-import dev.sasikanth.pinnit.BuildConfig
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.about.AboutBottomSheet
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition
@@ -205,33 +199,6 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   }
 
   private fun showAbout() {
-    val dialog = MaterialAlertDialogBuilder(requireContext()).apply {
-      setView(R.layout.pinnit_about_dialog)
-    }.create()
-    val versionName = getString(R.string.app_version, BuildConfig.VERSION_NAME)
-
-    if (!dialog.isShowing) {
-      dialog.show()
-      dialog.findViewById<AppCompatTextView>(R.id.app_version)?.text = versionName
-      dialog.findViewById<MaterialButton>(R.id.contact_support)?.setOnClickListener {
-        sendSupportEmail()
-      }
-    }
-  }
-
-  private fun sendSupportEmail() {
-    val emailAddresses = arrayOf(getString(R.string.dev_email_address))
-    val emailSubject = getString(R.string.support_subject, BuildConfig.VERSION_NAME)
-    val deviceInfo = getString(R.string.support_content, Build.MANUFACTURER, Build.MODEL, Build.VERSION.SDK_INT.toString())
-    val intent = Intent(Intent.ACTION_SENDTO).apply {
-      data = Uri.parse("mailto:")
-      putExtra(Intent.EXTRA_EMAIL, emailAddresses)
-      putExtra(Intent.EXTRA_SUBJECT, emailSubject)
-      putExtra(Intent.EXTRA_TEXT, deviceInfo)
-    }
-
-    startActivity(
-      Intent.createChooser(intent, getString(R.string.send_email))
-    )
+    AboutBottomSheet.show(requireActivity().supportFragmentManager)
   }
 }
