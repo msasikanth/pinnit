@@ -32,11 +32,10 @@
     android:focusable="true"
     android:padding="8dp"
     app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
-    app:layout_constraintEnd_toStartOf="@id/contentActionButton"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/topGuideline"
-    tools:src="@drawable/ic_pinnit_dark_mode"
-    app:tint="?attr/colorOnSurface" />
+    app:tint="?attr/colorOnSurface"
+    tools:src="@drawable/ic_pinnit_dark_mode" />
 
   <com.google.android.material.button.MaterialButton
     android:id="@+id/contentActionButton"
@@ -64,10 +63,9 @@
     android:padding="8dp"
     app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/contentActionButton"
     app:layout_constraintTop_toBottomOf="@id/topGuideline"
-    tools:src="@drawable/ic_pinnit_about"
-    app:tint="?attr/colorOnSurface" />
+    app:tint="?attr/colorOnSurface"
+    tools:src="@drawable/ic_pinnit_about" />
 
   <View
     android:id="@+id/divider"
