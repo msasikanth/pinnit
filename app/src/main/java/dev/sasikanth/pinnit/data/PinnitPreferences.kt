@@ -14,7 +14,8 @@ constructor(
 ) {
 
   companion object {
-    const val KEY_THEME = "pref_theme"
+    private const val KEY_THEME = "pref_theme"
+    private const val KEY_OEM_WARNING_DIALOG = "pref_oem_warning_dialog"
   }
 
   private val defaultThemeValue = application.getString(R.string.pref_theme_auto)
@@ -33,6 +34,14 @@ constructor(
     set(value) {
       sharedPreferences.edit {
         putString(KEY_THEME, getStorageKeyForTheme(value))
+      }
+    }
+
+  var isOemWarningDialogShown: Boolean
+    get() = sharedPreferences.getBoolean(KEY_OEM_WARNING_DIALOG, false)
+    set(value) {
+      sharedPreferences.edit {
+        putBoolean(KEY_OEM_WARNING_DIALOG, value)
       }
     }
 

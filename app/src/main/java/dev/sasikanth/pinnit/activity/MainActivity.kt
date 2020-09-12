@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.activity
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -7,11 +8,19 @@ import androidx.navigation.findNavController
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.data.PinnitPreferences
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
+import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
+import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.Locale
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+  @Inject
+  lateinit var pinnitPreferences: PinnitPreferences
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
@@ -46,6 +55,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     navController = findNavController(R.id.nav_host_fragment_container)
     navController?.addOnDestinationChangedListener(onNavDestinationChangeListener)
+
+    showOemWarningDialog()
+  }
+
+  private fun showOemWarningDialog() {
+    val brandName = Build.BRAND.toLowerCase(Locale.getDefault())
+    if (pinnitPreferences.isOemWarningDialogShown.not() && shouldShowWarningForOEM(brandName)) {
+      pinnitPreferences.isOemWarningDialogShown = true
+      OemWarningDialog.show(supportFragmentManager)
+    }
   }
 
   override fun onDestroy() {
