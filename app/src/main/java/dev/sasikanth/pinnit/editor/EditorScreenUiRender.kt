@@ -3,15 +3,11 @@ package dev.sasikanth.pinnit.editor
 class EditorScreenUiRender(private val ui: EditorScreenUi) {
 
   fun render(model: EditorScreenModel) {
-    if (model.isNotificationPinned) {
-      ui.renderSaveActionButtonText()
-    } else {
-      ui.renderSaveAndPinActionButtonText()
-    }
-
     if (model.isNotificationLoaded) {
+      ui.renderSaveActionButtonText()
       ui.showDeleteButton()
     } else {
+      ui.renderSaveAndPinActionButtonText()
       ui.hideDeleteButton()
     }
 

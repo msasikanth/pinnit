@@ -61,14 +61,11 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
   private suspend fun updateNotificationAndCloseEditor(effect: UpdateNotificationAndCloseEditor) {
     val notification = notificationRepository.notification(effect.notificationUuid)
-    // Always set isPinned to true when updating the notification
     val updatedNotification = notification.copy(
       title = effect.title,
-      content = effect.content,
-      isPinned = true
+      content = effect.content
     )
-    val notificationUpdated = notificationRepository.updateNotification(updatedNotification)
-    notificationUtil.showNotification(notificationUpdated)
+    notificationRepository.updateNotification(updatedNotification)
     viewEffectConsumer.accept(CloseEditorView)
   }
 

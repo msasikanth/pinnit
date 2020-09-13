@@ -45,28 +45,6 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
-    verify(ui).renderSaveAndPinActionButtonText()
-    verify(ui).showDeleteButton()
-    verify(ui).enableSave()
-    verifyNoMoreInteractions(ui)
-  }
-
-  @Test
-  fun `when notification is present & pinned, then update ui`() {
-    // given
-    val notification = TestData.notification(
-      uuid = notificationUuid,
-      title = "Notification Title",
-      isPinned = true
-    )
-    val model = EditorScreenModel.default(notificationUuid, null)
-      .notificationLoaded(notification)
-      .titleChanged(notification.title)
-
-    // when
-    uiRender.render(model)
-
-    // then
     verify(ui).renderSaveActionButtonText()
     verify(ui).showDeleteButton()
     verify(ui).enableSave()

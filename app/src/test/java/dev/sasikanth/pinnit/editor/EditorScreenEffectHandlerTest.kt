@@ -114,10 +114,7 @@ class EditorScreenEffectHandlerTest {
 
     val updatedTitle = "Updated Title"
     val updatedNotification = notification
-      .copy(
-        title = updatedTitle,
-        isPinned = true
-      )
+      .copy(title = updatedTitle)
 
     whenever(repository.notification(notificationUuid)) doReturn notification
     whenever(repository.updateNotification(updatedNotification)) doReturn updatedNotification
@@ -129,9 +126,6 @@ class EditorScreenEffectHandlerTest {
     verify(repository).notification(notificationUuid)
     verify(repository).updateNotification(updatedNotification)
     verifyNoMoreInteractions(repository)
-
-    verify(notificationUtil).showNotification(updatedNotification)
-    verifyNoMoreInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)
