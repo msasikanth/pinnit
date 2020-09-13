@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item name="alertDialogBackgroundDimAmount" format="float" type="integer">0.64</item>
+  <item name="backgroundDimAmount" format="float" type="integer">0.8</item>
 </resources>

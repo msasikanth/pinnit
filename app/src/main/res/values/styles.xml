@@ -72,7 +72,7 @@
   <style name="Base.ThemeOverlay.Pinnit.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="android:backgroundDimEnabled">true</item>
-    <item name="android:backgroundDimAmount">0.5</item>
+    <item name="android:backgroundDimAmount">@integer/backgroundDimAmount</item>
     <item name="android:colorBackground">@android:color/transparent</item>
     <item name="android:windowIsFloating">false</item>
     <item name="android:navigationBarColor">@android:color/black</item>
@@ -95,7 +95,7 @@
     </item>
     <item name="buttonBarStyle">@style/MaterialAlertDialog.Pinnit.ButtonRow
     </item>
-    <item name="android:backgroundDimAmount">@integer/alertDialogBackgroundDimAmount</item>
+    <item name="android:backgroundDimAmount">@integer/backgroundDimAmount</item>
   </style>
 
   <style name="MaterialAlertDialog.Pinnit.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
