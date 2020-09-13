@@ -25,13 +25,16 @@ data class EditorScreenModel(
    * & [PinnitNotification] we can say content is not changed or else content is
    * changed. By default we set content to be changed.
    */
-  val isTitleAndContentChanged: Boolean
+  val hasTitleAndContentChanged: Boolean
     get() {
       return notification?.equalsTitleAndContent(title, content)?.not() ?: (!title.isNullOrBlank() || !content.isNullOrBlank())
     }
 
   val isNotificationLoaded: Boolean
     get() = notification != null
+
+  val hasNotificationTitle: Boolean
+    get() = title.isNullOrBlank().not()
 
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)

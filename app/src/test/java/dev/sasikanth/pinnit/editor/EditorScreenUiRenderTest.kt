@@ -47,15 +47,21 @@ class EditorScreenUiRenderTest {
     // then
     verify(ui).renderSaveActionButtonText()
     verify(ui).showDeleteButton()
-    verify(ui).enableSave()
+    verify(ui).disableSave()
     verifyNoMoreInteractions(ui)
   }
 
   @Test
-  fun `when title is not blank, then enable save`() {
+  fun `when notification is present and title is changed, then enable save`() {
     val notificationTitle = "Notification Title"
 
     val model = EditorScreenModel.default(notificationUuid, null)
+      .notificationLoaded(
+        TestData.notification(
+          uuid = notificationUuid,
+          title = "Original Notification Title"
+        )
+      )
       .titleChanged(notificationTitle)
 
     // then
@@ -63,8 +69,8 @@ class EditorScreenUiRenderTest {
 
     // then
     verify(ui).enableSave()
-    verify(ui).hideDeleteButton()
-    verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).showDeleteButton()
+    verify(ui).renderSaveActionButtonText()
     verifyNoMoreInteractions(ui)
   }
 

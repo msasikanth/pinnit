@@ -11,7 +11,7 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
       ui.hideDeleteButton()
     }
 
-    if (!model.title.isNullOrBlank()) {
+    if (model.hasNotificationTitle && model.hasTitleAndContentChanged) {
       ui.enableSave()
     } else {
       ui.disableSave()
