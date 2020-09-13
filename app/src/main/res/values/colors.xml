@@ -22,10 +22,10 @@
   <color name="colorSecondary">@color/maroon_700</color>
 
   <color name="colorSurface">@android:color/white</color>
-  <color name="colorOnSurface">@android:color/black</color>
+  <color name="colorOnSurface">@color/maroon_900</color>
 
   <color name="colorBackground">@android:color/white</color>
-  <color name="colorOnBackground">@android:color/black</color>
+  <color name="colorOnBackground">@color/maroon_900</color>
 
   <color name="statusBarColor">#B3FFFFFF</color>
 
