@@ -120,12 +120,20 @@ class EditorScreenEffectHandlerTest {
     whenever(repository.updateNotification(updatedNotification)) doReturn updatedNotification
 
     // when
-    connection.accept(UpdateNotificationAndCloseEditor(notificationUuid, updatedTitle, null))
+    connection.accept(UpdateNotificationAndCloseEditor(
+      notificationUuid = notificationUuid,
+      title = updatedTitle,
+      content = null,
+      showAndroidNotification = true
+    ))
 
     // then
     verify(repository).notification(notificationUuid)
     verify(repository).updateNotification(updatedNotification)
     verifyNoMoreInteractions(repository)
+
+    verify(notificationUtil).showNotification(updatedNotification)
+    verifyNoMoreInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)

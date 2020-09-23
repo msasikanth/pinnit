@@ -11,7 +11,12 @@ data class SetTitleAndContent(val title: String?, val content: String?) : Editor
 
 data class SaveNotificationAndCloseEditor(val title: String, val content: String?) : EditorScreenEffect()
 
-data class UpdateNotificationAndCloseEditor(val notificationUuid: UUID, val title: String, val content: String?) : EditorScreenEffect()
+data class UpdateNotificationAndCloseEditor(
+  val notificationUuid: UUID,
+  val title: String,
+  val content: String?,
+  val showAndroidNotification: Boolean
+) : EditorScreenEffect()
 
 object CloseEditor : EditorScreenEffect()
 
