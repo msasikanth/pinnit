@@ -38,7 +38,12 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
     val effect = if (model.notification == null) {
       SaveNotificationAndCloseEditor(model.title!!, model.content)
     } else {
-      UpdateNotificationAndCloseEditor(model.notification.uuid, model.title!!, model.content)
+      UpdateNotificationAndCloseEditor(
+        notificationUuid = model.notification.uuid,
+        title = model.title!!,
+        content = model.content,
+        showAndroidNotification = model.notification.isPinned
+      )
     }
 
     return dispatch(setOf(effect))

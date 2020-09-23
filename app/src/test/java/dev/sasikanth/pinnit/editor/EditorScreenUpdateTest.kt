@@ -87,8 +87,13 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when save is clicked and notification is present, then update the notification`() {
-    val model = defaultModel
-      .notificationLoaded(notification)
+    val pinnedNotificationUuid = UUID.fromString("ad9ca7be-55a6-492c-bd5a-4e6d5860e973")
+    val pinnedNotification = TestData.notification(
+      uuid = pinnedNotificationUuid,
+      isPinned = true
+    )
+    val model = EditorScreenModel.default(pinnedNotificationUuid, null)
+      .notificationLoaded(pinnedNotification)
       .titleChanged("Title")
       .contentChanged("Content")
 
@@ -98,7 +103,14 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(UpdateNotificationAndCloseEditor(notificationUuid, model.title!!, model.content) as EditorScreenEffect)
+          hasEffects(
+            UpdateNotificationAndCloseEditor(
+              notificationUuid = pinnedNotificationUuid,
+              title = model.title!!,
+              content = model.content,
+              showAndroidNotification = true
+            ) as EditorScreenEffect
+          )
         )
       )
   }

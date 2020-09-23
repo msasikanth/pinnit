@@ -61,11 +61,16 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
   private suspend fun updateNotificationAndCloseEditor(effect: UpdateNotificationAndCloseEditor) {
     val notification = notificationRepository.notification(effect.notificationUuid)
-    val updatedNotification = notification.copy(
-      title = effect.title,
-      content = effect.content
+    val updatedNotification = notificationRepository.updateNotification(
+      notification.copy(
+        title = effect.title,
+        content = effect.content
+      )
     )
-    notificationRepository.updateNotification(updatedNotification)
+
+    if (effect.showAndroidNotification) {
+      notificationUtil.showNotification(updatedNotification)
+    }
     viewEffectConsumer.accept(CloseEditorView)
   }
 
