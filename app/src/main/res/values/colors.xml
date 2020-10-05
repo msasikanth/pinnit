@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="maroon_1000">#14000E</color>
-  <color name="maroon_900">#240018</color>
-  <color name="maroon_800">#3D0029</color>
+  <color name="maroon_900">#1F0014</color>
+  <color name="maroon_800">#380025</color>
   <color name="maroon_700">#4D0033</color>
   <color name="maroon_600">#660044</color>
   <color name="maroon_500">#852163</color>

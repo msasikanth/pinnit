@@ -5,10 +5,10 @@
 
   <color name="colorSecondary">@color/maroon_200</color>
 
-  <color name="colorSurface">@color/maroon_900</color>
+  <color name="colorSurface">@color/maroon_800</color>
   <color name="colorOnSurface">@android:color/white</color>
 
-  <color name="colorBackground">@color/maroon_1000</color>
+  <color name="colorBackground">@color/maroon_900</color>
   <color name="colorOnBackground">@android:color/white</color>
 
   <color name="statusBarColor">#6614000E</color>
