@@ -8,7 +8,10 @@ import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.notifications.NotificationModule
 import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
 import dev.sasikanth.pinnit.utils.DispatcherProvider
+import dev.sasikanth.pinnit.utils.RealUserClock
+import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import java.time.ZoneId
 
 @Module(
   includes = [
@@ -32,5 +35,13 @@ object AppModule {
 
   @AppScope
   @Provides
+  fun providesUserClock(userTimeZone: ZoneId): UserClock = RealUserClock(userTimeZone)
+
+  @AppScope
+  @Provides
   fun providesDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
+
+  @AppScope
+  @Provides
+  fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
 }
