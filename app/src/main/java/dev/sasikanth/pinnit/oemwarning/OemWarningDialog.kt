@@ -14,12 +14,13 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.sasikanth.pinnit.R
 import kotlinx.android.synthetic.main.pinnit_oem_warning_dialog.*
+import java.util.Locale
 
 class OemWarningDialog : DialogFragment() {
 
   companion object {
     private const val TAG = "OEM_WARNING_DIALOG"
-    private val DONT_KILL_MY_APP_LINK = "https://dontkillmyapp.com/${Build.BRAND}"
+    private val DONT_KILL_MY_APP_LINK = "https://dontkillmyapp.com/${Build.BRAND.toLowerCase(Locale.US)}"
 
     fun show(fragmentManager: FragmentManager) {
       OemWarningDialog()
