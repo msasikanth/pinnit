@@ -17,7 +17,7 @@ class EditorScreenUiRenderTest {
   @Test
   fun `when no notification is present, then update ui`() {
     // given
-    val model = EditorScreenModel.default(null, null)
+    val model = EditorScreenModel.default(null, null, null)
       .titleChanged(null)
 
     // when
@@ -36,7 +36,7 @@ class EditorScreenUiRenderTest {
     val notification = TestData.notification(
       uuid = notificationUuid
     )
-    val model = EditorScreenModel.default(notificationUuid, null)
+    val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(notification)
       .titleChanged(notification.title)
       .contentChanged(notification.content)
@@ -55,7 +55,7 @@ class EditorScreenUiRenderTest {
   fun `when notification is present and title is changed, then enable save`() {
     val notificationTitle = "Notification Title"
 
-    val model = EditorScreenModel.default(notificationUuid, null)
+    val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(
         TestData.notification(
           uuid = notificationUuid,
@@ -78,7 +78,7 @@ class EditorScreenUiRenderTest {
   fun `when title is blank, then disable save`() {
     val title = ""
 
-    val model = EditorScreenModel.default(notificationUuid, null)
+    val model = EditorScreenModel.default(notificationUuid, null, null)
       .titleChanged(title)
 
     // then

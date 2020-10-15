@@ -11,10 +11,10 @@ data class EditorScreenModel(
 ) {
 
   companion object {
-    fun default(notificationUuid: UUID?, content: String?) = EditorScreenModel(
+    fun default(notificationUuid: UUID?, title: String?, content: String?) = EditorScreenModel(
       notificationUuid = notificationUuid,
       notification = null,
-      title = null,
+      title = title,
       content = content
     )
   }
