@@ -17,7 +17,7 @@ class EditorScreenUpdateTest {
   private val notification = TestData.notification(
     uuid = notificationUuid
   )
-  private val defaultModel = EditorScreenModel.default(notificationUuid, null)
+  private val defaultModel = EditorScreenModel.default(notificationUuid, null, null)
 
   @Test
   fun `when notification is loaded, then update the ui`() {
@@ -70,7 +70,7 @@ class EditorScreenUpdateTest {
   @Test
   fun `when save is clicked and notification uuid is not present, then save the notification`() {
     val model = EditorScreenModel
-      .default(null, null)
+      .default(null, null, null)
       .titleChanged("Title")
       .contentChanged("Content")
 
@@ -92,7 +92,7 @@ class EditorScreenUpdateTest {
       uuid = pinnedNotificationUuid,
       isPinned = true
     )
-    val model = EditorScreenModel.default(pinnedNotificationUuid, null)
+    val model = EditorScreenModel.default(pinnedNotificationUuid, null, null)
       .notificationLoaded(pinnedNotification)
       .titleChanged("Title")
       .contentChanged("Content")
@@ -124,7 +124,7 @@ class EditorScreenUpdateTest {
       title = notificationTitle,
       content = notificationContent
     )
-    val model = EditorScreenModel.default(notificationUuid, null)
+    val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(notification)
       .titleChanged(notificationTitle)
       .contentChanged(notificationContent)

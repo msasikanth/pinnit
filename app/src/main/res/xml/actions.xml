@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<actions>
+
+  <action intentName="custom.actions.intent.PIN_MESSAGE"
+    queryPatterns="@array/PinnitQueries">
+    <parameter name="text" type="https://schema.org/Text" />
+
+    <fulfillment urlTemplate="app://pinnit.app/{?message}">
+      <parameter-mapping intentParameter="text" urlParameter="message" />
+    </fulfillment>
+
+  </action>
+</actions>

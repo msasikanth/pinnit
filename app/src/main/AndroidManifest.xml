@@ -45,6 +45,17 @@
       android:taskAffinity=""
       android:theme="@style/Theme.Pinnit.QsPopup" />
 
+    <activity android:name=".AppActionsReceiverActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+
+        <data android:host="pinnit.app"
+          android:path="/"
+          android:scheme="app"/>
+      </intent-filter>
+    </activity>
+
     <service
       android:name=".background.services.NotificationsListener"
       android:exported="false"
@@ -84,6 +95,10 @@
         <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
       </intent-filter>
     </receiver>
+
+    <meta-data
+      android:name="com.google.android.actions"
+      android:resource="@xml/actions" />
 
   </application>
 
