@@ -39,6 +39,9 @@ data class EditorScreenModel(
   val hasNotificationTitle: Boolean
     get() = title.isNullOrBlank().not()
 
+  val hasSchedule: Boolean
+    get() = schedule != null
+
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
   }
@@ -49,5 +52,9 @@ data class EditorScreenModel(
 
   fun notificationLoaded(notification: PinnitNotification): EditorScreenModel {
     return copy(notification = notification)
+  }
+
+  fun scheduleLoaded(schedule: Schedule): EditorScreenModel {
+    return copy(schedule = schedule)
   }
 }

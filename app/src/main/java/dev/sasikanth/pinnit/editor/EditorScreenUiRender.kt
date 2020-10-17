@@ -16,5 +16,19 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
     } else {
       ui.disableSave()
     }
+
+    renderScheduleView(model)
+  }
+
+  private fun renderScheduleView(model: EditorScreenModel) {
+    if (model.hasSchedule) {
+      val schedule = model.schedule!!
+
+      ui.showScheduleView(
+        scheduleDate = schedule.scheduleDate,
+        scheduleTime = schedule.scheduleTime,
+        scheduleType = schedule.scheduleType
+      )
+    }
   }
 }

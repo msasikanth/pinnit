@@ -4,7 +4,10 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.data.ScheduleType
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 class EditorScreenUiRenderTest {
@@ -88,6 +91,36 @@ class EditorScreenUiRenderTest {
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when schedule is present, then show schedule view`() {
+    // given
+    val scheduleDate = LocalDate.parse("2020-01-01")
+    val scheduleTime = LocalTime.parse("09:00:00")
+    val scheduleType = ScheduleType.Daily
+    val schedule = TestData.schedule(
+      scheduleDate = scheduleDate,
+      scheduleTime = scheduleTime,
+      scheduleType = scheduleType
+    )
+
+    val model = EditorScreenModel.default(notificationUuid, null, null)
+      .scheduleLoaded(schedule)
+
+    // when
+    uiRender.render(model)
+
+    // then
+    verify(ui).disableSave()
+    verify(ui).hideDeleteButton()
+    verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).showScheduleView(
+      scheduleDate = scheduleDate,
+      scheduleTime = scheduleTime,
+      scheduleType = scheduleType
+    )
     verifyNoMoreInteractions(ui)
   }
 }

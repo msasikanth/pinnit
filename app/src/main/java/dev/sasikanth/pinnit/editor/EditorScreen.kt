@@ -21,6 +21,7 @@ import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition.ContainerTransform
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
@@ -28,6 +29,8 @@ import dev.sasikanth.pinnit.utils.resolveColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 import javax.inject.Inject
 
@@ -224,6 +227,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   override fun hideDeleteButton() {
     requireActivity().bottomBar.setActionIcon(null)
+  }
+
+  override fun showScheduleView(scheduleDate: LocalDate, scheduleTime: LocalTime, scheduleType: ScheduleType?) {
+    // TODO: Show schedule view
   }
 
   private fun showConfirmExitDialog() {

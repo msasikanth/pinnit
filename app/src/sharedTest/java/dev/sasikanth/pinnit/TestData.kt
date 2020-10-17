@@ -20,7 +20,7 @@ object TestData {
     scheduleDate: LocalDate = LocalDate.now(),
     scheduleTime: LocalTime = LocalTime.now(),
     scheduleType: ScheduleType? = ScheduleType.Daily,
-    schedule: Schedule? = Schedule(
+    schedule: Schedule? = schedule(
       scheduleDate = scheduleDate,
       scheduleTime = scheduleTime,
       scheduleType = scheduleType
@@ -35,6 +35,18 @@ object TestData {
       updatedAt = updatedAt,
       deletedAt = deletedAt,
       schedule = schedule
+    )
+  }
+
+  fun schedule(
+    scheduleDate: LocalDate = LocalDate.now(),
+    scheduleTime: LocalTime = LocalTime.now(),
+    scheduleType: ScheduleType? = ScheduleType.Daily,
+  ): Schedule {
+    return Schedule(
+      scheduleDate = scheduleDate,
+      scheduleTime = scheduleTime,
+      scheduleType = scheduleType
     )
   }
 }
