@@ -31,6 +31,7 @@ class EditorScreenUpdateTest {
               .notificationLoaded(notification)
               .titleChanged(notification.title)
               .contentChanged(notification.content)
+              .scheduleLoaded(notification.schedule)
           ),
           hasEffects(SetTitleAndContent(notification.title, notification.content) as EditorScreenEffect)
         )

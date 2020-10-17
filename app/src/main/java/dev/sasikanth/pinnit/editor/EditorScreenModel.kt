@@ -54,7 +54,7 @@ data class EditorScreenModel(
     return copy(notification = notification)
   }
 
-  fun scheduleLoaded(schedule: Schedule): EditorScreenModel {
+  fun scheduleLoaded(schedule: Schedule?): EditorScreenModel {
     return copy(schedule = schedule)
   }
 }

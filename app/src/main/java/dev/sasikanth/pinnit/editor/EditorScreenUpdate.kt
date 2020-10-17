@@ -31,6 +31,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       .notificationLoaded(event.notification)
       .titleChanged(event.notification.title)
       .contentChanged(event.notification.content)
+      .scheduleLoaded(event.notification.schedule)
+
     return next(updatedModel, setOf(SetTitleAndContent(event.notification.title, event.notification.content)))
   }
 
