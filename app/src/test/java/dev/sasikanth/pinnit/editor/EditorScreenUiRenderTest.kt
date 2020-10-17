@@ -30,6 +30,7 @@ class EditorScreenUiRenderTest {
     verify(ui).renderSaveAndPinActionButtonText()
     verify(ui).hideDeleteButton()
     verify(ui).disableSave()
+    verify(ui).hideScheduleView()
     verifyNoMoreInteractions(ui)
   }
 
@@ -51,6 +52,7 @@ class EditorScreenUiRenderTest {
     verify(ui).renderSaveActionButtonText()
     verify(ui).showDeleteButton()
     verify(ui).disableSave()
+    verify(ui).hideScheduleView()
     verifyNoMoreInteractions(ui)
   }
 
@@ -74,6 +76,7 @@ class EditorScreenUiRenderTest {
     verify(ui).enableSave()
     verify(ui).showDeleteButton()
     verify(ui).renderSaveActionButtonText()
+    verify(ui).hideScheduleView()
     verifyNoMoreInteractions(ui)
   }
 
@@ -91,6 +94,7 @@ class EditorScreenUiRenderTest {
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).hideScheduleView()
     verifyNoMoreInteractions(ui)
   }
 
@@ -121,6 +125,22 @@ class EditorScreenUiRenderTest {
       scheduleTime = scheduleTime,
       scheduleType = scheduleType
     )
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when schedule is not present, then hide schedule view`() {
+    // given
+    val model = EditorScreenModel.default(notificationUuid, null, null)
+
+    // when
+    uiRender.render(model)
+
+    // then
+    verify(ui).disableSave()
+    verify(ui).hideDeleteButton()
+    verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).hideScheduleView()
     verifyNoMoreInteractions(ui)
   }
 }

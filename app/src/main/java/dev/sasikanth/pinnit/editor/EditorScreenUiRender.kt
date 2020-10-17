@@ -29,6 +29,8 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
         scheduleTime = schedule.scheduleTime,
         scheduleType = schedule.scheduleType
       )
+    } else {
+      ui.hideScheduleView()
     }
   }
 }

@@ -12,4 +12,5 @@ interface EditorScreenUi {
   fun showDeleteButton()
   fun hideDeleteButton()
   fun showScheduleView(scheduleDate: LocalDate, scheduleTime: LocalTime, scheduleType: ScheduleType?)
+  fun hideScheduleView()
 }

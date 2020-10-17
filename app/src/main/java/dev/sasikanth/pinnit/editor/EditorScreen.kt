@@ -233,6 +233,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     // TODO: Show schedule view
   }
 
+  override fun hideScheduleView() {
+    // TODO: Hide schedule view
+  }
+
   private fun showConfirmExitDialog() {
     MaterialAlertDialogBuilder(requireContext())
       .setTitle(getString(R.string.confirm_editor_exit_title))
