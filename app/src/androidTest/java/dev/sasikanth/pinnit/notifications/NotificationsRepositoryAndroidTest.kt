@@ -66,6 +66,7 @@ class NotificationsRepositoryAndroidTest {
       title = expectedNotification.title,
       content = expectedNotification.content,
       isPinned = expectedNotification.isPinned,
+      schedule = expectedNotification.schedule,
       uuid = expectedNotification.uuid
     )
 
@@ -90,6 +91,7 @@ class NotificationsRepositoryAndroidTest {
       title = notification.title,
       content = notification.content,
       isPinned = notification.isPinned,
+      schedule = notification.schedule,
       uuid = notification.uuid
     )
     notificationRepository.toggleNotificationPinStatus(notification)

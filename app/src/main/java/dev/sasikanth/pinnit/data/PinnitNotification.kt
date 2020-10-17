@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.data
 import android.os.Parcelable
 import androidx.annotation.Keep
 import androidx.room.Dao
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -23,7 +24,9 @@ data class PinnitNotification(
   val isPinned: Boolean = true,
   val createdAt: Instant,
   val updatedAt: Instant,
-  val deletedAt: Instant? = null
+  val deletedAt: Instant? = null,
+  @Embedded
+  val schedule: Schedule? = null
 ) : Parcelable {
 
   fun equalsTitleAndContent(title: String?, content: String?) =

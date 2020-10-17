@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.notifications
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,7 @@ class NotificationRepository @Inject constructor(
     title: String,
     content: String? = null,
     isPinned: Boolean = true,
+    schedule: Schedule? = null,
     uuid: UUID = UUID.randomUUID()
   ): PinnitNotification {
     val notification = PinnitNotification(
@@ -25,6 +27,7 @@ class NotificationRepository @Inject constructor(
       title = title,
       content = content,
       isPinned = isPinned,
+      schedule = schedule,
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock),
       deletedAt = null
