@@ -2,6 +2,8 @@ package dev.sasikanth.pinnit.di
 
 import android.app.Application
 import androidx.room.Room
+import androidx.work.Configuration
+import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dev.sasikanth.pinnit.data.AppDatabase
@@ -11,6 +13,7 @@ import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.RealUserClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import dev.sasikanth.pinnit.worker.PinnitWorkerFactory
 import java.time.ZoneId
 
 @Module(
@@ -44,4 +47,18 @@ object AppModule {
   @AppScope
   @Provides
   fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
+
+  @AppScope
+  @Provides
+  fun providesWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
+
+  @AppScope
+  @Provides
+  fun providesWorkManagerConfiguration(
+    pinnitWorkerFactory: PinnitWorkerFactory
+  ): Configuration {
+    return Configuration.Builder()
+      .setWorkerFactory(pinnitWorkerFactory)
+      .build()
+  }
 }
