@@ -1,13 +1,15 @@
 package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
 import java.util.UUID
 
 data class EditorScreenModel(
   val notificationUuid: UUID?,
   val notification: PinnitNotification?,
   val title: String?,
-  val content: String?
+  val content: String?,
+  val schedule: Schedule?
 ) {
 
   companion object {
@@ -15,7 +17,8 @@ data class EditorScreenModel(
       notificationUuid = notificationUuid,
       notification = null,
       title = title,
-      content = content
+      content = content,
+      schedule = null
     )
   }
 
