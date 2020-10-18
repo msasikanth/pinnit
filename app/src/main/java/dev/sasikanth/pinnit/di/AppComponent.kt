@@ -17,7 +17,7 @@ import dev.sasikanth.pinnit.worker.ScheduleWorker
 import javax.inject.Scope
 
 @AppScope
-@Component(modules = [AppModule::class])
+@Component(modules = [AppModule::class, DateTimeFormatterModule::class])
 interface AppComponent {
 
   @Component.Factory
