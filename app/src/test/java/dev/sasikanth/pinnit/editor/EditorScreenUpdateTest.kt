@@ -209,4 +209,19 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when add schedule button is clicked, then add schedule`() {
+    val schedule = TestData.schedule()
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(AddScheduleClicked(schedule))
+      .then(
+        assertThatNext(
+          hasModel(defaultModel.addSchedule(schedule)),
+          hasNoEffects()
+        )
+      )
+  }
 }

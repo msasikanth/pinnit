@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
 
 sealed class EditorScreenEvent
 
@@ -19,3 +20,5 @@ object ConfirmedExit : EditorScreenEvent()
 object DeleteNotificationClicked : EditorScreenEvent()
 
 object ConfirmDeleteNotification : EditorScreenEvent()
+
+data class AddScheduleClicked(val schedule: Schedule) : EditorScreenEvent()

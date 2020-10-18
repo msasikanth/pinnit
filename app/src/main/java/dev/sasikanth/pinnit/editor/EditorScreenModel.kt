@@ -57,4 +57,8 @@ data class EditorScreenModel(
   fun scheduleLoaded(schedule: Schedule?): EditorScreenModel {
     return copy(schedule = schedule)
   }
+
+  fun addSchedule(schedule: Schedule): EditorScreenModel {
+    return copy(schedule = schedule)
+  }
 }

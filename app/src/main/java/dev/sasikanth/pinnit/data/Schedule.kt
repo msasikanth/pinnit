@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.data
 
 import android.os.Parcelable
 import androidx.room.TypeConverter
+import dev.sasikanth.pinnit.utils.UserClock
 import kotlinx.android.parcel.Parcelize
 import java.time.LocalDate
 import java.time.LocalTime
@@ -11,7 +12,19 @@ data class Schedule(
   val scheduleDate: LocalDate?,
   val scheduleTime: LocalTime?,
   val scheduleType: ScheduleType?
-) : Parcelable
+) : Parcelable {
+
+  companion object {
+
+    fun default(userClock: UserClock): Schedule {
+      return Schedule(
+        scheduleDate = LocalDate.now(userClock),
+        scheduleTime = LocalTime.now(userClock),
+        scheduleType = ScheduleType.Daily
+      )
+    }
+  }
+}
 
 enum class ScheduleType {
   Daily, Weekly, Monthly
