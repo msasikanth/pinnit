@@ -25,6 +25,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       ConfirmDeleteNotification -> dispatch(setOf(DeleteNotification(model.notification!!)))
 
       is AddScheduleClicked -> addSchedule(event, model)
+
+      RemoveScheduleClicked -> next(model.removeSchedule())
     }
   }
 

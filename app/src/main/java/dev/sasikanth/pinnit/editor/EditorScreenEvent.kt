@@ -22,3 +22,5 @@ object DeleteNotificationClicked : EditorScreenEvent()
 object ConfirmDeleteNotification : EditorScreenEvent()
 
 data class AddScheduleClicked(val schedule: Schedule) : EditorScreenEvent()
+
+object RemoveScheduleClicked : EditorScreenEvent()

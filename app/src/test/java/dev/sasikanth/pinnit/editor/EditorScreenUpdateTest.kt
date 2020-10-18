@@ -224,4 +224,20 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when remove schedule button is clicked, then remove schedule`() {
+    val schedule = TestData.schedule()
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(RemoveScheduleClicked)
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.removeSchedule()),
+          hasNoEffects()
+        )
+      )
+  }
 }
