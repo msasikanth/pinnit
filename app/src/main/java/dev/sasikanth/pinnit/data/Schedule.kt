@@ -14,6 +14,10 @@ data class Schedule(
   val scheduleType: ScheduleType?
 ) : Parcelable {
 
+  fun removeScheduleRepeat(): Schedule {
+    return copy(scheduleType = null)
+  }
+
   companion object {
 
     fun default(userClock: UserClock): Schedule {

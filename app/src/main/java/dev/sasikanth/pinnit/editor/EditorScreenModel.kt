@@ -65,4 +65,8 @@ data class EditorScreenModel(
   fun removeSchedule(): EditorScreenModel {
     return copy(schedule = null)
   }
+
+  fun removeScheduleRepeat(): EditorScreenModel {
+    return copy(schedule = schedule?.removeScheduleRepeat())
+  }
 }

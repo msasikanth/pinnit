@@ -7,6 +7,7 @@ import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.data.ScheduleType
 import org.junit.Test
 import java.util.UUID
 
@@ -236,6 +237,22 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasModel(scheduleLoadedModel.removeSchedule()),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule repeat is unchecked, then remove the schedule repeat type`() {
+    val schedule = TestData.schedule(scheduleType = ScheduleType.Daily)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleRepeatUnchecked)
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.removeScheduleRepeat()),
           hasNoEffects()
         )
       )
