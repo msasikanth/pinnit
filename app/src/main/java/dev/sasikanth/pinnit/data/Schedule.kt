@@ -8,8 +8,8 @@ import java.time.LocalTime
 
 @Parcelize
 data class Schedule(
-  val scheduleDate: LocalDate,
-  val scheduleTime: LocalTime,
+  val scheduleDate: LocalDate?,
+  val scheduleTime: LocalTime?,
   val scheduleType: ScheduleType?
 ) : Parcelable
 

@@ -25,8 +25,8 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
       val schedule = model.schedule!!
 
       ui.showScheduleView(
-        scheduleDate = schedule.scheduleDate,
-        scheduleTime = schedule.scheduleTime,
+        scheduleDate = schedule.scheduleDate!!,
+        scheduleTime = schedule.scheduleTime!!,
         scheduleType = schedule.scheduleType
       )
     } else {
