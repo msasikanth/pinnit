@@ -29,6 +29,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       RemoveScheduleClicked -> next(model.removeSchedule())
 
       ScheduleRepeatUnchecked -> next(model.removeScheduleRepeat())
+
+      ScheduleRepeatChecked -> next(model.addScheduleRepeat())
     }
   }
 

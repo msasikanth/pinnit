@@ -18,6 +18,10 @@ data class Schedule(
     return copy(scheduleType = null)
   }
 
+  fun addScheduleRepeat(): Schedule? {
+    return copy(scheduleType = ScheduleType.Daily)
+  }
+
   companion object {
 
     fun default(userClock: UserClock): Schedule {

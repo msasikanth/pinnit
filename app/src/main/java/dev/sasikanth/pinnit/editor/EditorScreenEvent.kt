@@ -26,3 +26,5 @@ data class AddScheduleClicked(val schedule: Schedule) : EditorScreenEvent()
 object RemoveScheduleClicked : EditorScreenEvent()
 
 object ScheduleRepeatUnchecked : EditorScreenEvent()
+
+object ScheduleRepeatChecked : EditorScreenEvent()

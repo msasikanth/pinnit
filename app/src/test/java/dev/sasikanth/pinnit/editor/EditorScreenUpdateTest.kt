@@ -257,4 +257,20 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when schedule repeat is checked, then add the schedule repeat type`() {
+    val schedule = TestData.schedule(scheduleType = null)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleRepeatChecked)
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.addScheduleRepeat()),
+          hasNoEffects()
+        )
+      )
+  }
 }
