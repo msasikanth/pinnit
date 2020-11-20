@@ -28,6 +28,8 @@ android {
   }
 
   sourceSets {
+    androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+
     String sharedTestDir = 'src/sharedTest/java'
     test {
       java.srcDir sharedTestDir
@@ -120,6 +122,7 @@ dependencies {
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
   testImplementation "com.spotify.mobius:mobius-test:$versions.mobius"
 
+  androidTestImplementation "androidx.room:room-testing:$versions.room"
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
   androidTestImplementation "com.google.truth:truth:$versions.truth"
