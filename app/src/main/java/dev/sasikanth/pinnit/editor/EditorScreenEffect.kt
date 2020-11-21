@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 sealed class EditorScreenEffect
@@ -28,3 +29,5 @@ data class DeleteNotification(val notification: PinnitNotification) : EditorScre
 object ShowConfirmDelete : EditorScreenEffect()
 
 data class ShowDatePicker(val date: LocalDate) : EditorScreenEffect()
+
+data class ShowTimePicker(var time: LocalTime) : EditorScreenEffect()

@@ -16,6 +16,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialContainerTransform.FADE_MODE_OUT
 import com.google.android.material.transition.MaterialSharedAxis
@@ -163,6 +165,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         is ShowDatePickerDialog -> {
           showDatePickerDialog(viewEffect.date)
         }
+
+        is ShowTimePickerDialog -> {
+          showTimePickerDialog(viewEffect.time)
+        }
       }
     })
   }
@@ -297,5 +303,15 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       .build()
 
     datePicker.show(parentFragmentManager, "ScheduleDatePickerDialog")
+  }
+
+  private fun showTimePickerDialog(time: LocalTime) {
+    val timePicker = MaterialTimePicker.Builder()
+      .setTimeFormat(TimeFormat.CLOCK_12H)
+      .setHour(time.hour)
+      .setMinute(time.minute)
+      .build()
+
+    timePicker.show(parentFragmentManager, "ScheduleTimePickerDialog")
   }
 }

@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.editor
 
 import java.time.LocalDate
+import java.time.LocalTime
 
 sealed class EditorScreenViewEffect
 
@@ -15,3 +16,5 @@ object ShowConfirmExitEditorDialog : EditorScreenViewEffect()
 object ShowConfirmDeleteDialog : EditorScreenViewEffect()
 
 data class ShowDatePickerDialog(val date: LocalDate) : EditorScreenViewEffect()
+
+data class ShowTimePickerDialog(val time: LocalTime) : EditorScreenViewEffect()

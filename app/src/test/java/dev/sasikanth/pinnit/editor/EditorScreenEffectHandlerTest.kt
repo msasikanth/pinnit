@@ -20,6 +20,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 class EditorScreenEffectHandlerTest {
@@ -232,5 +233,21 @@ class EditorScreenEffectHandlerTest {
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowDatePickerDialog(date))
+  }
+
+  @Test
+  fun `when show time picker effect is received, then show time picker dialog`() {
+    // given
+    val time = LocalTime.parse("09:00:00")
+
+    // when
+    connection.accept(ShowTimePicker(time))
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(ShowTimePickerDialog(time))
   }
 }
