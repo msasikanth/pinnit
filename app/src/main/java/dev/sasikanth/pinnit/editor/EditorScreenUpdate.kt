@@ -39,6 +39,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       is ScheduleDateChanged -> next(model.scheduleDateChanged(event.date))
 
       is ScheduleTimeChanged -> next(model.scheduleTimeChanged(event.time))
+
+      is ScheduleTypeChanged -> next(model.scheduleTypeChanged(event.scheduleType))
     }
   }
 

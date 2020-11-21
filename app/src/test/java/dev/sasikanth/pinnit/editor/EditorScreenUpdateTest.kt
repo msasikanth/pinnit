@@ -343,4 +343,20 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when schedule type is changed, then update the model`() {
+    val schedule = TestData.schedule(scheduleType = ScheduleType.Daily)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleTypeChanged(ScheduleType.Monthly))
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.scheduleTypeChanged(ScheduleType.Monthly)),
+          hasNoEffects()
+        )
+      )
+  }
 }

@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
+import dev.sasikanth.pinnit.data.ScheduleType
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -82,5 +83,9 @@ data class EditorScreenModel(
 
   fun scheduleTimeChanged(updatedLocalTime: LocalTime?): EditorScreenModel {
     return copy(schedule = schedule?.scheduleTimeChanged(updatedLocalTime))
+  }
+
+  fun scheduleTypeChanged(scheduleType: ScheduleType): EditorScreenModel {
+    return copy(schedule = schedule?.scheduleTypeChanged(scheduleType))
   }
 }

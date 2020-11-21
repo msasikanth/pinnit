@@ -30,6 +30,10 @@ data class Schedule(
     return copy(scheduleTime = time)
   }
 
+  fun scheduleTypeChanged(scheduleType: ScheduleType): Schedule {
+    return copy(scheduleType = scheduleType)
+  }
+
   companion object {
 
     fun default(userClock: UserClock): Schedule {

@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
+import dev.sasikanth.pinnit.data.ScheduleType
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -38,3 +39,5 @@ object ScheduleTimeClicked : EditorScreenEvent()
 data class ScheduleDateChanged(val date: LocalDate) : EditorScreenEvent()
 
 data class ScheduleTimeChanged(val time: LocalTime) : EditorScreenEvent()
+
+data class ScheduleTypeChanged(val scheduleType: ScheduleType) : EditorScreenEvent()
