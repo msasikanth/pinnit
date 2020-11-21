@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialContainerTransform.FADE_MODE_OUT
@@ -25,6 +27,8 @@ import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition.ContainerTransform
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
+import dev.sasikanth.pinnit.utils.UserClock
+import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
@@ -38,6 +42,15 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   @Inject
   lateinit var effectHandler: EditorScreenEffectHandler.Factory
+
+  @Inject
+  lateinit var userClock: UserClock
+
+  @Inject
+  lateinit var utcClock: UtcClock
+
+  @Inject
+  lateinit var currentDateValidator: CurrentDateValidator
 
   private val args by navArgs<EditorScreenArgs>()
   private val editorTransition by lazy { args.editorTransition }
@@ -145,6 +158,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
         ShowConfirmDeleteDialog -> {
           showConfirmDeleteDialog()
+        }
+
+        is ShowDatePickerDialog -> {
+          showDatePickerDialog(viewEffect.date)
         }
       }
     })
@@ -260,5 +277,25 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         // NO-OP
       }
       .show()
+  }
+
+  private fun showDatePickerDialog(date: LocalDate) {
+    val currentDate = LocalDate.now(userClock)
+
+    val selectedDate = date.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
+    val startAt = currentDate.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
+
+    val calendarConstraints = CalendarConstraints.Builder()
+      .setStart(startAt)
+      .setOpenAt(selectedDate)
+      .setValidator(currentDateValidator)
+      .build()
+
+    val datePicker = MaterialDatePicker.Builder.datePicker()
+      .setSelection(selectedDate)
+      .setCalendarConstraints(calendarConstraints)
+      .build()
+
+    datePicker.show(parentFragmentManager, "ScheduleDatePickerDialog")
   }
 }

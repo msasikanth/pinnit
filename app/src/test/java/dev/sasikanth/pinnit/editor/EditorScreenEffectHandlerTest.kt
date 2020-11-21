@@ -19,6 +19,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 import java.util.UUID
 
 class EditorScreenEffectHandlerTest {
@@ -120,12 +121,14 @@ class EditorScreenEffectHandlerTest {
     whenever(repository.updateNotification(updatedNotification)) doReturn updatedNotification
 
     // when
-    connection.accept(UpdateNotificationAndCloseEditor(
-      notificationUuid = notificationUuid,
-      title = updatedTitle,
-      content = null,
-      showAndroidNotification = true
-    ))
+    connection.accept(
+      UpdateNotificationAndCloseEditor(
+        notificationUuid = notificationUuid,
+        title = updatedTitle,
+        content = null,
+        showAndroidNotification = true
+      )
+    )
 
     // then
     verify(repository).notification(notificationUuid)
@@ -213,5 +216,21 @@ class EditorScreenEffectHandlerTest {
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(SetTitle(null), SetContent(notificationContent))
+  }
+
+  @Test
+  fun `when show date picker effect is received, then show date picker dialog`() {
+    // given
+    val date = LocalDate.parse("2020-01-01")
+
+    // when
+    connection.accept(ShowDatePicker(date))
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(ShowDatePickerDialog(date))
   }
 }
