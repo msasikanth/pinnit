@@ -10,6 +10,7 @@ import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import org.junit.Test
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 class EditorScreenUpdateTest {
@@ -288,6 +289,23 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(ShowDatePicker(scheduleDate))
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule time is clicked, then show time picker`() {
+    val scheduleTime = LocalTime.parse("09:00:00")
+    val schedule = TestData.schedule(scheduleTime = scheduleTime)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleTimeClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowTimePicker(scheduleTime))
         )
       )
   }
