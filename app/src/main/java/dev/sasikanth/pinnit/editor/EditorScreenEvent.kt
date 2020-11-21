@@ -28,3 +28,5 @@ object RemoveScheduleClicked : EditorScreenEvent()
 object ScheduleRepeatUnchecked : EditorScreenEvent()
 
 object ScheduleRepeatChecked : EditorScreenEvent()
+
+object ScheduleDateClicked : EditorScreenEvent()

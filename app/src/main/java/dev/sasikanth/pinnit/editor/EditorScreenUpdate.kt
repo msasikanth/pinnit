@@ -31,6 +31,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       ScheduleRepeatUnchecked -> next(model.removeScheduleRepeat())
 
       ScheduleRepeatChecked -> next(model.addScheduleRepeat())
+
+      ScheduleDateClicked -> dispatch(setOf(ShowDatePicker(model.schedule!!.scheduleDate!!)))
     }
   }
 

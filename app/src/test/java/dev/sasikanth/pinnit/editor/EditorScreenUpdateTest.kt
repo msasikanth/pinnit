@@ -9,6 +9,7 @@ import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import org.junit.Test
+import java.time.LocalDate
 import java.util.UUID
 
 class EditorScreenUpdateTest {
@@ -270,6 +271,23 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasModel(scheduleLoadedModel.addScheduleRepeat()),
           hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule date is clicked, then show date picker`() {
+    val scheduleDate = LocalDate.parse("2020-01-01")
+    val schedule = TestData.schedule(scheduleDate = scheduleDate)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleDateClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowDatePicker(scheduleDate))
         )
       )
   }
