@@ -35,6 +35,7 @@ import dev.sasikanth.pinnit.utils.resolveColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -288,19 +289,26 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   private fun showDatePickerDialog(date: LocalDate) {
     val currentDate = LocalDate.now(userClock)
 
-    val selectedDate = date.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
+    val initialDate = date.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
     val startAt = currentDate.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
 
     val calendarConstraints = CalendarConstraints.Builder()
       .setStart(startAt)
-      .setOpenAt(selectedDate)
+      .setOpenAt(initialDate)
       .setValidator(currentDateValidator)
       .build()
 
     val datePicker = MaterialDatePicker.Builder.datePicker()
-      .setSelection(selectedDate)
+      .setSelection(initialDate)
       .setCalendarConstraints(calendarConstraints)
       .build()
+
+    datePicker.addOnPositiveButtonClickListener { selectedDate ->
+      val instant = Instant.ofEpochMilli(selectedDate)
+      val localDate = instant.atZone(userClock.zone).toLocalDate()
+
+      viewModel.dispatchEvent(ScheduleDateChanged(localDate))
+    }
 
     datePicker.show(parentFragmentManager, "ScheduleDatePickerDialog")
   }

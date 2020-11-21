@@ -35,6 +35,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       ScheduleDateClicked -> dispatch(setOf(ShowDatePicker(model.schedule!!.scheduleDate!!)))
 
       ScheduleTimeClicked -> dispatch(setOf(ShowTimePicker(model.schedule!!.scheduleTime!!)))
+
+      is ScheduleDateChanged -> next(model.scheduleDateChanged(event.date))
     }
   }
 

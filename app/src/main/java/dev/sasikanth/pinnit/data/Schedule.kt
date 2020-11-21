@@ -18,8 +18,12 @@ data class Schedule(
     return copy(scheduleType = null)
   }
 
-  fun addScheduleRepeat(): Schedule? {
+  fun addScheduleRepeat(): Schedule {
     return copy(scheduleType = ScheduleType.Daily)
+  }
+
+  fun scheduleDateChanged(date: LocalDate): Schedule {
+    return copy(scheduleDate = date)
   }
 
   companion object {
