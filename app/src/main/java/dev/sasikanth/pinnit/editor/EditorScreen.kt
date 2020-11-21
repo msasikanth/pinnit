@@ -3,9 +3,12 @@ package dev.sasikanth.pinnit.editor
 import android.content.Context
 import android.os.Bundle
 import android.text.util.Linkify
+import android.view.View.NO_ID
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +16,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.vectordrawable.graphics.drawable.SeekableAnimatedVectorDrawable
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,19 +29,27 @@ import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.di.DateTimeFormat
+import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleDateFormat
+import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleTimeFormat
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition.ContainerTransform
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
+import dev.sasikanth.pinnit.utils.reverse
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
+import kotlinx.android.synthetic.main.view_schedule.*
+import kotlinx.android.synthetic.main.view_schedule.view.*
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 import javax.inject.Inject
 
@@ -54,6 +66,14 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
   @Inject
   lateinit var currentDateValidator: CurrentDateValidator
+
+  @Inject
+  @DateTimeFormat(ScheduleDateFormat)
+  lateinit var scheduleDateFormatter: DateTimeFormatter
+
+  @Inject
+  @DateTimeFormat(ScheduleTimeFormat)
+  lateinit var scheduleTimeFormatter: DateTimeFormatter
 
   private val args by navArgs<EditorScreenArgs>()
   private val editorTransition by lazy { args.editorTransition }
@@ -81,6 +101,22 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         ) as T
       }
     }
+  }
+
+  private val scheduleTypeToButtonId = mapOf(
+    ScheduleType.Daily to R.id.repeatDailyButton,
+    ScheduleType.Weekly to R.id.repeatWeeklyButton,
+    ScheduleType.Monthly to R.id.repeatMonthlyButton
+  )
+
+  private val buttonIdToScheduleType = mapOf(
+    R.id.repeatDailyButton to ScheduleType.Daily,
+    R.id.repeatWeeklyButton to ScheduleType.Weekly,
+    R.id.repeatMonthlyButton to ScheduleType.Monthly
+  )
+
+  private val seekableAvd by lazy {
+    SeekableAnimatedVectorDrawable.create(requireContext(), R.drawable.avd_add_to_delete)!!
   }
 
   override fun onAttach(context: Context) {
@@ -134,6 +170,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       editorRoot.transitionName = (editorTransition as ContainerTransform).transitionName
     }
     editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
+
+    scheduleView.addRemoveScheduleButton.setImageDrawable(seekableAvd)
   }
 
   private fun viewModelObservers() {
@@ -254,11 +292,85 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   override fun showScheduleView(scheduleDate: LocalDate, scheduleTime: LocalTime, scheduleType: ScheduleType?) {
-    // TODO: Show schedule view
+    if (seekableAvd.isRunning.not()) {
+      // Go to the end state of the AVD, in this case we will be showing delete icon at end
+      seekableAvd.currentPlayTime = seekableAvd.totalDuration
+    }
+
+    scheduleView.addRemoveScheduleButton.setOnClickListener {
+      seekableAvd.reverse()
+      viewModel.dispatchEvent(RemoveScheduleClicked)
+    }
+
+    scheduleView.scheduleHeadingTextView.isGone = true
+    scheduleView.scheduleDateButton.isVisible = true
+    scheduleView.scheduleTimeButton.isVisible = true
+    scheduleView.repeatEveryCheckBox.isVisible = true
+
+    scheduleDateButton.text = scheduleDateFormatter.format(scheduleDate)
+    scheduleTimeButton.text = scheduleTimeFormatter.format(scheduleTime)
+
+    scheduleView.scheduleDateButton.setOnClickListener {
+      viewModel.dispatchEvent(ScheduleDateClicked)
+    }
+
+    scheduleView.scheduleTimeButton.setOnClickListener {
+      viewModel.dispatchEvent(ScheduleTimeClicked)
+    }
+
+    renderScheduleRepeat(scheduleType)
+  }
+
+  private fun renderScheduleRepeat(scheduleType: ScheduleType?) {
+    scheduleView.repeatEveryCheckBox.isChecked = scheduleType != null
+
+    scheduleView.repeatEveryButtonGroup.isVisible = true
+    scheduleView.repeatEveryButtonGroup.clearChecked()
+    // To avoid any un-necessary even triggers of schedule type change
+    // when schedule repeat is not set. so we are removing listeners on every model changes
+    // and resetting it if schedule type is available.
+    scheduleView.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
+
+    scheduleView.repeatDailyButton.isEnabled = scheduleType != null
+    scheduleView.repeatWeeklyButton.isEnabled = scheduleType != null
+    scheduleView.repeatMonthlyButton.isEnabled = scheduleType != null
+
+    scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener { _, isChecked ->
+      if (isChecked.not())
+        viewModel.dispatchEvent(ScheduleRepeatUnchecked)
+      else
+        viewModel.dispatchEvent(ScheduleRepeatChecked)
+    }
+
+    if (scheduleType != null) {
+      scheduleView.repeatEveryButtonGroup.check(scheduleTypeToButtonId.getValue(scheduleType))
+      scheduleView.repeatEveryButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+        if (checkedId != NO_ID && isChecked) {
+          viewModel.dispatchEvent(ScheduleTypeChanged(buttonIdToScheduleType.getValue(checkedId)))
+        }
+      }
+    }
   }
 
   override fun hideScheduleView() {
-    // TODO: Hide schedule view
+    scheduleView.addRemoveScheduleButton.setOnClickListener {
+      // Start animating the add icon to delete icon
+      seekableAvd.start()
+
+      val schedule = Schedule.default(userClock)
+      viewModel.dispatchEvent(AddScheduleClicked(schedule))
+    }
+
+    scheduleView.scheduleDateButton.isGone = true
+    scheduleView.scheduleTimeButton.isGone = true
+
+    scheduleView.repeatEveryCheckBox.isGone = true
+    scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener(null)
+
+    scheduleView.repeatEveryButtonGroup.isGone = true
+    scheduleView.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
+
+    scheduleView.scheduleHeadingTextView.isVisible = true
   }
 
   private fun showConfirmExitDialog() {

@@ -84,6 +84,11 @@
     <item name="lastBaselineToBottomHeight">8sp</item>
     <item name="android:includeFontPadding">false</item>
   </style>
+
+  <style name="TextStyle.Pinnit.Subtitle1.ScheduleHeading">
+    <item name="android:textColor">?attr/colorOnBackgroundVariant</item>
+  </style>
+
   <!-- Subtitle1 -->
 
   <!-- Subtitle2 -->

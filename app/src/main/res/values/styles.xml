@@ -41,10 +41,10 @@
     <item name="android:insetBottom">8dp</item>
     <item name="android:maxHeight">@dimen/button_height</item>
     <item name="android:minHeight">@dimen/button_height</item>
-    <item name="backgroundTint">@color/button_group_state</item>
+    <item name="backgroundTint">@color/button_group_background_state</item>
     <item name="android:textColor">@color/button_group_text_state</item>
     <item name="strokeWidth">2dp</item>
-    <item name="strokeColor">?attr/colorOutlinedButtonGroup</item>
+    <item name="strokeColor">@color/button_group_stroke_state</item>
     <item name="cornerRadius">@dimen/shape_theming_radius</item>
     <item name="elevation">0dp</item>
   </style>
@@ -61,6 +61,20 @@
     <item name="android:textColor">@color/maroon_200</item>
     <item name="rippleColor">@color/maroon_200</item>
     <item name="cornerRadius">@dimen/shape_theming_radius</item>
+  </style>
+
+  <style name="Widget.Pinnit.Button.TextButton.Schedule">
+    <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">0dp</item>
+    <item name="android:maxHeight">@dimen/button_height</item>
+    <item name="android:minHeight">@dimen/button_height</item>
+    <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
+    <item name="android:textColor">?attr/colorSecondary</item>
+    <item name="rippleColor">?attr/colorSecondaryRipple</item>
+    <item name="iconGravity">end</item>
+    <item name="iconTint">?attr/colorSecondary</item>
+    <item name="iconPadding">0dp</item>
+    <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
   </style>
 
   <!-- Bottom Sheet -->
