@@ -26,6 +26,10 @@ data class Schedule(
     return copy(scheduleDate = date)
   }
 
+  fun scheduleTimeChanged(time: LocalTime?): Schedule {
+    return copy(scheduleTime = time)
+  }
+
   companion object {
 
     fun default(userClock: UserClock): Schedule {

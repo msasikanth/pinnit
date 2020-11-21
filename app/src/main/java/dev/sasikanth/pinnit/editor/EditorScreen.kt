@@ -320,6 +320,12 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       .setMinute(time.minute)
       .build()
 
+    timePicker.addOnPositiveButtonClickListener {
+      val selectedTime = LocalTime.of(timePicker.hour, timePicker.minute)
+
+      viewModel.dispatchEvent(ScheduleTimeChanged(selectedTime))
+    }
+
     timePicker.show(parentFragmentManager, "ScheduleTimePickerDialog")
   }
 }
