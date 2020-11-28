@@ -124,6 +124,12 @@ class EditorScreenEffectHandlerTest {
     val updatedNotification = notification
       .copy(title = updatedTitle)
 
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00"),
+      scheduleType = ScheduleType.Daily
+    )
+
     whenever(repository.notification(notificationUuid)) doReturn notification
     whenever(repository.updateNotification(updatedNotification)) doReturn updatedNotification
 
@@ -133,6 +139,7 @@ class EditorScreenEffectHandlerTest {
         notificationUuid = notificationUuid,
         title = updatedTitle,
         content = null,
+        schedule = schedule,
         showAndroidNotification = true
       )
     )

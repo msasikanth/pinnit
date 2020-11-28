@@ -112,6 +112,7 @@ class EditorScreenUpdateTest {
               notificationUuid = pinnedNotificationUuid,
               title = model.title!!,
               content = model.content,
+              schedule = model.schedule,
               showAndroidNotification = true
             ) as EditorScreenEffect
           )

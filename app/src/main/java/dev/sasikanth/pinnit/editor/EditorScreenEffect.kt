@@ -22,6 +22,7 @@ data class UpdateNotificationAndCloseEditor(
   val notificationUuid: UUID,
   val title: String,
   val content: String?,
+  val schedule: Schedule?,
   val showAndroidNotification: Boolean
 ) : EditorScreenEffect()
 

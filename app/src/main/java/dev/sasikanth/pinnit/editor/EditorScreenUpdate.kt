@@ -66,6 +66,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
         notificationUuid = model.notification.uuid,
         title = model.title!!,
         content = model.content,
+        schedule = model.schedule,
         showAndroidNotification = model.notification.isPinned
       )
     }
