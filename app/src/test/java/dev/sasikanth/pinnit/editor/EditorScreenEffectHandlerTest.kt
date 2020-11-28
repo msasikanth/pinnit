@@ -11,6 +11,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
@@ -77,6 +78,11 @@ class EditorScreenEffectHandlerTest {
     val notificationUuid = UUID.fromString("9610e5b7-6894-4da9-965a-048abf568247")
     val title = "Notification Title"
     val content = "This is content"
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00"),
+      scheduleType = ScheduleType.Daily
+    )
 
     val notification = TestData.notification(
       uuid = notificationUuid,
@@ -87,7 +93,7 @@ class EditorScreenEffectHandlerTest {
     whenever(repository.save(eq(title), eq(content), eq(true), any())) doReturn notification
 
     // when
-    connection.accept(SaveNotificationAndCloseEditor(title, content))
+    connection.accept(SaveNotificationAndCloseEditor(title, content, schedule))
 
     // then
     verify(repository).save(

@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -11,7 +12,11 @@ data class LoadNotification(val uuid: UUID) : EditorScreenEffect()
 
 data class SetTitleAndContent(val title: String?, val content: String?) : EditorScreenEffect()
 
-data class SaveNotificationAndCloseEditor(val title: String, val content: String?) : EditorScreenEffect()
+data class SaveNotificationAndCloseEditor(
+  val title: String,
+  val content: String?,
+  val schedule: Schedule?
+) : EditorScreenEffect()
 
 data class UpdateNotificationAndCloseEditor(
   val notificationUuid: UUID,
