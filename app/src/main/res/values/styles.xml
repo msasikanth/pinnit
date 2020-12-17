@@ -150,4 +150,37 @@
     <item name="elevation">0dp</item>
   </style>
 
+  <!-- Calendar picker -->
+  <style name="ThemeOverlay.Pinnit.MaterialCalendar" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+    <item name="colorPrimary">?attr/colorSecondary</item>
+    <item name="colorOnPrimary">?attr/colorOnSecondary</item>
+
+    <item name="materialCalendarHeaderLayout">@style/Widget.Pinnit.MaterialCalendar.HeaderLayout</item>
+    <item name="materialCalendarHeaderTitle">@style/Widget.Pinnit.MaterialCalendar.HeaderTitle</item>
+    <item name="materialCalendarHeaderSelection">@style/Widget.Pinnit.MaterialCalendar.HeaderSelection</item>
+    <item name="materialCalendarHeaderToggleButton">@style/Widget.Pinnit.MaterialCalendar.HeaderToggleButton</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderLayout" parent="Widget.MaterialComponents.MaterialCalendar.HeaderLayout">
+    <item name="android:background">?attr/colorSurface</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderTitle" parent="Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderSelection" parent="Widget.MaterialComponents.MaterialCalendar.HeaderSelection">
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderToggleButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+    <item name="android:tint">?attr/colorOnSurface</item>
+  </style>
+
+  <!-- Time picker -->
+  <style name="ThemeOverlay.Pinnit.TimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+    <item name="colorPrimary">?attr/colorSecondary</item>
+    <item name="colorOnPrimary">?attr/colorOnSecondary</item>
+    <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.TimePicker.Title</item>
+  </style>
 </resources>

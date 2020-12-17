@@ -4,6 +4,7 @@
   <color name="colorPrimaryVariant">@color/maroon_700</color>
 
   <color name="colorSecondary">@color/maroon_200</color>
+  <color name="colorOnSecondary">@android:color/black</color>
 
   <color name="colorSurface">@color/maroon_800</color>
   <color name="colorOnSurface">@android:color/white</color>
