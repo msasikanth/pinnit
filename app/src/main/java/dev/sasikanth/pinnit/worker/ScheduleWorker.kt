@@ -2,8 +2,8 @@ package dev.sasikanth.pinnit.worker
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dev.sasikanth.pinnit.data.PinnitNotification
@@ -30,12 +30,13 @@ class ScheduleWorker(
 
   companion object {
     const val INPUT_NOTIFICATION_UUID = "notification_uuid"
+    private const val SCHEDULE_TAG_PREFIX = "scheduled-notification"
 
     fun scheduleNotificationRequest(
       notificationUuid: UUID,
       schedule: Schedule,
       userClock: UserClock
-    ): WorkRequest {
+    ): OneTimeWorkRequest {
       val currentDateTime = LocalDateTime.now(userClock)
       val scheduledAt = schedule.scheduleDate!!.atTime(schedule.scheduleTime!!)
       val initialDelay = Duration.between(currentDateTime, scheduledAt)
@@ -47,8 +48,12 @@ class ScheduleWorker(
       return OneTimeWorkRequestBuilder<ScheduleWorker>()
         .setInputData(inputData)
         .setInitialDelay(initialDelay.toMillis(), TimeUnit.MILLISECONDS)
-        .addTag("scheduled-notification-$notificationUuid")
+        .addTag(tag(notificationUuid = notificationUuid))
         .build()
+    }
+
+    fun tag(notificationUuid: UUID): String {
+      return "$SCHEDULE_TAG_PREFIX-${notificationUuid}"
     }
   }
 
@@ -79,6 +84,7 @@ class ScheduleWorker(
         reschedule(notification)
       }
     }
+
     return Result.success()
   }
 
