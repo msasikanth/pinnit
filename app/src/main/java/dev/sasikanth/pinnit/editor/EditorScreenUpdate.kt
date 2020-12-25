@@ -93,6 +93,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       effects.add(ShowNotification(notification))
     }
 
+    if (notification.hasSchedule) {
+      effects.add(ScheduleNotification(notification))
+    }
+
     // We need to close the editor once all the pre-requisites are finished.
     // like showing notification or scheduling.
     effects.add(CloseEditor)

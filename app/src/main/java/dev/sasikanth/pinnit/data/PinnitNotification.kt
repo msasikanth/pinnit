@@ -29,6 +29,9 @@ data class PinnitNotification(
   val schedule: Schedule? = null
 ) : Parcelable {
 
+  val hasSchedule: Boolean
+    get() = schedule != null
+
   fun equalsTitleAndContent(title: String?, content: String?) =
     this.title == title.orEmpty() && this.content.orEmpty() == content.orEmpty()
 

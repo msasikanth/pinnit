@@ -377,7 +377,7 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(ShowNotification(notification), CloseEditor)
+          hasEffects(ShowNotification(notification), ScheduleNotification(notification), CloseEditor)
         )
       )
   }
@@ -399,7 +399,7 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(CloseEditor)
+          hasEffects(ScheduleNotification(notification), CloseEditor)
         )
       )
   }
@@ -431,7 +431,11 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(ShowNotification(updatedNotification), CloseEditor)
+          hasEffects(
+            ShowNotification(updatedNotification),
+            ScheduleNotification(updatedNotification),
+            CloseEditor
+          )
         )
       )
   }
@@ -463,7 +467,7 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(CloseEditor)
+          hasEffects(ScheduleNotification(updatedNotification), CloseEditor)
         )
       )
   }
