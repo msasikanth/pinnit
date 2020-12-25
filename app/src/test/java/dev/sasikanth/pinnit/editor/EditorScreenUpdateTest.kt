@@ -84,7 +84,7 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(SaveNotification(model.title!!, model.content, model.schedule) as EditorScreenEffect)
+          hasEffects(SaveNotification(model.title!!, model.content, model.schedule, true) as EditorScreenEffect)
         )
       )
   }

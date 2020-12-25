@@ -15,7 +15,8 @@ data class SetTitleAndContent(val title: String?, val content: String?) : Editor
 data class SaveNotification(
   val title: String,
   val content: String?,
-  val schedule: Schedule?
+  val schedule: Schedule?,
+  val canPinNotification: Boolean
 ) : EditorScreenEffect()
 
 data class UpdateNotification(

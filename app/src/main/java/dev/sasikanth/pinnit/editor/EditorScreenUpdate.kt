@@ -65,7 +65,14 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
   private fun saveClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {
     val effect = if (model.notification == null) {
-      SaveNotification(model.title!!, model.content, model.schedule)
+      val canPinNotification = model.schedule == null
+
+      SaveNotification(
+        title = model.title!!,
+        content = model.content,
+        schedule = model.schedule,
+        canPinNotification = canPinNotification
+      )
     } else {
       UpdateNotification(
         notificationUuid = model.notification.uuid,

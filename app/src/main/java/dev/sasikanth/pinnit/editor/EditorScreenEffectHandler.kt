@@ -66,7 +66,11 @@ class EditorScreenEffectHandler @AssistedInject constructor(
   }
 
   private suspend fun saveNotification(effect: SaveNotification, dispatchEvent: (EditorScreenEvent) -> Unit) {
-    val notification = notificationRepository.save(effect.title, effect.content)
+    val notification = notificationRepository.save(
+      title = effect.title,
+      content = effect.content,
+      isPinned = effect.canPinNotification
+    )
     dispatchEvent(NotificationSaved(notification))
   }
 

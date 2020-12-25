@@ -90,13 +90,14 @@ class EditorScreenEffectHandlerTest {
     val notification = TestData.notification(
       uuid = notificationUuid,
       title = title,
-      content = content
+      content = content,
+      isPinned = true
     )
 
     whenever(repository.save(eq(title), eq(content), eq(true), any())) doReturn notification
 
     // when
-    connection.accept(SaveNotification(title, content, schedule))
+    connection.accept(SaveNotification(title, content, schedule, true))
 
     // then
     verify(repository).save(
