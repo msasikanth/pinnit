@@ -3,8 +3,8 @@ package dev.sasikanth.pinnit.editor
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
-import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
+import dev.sasikanth.pinnit.data.PinnitNotification
 
 class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorScreenEffect> {
   override fun update(model: EditorScreenModel, event: EditorScreenEvent): Next<EditorScreenModel, EditorScreenEffect> {
@@ -43,7 +43,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       is ScheduleTypeChanged -> next(model.scheduleTypeChanged(event.scheduleType))
 
-      is NotificationSaved -> noChange()
+      is NotificationSaved -> notificationSaved(event.notification)
     }
   }
 
@@ -83,5 +83,9 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
     }
 
     return dispatch(setOf(CloseEditor))
+  }
+
+  private fun notificationSaved(notification: PinnitNotification): Next<EditorScreenModel, EditorScreenEffect> {
+    return dispatch(setOf(ShowNotification(notification), CloseEditor))
   }
 }

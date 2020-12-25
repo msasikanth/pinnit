@@ -360,4 +360,26 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification is saved, then show notification if it's pinned and close editor`() {
+    val notification = TestData.notification(
+      title = "Sample Title",
+      content = "Sample Content",
+      isPinned = true
+    )
+    val notificationSavedModel = defaultModel
+      .titleChanged("Sample Title")
+      .contentChanged("Sample Content")
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationSaved(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowNotification(notification), CloseEditor)
+        )
+      )
+  }
 }
