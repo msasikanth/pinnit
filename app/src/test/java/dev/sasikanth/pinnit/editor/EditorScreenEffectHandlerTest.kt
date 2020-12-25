@@ -109,7 +109,7 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when update and close effect is received, then update the notification and close editor`() = testScope.runBlockingTest {
+  fun `when update notification effect is received, then update the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("4e91382a-d5c3-44a7-8ee3-fa15a4ec69b4")
     val notification = TestData.notification(
@@ -132,12 +132,11 @@ class EditorScreenEffectHandlerTest {
 
     // when
     connection.accept(
-      UpdateNotificationAndCloseEditor(
+      UpdateNotification(
         notificationUuid = notificationUuid,
         title = updatedTitle,
         content = null,
-        schedule = schedule,
-        showAndroidNotification = true
+        schedule = schedule
       )
     )
 
@@ -146,11 +145,8 @@ class EditorScreenEffectHandlerTest {
     verify(repository).updateNotification(updatedNotification)
     verifyNoMoreInteractions(repository)
 
-    verify(notificationUtil).showNotification(updatedNotification)
-    verifyNoMoreInteractions(notificationUtil)
-
-    consumer.assertValues()
-    viewEffectConsumer.assertValues(CloseEditorView)
+    consumer.assertValues(NotificationUpdated(updatedNotification))
+    viewEffectConsumer.assertValues()
   }
 
   @Test

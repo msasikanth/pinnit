@@ -18,12 +18,11 @@ data class SaveNotification(
   val schedule: Schedule?
 ) : EditorScreenEffect()
 
-data class UpdateNotificationAndCloseEditor(
+data class UpdateNotification(
   val notificationUuid: UUID,
   val title: String,
   val content: String?,
-  val schedule: Schedule?,
-  val showAndroidNotification: Boolean
+  val schedule: Schedule?
 ) : EditorScreenEffect()
 
 object CloseEditor : EditorScreenEffect()

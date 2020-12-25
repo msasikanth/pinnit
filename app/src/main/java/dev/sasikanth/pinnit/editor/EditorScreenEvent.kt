@@ -43,3 +43,5 @@ data class ScheduleTimeChanged(val time: LocalTime) : EditorScreenEvent()
 data class ScheduleTypeChanged(val scheduleType: ScheduleType) : EditorScreenEvent()
 
 data class NotificationSaved(val notification: PinnitNotification) : EditorScreenEvent()
+
+data class NotificationUpdated(val updatedNotification: PinnitNotification) : EditorScreenEvent()

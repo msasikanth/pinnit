@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
+import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 import dev.sasikanth.pinnit.data.PinnitNotification
 
@@ -44,6 +45,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       is ScheduleTypeChanged -> next(model.scheduleTypeChanged(event.scheduleType))
 
       is NotificationSaved -> notificationSaved(event.notification)
+
+      is NotificationUpdated -> noChange()
     }
   }
 
@@ -65,12 +68,11 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
     val effect = if (model.notification == null) {
       SaveNotification(model.title!!, model.content, model.schedule)
     } else {
-      UpdateNotificationAndCloseEditor(
+      UpdateNotification(
         notificationUuid = model.notification.uuid,
         title = model.title!!,
         content = model.content,
-        schedule = model.schedule,
-        showAndroidNotification = model.notification.isPinned
+        schedule = model.schedule
       )
     }
 

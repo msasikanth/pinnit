@@ -108,12 +108,11 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(
-            UpdateNotificationAndCloseEditor(
+            UpdateNotification(
               notificationUuid = pinnedNotificationUuid,
               title = model.title!!,
               content = model.content,
-              schedule = model.schedule,
-              showAndroidNotification = true
+              schedule = model.schedule
             ) as EditorScreenEffect
           )
         )

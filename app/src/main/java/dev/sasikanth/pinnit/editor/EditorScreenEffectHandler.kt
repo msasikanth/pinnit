@@ -28,7 +28,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
       is SaveNotification -> saveNotification(effect, dispatchEvent)
 
-      is UpdateNotificationAndCloseEditor -> updateNotificationAndCloseEditor(effect)
+      is UpdateNotification -> updateNotification(effect, dispatchEvent)
 
       ShowConfirmExitEditor -> viewEffectConsumer.accept(ShowConfirmExitEditorDialog)
 
@@ -64,7 +64,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     dispatchEvent(NotificationSaved(notification))
   }
 
-  private suspend fun updateNotificationAndCloseEditor(effect: UpdateNotificationAndCloseEditor) {
+  private suspend fun updateNotification(effect: UpdateNotification, dispatchEvent: (EditorScreenEvent) -> Unit) {
     val notification = notificationRepository.notification(effect.notificationUuid)
     val updatedNotification = notificationRepository.updateNotification(
       notification.copy(
@@ -73,10 +73,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       )
     )
 
-    if (effect.showAndroidNotification) {
-      notificationUtil.showNotification(updatedNotification)
-    }
-    viewEffectConsumer.accept(CloseEditorView)
+    dispatchEvent(NotificationUpdated(updatedNotification))
   }
 
   private suspend fun deleteNotification(
