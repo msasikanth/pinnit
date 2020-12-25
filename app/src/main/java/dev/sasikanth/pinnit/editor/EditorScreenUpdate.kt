@@ -45,7 +45,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       is NotificationSaved -> notificationSaved(event.notification)
 
-      is NotificationUpdated -> notificationUpdated(event.updatedNotification)
+      is NotificationUpdated -> notificationUpdated(model, event.updatedNotification)
     }
   }
 
@@ -104,9 +104,28 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
     return dispatch(effects)
   }
 
-  private fun notificationUpdated(updatedNotification: PinnitNotification): Next<EditorScreenModel, EditorScreenEffect> {
-    // When notification is updated, we are doing same thing as when notification is saved.
-    // so we are simply redirecting the call here.
-    return notificationSaved(updatedNotification)
+  private fun notificationUpdated(model: EditorScreenModel, updatedNotification: PinnitNotification): Next<EditorScreenModel, EditorScreenEffect> {
+    val effects = mutableSetOf<EditorScreenEffect>()
+
+    if (updatedNotification.isPinned) {
+      effects.add(ShowNotification(updatedNotification))
+    }
+
+    when {
+      updatedNotification.hasSchedule -> {
+        effects.add(ScheduleNotification(updatedNotification))
+      }
+      // When we are updating a notification and schedule is removed
+      // then we need to cancel the schedule.
+      updatedNotification.hasSchedule.not() && model.notification?.hasSchedule == true -> {
+        effects.add(CancelNotificationSchedule(updatedNotification.uuid))
+      }
+    }
+
+    // We need to close the editor once all the pre-requisites are finished.
+    // like showing notification or scheduling.
+    effects.add(CloseEditor)
+
+    return dispatch(effects)
   }
 }

@@ -471,4 +471,39 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification is updated and schedule is removed, then cancel the schedule`() {
+    val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
+    val schedule = TestData.schedule()
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 1",
+      content = "Sample Content 1",
+      isPinned = true,
+      schedule = schedule
+    )
+    val notificationSavedModel = defaultModel
+      .notificationLoaded(notification)
+      .titleChanged("Sample Title 2")
+      .contentChanged("Sample Content 2")
+
+    val updatedNotification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 2",
+      content = "Sample Content 2",
+      isPinned = false,
+      schedule = null
+    )
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationUpdated(updatedNotification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CancelNotificationSchedule(notificationUuid), CloseEditor)
+        )
+      )
+  }
 }
