@@ -12,7 +12,7 @@ data class LoadNotification(val uuid: UUID) : EditorScreenEffect()
 
 data class SetTitleAndContent(val title: String?, val content: String?) : EditorScreenEffect()
 
-data class SaveNotificationAndCloseEditor(
+data class SaveNotification(
   val title: String,
   val content: String?,
   val schedule: Schedule?

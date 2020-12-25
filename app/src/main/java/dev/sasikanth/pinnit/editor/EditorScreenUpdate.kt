@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
+import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 
 class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorScreenEffect> {
@@ -41,6 +42,8 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       is ScheduleTimeChanged -> next(model.scheduleTimeChanged(event.time))
 
       is ScheduleTypeChanged -> next(model.scheduleTypeChanged(event.scheduleType))
+
+      is NotificationSaved -> noChange()
     }
   }
 
@@ -60,7 +63,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
   private fun saveClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {
     val effect = if (model.notification == null) {
-      SaveNotificationAndCloseEditor(model.title!!, model.content, model.schedule)
+      SaveNotification(model.title!!, model.content, model.schedule)
     } else {
       UpdateNotificationAndCloseEditor(
         notificationUuid = model.notification.uuid,

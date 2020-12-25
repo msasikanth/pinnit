@@ -73,7 +73,7 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when save and close effect is received, then save the notification and close editor`() = testScope.runBlockingTest {
+  fun `when save notification effect is received, then save the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("9610e5b7-6894-4da9-965a-048abf568247")
     val title = "Notification Title"
@@ -93,7 +93,7 @@ class EditorScreenEffectHandlerTest {
     whenever(repository.save(eq(title), eq(content), eq(true), any())) doReturn notification
 
     // when
-    connection.accept(SaveNotificationAndCloseEditor(title, content, schedule))
+    connection.accept(SaveNotification(title, content, schedule))
 
     // then
     verify(repository).save(
@@ -104,11 +104,8 @@ class EditorScreenEffectHandlerTest {
     )
     verifyNoMoreInteractions(repository)
 
-    verify(notificationUtil).showNotification(notification)
-    verifyNoMoreInteractions(notificationUtil)
-
-    consumer.assertValues()
-    viewEffectConsumer.assertValues(CloseEditorView)
+    consumer.assertValues(NotificationSaved(notification))
+    viewEffectConsumer.assertValues()
   }
 
   @Test
