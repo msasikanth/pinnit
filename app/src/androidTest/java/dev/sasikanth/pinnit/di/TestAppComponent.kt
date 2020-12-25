@@ -7,7 +7,7 @@ import dev.sasikanth.pinnit.notifications.NotificationsRepositoryAndroidTest
 
 @AppScope
 @Component(modules = [TestAppModule::class])
-interface TestAppComponent : AppComponent {
+interface TestAppComponent {
   @Component.Factory
   interface Factory {
     fun create(@BindsInstance application: Application): TestAppComponent
