@@ -382,4 +382,26 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification is saved, then close editor if the notification is not pinned`() {
+    val notification = TestData.notification(
+      title = "Sample Title",
+      content = "Sample Content",
+      isPinned = false
+    )
+    val notificationSavedModel = defaultModel
+      .titleChanged("Sample Title")
+      .contentChanged("Sample Content")
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationSaved(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CloseEditor)
+        )
+      )
+  }
 }

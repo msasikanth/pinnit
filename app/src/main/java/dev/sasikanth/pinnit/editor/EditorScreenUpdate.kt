@@ -86,6 +86,16 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
   }
 
   private fun notificationSaved(notification: PinnitNotification): Next<EditorScreenModel, EditorScreenEffect> {
-    return dispatch(setOf(ShowNotification(notification), CloseEditor))
+    val effects = mutableSetOf<EditorScreenEffect>()
+
+    if (notification.isPinned) {
+      effects.add(ShowNotification(notification))
+    }
+
+    // We need to close the editor once all the pre-requisites are finished.
+    // like showing notification or scheduling.
+    effects.add(CloseEditor)
+
+    return dispatch(effects)
   }
 }
