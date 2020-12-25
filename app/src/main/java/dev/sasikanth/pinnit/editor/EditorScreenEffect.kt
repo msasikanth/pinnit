@@ -40,3 +40,5 @@ data class ShowTimePicker(var time: LocalTime) : EditorScreenEffect()
 data class ShowNotification(val notification: PinnitNotification) : EditorScreenEffect()
 
 data class ScheduleNotification(val notification: PinnitNotification) : EditorScreenEffect()
+
+data class CancelNotificationSchedule(val notificationId: UUID) : EditorScreenEffect()

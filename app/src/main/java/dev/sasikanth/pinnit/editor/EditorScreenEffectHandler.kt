@@ -47,6 +47,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       is ShowNotification -> showNotification(effect)
 
       is ScheduleNotification -> scheduleNotification(effect)
+
+      is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
     }
   }
 
@@ -96,5 +98,9 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
   private fun scheduleNotification(effect: ScheduleNotification) {
     pinnitNotificationScheduler.scheduleNotification(effect.notification)
+  }
+
+  private fun cancelNotificationSchedule(effect: CancelNotificationSchedule) {
+    pinnitNotificationScheduler.cancel(effect.notificationId)
   }
 }

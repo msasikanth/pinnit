@@ -293,4 +293,20 @@ class EditorScreenEffectHandlerTest {
     verify(pinnitNotificationScheduler).scheduleNotification(notification)
     verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
+
+  @Test
+  fun `when cancel notification schedule effect is received, then cancel notification schedule`() {
+    // given
+    val notificationId = UUID.fromString("43c61479-2529-424a-a0fa-12b4bd90f591")
+
+    // when
+    connection.accept(CancelNotificationSchedule(notificationId))
+
+    // then
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+
+    verify(pinnitNotificationScheduler).cancel(notificationId)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
+  }
 }
