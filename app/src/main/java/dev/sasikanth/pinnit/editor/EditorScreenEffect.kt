@@ -37,3 +37,5 @@ object ShowConfirmDelete : EditorScreenEffect()
 data class ShowDatePicker(val date: LocalDate) : EditorScreenEffect()
 
 data class ShowTimePicker(var time: LocalTime) : EditorScreenEffect()
+
+data class ShowNotification(val notification: PinnitNotification) : EditorScreenEffect()

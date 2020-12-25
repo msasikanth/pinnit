@@ -41,6 +41,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       is ShowDatePicker -> viewEffectConsumer.accept(ShowDatePickerDialog(effect.date))
 
       is ShowTimePicker -> viewEffectConsumer.accept(ShowTimePickerDialog(effect.time))
+
+      is ShowNotification -> showNotification(effect)
     }
   }
 
@@ -86,5 +88,9 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     notificationRepository.deleteNotification(notification)
     notificationUtil.dismissNotification(notification)
     viewEffectConsumer.accept(CloseEditorView)
+  }
+
+  private fun showNotification(effect: ShowNotification) {
+    notificationUtil.showNotification(effect.notification)
   }
 }

@@ -263,4 +263,21 @@ class EditorScreenEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowTimePickerDialog(time))
   }
+
+  @Test
+  fun `when show notification effect is received, then show android notification`() {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("e3848c84-afe9-45a6-ba90-d7f0ad3de193")
+    )
+
+    // when
+    connection.accept(ShowNotification(notification))
+
+    // then
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+
+    verify(notificationUtil).showNotification(notification)
+  }
 }
