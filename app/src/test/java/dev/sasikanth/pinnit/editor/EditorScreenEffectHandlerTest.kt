@@ -13,6 +13,7 @@ import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -32,10 +33,12 @@ class EditorScreenEffectHandlerTest {
   private val repository = mock<NotificationRepository>()
   private val dispatcherProvider = TestDispatcherProvider()
   private val notificationUtil = mock<NotificationUtil>()
+  private val pinnitNotificationScheduler = mock<PinnitNotificationScheduler>()
   private val effectHandler = EditorScreenEffectHandler(
     repository,
     dispatcherProvider,
     notificationUtil,
+    pinnitNotificationScheduler,
     viewEffectConsumer
   )
 
@@ -272,5 +275,22 @@ class EditorScreenEffectHandlerTest {
     viewEffectConsumer.assertValues()
 
     verify(notificationUtil).showNotification(notification)
+    verifyNoMoreInteractions(notificationUtil)
+  }
+
+  @Test
+  fun `when schedule notification effect is received, then schedule a notification`() {
+    // given
+    val notification = TestData.notification()
+
+    // when
+    connection.accept(ScheduleNotification(notification))
+
+    // then
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+
+    verify(pinnitNotificationScheduler).scheduleNotification(notification)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
 }

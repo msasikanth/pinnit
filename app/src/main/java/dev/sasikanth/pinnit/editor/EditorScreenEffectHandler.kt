@@ -5,6 +5,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 
@@ -12,6 +13,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   dispatcherProvider: DispatcherProvider,
   private val notificationUtil: NotificationUtil,
+  private val pinnitNotificationScheduler: PinnitNotificationScheduler,
   @Assisted private val viewEffectConsumer: Consumer<EditorScreenViewEffect>
 ) : CoroutineConnectable<EditorScreenEffect, EditorScreenEvent>(dispatcherProvider.main) {
 
@@ -43,6 +45,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       is ShowTimePicker -> viewEffectConsumer.accept(ShowTimePickerDialog(effect.time))
 
       is ShowNotification -> showNotification(effect)
+
+      is ScheduleNotification -> scheduleNotification(effect)
     }
   }
 
@@ -88,5 +92,9 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
   private fun showNotification(effect: ShowNotification) {
     notificationUtil.showNotification(effect.notification)
+  }
+
+  private fun scheduleNotification(effect: ScheduleNotification) {
+    pinnitNotificationScheduler.scheduleNotification(effect.notification)
   }
 }
