@@ -94,7 +94,15 @@ class EditorScreenEffectHandlerTest {
       isPinned = true
     )
 
-    whenever(repository.save(eq(title), eq(content), eq(true), any())) doReturn notification
+    whenever(
+      repository.save(
+        title = eq(title),
+        content = eq(content),
+        isPinned = eq(true),
+        schedule = eq(schedule),
+        uuid = any()
+      )
+    ) doReturn notification
 
     // when
     connection.accept(SaveNotification(title, content, schedule, true))
@@ -104,6 +112,7 @@ class EditorScreenEffectHandlerTest {
       title = eq(title),
       content = eq(content),
       isPinned = eq(true),
+      schedule = eq(schedule),
       uuid = any()
     )
     verifyNoMoreInteractions(repository)

@@ -69,7 +69,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     val notification = notificationRepository.save(
       title = effect.title,
       content = effect.content,
-      isPinned = effect.canPinNotification
+      isPinned = effect.canPinNotification,
+      schedule = effect.schedule
     )
     dispatchEvent(NotificationSaved(notification))
   }
