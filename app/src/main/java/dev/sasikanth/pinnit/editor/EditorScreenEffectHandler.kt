@@ -80,7 +80,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     val updatedNotification = notificationRepository.updateNotification(
       notification.copy(
         title = effect.title,
-        content = effect.content
+        content = effect.content,
+        schedule = effect.schedule
       )
     )
 
