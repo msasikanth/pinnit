@@ -403,4 +403,36 @@ class EditorScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification is updated, then show notification if the notification is pinned`() {
+    val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 1",
+      content = "Sample Content 1",
+      isPinned = true
+    )
+    val notificationSavedModel = defaultModel
+      .notificationLoaded(notification)
+      .titleChanged("Sample Title 2")
+      .contentChanged("Sample Content 2")
+
+    val updatedNotification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 2",
+      content = "Sample Content 2",
+      isPinned = true
+    )
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationUpdated(updatedNotification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowNotification(updatedNotification), CloseEditor)
+        )
+      )
+  }
 }

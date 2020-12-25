@@ -3,7 +3,6 @@ package dev.sasikanth.pinnit.editor
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
-import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 import dev.sasikanth.pinnit.data.PinnitNotification
 
@@ -46,7 +45,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       is NotificationSaved -> notificationSaved(event.notification)
 
-      is NotificationUpdated -> noChange()
+      is NotificationUpdated -> notificationUpdated(event.updatedNotification)
     }
   }
 
@@ -99,5 +98,11 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
     effects.add(CloseEditor)
 
     return dispatch(effects)
+  }
+
+  private fun notificationUpdated(updatedNotification: PinnitNotification): Next<EditorScreenModel, EditorScreenEffect> {
+    // When notification is updated, we are doing same thing as when notification is saved.
+    // so we are simply redirecting the call here.
+    return notificationSaved(updatedNotification)
   }
 }
