@@ -4,6 +4,7 @@ import com.spotify.mobius.functions.Consumer
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.launchIn
@@ -14,6 +15,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,
   private val notificationUtil: NotificationUtil,
+  private val pinnitNotificationScheduler: PinnitNotificationScheduler,
   @Assisted private val viewEffectConsumer: Consumer<NotificationScreenViewEffect>
 ) : CoroutineConnectable<NotificationsScreenEffect, NotificationsScreenEvent>(dispatcherProvider.main) {
 
@@ -35,6 +37,8 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is UndoDeletedNotification -> undoDeleteNotification(effect)
 
       is ShowUndoDeleteNotification -> showUndoDeleteNotification(effect)
+
+      is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
     }
   }
 
@@ -84,5 +88,9 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
     withContext(dispatcherProvider.default) {
       notificationUtil.checkNotificationsVisibility(notifications)
     }
+  }
+
+  private fun cancelNotificationSchedule(effect: CancelNotificationSchedule) {
+    pinnitNotificationScheduler.cancel(effect.notificationId)
   }
 }

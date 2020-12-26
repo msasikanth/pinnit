@@ -9,6 +9,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
@@ -38,10 +39,12 @@ class NotificationsScreenEffectHandlerTest {
   private val notificationRepository = mock<NotificationRepository>()
   private val testDispatcherProvider = TestDispatcherProvider()
   private val notificationUtil = mock<NotificationUtil>()
+  private val pinnitNotificationScheduler = mock<PinnitNotificationScheduler>()
   private val effectHandler = NotificationsScreenEffectHandler(
     notificationRepository,
     testDispatcherProvider,
     notificationUtil,
+    pinnitNotificationScheduler,
     viewActionsConsumer
   )
 
@@ -220,5 +223,21 @@ class NotificationsScreenEffectHandlerTest {
     // then
     consumer.assertValues()
     viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
+  }
+
+  @Test
+  fun `when cancel schedule notification effect is received, then cancel the schedule`() {
+    // give
+    val notificationId = UUID.fromString("f249493f-7807-4e05-a3f8-dfdb049ad99f")
+
+    // when
+    connection.accept(CancelNotificationSchedule(notificationId))
+
+    // then
+    consumer.assertValues()
+    viewActionsConsumer.assertValues()
+
+    verify(pinnitNotificationScheduler).cancel(notificationId)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
 }
