@@ -213,16 +213,15 @@ class NotificationsRepositoryAndroidTest {
       updatedAt = Instant.now(clock).minus(1, ChronoUnit.DAYS)
     )
 
-    val deletedNotification = notification.copy(
+    val expectedDeletedNotification = notification.copy(
       deletedAt = Instant.now(clock)
     )
 
     // when
-    notificationRepository.deleteNotification(notification)
+    val deletedNotification = notificationRepository.deleteNotification(notification)
 
     // then
-    assertThat(notificationRepository.notification(notification.uuid))
-      .isEqualTo(deletedNotification)
+    assertThat(deletedNotification).isEqualTo(expectedDeletedNotification)
   }
 
   @Test
