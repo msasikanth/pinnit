@@ -7,7 +7,7 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
       ui.renderSaveActionButtonText()
       ui.showDeleteButton()
     } else {
-      ui.renderSaveAndPinActionButtonText()
+      renderSaveButton(model)
       ui.hideDeleteButton()
     }
 
@@ -18,6 +18,14 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
     }
 
     renderScheduleView(model)
+  }
+
+  private fun renderSaveButton(model: EditorScreenModel) {
+    if (model.hasSchedule) {
+      ui.renderSaveActionButtonText()
+    } else {
+      ui.renderSaveAndPinActionButtonText()
+    }
   }
 
   private fun renderScheduleView(model: EditorScreenModel) {

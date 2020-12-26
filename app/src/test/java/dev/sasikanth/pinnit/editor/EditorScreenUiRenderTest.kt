@@ -119,7 +119,7 @@ class EditorScreenUiRenderTest {
     // then
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
-    verify(ui).renderSaveAndPinActionButtonText()
+    verify(ui).renderSaveActionButtonText()
     verify(ui).showScheduleView(
       scheduleDate = scheduleDate,
       scheduleTime = scheduleTime,
