@@ -204,6 +204,8 @@ class EditorScreenEffectHandlerTest {
     verifyNoMoreInteractions(repository)
     verify(notificationUtil).dismissNotification(notification)
     verifyNoMoreInteractions(notificationUtil)
+    verify(pinnitNotificationScheduler).cancel(notification.uuid)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)

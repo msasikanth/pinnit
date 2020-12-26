@@ -96,6 +96,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     notificationRepository.deleteNotification(notification)
     notificationUtil.dismissNotification(notification)
     viewEffectConsumer.accept(CloseEditorView)
+    pinnitNotificationScheduler.cancel(notification.uuid)
   }
 
   private fun showNotification(effect: ShowNotification) {
