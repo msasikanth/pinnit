@@ -105,4 +105,18 @@ class NotificationsScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification is deleted, then show undo delete notification`() {
+    val notification = TestData.notification()
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(NotificationDeleted(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowUndoDeleteNotification(notification) as NotificationsScreenEffect)
+        )
+      )
+  }
 }
