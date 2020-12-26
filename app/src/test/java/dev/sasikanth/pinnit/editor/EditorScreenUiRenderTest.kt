@@ -38,7 +38,8 @@ class EditorScreenUiRenderTest {
   fun `when notification is present, then update ui`() {
     // given
     val notification = TestData.notification(
-      uuid = notificationUuid
+      uuid = notificationUuid,
+      schedule = null
     )
     val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(notification)

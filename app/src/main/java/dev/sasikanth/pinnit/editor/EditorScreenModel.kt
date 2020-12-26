@@ -36,6 +36,14 @@ data class EditorScreenModel(
       return notification?.equalsTitleAndContent(title, content)?.not() ?: (!title.isNullOrBlank() || !content.isNullOrBlank())
     }
 
+  val hasScheduleChanged: Boolean
+    get() {
+      val notificationSchedule = notification?.schedule
+      if (notificationSchedule == schedule) return false
+      if (schedule == null) return false
+      return true
+    }
+
   val isNotificationLoaded: Boolean
     get() = notification != null
 
