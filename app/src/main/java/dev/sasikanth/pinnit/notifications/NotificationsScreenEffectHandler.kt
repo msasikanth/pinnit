@@ -33,6 +33,8 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is DeleteNotification -> deleteNotification(effect)
 
       is UndoDeletedNotification -> undoDeleteNotification(effect)
+
+      is ShowUndoDeleteNotification -> showUndoDeleteNotification(effect)
     }
   }
 
@@ -61,6 +63,10 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
 
   private suspend fun deleteNotification(effect: DeleteNotification) {
     notificationRepository.deleteNotification(effect.notification)
+    viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
+  }
+
+  private fun showUndoDeleteNotification(effect: ShowUndoDeleteNotification) {
     viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
   }
 

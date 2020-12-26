@@ -202,4 +202,17 @@ class NotificationsScreenEffectHandlerTest {
     consumer.assertValues()
     viewActionsConsumer.assertValues()
   }
+
+  @Test
+  fun `when show undo delete notification effect is received, then show the undo delete notification`() {
+    // given
+    val notification = TestData.notification()
+
+    // when
+    connection.accept(ShowUndoDeleteNotification(notification))
+
+    // then
+    consumer.assertValues()
+    viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
+  }
 }
