@@ -126,7 +126,8 @@ class EditorScreenUpdateTest {
     val notification = TestData.notification(
       uuid = UUID.fromString("33605259-a4b2-4fc7-b4a6-90cf75215777"),
       title = notificationTitle,
-      content = notificationContent
+      content = notificationContent,
+      schedule = null
     )
     val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(notification)
@@ -152,6 +153,26 @@ class EditorScreenUpdateTest {
         TitleChanged("Updated Title"),
         BackClicked
       )
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowConfirmExitEditor as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when back is clicked and schedule is changed, then show confirm exit editor`() {
+    val notificationWithoutSchedule = TestData.notification(
+      schedule = null
+    )
+    val modelWithoutSchedule = defaultModel
+      .notificationLoaded(notificationWithoutSchedule)
+      .scheduleLoaded(TestData.schedule())
+
+    updateSpec
+      .given(modelWithoutSchedule)
+      .whenEvents(BackClicked)
       .then(
         assertThatNext(
           hasNoModel(),

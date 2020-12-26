@@ -86,7 +86,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
   }
 
   private fun backClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {
-    if (model.hasTitleAndContentChanged) {
+    if (model.hasTitleAndContentChanged || model.hasScheduleChanged) {
       return dispatch(setOf(ShowConfirmExitEditor))
     }
 
