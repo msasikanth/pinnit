@@ -108,7 +108,9 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when notification is deleted, then show undo delete notification`() {
-    val notification = TestData.notification()
+    val notification = TestData.notification(
+      schedule = null
+    )
     updateSpec
       .given(defaultModel)
       .whenEvent(NotificationDeleted(notification))
@@ -116,6 +118,22 @@ class NotificationsScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(ShowUndoDeleteNotification(notification) as NotificationsScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is deleted and has schedule, then cancel the schedule`() {
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(NotificationDeleted(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowUndoDeleteNotification(notification), CancelNotificationSchedule(notification.uuid))
         )
       )
   }
