@@ -30,7 +30,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
 
       is ToggleNotificationPinStatus -> toggleNotificationPinStatus(effect)
 
-      is DeleteNotification -> deleteNotification(effect)
+      is DeleteNotification -> deleteNotification(effect, dispatchEvent)
 
       is UndoDeletedNotification -> undoDeleteNotification(effect)
 
@@ -61,9 +61,9 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
     notificationRepository.toggleNotificationPinStatus(notification)
   }
 
-  private suspend fun deleteNotification(effect: DeleteNotification) {
-    notificationRepository.deleteNotification(effect.notification)
-    viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
+  private suspend fun deleteNotification(effect: DeleteNotification, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
+    val deletedNotification = notificationRepository.deleteNotification(effect.notification)
+    dispatchEvent(NotificationDeleted(deletedNotification))
   }
 
   private fun showUndoDeleteNotification(effect: ShowUndoDeleteNotification) {

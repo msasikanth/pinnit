@@ -141,6 +141,12 @@ class NotificationsScreenEffectHandlerTest {
       updatedAt = Instant.now(utcClock)
     )
 
+    val deletedNotification = notification.copy(
+      deletedAt = Instant.now(utcClock).plus(10, ChronoUnit.MINUTES)
+    )
+
+    whenever(notificationRepository.deleteNotification(notification)) doReturn deletedNotification
+
     // when
     connection.accept(DeleteNotification(notification))
 
@@ -148,8 +154,8 @@ class NotificationsScreenEffectHandlerTest {
     verify(notificationRepository, times(1)).deleteNotification(notification)
     verifyNoMoreInteractions(notificationRepository)
 
-    consumer.assertValues()
-    viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
+    consumer.assertValues(NotificationDeleted(deletedNotification))
+    viewActionsConsumer.assertValues()
   }
 
   @Test

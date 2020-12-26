@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.notifications
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
+import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 
 class NotificationsScreenUpdate : Update<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect> {
@@ -12,6 +13,7 @@ class NotificationsScreenUpdate : Update<NotificationsScreenModel, Notifications
       is NotificationSwiped -> dispatch(setOf(DeleteNotification(event.notification)))
       is TogglePinStatusClicked -> dispatch(setOf(ToggleNotificationPinStatus(event.notification)))
       is UndoNotificationDelete -> dispatch(setOf(UndoDeletedNotification(event.notificationUuid)))
+      is NotificationDeleted -> noChange()
     }
   }
 }
