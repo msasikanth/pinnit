@@ -77,6 +77,10 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
   private suspend fun undoDeleteNotification(effect: UndoDeletedNotification) {
     val notification = notificationRepository.notification(effect.notificationUuid)
     notificationRepository.undoNotificationDelete(notification)
+
+    // TODO: Move this check to Update function
+    if (notification.hasSchedule)
+      pinnitNotificationScheduler.scheduleNotification(notification)
   }
 
   /**
