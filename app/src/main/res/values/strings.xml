@@ -47,7 +47,10 @@
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="undo">Undo</string>
+
+  <!-- Notification Actions -->
   <string name="unpin">Unpin</string>
+  <string name="delete">Delete</string>
 
   <!-- Confirm Editor Exit-->
   <string name="confirm_editor_exit_title">Discard changes?</string>

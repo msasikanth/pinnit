@@ -9,11 +9,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.Action
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import androidx.navigation.NavDeepLinkBuilder
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
+import dev.sasikanth.pinnit.background.receivers.DeleteNotificationReceiver
 import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.di.AppScope
@@ -100,6 +102,17 @@ class NotificationUtil @Inject constructor(
       PendingIntent.FLAG_UPDATE_CURRENT
     )
 
+    val deleteIntent = Intent(context, DeleteNotificationReceiver::class.java).apply {
+      action = DeleteNotificationReceiver.ACTION_DELETE
+      putExtra(DeleteNotificationReceiver.EXTRA_NOTIFICATION_UUID, notification.uuid.toString())
+    }
+    val deletePendingIntent = PendingIntent.getBroadcast(
+      context,
+      notification.uuid.hashCode(),
+      deleteIntent,
+      PendingIntent.FLAG_UPDATE_CURRENT
+    )
+
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)
       .setSmallIcon(R.drawable.ic_pinnit_notification)
       .setContentTitle(notification.title)
@@ -111,7 +124,8 @@ class NotificationUtil @Inject constructor(
           notification.content
         )
       )
-      .addAction(R.drawable.ic_pinnit_pin, context.getString(R.string.unpin), unpinPendingIntent)
+      .addAction(Action(R.drawable.ic_pinnit_pin, context.getString(R.string.unpin), unpinPendingIntent))
+      .addAction(Action(R.drawable.ic_pinnit_delete, context.getString(R.string.delete), deletePendingIntent))
       .setOngoing(true)
 
     return builder.build()
