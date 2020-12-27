@@ -84,6 +84,15 @@
       </intent-filter>
     </receiver>
 
+    <receiver
+      android:name=".background.receivers.DeleteNotificationReceiver"
+      android:enabled="true"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="dev.sasikanth.pinnit.system.action.DeleteNotification" />
+      </intent-filter>
+    </receiver>
+
     <receiver android:name=".background.receivers.BootCompletedReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
