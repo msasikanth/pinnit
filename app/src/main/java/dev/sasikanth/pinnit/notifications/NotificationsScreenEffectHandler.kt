@@ -62,7 +62,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       // If already is not pinned, then show the notification and pin it
       notificationUtil.showNotification(notification)
     }
-    notificationRepository.toggleNotificationPinStatus(notification)
+    notificationRepository.updatePinStatus(notification.uuid, !notification.isPinned)
   }
 
   private suspend fun deleteNotification(effect: DeleteNotification, dispatchEvent: (NotificationsScreenEvent) -> Unit) {

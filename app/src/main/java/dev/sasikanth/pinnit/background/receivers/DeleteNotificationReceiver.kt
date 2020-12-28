@@ -51,7 +51,7 @@ class DeleteNotificationReceiver : BroadcastReceiver() {
       mainScope.launch {
         val notificationId = UUID.fromString(notificationUuid)
         val notification = repository.notification(notificationId)
-        repository.toggleNotificationPinStatus(notification)
+        repository.updatePinStatus(notification.uuid, false)
         repository.deleteNotification(notification)
 
         notificationUtil.dismissNotification(notification)

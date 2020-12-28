@@ -199,7 +199,7 @@ class EditorScreenEffectHandlerTest {
     connection.accept(DeleteNotification(notification))
 
     // then
-    verify(repository).toggleNotificationPinStatus(notification)
+    verify(repository).updatePinStatus(notification.uuid, false)
     verify(repository).deleteNotification(notification)
     verifyNoMoreInteractions(repository)
     verify(notificationUtil).dismissNotification(notification)

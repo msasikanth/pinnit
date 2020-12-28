@@ -70,9 +70,7 @@ class ScheduleWorker(
       val notification = repository.notification(notificationUuid)
 
       // If the notification is not already pinned, then pin the notification
-      if (notification.isPinned.not()) {
-        repository.toggleNotificationPinStatus(notification)
-      }
+      repository.updatePinStatus(notificationUuid, true)
 
       // Show notification (If it's already being shown, it will just refresh the notification)
       notificationUtil.showNotification(notification)

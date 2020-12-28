@@ -93,6 +93,7 @@ class NotificationsScreenEffectHandlerTest {
     // given
     val notification = TestData.notification(
       uuid = UUID.fromString("ff73fd70-852f-4833-bc9c-a6f67b2e66f0"),
+      isPinned = false,
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock)
     )
@@ -101,7 +102,7 @@ class NotificationsScreenEffectHandlerTest {
     connection.accept(ToggleNotificationPinStatus(notification))
 
     // then
-    verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
+    verify(notificationRepository, times(1)).updatePinStatus(notification.uuid, true)
     verifyNoMoreInteractions(notificationRepository)
 
     verify(notificationUtil).showNotification(notification)
@@ -125,7 +126,7 @@ class NotificationsScreenEffectHandlerTest {
     connection.accept(ToggleNotificationPinStatus(notification))
 
     // then
-    verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
+    verify(notificationRepository, times(1)).updatePinStatus(notification.uuid, false)
     verifyNoMoreInteractions(notificationRepository)
 
     verify(notificationUtil).dismissNotification(notification)

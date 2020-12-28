@@ -92,7 +92,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
     effect: DeleteNotification
   ) {
     val notification = effect.notification
-    notificationRepository.toggleNotificationPinStatus(notification)
+    notificationRepository.updatePinStatus(notification.uuid, false)
     notificationRepository.deleteNotification(notification)
     notificationUtil.dismissNotification(notification)
     viewEffectConsumer.accept(CloseEditorView)
