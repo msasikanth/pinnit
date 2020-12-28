@@ -57,6 +57,10 @@ class NotificationRepository @Inject constructor(
     notificationDao.updatePinStatus(notification.uuid, newPinStatus)
   }
 
+  suspend fun updatePinStatus(notificationUuid: UUID, isPinned: Boolean) {
+    notificationDao.updatePinStatus(notificationUuid, isPinned)
+  }
+
   fun notifications(): Flow<List<PinnitNotification>> {
     return notificationDao.notifications()
   }

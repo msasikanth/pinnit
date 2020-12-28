@@ -104,6 +104,36 @@ class NotificationsRepositoryAndroidTest {
   }
 
   @Test
+  fun updating_notification_pin_status_should_work_correctly() = runBlocking {
+    // given
+    val notificationUuid = UUID.fromString("76dde7cb-2d17-46c0-b523-3ea01eb1565e")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Notification Title",
+      content = "Notification Content",
+      isPinned = false,
+      createdAt = Instant.now(clock),
+      updatedAt = Instant.now(clock)
+    )
+
+    // when
+    notificationRepository.save(
+      title = notification.title,
+      content = notification.content,
+      isPinned = notification.isPinned,
+      schedule = notification.schedule,
+      uuid = notification.uuid
+    )
+    notificationRepository.updatePinStatus(notificationUuid, true)
+
+    // then
+    val expectedNotification = notification.copy(
+      isPinned = true
+    )
+    assertThat(notificationRepository.notification(notificationUuid)).isEqualTo(expectedNotification)
+  }
+
+  @Test
   fun getting_notifications_should_be_ordered_correctly() = runBlocking {
     // given
     val notificationNow = TestData.notification(
