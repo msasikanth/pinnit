@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.notifications
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,7 @@ class NotificationRepository @Inject constructor(
     title: String,
     content: String? = null,
     isPinned: Boolean = true,
+    schedule: Schedule? = null,
     uuid: UUID = UUID.randomUUID()
   ): PinnitNotification {
     val notification = PinnitNotification(
@@ -25,6 +27,7 @@ class NotificationRepository @Inject constructor(
       title = title,
       content = content,
       isPinned = isPinned,
+      schedule = schedule,
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock),
       deletedAt = null
@@ -49,9 +52,8 @@ class NotificationRepository @Inject constructor(
     return notificationDao.notification(uuid)
   }
 
-  suspend fun toggleNotificationPinStatus(notification: PinnitNotification) {
-    val newPinStatus = !notification.isPinned
-    notificationDao.updatePinStatus(notification.uuid, newPinStatus)
+  suspend fun updatePinStatus(notificationUuid: UUID, isPinned: Boolean) {
+    notificationDao.updatePinStatus(notificationUuid, isPinned)
   }
 
   fun notifications(): Flow<List<PinnitNotification>> {
@@ -62,11 +64,12 @@ class NotificationRepository @Inject constructor(
     return notificationDao.pinnedNotifications()
   }
 
-  suspend fun deleteNotification(notification: PinnitNotification) {
+  suspend fun deleteNotification(notification: PinnitNotification): PinnitNotification {
     val deletedNotification = notification.copy(
       deletedAt = Instant.now(utcClock)
     )
     notificationDao.save(listOf(deletedNotification))
+    return deletedNotification
   }
 
   suspend fun undoNotificationDelete(notification: PinnitNotification) {

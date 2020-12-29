@@ -1,0 +1,52 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:name="plus_to_edit"
+  android:width="24dp"
+  android:height="24dp"
+  android:tint="?attr/colorSecondary"
+  android:viewportWidth="24"
+  android:viewportHeight="24">
+  <group
+    android:name="rotate"
+    android:pivotX="12"
+    android:pivotY="12">
+    <group
+      android:name="horizontal"
+      android:pivotX="12"
+      android:pivotY="12"
+      android:rotation="90">
+      <path
+        android:name="horizontal_line"
+        android:fillColor="#000000"
+        android:pathData="M 11 4 L 13 4 L 13 20 L 11 20 Z" />
+    </group>
+    <path
+      android:name="vertical_line"
+      android:fillColor="#000000"
+      android:pathData="M 11 4 L 13 4 L 13 20 L 11 20 Z" />
+    <group
+      android:name="pencil_fade"
+      android:pivotX="12"
+      android:pivotY="12"
+      android:rotation="-45"
+      android:scaleX="0.5"
+      android:scaleY="0.5">
+      <path
+        android:name="eraser"
+        android:fillAlpha="0"
+        android:fillColor="#1f0014"
+        android:pathData="M 16.5 4 L 18 2.5 L 21.5 6 L 20 7.5 L 16.5 4 Z"
+        android:strokeWidth="1" />
+      <path
+        android:name="pencil"
+        android:fillAlpha="0"
+        android:fillColor="#1f0014"
+        android:fillType="evenOdd"
+        android:pathData="M 15.5 5 L 4 16.5 L 4 20 L 7.5 20 L 19 8.5 L 15.5 5 Z M 5.667 18.333 L 5.667 17.19 L 15.5 7.357 L 16.643 8.5 L 6.81 18.333 L 5.667 18.333 Z"
+        android:strokeWidth="1" />
+      <path
+        android:name="bounds"
+        android:pathData="M 0 0 L 24 0 L 24 24 L 0 24 Z"
+        android:strokeWidth="1" />
+    </group>
+  </group>
+</vector>

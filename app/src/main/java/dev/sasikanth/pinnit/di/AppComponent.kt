@@ -13,10 +13,11 @@ import dev.sasikanth.pinnit.editor.EditorScreen
 import dev.sasikanth.pinnit.notifications.NotificationsScreen
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.qspopup.QsPopupActivity
+import dev.sasikanth.pinnit.worker.ScheduleWorker
 import javax.inject.Scope
 
 @AppScope
-@Component(modules = [AppModule::class])
+@Component(modules = [AppModule::class, DateTimeFormatterModule::class])
 interface AppComponent {
 
   @Component.Factory
@@ -36,6 +37,8 @@ interface AppComponent {
   fun inject(target: BootCompletedReceiver)
   fun inject(target: AppUpdateReceiver)
   fun inject(target: DeleteNotificationReceiver)
+
+  fun inject(target: ScheduleWorker)
 }
 
 @Scope

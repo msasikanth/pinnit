@@ -41,10 +41,10 @@
     <item name="android:insetBottom">8dp</item>
     <item name="android:maxHeight">@dimen/button_height</item>
     <item name="android:minHeight">@dimen/button_height</item>
-    <item name="backgroundTint">@color/button_group_state</item>
+    <item name="backgroundTint">@color/button_group_background_state</item>
     <item name="android:textColor">@color/button_group_text_state</item>
     <item name="strokeWidth">2dp</item>
-    <item name="strokeColor">?attr/colorOutlinedButtonGroup</item>
+    <item name="strokeColor">@color/button_group_stroke_state</item>
     <item name="cornerRadius">@dimen/shape_theming_radius</item>
     <item name="elevation">0dp</item>
   </style>
@@ -61,6 +61,20 @@
     <item name="android:textColor">@color/maroon_200</item>
     <item name="rippleColor">@color/maroon_200</item>
     <item name="cornerRadius">@dimen/shape_theming_radius</item>
+  </style>
+
+  <style name="Widget.Pinnit.Button.TextButton.Schedule">
+    <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">0dp</item>
+    <item name="android:maxHeight">@dimen/button_height</item>
+    <item name="android:minHeight">@dimen/button_height</item>
+    <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
+    <item name="android:textColor">?attr/colorSecondary</item>
+    <item name="rippleColor">?attr/colorSecondaryRipple</item>
+    <item name="iconGravity">end</item>
+    <item name="iconTint">?attr/colorSecondary</item>
+    <item name="iconPadding">0dp</item>
+    <item name="shapeAppearanceOverlay">?attr/shapeAppearanceSmallComponent</item>
   </style>
 
   <!-- Bottom Sheet -->
@@ -136,4 +150,37 @@
     <item name="elevation">0dp</item>
   </style>
 
+  <!-- Calendar picker -->
+  <style name="ThemeOverlay.Pinnit.MaterialCalendar" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+    <item name="colorPrimary">?attr/colorSecondary</item>
+    <item name="colorOnPrimary">?attr/colorOnSecondary</item>
+
+    <item name="materialCalendarHeaderLayout">@style/Widget.Pinnit.MaterialCalendar.HeaderLayout</item>
+    <item name="materialCalendarHeaderTitle">@style/Widget.Pinnit.MaterialCalendar.HeaderTitle</item>
+    <item name="materialCalendarHeaderSelection">@style/Widget.Pinnit.MaterialCalendar.HeaderSelection</item>
+    <item name="materialCalendarHeaderToggleButton">@style/Widget.Pinnit.MaterialCalendar.HeaderToggleButton</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderLayout" parent="Widget.MaterialComponents.MaterialCalendar.HeaderLayout">
+    <item name="android:background">?attr/colorSurface</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderTitle" parent="Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderSelection" parent="Widget.MaterialComponents.MaterialCalendar.HeaderSelection">
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="Widget.Pinnit.MaterialCalendar.HeaderToggleButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+    <item name="android:tint">?attr/colorOnSurface</item>
+  </style>
+
+  <!-- Time picker -->
+  <style name="ThemeOverlay.Pinnit.TimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+    <item name="colorPrimary">?attr/colorSecondary</item>
+    <item name="colorOnPrimary">?attr/colorOnSecondary</item>
+    <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.TimePicker.Title</item>
+  </style>
 </resources>

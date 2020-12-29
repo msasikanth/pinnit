@@ -12,6 +12,18 @@ class NotificationsScreenUpdate : Update<NotificationsScreenModel, Notifications
       is NotificationSwiped -> dispatch(setOf(DeleteNotification(event.notification)))
       is TogglePinStatusClicked -> dispatch(setOf(ToggleNotificationPinStatus(event.notification)))
       is UndoNotificationDelete -> dispatch(setOf(UndoDeletedNotification(event.notificationUuid)))
+      is NotificationDeleted -> notificationDeleted(event)
     }
+  }
+
+  private fun notificationDeleted(event: NotificationDeleted): Next<NotificationsScreenModel, NotificationsScreenEffect> {
+    val notification = event.notification
+    val effects = mutableSetOf<NotificationsScreenEffect>(ShowUndoDeleteNotification(event.notification))
+
+    if (notification.hasSchedule) {
+      effects.add(CancelNotificationSchedule(notification.uuid))
+    }
+
+    return dispatch(effects)
   }
 }

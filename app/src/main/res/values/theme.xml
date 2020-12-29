@@ -18,6 +18,7 @@
     <item name="colorOnPrimaryVariant">@color/colorOnPrimaryVariant</item>
 
     <item name="colorSecondary">@color/colorSecondary</item>
+    <item name="colorOnSecondary">@color/colorOnSecondary</item>
     <item name="colorSecondaryRipple">@color/color_secondary_20</item>
 
     <item name="colorSurface">@color/colorSurface</item>
@@ -44,6 +45,9 @@
     <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
     <item name="snackbarButtonStyle">@style/Widget.Pinnit.Button.TextButton.Snackbar</item>
     <item name="snackbarStyle">@style/Widget.Pinnit.Snackbar.FullWidth</item>
+
+    <item name="materialCalendarTheme">@style/ThemeOverlay.Pinnit.MaterialCalendar</item>
+    <item name="materialTimePickerTheme">@style/ThemeOverlay.Pinnit.TimePicker</item>
 
     <item name="textAppearanceOverline">@style/TextAppearance.Pinnit.Overline2</item>
     <item name="textAppearanceCaption">@style/TextAppearance.Pinnit.Caption</item>

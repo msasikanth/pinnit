@@ -7,7 +7,10 @@ import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.data.ScheduleType
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 class EditorScreenUpdateTest {
@@ -31,6 +34,7 @@ class EditorScreenUpdateTest {
               .notificationLoaded(notification)
               .titleChanged(notification.title)
               .contentChanged(notification.content)
+              .scheduleLoaded(notification.schedule)
           ),
           hasEffects(SetTitleAndContent(notification.title, notification.content) as EditorScreenEffect)
         )
@@ -80,7 +84,7 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasNoModel(),
-          hasEffects(SaveNotificationAndCloseEditor(model.title!!, model.content) as EditorScreenEffect)
+          hasEffects(SaveNotification(model.title!!, model.content, model.schedule, true) as EditorScreenEffect)
         )
       )
   }
@@ -104,11 +108,11 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(
-            UpdateNotificationAndCloseEditor(
+            UpdateNotification(
               notificationUuid = pinnedNotificationUuid,
               title = model.title!!,
               content = model.content,
-              showAndroidNotification = true
+              schedule = model.schedule
             ) as EditorScreenEffect
           )
         )
@@ -122,7 +126,8 @@ class EditorScreenUpdateTest {
     val notification = TestData.notification(
       uuid = UUID.fromString("33605259-a4b2-4fc7-b4a6-90cf75215777"),
       title = notificationTitle,
-      content = notificationContent
+      content = notificationContent,
+      schedule = null
     )
     val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(notification)
@@ -148,6 +153,26 @@ class EditorScreenUpdateTest {
         TitleChanged("Updated Title"),
         BackClicked
       )
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowConfirmExitEditor as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when back is clicked and schedule is changed, then show confirm exit editor`() {
+    val notificationWithoutSchedule = TestData.notification(
+      schedule = null
+    )
+    val modelWithoutSchedule = defaultModel
+      .notificationLoaded(notificationWithoutSchedule)
+      .scheduleLoaded(TestData.schedule())
+
+    updateSpec
+      .given(modelWithoutSchedule)
+      .whenEvents(BackClicked)
       .then(
         assertThatNext(
           hasNoModel(),
@@ -205,6 +230,300 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(DeleteNotification(notification) as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when add schedule button is clicked, then add schedule`() {
+    val schedule = TestData.schedule()
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(AddScheduleClicked(schedule))
+      .then(
+        assertThatNext(
+          hasModel(defaultModel.addSchedule(schedule)),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when remove schedule button is clicked, then remove schedule`() {
+    val schedule = TestData.schedule()
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(RemoveScheduleClicked)
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.removeSchedule()),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule repeat is unchecked, then remove the schedule repeat type`() {
+    val schedule = TestData.schedule(scheduleType = ScheduleType.Daily)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleRepeatUnchecked)
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.removeScheduleRepeat()),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule repeat is checked, then add the schedule repeat type`() {
+    val schedule = TestData.schedule(scheduleType = null)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleRepeatChecked)
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.addScheduleRepeat()),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule date is clicked, then show date picker`() {
+    val scheduleDate = LocalDate.parse("2020-01-01")
+    val schedule = TestData.schedule(scheduleDate = scheduleDate)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleDateClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowDatePicker(scheduleDate))
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule time is clicked, then show time picker`() {
+    val scheduleTime = LocalTime.parse("09:00:00")
+    val schedule = TestData.schedule(scheduleTime = scheduleTime)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleTimeClicked)
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowTimePicker(scheduleTime))
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule date is changed, then update the model`() {
+    val schedule = TestData.schedule(scheduleDate = LocalDate.parse("2020-01-01"))
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+    val updatedLocalDate = LocalDate.parse("2020-01-05")
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleDateChanged(updatedLocalDate))
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.scheduleDateChanged(updatedLocalDate)),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule time is changed, then update the model`() {
+    val schedule = TestData.schedule(scheduleTime = LocalTime.parse("09:00:00"))
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+    val updatedLocalTime = LocalTime.parse("09:00:00")
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleTimeChanged(updatedLocalTime))
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.scheduleTimeChanged(updatedLocalTime)),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule type is changed, then update the model`() {
+    val schedule = TestData.schedule(scheduleType = ScheduleType.Daily)
+    val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleTypeChanged(ScheduleType.Monthly))
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.scheduleTypeChanged(ScheduleType.Monthly)),
+          hasNoEffects()
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is saved, then show notification if it's pinned and close editor`() {
+    val notification = TestData.notification(
+      title = "Sample Title",
+      content = "Sample Content",
+      isPinned = true
+    )
+    val notificationSavedModel = defaultModel
+      .titleChanged("Sample Title")
+      .contentChanged("Sample Content")
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationSaved(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ShowNotification(notification), ScheduleNotification(notification), CloseEditor)
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is saved, then close editor if the notification is not pinned`() {
+    val notification = TestData.notification(
+      title = "Sample Title",
+      content = "Sample Content",
+      isPinned = false
+    )
+    val notificationSavedModel = defaultModel
+      .titleChanged("Sample Title")
+      .contentChanged("Sample Content")
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationSaved(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ScheduleNotification(notification), CloseEditor)
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is updated, then show notification if the notification is pinned`() {
+    val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 1",
+      content = "Sample Content 1",
+      isPinned = true
+    )
+    val notificationSavedModel = defaultModel
+      .notificationLoaded(notification)
+      .titleChanged("Sample Title 2")
+      .contentChanged("Sample Content 2")
+
+    val updatedNotification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 2",
+      content = "Sample Content 2",
+      isPinned = true
+    )
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationUpdated(updatedNotification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(
+            ShowNotification(updatedNotification),
+            ScheduleNotification(updatedNotification),
+            CloseEditor
+          )
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is updated, then close editor if notification is not pinned`() {
+    val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 1",
+      content = "Sample Content 1",
+      isPinned = true
+    )
+    val notificationSavedModel = defaultModel
+      .notificationLoaded(notification)
+      .titleChanged("Sample Title 2")
+      .contentChanged("Sample Content 2")
+
+    val updatedNotification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 2",
+      content = "Sample Content 2",
+      isPinned = false
+    )
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationUpdated(updatedNotification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ScheduleNotification(updatedNotification), CloseEditor)
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is updated and schedule is removed, then cancel the schedule`() {
+    val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
+    val schedule = TestData.schedule()
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 1",
+      content = "Sample Content 1",
+      isPinned = true,
+      schedule = schedule
+    )
+    val notificationSavedModel = defaultModel
+      .notificationLoaded(notification)
+      .titleChanged("Sample Title 2")
+      .contentChanged("Sample Content 2")
+
+    val updatedNotification = TestData.notification(
+      uuid = notificationUuid,
+      title = "Sample Title 2",
+      content = "Sample Content 2",
+      isPinned = false,
+      schedule = null
+    )
+
+    updateSpec
+      .given(notificationSavedModel)
+      .whenEvent(NotificationUpdated(updatedNotification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CancelNotificationSchedule(notificationUuid), CloseEditor)
         )
       )
   }

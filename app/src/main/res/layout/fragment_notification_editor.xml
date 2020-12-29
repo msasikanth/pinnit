@@ -107,9 +107,7 @@
         style="@style/Widget.Pinnit.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         app:counterMaxLength="400"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
         app:layout_constraintStart_toEndOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/titleInputLayout">
@@ -127,6 +125,21 @@
           tools:text="@tools:sample/lorem/random" />
 
       </com.google.android.material.textfield.TextInputLayout>
+
+      <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/scheduleTopBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:barrierMargin="24dp"
+        app:constraint_referenced_ids="contentInputLayout" />
+
+      <include
+        android:id="@+id/scheduleView"
+        layout="@layout/view_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/scheduleTopBarrier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

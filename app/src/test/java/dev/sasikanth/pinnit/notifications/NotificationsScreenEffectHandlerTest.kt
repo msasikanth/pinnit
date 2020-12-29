@@ -9,6 +9,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
@@ -38,10 +39,12 @@ class NotificationsScreenEffectHandlerTest {
   private val notificationRepository = mock<NotificationRepository>()
   private val testDispatcherProvider = TestDispatcherProvider()
   private val notificationUtil = mock<NotificationUtil>()
+  private val pinnitNotificationScheduler = mock<PinnitNotificationScheduler>()
   private val effectHandler = NotificationsScreenEffectHandler(
     notificationRepository,
     testDispatcherProvider,
     notificationUtil,
+    pinnitNotificationScheduler,
     viewActionsConsumer
   )
 
@@ -90,6 +93,7 @@ class NotificationsScreenEffectHandlerTest {
     // given
     val notification = TestData.notification(
       uuid = UUID.fromString("ff73fd70-852f-4833-bc9c-a6f67b2e66f0"),
+      isPinned = false,
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock)
     )
@@ -98,7 +102,7 @@ class NotificationsScreenEffectHandlerTest {
     connection.accept(ToggleNotificationPinStatus(notification))
 
     // then
-    verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
+    verify(notificationRepository, times(1)).updatePinStatus(notification.uuid, true)
     verifyNoMoreInteractions(notificationRepository)
 
     verify(notificationUtil).showNotification(notification)
@@ -122,7 +126,7 @@ class NotificationsScreenEffectHandlerTest {
     connection.accept(ToggleNotificationPinStatus(notification))
 
     // then
-    verify(notificationRepository, times(1)).toggleNotificationPinStatus(notification)
+    verify(notificationRepository, times(1)).updatePinStatus(notification.uuid, false)
     verifyNoMoreInteractions(notificationRepository)
 
     verify(notificationUtil).dismissNotification(notification)
@@ -141,6 +145,12 @@ class NotificationsScreenEffectHandlerTest {
       updatedAt = Instant.now(utcClock)
     )
 
+    val deletedNotification = notification.copy(
+      deletedAt = Instant.now(utcClock).plus(10, ChronoUnit.MINUTES)
+    )
+
+    whenever(notificationRepository.deleteNotification(notification)) doReturn deletedNotification
+
     // when
     connection.accept(DeleteNotification(notification))
 
@@ -148,8 +158,8 @@ class NotificationsScreenEffectHandlerTest {
     verify(notificationRepository, times(1)).deleteNotification(notification)
     verifyNoMoreInteractions(notificationRepository)
 
-    consumer.assertValues()
-    viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
+    consumer.assertValues(NotificationDeleted(deletedNotification))
+    viewActionsConsumer.assertValues()
   }
 
   @Test
@@ -158,6 +168,7 @@ class NotificationsScreenEffectHandlerTest {
     val notificationUuid = UUID.fromString("f3d50ff2-5e92-4d46-b5b9-53bbe770ef9c")
     val notification = TestData.notification(
       uuid = UUID.fromString("34727623-c572-455f-8e37-b1df3baca79e"),
+      schedule = null,
       createdAt = Instant.now(utcClock).minus(1, ChronoUnit.DAYS),
       updatedAt = Instant.now(utcClock),
       deletedAt = Instant.now(utcClock)
@@ -176,6 +187,36 @@ class NotificationsScreenEffectHandlerTest {
     consumer.assertValues()
     viewActionsConsumer.assertValues()
   }
+
+  @Test
+  fun `when undo deleted notification effect is received and notification has schedule, then undo the delete and schedule the notification`() =
+    testScope.runBlockingTest {
+      // given
+      val notificationUuid = UUID.fromString("f3d50ff2-5e92-4d46-b5b9-53bbe770ef9c")
+      val notification = TestData.notification(
+        uuid = UUID.fromString("34727623-c572-455f-8e37-b1df3baca79e"),
+        schedule = TestData.schedule(),
+        createdAt = Instant.now(utcClock).minus(1, ChronoUnit.DAYS),
+        updatedAt = Instant.now(utcClock),
+        deletedAt = Instant.now(utcClock)
+      )
+
+      whenever(notificationRepository.notification(notificationUuid)) doReturn notification
+
+      // when
+      connection.accept(UndoDeletedNotification(notificationUuid))
+
+      // then
+      verify(notificationRepository, times(1)).notification(notificationUuid)
+      verify(notificationRepository, times(1)).undoNotificationDelete(notification)
+      verifyNoMoreInteractions(notificationRepository)
+
+      verify(pinnitNotificationScheduler).scheduleNotification(notification)
+      verifyNoMoreInteractions(notificationRepository)
+
+      consumer.assertValues()
+      viewActionsConsumer.assertValues()
+    }
 
   @Test
   fun `when check notifications visibility effect is received, then check notifications visibility`() = testScope.runBlockingTest {
@@ -201,5 +242,34 @@ class NotificationsScreenEffectHandlerTest {
 
     consumer.assertValues()
     viewActionsConsumer.assertValues()
+  }
+
+  @Test
+  fun `when show undo delete notification effect is received, then show the undo delete notification`() {
+    // given
+    val notification = TestData.notification()
+
+    // when
+    connection.accept(ShowUndoDeleteNotification(notification))
+
+    // then
+    consumer.assertValues()
+    viewActionsConsumer.assertValues(UndoNotificationDeleteViewEffect(notification.uuid))
+  }
+
+  @Test
+  fun `when cancel schedule notification effect is received, then cancel the schedule`() {
+    // give
+    val notificationId = UUID.fromString("f249493f-7807-4e05-a3f8-dfdb049ad99f")
+
+    // when
+    connection.accept(CancelNotificationSchedule(notificationId))
+
+    // then
+    consumer.assertValues()
+    viewActionsConsumer.assertValues()
+
+    verify(pinnitNotificationScheduler).cancel(notificationId)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
 }

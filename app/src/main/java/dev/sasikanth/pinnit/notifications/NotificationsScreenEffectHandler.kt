@@ -4,6 +4,7 @@ import com.spotify.mobius.functions.Consumer
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.launchIn
@@ -14,6 +15,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
   private val notificationRepository: NotificationRepository,
   private val dispatcherProvider: DispatcherProvider,
   private val notificationUtil: NotificationUtil,
+  private val pinnitNotificationScheduler: PinnitNotificationScheduler,
   @Assisted private val viewEffectConsumer: Consumer<NotificationScreenViewEffect>
 ) : CoroutineConnectable<NotificationsScreenEffect, NotificationsScreenEvent>(dispatcherProvider.main) {
 
@@ -30,9 +32,13 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
 
       is ToggleNotificationPinStatus -> toggleNotificationPinStatus(effect)
 
-      is DeleteNotification -> deleteNotification(effect)
+      is DeleteNotification -> deleteNotification(effect, dispatchEvent)
 
       is UndoDeletedNotification -> undoDeleteNotification(effect)
+
+      is ShowUndoDeleteNotification -> showUndoDeleteNotification(effect)
+
+      is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
     }
   }
 
@@ -56,17 +62,25 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       // If already is not pinned, then show the notification and pin it
       notificationUtil.showNotification(notification)
     }
-    notificationRepository.toggleNotificationPinStatus(notification)
+    notificationRepository.updatePinStatus(notification.uuid, !notification.isPinned)
   }
 
-  private suspend fun deleteNotification(effect: DeleteNotification) {
-    notificationRepository.deleteNotification(effect.notification)
+  private suspend fun deleteNotification(effect: DeleteNotification, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
+    val deletedNotification = notificationRepository.deleteNotification(effect.notification)
+    dispatchEvent(NotificationDeleted(deletedNotification))
+  }
+
+  private fun showUndoDeleteNotification(effect: ShowUndoDeleteNotification) {
     viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
   }
 
   private suspend fun undoDeleteNotification(effect: UndoDeletedNotification) {
     val notification = notificationRepository.notification(effect.notificationUuid)
     notificationRepository.undoNotificationDelete(notification)
+
+    // TODO: Move this check to Update function
+    if (notification.hasSchedule)
+      pinnitNotificationScheduler.scheduleNotification(notification)
   }
 
   /**
@@ -78,5 +92,9 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
     withContext(dispatcherProvider.default) {
       notificationUtil.checkNotificationsVisibility(notifications)
     }
+  }
+
+  private fun cancelNotificationSchedule(effect: CancelNotificationSchedule) {
+    pinnitNotificationScheduler.cancel(effect.notificationId)
   }
 }

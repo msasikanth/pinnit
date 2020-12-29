@@ -11,7 +11,9 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -19,6 +21,8 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 class EditorScreenEffectHandlerTest {
@@ -29,10 +33,12 @@ class EditorScreenEffectHandlerTest {
   private val repository = mock<NotificationRepository>()
   private val dispatcherProvider = TestDispatcherProvider()
   private val notificationUtil = mock<NotificationUtil>()
+  private val pinnitNotificationScheduler = mock<PinnitNotificationScheduler>()
   private val effectHandler = EditorScreenEffectHandler(
     repository,
     dispatcherProvider,
     notificationUtil,
+    pinnitNotificationScheduler,
     viewEffectConsumer
   )
 
@@ -70,41 +76,53 @@ class EditorScreenEffectHandlerTest {
   }
 
   @Test
-  fun `when save and close effect is received, then save the notification and close editor`() = testScope.runBlockingTest {
+  fun `when save notification effect is received, then save the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("9610e5b7-6894-4da9-965a-048abf568247")
     val title = "Notification Title"
     val content = "This is content"
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00"),
+      scheduleType = ScheduleType.Daily
+    )
 
     val notification = TestData.notification(
       uuid = notificationUuid,
       title = title,
-      content = content
+      content = content,
+      isPinned = true
     )
 
-    whenever(repository.save(eq(title), eq(content), eq(true), any())) doReturn notification
+    whenever(
+      repository.save(
+        title = eq(title),
+        content = eq(content),
+        isPinned = eq(true),
+        schedule = eq(schedule),
+        uuid = any()
+      )
+    ) doReturn notification
 
     // when
-    connection.accept(SaveNotificationAndCloseEditor(title, content))
+    connection.accept(SaveNotification(title, content, schedule, true))
 
     // then
     verify(repository).save(
       title = eq(title),
       content = eq(content),
       isPinned = eq(true),
+      schedule = eq(schedule),
       uuid = any()
     )
     verifyNoMoreInteractions(repository)
 
-    verify(notificationUtil).showNotification(notification)
-    verifyNoMoreInteractions(notificationUtil)
-
-    consumer.assertValues()
-    viewEffectConsumer.assertValues(CloseEditorView)
+    consumer.assertValues(NotificationSaved(notification))
+    viewEffectConsumer.assertValues()
   }
 
   @Test
-  fun `when update and close effect is received, then update the notification and close editor`() = testScope.runBlockingTest {
+  fun `when update notification effect is received, then update the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("4e91382a-d5c3-44a7-8ee3-fa15a4ec69b4")
     val notification = TestData.notification(
@@ -112,31 +130,36 @@ class EditorScreenEffectHandlerTest {
       title = "Notification Title"
     )
 
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00"),
+      scheduleType = ScheduleType.Daily
+    )
+
     val updatedTitle = "Updated Title"
     val updatedNotification = notification
-      .copy(title = updatedTitle)
+      .copy(title = updatedTitle, schedule = schedule)
 
     whenever(repository.notification(notificationUuid)) doReturn notification
     whenever(repository.updateNotification(updatedNotification)) doReturn updatedNotification
 
     // when
-    connection.accept(UpdateNotificationAndCloseEditor(
-      notificationUuid = notificationUuid,
-      title = updatedTitle,
-      content = null,
-      showAndroidNotification = true
-    ))
+    connection.accept(
+      UpdateNotification(
+        notificationUuid = notificationUuid,
+        title = updatedTitle,
+        content = null,
+        schedule = schedule
+      )
+    )
 
     // then
     verify(repository).notification(notificationUuid)
     verify(repository).updateNotification(updatedNotification)
     verifyNoMoreInteractions(repository)
 
-    verify(notificationUtil).showNotification(updatedNotification)
-    verifyNoMoreInteractions(notificationUtil)
-
-    consumer.assertValues()
-    viewEffectConsumer.assertValues(CloseEditorView)
+    consumer.assertValues(NotificationUpdated(updatedNotification))
+    viewEffectConsumer.assertValues()
   }
 
   @Test
@@ -176,11 +199,13 @@ class EditorScreenEffectHandlerTest {
     connection.accept(DeleteNotification(notification))
 
     // then
-    verify(repository).toggleNotificationPinStatus(notification)
+    verify(repository).updatePinStatus(notification.uuid, false)
     verify(repository).deleteNotification(notification)
     verifyNoMoreInteractions(repository)
     verify(notificationUtil).dismissNotification(notification)
     verifyNoMoreInteractions(notificationUtil)
+    verify(pinnitNotificationScheduler).cancel(notification.uuid)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)
@@ -213,5 +238,87 @@ class EditorScreenEffectHandlerTest {
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(SetTitle(null), SetContent(notificationContent))
+  }
+
+  @Test
+  fun `when show date picker effect is received, then show date picker dialog`() {
+    // given
+    val date = LocalDate.parse("2020-01-01")
+
+    // when
+    connection.accept(ShowDatePicker(date))
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(ShowDatePickerDialog(date))
+  }
+
+  @Test
+  fun `when show time picker effect is received, then show time picker dialog`() {
+    // given
+    val time = LocalTime.parse("09:00:00")
+
+    // when
+    connection.accept(ShowTimePicker(time))
+
+    // then
+    verifyZeroInteractions(repository)
+    verifyZeroInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues(ShowTimePickerDialog(time))
+  }
+
+  @Test
+  fun `when show notification effect is received, then show android notification`() {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("e3848c84-afe9-45a6-ba90-d7f0ad3de193")
+    )
+
+    // when
+    connection.accept(ShowNotification(notification))
+
+    // then
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+
+    verify(notificationUtil).showNotification(notification)
+    verifyNoMoreInteractions(notificationUtil)
+  }
+
+  @Test
+  fun `when schedule notification effect is received, then schedule a notification`() {
+    // given
+    val notification = TestData.notification()
+
+    // when
+    connection.accept(ScheduleNotification(notification))
+
+    // then
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+
+    verify(pinnitNotificationScheduler).scheduleNotification(notification)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
+  }
+
+  @Test
+  fun `when cancel notification schedule effect is received, then cancel notification schedule`() {
+    // given
+    val notificationId = UUID.fromString("43c61479-2529-424a-a0fa-12b4bd90f591")
+
+    // when
+    connection.accept(CancelNotificationSchedule(notificationId))
+
+    // then
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+
+    verify(pinnitNotificationScheduler).cancel(notificationId)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
 }

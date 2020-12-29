@@ -50,7 +50,7 @@ class UnpinNotificationReceiver : BroadcastReceiver() {
 
       mainScope.launch {
         val notification = repository.notification(UUID.fromString(notificationUuid))
-        repository.toggleNotificationPinStatus(notification)
+        repository.updatePinStatus(notification.uuid, false)
 
         notificationUtil.dismissNotification(notification)
 

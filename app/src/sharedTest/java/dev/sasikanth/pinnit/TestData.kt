@@ -1,7 +1,11 @@
 package dev.sasikanth.pinnit
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
+import dev.sasikanth.pinnit.data.ScheduleType
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 object TestData {
@@ -12,7 +16,15 @@ object TestData {
     isPinned: Boolean = false,
     createdAt: Instant = Instant.now(),
     updatedAt: Instant = Instant.now(),
-    deletedAt: Instant? = null
+    deletedAt: Instant? = null,
+    scheduleDate: LocalDate = LocalDate.now(),
+    scheduleTime: LocalTime = LocalTime.now(),
+    scheduleType: ScheduleType? = ScheduleType.Daily,
+    schedule: Schedule? = schedule(
+      scheduleDate = scheduleDate,
+      scheduleTime = scheduleTime,
+      scheduleType = scheduleType
+    )
   ): PinnitNotification {
     return PinnitNotification(
       uuid = uuid,
@@ -21,7 +33,20 @@ object TestData {
       isPinned = isPinned,
       createdAt = createdAt,
       updatedAt = updatedAt,
-      deletedAt = deletedAt
+      deletedAt = deletedAt,
+      schedule = schedule
+    )
+  }
+
+  fun schedule(
+    scheduleDate: LocalDate = LocalDate.now(),
+    scheduleTime: LocalTime = LocalTime.now(),
+    scheduleType: ScheduleType? = ScheduleType.Daily,
+  ): Schedule {
+    return Schedule(
+      scheduleDate = scheduleDate,
+      scheduleTime = scheduleTime,
+      scheduleType = scheduleType
     )
   }
 }

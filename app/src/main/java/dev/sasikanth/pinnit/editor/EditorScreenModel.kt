@@ -1,13 +1,18 @@
 package dev.sasikanth.pinnit.editor
 
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
+import dev.sasikanth.pinnit.data.ScheduleType
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 data class EditorScreenModel(
   val notificationUuid: UUID?,
   val notification: PinnitNotification?,
   val title: String?,
-  val content: String?
+  val content: String?,
+  val schedule: Schedule?
 ) {
 
   companion object {
@@ -15,7 +20,8 @@ data class EditorScreenModel(
       notificationUuid = notificationUuid,
       notification = null,
       title = title,
-      content = content
+      content = content,
+      schedule = null
     )
   }
 
@@ -30,11 +36,22 @@ data class EditorScreenModel(
       return notification?.equalsTitleAndContent(title, content)?.not() ?: (!title.isNullOrBlank() || !content.isNullOrBlank())
     }
 
+  val hasScheduleChanged: Boolean
+    get() {
+      val notificationSchedule = notification?.schedule
+      if (notificationSchedule == schedule) return false
+      if (schedule == null) return false
+      return true
+    }
+
   val isNotificationLoaded: Boolean
     get() = notification != null
 
   val hasNotificationTitle: Boolean
     get() = title.isNullOrBlank().not()
+
+  val hasSchedule: Boolean
+    get() = schedule != null
 
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
@@ -46,5 +63,37 @@ data class EditorScreenModel(
 
   fun notificationLoaded(notification: PinnitNotification): EditorScreenModel {
     return copy(notification = notification)
+  }
+
+  fun scheduleLoaded(schedule: Schedule?): EditorScreenModel {
+    return copy(schedule = schedule)
+  }
+
+  fun addSchedule(schedule: Schedule): EditorScreenModel {
+    return copy(schedule = schedule)
+  }
+
+  fun removeSchedule(): EditorScreenModel {
+    return copy(schedule = null)
+  }
+
+  fun removeScheduleRepeat(): EditorScreenModel {
+    return copy(schedule = schedule?.removeScheduleRepeat())
+  }
+
+  fun addScheduleRepeat(): EditorScreenModel {
+    return copy(schedule = schedule?.addScheduleRepeat())
+  }
+
+  fun scheduleDateChanged(date: LocalDate): EditorScreenModel {
+    return copy(schedule = schedule?.scheduleDateChanged(date))
+  }
+
+  fun scheduleTimeChanged(updatedLocalTime: LocalTime?): EditorScreenModel {
+    return copy(schedule = schedule?.scheduleTimeChanged(updatedLocalTime))
+  }
+
+  fun scheduleTypeChanged(scheduleType: ScheduleType): EditorScreenModel {
+    return copy(schedule = schedule?.scheduleTypeChanged(scheduleType))
   }
 }

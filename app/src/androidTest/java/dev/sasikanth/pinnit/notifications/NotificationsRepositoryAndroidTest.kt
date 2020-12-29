@@ -66,6 +66,7 @@ class NotificationsRepositoryAndroidTest {
       title = expectedNotification.title,
       content = expectedNotification.content,
       isPinned = expectedNotification.isPinned,
+      schedule = expectedNotification.schedule,
       uuid = expectedNotification.uuid
     )
 
@@ -74,13 +75,14 @@ class NotificationsRepositoryAndroidTest {
   }
 
   @Test
-  fun toggling_notification_pin_status_should_work_correctly() = runBlocking {
+  fun updating_notification_pin_status_should_work_correctly() = runBlocking {
     // given
     val notificationUuid = UUID.fromString("76dde7cb-2d17-46c0-b523-3ea01eb1565e")
     val notification = TestData.notification(
       uuid = notificationUuid,
       title = "Notification Title",
       content = "Notification Content",
+      isPinned = false,
       createdAt = Instant.now(clock),
       updatedAt = Instant.now(clock)
     )
@@ -90,9 +92,10 @@ class NotificationsRepositoryAndroidTest {
       title = notification.title,
       content = notification.content,
       isPinned = notification.isPinned,
+      schedule = notification.schedule,
       uuid = notification.uuid
     )
-    notificationRepository.toggleNotificationPinStatus(notification)
+    notificationRepository.updatePinStatus(notificationUuid, true)
 
     // then
     val expectedNotification = notification.copy(
@@ -211,16 +214,15 @@ class NotificationsRepositoryAndroidTest {
       updatedAt = Instant.now(clock).minus(1, ChronoUnit.DAYS)
     )
 
-    val deletedNotification = notification.copy(
+    val expectedDeletedNotification = notification.copy(
       deletedAt = Instant.now(clock)
     )
 
     // when
-    notificationRepository.deleteNotification(notification)
+    val deletedNotification = notificationRepository.deleteNotification(notification)
 
     // then
-    assertThat(notificationRepository.notification(notification.uuid))
-      .isEqualTo(deletedNotification)
+    assertThat(deletedNotification).isEqualTo(expectedDeletedNotification)
   }
 
   @Test

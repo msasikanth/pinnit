@@ -28,6 +28,8 @@ android {
   }
 
   sourceSets {
+    androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+
     String sharedTestDir = 'src/sharedTest/java'
     test {
       java.srcDir sharedTestDir
@@ -90,6 +92,8 @@ dependencies {
 
   implementation "androidx.preference:preference-ktx:$versions.preference"
 
+  implementation "androidx.work:work-runtime-ktx:$versions.workManager"
+
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
 
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
@@ -110,6 +114,8 @@ dependencies {
 
   implementation "me.saket:better-link-movement-method:$versions.betterLinkMovement"
 
+  implementation "androidx.vectordrawable:vectordrawable-seekable:$versions.seekableAVD"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
@@ -118,9 +124,11 @@ dependencies {
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
   testImplementation "com.spotify.mobius:mobius-test:$versions.mobius"
 
+  androidTestImplementation "androidx.room:room-testing:$versions.room"
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
   androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
   androidTestImplementation "com.google.truth:truth:$versions.truth"
   androidTestImplementation "app.cash.turbine:turbine:$versions.turbine"
+  androidTestImplementation "androidx.work:work-testing:$versions.workManager"
   kaptAndroidTest "com.google.dagger:dagger-compiler:$versions.dagger"
 }

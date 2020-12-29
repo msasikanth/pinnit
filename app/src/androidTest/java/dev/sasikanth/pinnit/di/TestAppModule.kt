@@ -8,7 +8,9 @@ import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.notifications.NotificationModule
 import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
 import dev.sasikanth.pinnit.utils.DispatcherProvider
+import dev.sasikanth.pinnit.utils.TestUserClock
 import dev.sasikanth.pinnit.utils.TestUtcClock
+import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 
 @Module(
@@ -35,6 +37,15 @@ object TestAppModule {
 
   @Provides
   fun providesUtcClock(testUtcClock: TestUtcClock): UtcClock = testUtcClock
+
+  @AppScope
+  @Provides
+  fun testUserClock(): TestUserClock {
+    return TestUserClock()
+  }
+
+  @Provides
+  fun userClock(testUserClock: TestUserClock): UserClock = testUserClock
 
   @AppScope
   @Provides
