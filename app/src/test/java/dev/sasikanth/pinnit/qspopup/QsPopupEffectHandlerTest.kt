@@ -146,4 +146,22 @@ class QsPopupEffectHandlerTest {
     consumer.assertValues()
     viewEffectConsumer.assertValues()
   }
+
+  @Test
+  fun `when remove notification schedule effect is received, then remove notification schedule`() = testScope.runBlockingTest {
+    // given
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+
+    // when
+    connection.accept(RemoveSchedule(notification.uuid))
+
+    // then
+    verify(notificationRepository).removeSchedule(notification.uuid)
+    verifyNoMoreInteractions(notificationRepository)
+
+    consumer.assertValues(RemovedNotificationSchedule(notification.uuid))
+    viewEffectConsumer.assertValues()
+  }
 }

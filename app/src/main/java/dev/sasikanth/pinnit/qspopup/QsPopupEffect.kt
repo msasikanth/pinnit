@@ -12,3 +12,5 @@ data class OpenNotificationEditor(val notification: PinnitNotification) : QsPopu
 data class ToggleNotificationPinStatus(val notification: PinnitNotification) : QsPopupEffect()
 
 data class CancelNotificationSchedule(val notificationId: UUID) : QsPopupEffect()
+
+data class RemoveSchedule(val notificationId: UUID) : QsPopupEffect()

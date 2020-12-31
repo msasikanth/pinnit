@@ -31,6 +31,7 @@ class QsPopupEffectHandler @AssistedInject constructor(
 
       is ToggleNotificationPinStatus -> toggleNotificationPinStatus(effect)
       is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
+      is RemoveSchedule -> removeSchedule(effect, dispatchEvent)
     }
   }
 
@@ -59,5 +60,12 @@ class QsPopupEffectHandler @AssistedInject constructor(
 
   private fun cancelNotificationSchedule(effect: CancelNotificationSchedule) {
     pinnitNotificationScheduler.cancel(effect.notificationId)
+  }
+
+  private suspend fun removeSchedule(effect: RemoveSchedule, dispatchEvent: (QsPopupEvent) -> Unit) {
+    val notificationId = effect.notificationId
+
+    notificationRepository.removeSchedule(notificationId)
+    dispatchEvent(RemovedNotificationSchedule(notificationId))
   }
 }
