@@ -78,4 +78,8 @@ class NotificationRepository @Inject constructor(
     )
     notificationDao.save(listOf(undidNotification))
   }
+
+  suspend fun removeSchedule(notificationId: UUID) {
+    notificationDao.removeSchedule(notificationId)
+  }
 }
