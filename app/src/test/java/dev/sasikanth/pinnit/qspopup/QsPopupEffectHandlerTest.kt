@@ -11,6 +11,7 @@ import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
@@ -33,11 +34,13 @@ class QsPopupEffectHandlerTest {
 
   private val notificationRepository = mock<NotificationRepository>()
   private val notificationUtil = mock<NotificationUtil>()
+  private val pinnitNotificationScheduler = mock<PinnitNotificationScheduler>()
 
   private val effectHandler = QsPopupEffectHandler(
     dispatcherProvider = TestDispatcherProvider(),
     notificationRepository = notificationRepository,
     notificationUtil = notificationUtil,
+    pinnitNotificationScheduler = pinnitNotificationScheduler,
     viewEffectConsumer = viewEffectConsumer
   )
 
@@ -121,6 +124,24 @@ class QsPopupEffectHandlerTest {
 
     verify(notificationUtil).dismissNotification(notification)
     verifyNoMoreInteractions(notificationUtil)
+
+    consumer.assertValues()
+    viewEffectConsumer.assertValues()
+  }
+
+  @Test
+  fun `when cancel notification schedule effect is received, then cancel the notification schedule`() = testScope.runBlockingTest {
+    // given
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+
+    // when
+    connection.accept(CancelNotificationSchedule(notification.uuid))
+
+    // then
+    verify(pinnitNotificationScheduler).cancel(notification.uuid)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues()

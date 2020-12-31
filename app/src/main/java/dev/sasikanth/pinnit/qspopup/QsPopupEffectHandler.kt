@@ -5,6 +5,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.notifications.NotificationRepository
+import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.launchIn
@@ -14,6 +15,7 @@ class QsPopupEffectHandler @AssistedInject constructor(
   dispatcherProvider: DispatcherProvider,
   private val notificationRepository: NotificationRepository,
   private val notificationUtil: NotificationUtil,
+  private val pinnitNotificationScheduler: PinnitNotificationScheduler,
   @Assisted private val viewEffectConsumer: Consumer<QsPopupViewEffect>
 ) : CoroutineConnectable<QsPopupEffect, QsPopupEvent>(dispatcherProvider.main) {
 
@@ -28,6 +30,7 @@ class QsPopupEffectHandler @AssistedInject constructor(
       is OpenNotificationEditor -> viewEffectConsumer.accept(OpenNotificationEditorViewEffect(effect.notification))
 
       is ToggleNotificationPinStatus -> toggleNotificationPinStatus(effect)
+      is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
     }
   }
 
@@ -54,4 +57,7 @@ class QsPopupEffectHandler @AssistedInject constructor(
     notificationRepository.updatePinStatus(notification.uuid, !notification.isPinned)
   }
 
+  private fun cancelNotificationSchedule(effect: CancelNotificationSchedule) {
+    pinnitNotificationScheduler.cancel(effect.notificationId)
+  }
 }
