@@ -96,4 +96,21 @@ class QsPopupUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when remove notification schedule is clicked, then remove schedule`() {
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(RemoveNotificationScheduleClicked(notification.uuid))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(RemoveSchedule(notification.uuid))
+        )
+      )
+  }
 }

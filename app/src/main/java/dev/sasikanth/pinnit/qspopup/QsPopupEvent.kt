@@ -12,3 +12,5 @@ data class NotificationClicked(val notification: PinnitNotification) : QsPopupEv
 data class TogglePinStatusClicked(val notification: PinnitNotification) : QsPopupEvent()
 
 data class RemovedNotificationSchedule(val notificationId: UUID) : QsPopupEvent()
+
+data class RemoveNotificationScheduleClicked(val notificationId: UUID) : QsPopupEvent()
