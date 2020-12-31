@@ -1,7 +1,10 @@
 package dev.sasikanth.pinnit.qspopup
 
 import com.spotify.mobius.test.NextMatchers
+import com.spotify.mobius.test.NextMatchers.hasEffects
+import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
+import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import org.junit.Test
@@ -28,7 +31,7 @@ class QsPopupUpdateTest {
       .given(defaultModel)
       .whenEvent(NotificationsLoaded(notifications))
       .then(
-        UpdateSpec.assertThatNext(
+        assertThatNext(
           NextMatchers.hasModel(defaultModel.onNotificationsLoaded(notifications)),
           NextMatchers.hasNoEffects()
         )
@@ -49,9 +52,9 @@ class QsPopupUpdateTest {
       .given(model)
       .whenEvent(NotificationClicked(notification))
       .then(
-        UpdateSpec.assertThatNext(
-          NextMatchers.hasNoModel(),
-          NextMatchers.hasEffects(OpenNotificationEditor(notification) as QsPopupEffect)
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(OpenNotificationEditor(notification) as QsPopupEffect)
         )
       )
   }
@@ -70,9 +73,26 @@ class QsPopupUpdateTest {
       .given(model)
       .whenEvent(TogglePinStatusClicked(notification))
       .then(
-        UpdateSpec.assertThatNext(
-          NextMatchers.hasNoModel(),
-          NextMatchers.hasEffects(ToggleNotificationPinStatus(notification) as QsPopupEffect)
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ToggleNotificationPinStatus(notification) as QsPopupEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule is removed, then cancel the notification schedule`() {
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(RemovedNotificationSchedule(notification.uuid))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CancelNotificationSchedule(notification.uuid))
         )
       )
   }
