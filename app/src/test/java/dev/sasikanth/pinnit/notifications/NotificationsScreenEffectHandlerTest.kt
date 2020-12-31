@@ -272,4 +272,19 @@ class NotificationsScreenEffectHandlerTest {
     verify(pinnitNotificationScheduler).cancel(notificationId)
     verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
+
+  @Test
+  fun `when remove schedule effect is received, then remove the schedule`() = testScope.runBlockingTest {
+    // given
+    val notificationId = UUID.fromString("b19bbdfd-786a-4228-a5cb-f12ab040ac07")
+
+    // when
+    connection.accept(RemoveSchedule(notificationId))
+
+    // then
+    consumer.assertValues(RemovedNotificationSchedule(notificationId))
+
+    verify(notificationRepository).removeSchedule(notificationId)
+    verifyNoMoreInteractions(notificationRepository)
+  }
 }

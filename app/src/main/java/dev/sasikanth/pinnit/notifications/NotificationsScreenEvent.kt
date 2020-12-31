@@ -14,3 +14,5 @@ data class TogglePinStatusClicked(val notification: PinnitNotification) : Notifi
 data class UndoNotificationDelete(val notificationUuid: UUID) : NotificationsScreenEvent()
 
 data class NotificationDeleted(val notification: PinnitNotification) : NotificationsScreenEvent()
+
+data class RemovedNotificationSchedule(val notificationId: UUID) : NotificationsScreenEvent()

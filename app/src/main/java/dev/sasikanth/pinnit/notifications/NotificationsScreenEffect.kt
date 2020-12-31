@@ -18,3 +18,5 @@ object CheckNotificationsVisibility : NotificationsScreenEffect()
 data class ShowUndoDeleteNotification(val notification: PinnitNotification) : NotificationsScreenEffect()
 
 data class CancelNotificationSchedule(val notificationId: UUID) : NotificationsScreenEffect()
+
+data class RemoveSchedule(val notificationId: UUID) : NotificationsScreenEffect()
