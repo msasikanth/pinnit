@@ -137,4 +137,20 @@ class NotificationsScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when notification schedule is removed, then cancel the notification schedule`() {
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(RemovedNotificationSchedule(notification.uuid))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(CancelNotificationSchedule(notification.uuid))
+        )
+      )
+  }
 }
