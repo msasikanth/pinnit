@@ -17,6 +17,8 @@ class QsPopupUpdate : Update<QsPopupModel, QsPopupEvent, QsPopupEffect> {
       is RemovedNotificationSchedule -> dispatch(setOf(CancelNotificationSchedule(event.notificationId)))
 
       is RemoveNotificationScheduleClicked -> dispatch(setOf(RemoveSchedule(event.notificationId)))
+
+      is EditNotificationScheduleClicked -> dispatch(setOf(OpenNotificationEditor(event.notification)))
     }
   }
 }

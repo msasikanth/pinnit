@@ -113,4 +113,21 @@ class QsPopupUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when edit notification schedule is clicked, then open notification editor`() {
+    val notification = TestData.notification(
+      schedule = TestData.schedule()
+    )
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(EditNotificationScheduleClicked(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(OpenNotificationEditor(notification))
+        )
+      )
+  }
 }
