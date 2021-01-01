@@ -24,6 +24,7 @@ import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.about.AboutBottomSheet
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
@@ -31,9 +32,11 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
+import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class NotificationsScreen : Fragment(R.layout.fragment_notifications), NotificationsScreenUi {
@@ -42,7 +45,18 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   lateinit var utcClock: UtcClock
 
   @Inject
+  lateinit var userClock: UserClock
+
+  @Inject
   lateinit var effectHandler: NotificationsScreenEffectHandler.Factory
+
+  @Inject
+  @DateTimeFormat(DateTimeFormat.Type.ScheduleDateFormat)
+  lateinit var scheduleDateFormatter: DateTimeFormatter
+
+  @Inject
+  @DateTimeFormat(DateTimeFormat.Type.ScheduleTimeFormat)
+  lateinit var scheduleTimeFormatter: DateTimeFormatter
 
   private lateinit var adapter: NotificationsListAdapter
 
@@ -81,7 +95,16 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
     postponeEnterTransition()
 
-    adapter = NotificationsListAdapter(utcClock, ::onToggleNotificationPinClicked, ::onNotificationClicked)
+    adapter = NotificationsListAdapter(
+      utcClock = utcClock,
+      userClock = userClock,
+      scheduleDateFormatter = scheduleDateFormatter,
+      scheduleTimeFormatter = scheduleTimeFormatter,
+      onToggleNotificationPinClicked = ::onToggleNotificationPinClicked,
+      onNotificationClicked = ::onNotificationClicked,
+      onEditNotificationScheduleClicked = ::onEditNotificationScheduleClicked,
+      onRemoveNotificationScheduleClicked = ::onRemoveNotificationScheduleClicked
+    )
     adapter.registerAdapterDataObserver(adapterDataObserver)
     notificationsRecyclerView.adapter = adapter
     notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
@@ -165,6 +188,18 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       navigatorExtras = FragmentNavigatorExtras(view to view.transitionName),
       editorTransition = EditorTransition.ContainerTransform(view.transitionName)
     )
+  }
+
+  private fun onEditNotificationScheduleClicked(pinnitNotification: PinnitNotification) {
+    openNotificationEditor(
+      notification = pinnitNotification,
+      navigatorExtras = null,
+      editorTransition = SharedAxis
+    )
+  }
+
+  private fun onRemoveNotificationScheduleClicked(pinnitNotification: PinnitNotification) {
+    viewModel.dispatchEvent(RemoveNotificationScheduleClicked(pinnitNotification.uuid))
   }
 
   private fun openNotificationEditor(

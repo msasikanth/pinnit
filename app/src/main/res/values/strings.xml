@@ -78,4 +78,11 @@
     \nTo avoid this, visit the link below and follow the instructions.
   </string>
   <string name="oem_warning_show_instructions">show instructions</string>
+
+  <string name="notification_schedule_button">%1$s - %2$s</string>
+  <string name="notification_schedule_button_today">Today - %1$s</string>
+  <string name="notification_schedule_button_yesterday">Yesterday - %1$s</string>
+  <string name="notification_schedule_button_tomorrow">Tomorrow - %1$s</string>
+  <string name="notification_menu_edit_schedule">Edit schedule</string>
+  <string name="notification_menu_remove_schedule">Remove schedule</string>
 </resources>

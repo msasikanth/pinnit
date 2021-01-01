@@ -45,6 +45,7 @@
     <item name="materialAlertDialogTheme">@style/ThemeOverlay.Pinnit.MaterialAlertDialog</item>
     <item name="snackbarButtonStyle">@style/Widget.Pinnit.Button.TextButton.Snackbar</item>
     <item name="snackbarStyle">@style/Widget.Pinnit.Snackbar.FullWidth</item>
+    <item name="popupMenuStyle">@style/Widget.Pinnit.PopupMenu</item>
 
     <item name="materialCalendarTheme">@style/ThemeOverlay.Pinnit.MaterialCalendar</item>
     <item name="materialTimePickerTheme">@style/ThemeOverlay.Pinnit.TimePicker</item>

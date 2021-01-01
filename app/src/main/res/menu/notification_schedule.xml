@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/editSchedule"
+    android:title="@string/notification_menu_edit_schedule" />
+  <item
+    android:id="@+id/removeSchedule"
+    android:title="@string/notification_menu_remove_schedule" />
+</menu>

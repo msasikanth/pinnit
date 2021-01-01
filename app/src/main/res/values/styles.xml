@@ -183,4 +183,28 @@
     <item name="colorOnPrimary">?attr/colorOnSecondary</item>
     <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.TimePicker.Title</item>
   </style>
+
+  <!-- Popup menu -->
+  <style name="Widget.Pinnit.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+    <item name="overlapAnchor">true</item>
+    <item name="android:dropDownVerticalOffset">0px</item>
+  </style>
+
+  <!-- Custom -->
+  <style name="Widget.Pinnit.ScheduleIndicator" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="android:insetTop">0dp</item>
+    <item name="android:insetBottom">0dp</item>
+    <item name="android:minHeight">32dp</item>
+    <item name="android:paddingStart">8dp</item>
+    <item name="android:paddingEnd">12dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.Pinnit.Overline1</item>
+    <item name="android:textColor">@color/button_group_text_state</item>
+    <item name="cornerRadius">2dp</item>
+    <item name="icon">@drawable/ic_pinnit_date</item>
+    <item name="iconPadding">8dp</item>
+    <item name="iconSize">18dp</item>
+    <item name="iconTint">?attr/colorSecondary</item>
+    <item name="strokeWidth">1.5dp</item>
+    <item name="strokeColor">@color/button_group_stroke_state</item>
+  </style>
 </resources>
