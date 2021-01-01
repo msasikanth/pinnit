@@ -66,11 +66,11 @@ class ScheduleWorker(
     }
 
     withContext(dispatcherProvider.io) {
-      // Getting notification from UUID
-      val notification = repository.notification(notificationUuid)
-
       // If the notification is not already pinned, then pin the notification
       repository.updatePinStatus(notificationUuid, true)
+
+      // Getting notification from UUID
+      val notification = repository.notification(notificationUuid)
 
       // Show notification (If it's already being shown, it will just refresh the notification)
       notificationUtil.showNotification(notification)
