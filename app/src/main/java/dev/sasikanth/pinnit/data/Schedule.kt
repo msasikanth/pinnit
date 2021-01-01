@@ -4,7 +4,9 @@ import android.os.Parcelable
 import androidx.room.TypeConverter
 import dev.sasikanth.pinnit.utils.UserClock
 import kotlinx.android.parcel.Parcelize
+import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Parcelize
@@ -37,9 +39,12 @@ data class Schedule(
   companion object {
 
     fun default(userClock: UserClock): Schedule {
+      val userDateTime = LocalDateTime.now(userClock)
+        .plus(Duration.ofMinutes(10))
+
       return Schedule(
-        scheduleDate = LocalDate.now(userClock),
-        scheduleTime = LocalTime.now(userClock),
+        scheduleDate = userDateTime.toLocalDate(),
+        scheduleTime = userDateTime.toLocalTime(),
         scheduleType = ScheduleType.Daily
       )
     }
