@@ -187,11 +187,15 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     } else {
       val backward = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
         duration = 300
+        addTarget(R.id.notificationsRoot)
+        addTarget(R.id.editorRoot)
       }
       reenterTransition = backward
 
       val forward = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
         duration = 300
+        addTarget(R.id.notificationsRoot)
+        addTarget(R.id.editorRoot)
       }
       exitTransition = forward
       findNavController().navigate(navDirections)
