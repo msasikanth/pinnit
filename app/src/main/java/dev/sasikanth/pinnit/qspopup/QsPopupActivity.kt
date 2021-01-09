@@ -15,13 +15,16 @@ import com.spotify.mobius.android.MobiusLoopViewModel
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
+import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.android.synthetic.main.activity_qs_popup.*
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 /**
@@ -36,6 +39,17 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
 
   @Inject
   lateinit var utcClock: UtcClock
+
+  @Inject
+  lateinit var userClock: UserClock
+
+  @Inject
+  @DateTimeFormat(DateTimeFormat.Type.ScheduleDateFormat)
+  lateinit var scheduleDateFormatter: DateTimeFormatter
+
+  @Inject
+  @DateTimeFormat(DateTimeFormat.Type.ScheduleTimeFormat)
+  lateinit var scheduleTimeFormatter: DateTimeFormatter
 
   private val uiRender = QsPopupUiRenderer(this)
 
@@ -65,8 +79,13 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
 
     adapter = NotificationsListAdapter(
       utcClock = utcClock,
+      userClock = userClock,
+      scheduleDateFormatter = scheduleDateFormatter,
+      scheduleTimeFormatter = scheduleTimeFormatter,
       onToggleNotificationPinClicked = ::onToggleNotificationPinClicked,
-      onNotificationClicked = ::onNotificationClicked
+      onNotificationClicked = ::onNotificationClicked,
+      onEditNotificationScheduleClicked = ::onEditNotificationScheduleClicked,
+      onRemoveNotificationScheduleClicked = ::onRemoveNotificationScheduleClicked
     )
     qsPopupNotificationsRecyclerView.adapter = adapter
     qsPopupNotificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
@@ -140,5 +159,13 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
 
   private fun onNotificationClicked(view: View, notification: PinnitNotification) {
     viewModel.dispatchEvent(NotificationClicked(notification))
+  }
+
+  private fun onEditNotificationScheduleClicked(notification: PinnitNotification) {
+    viewModel.dispatchEvent(EditNotificationScheduleClicked(notification))
+  }
+
+  private fun onRemoveNotificationScheduleClicked(notification: PinnitNotification) {
+    viewModel.dispatchEvent(RemoveNotificationScheduleClicked(notification.uuid))
   }
 }

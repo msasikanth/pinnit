@@ -66,5 +66,8 @@ data class PinnitNotification(
 
     @Query("SELECT * FROM PinnitNotification WHERE uuid = :uuid LIMIT 1")
     suspend fun notification(uuid: UUID): PinnitNotification
+
+    @Query("UPDATE PinnitNotification SET scheduleDate = null, scheduleTime = null, scheduleType = null WHERE uuid = :notificationId")
+    suspend fun removeSchedule(notificationId: UUID)
   }
 }

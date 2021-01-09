@@ -37,12 +37,7 @@ data class EditorScreenModel(
     }
 
   val hasScheduleChanged: Boolean
-    get() {
-      val notificationSchedule = notification?.schedule
-      if (notificationSchedule == schedule) return false
-      if (schedule == null) return false
-      return true
-    }
+    get() = notification?.schedule != schedule
 
   val isNotificationLoaded: Boolean
     get() = notification != null

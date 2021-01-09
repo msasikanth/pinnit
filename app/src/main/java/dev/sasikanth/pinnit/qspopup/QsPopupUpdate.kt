@@ -13,6 +13,12 @@ class QsPopupUpdate : Update<QsPopupModel, QsPopupEvent, QsPopupEffect> {
       is NotificationClicked -> dispatch(setOf(OpenNotificationEditor(event.notification)))
 
       is TogglePinStatusClicked -> dispatch(setOf(ToggleNotificationPinStatus(event.notification)))
+
+      is RemovedNotificationSchedule -> dispatch(setOf(CancelNotificationSchedule(event.notificationId)))
+
+      is RemoveNotificationScheduleClicked -> dispatch(setOf(RemoveSchedule(event.notificationId)))
+
+      is EditNotificationScheduleClicked -> dispatch(setOf(OpenNotificationEditor(event.notification)))
     }
   }
 }

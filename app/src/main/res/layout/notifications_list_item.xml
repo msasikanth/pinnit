@@ -130,9 +130,9 @@
       android:id="@+id/personImageView"
       android:layout_width="40dp"
       android:layout_height="48dp"
-      android:paddingTop="8dp"
       android:layout_marginTop="8dp"
       android:layout_marginEnd="16dp"
+      android:paddingTop="8dp"
       android:src="?attr/colorSecondary"
       android:visibility="gone"
       app:civ_border_color="@android:color/white"
@@ -153,6 +153,7 @@
       android:layout_marginEnd="8dp"
       android:textColor="?attr/colorOnBackground"
       android:translationY="4sp"
+      app:layout_constraintVertical_chainStyle="packed"
       app:layout_constraintBottom_toTopOf="@id/contentTextView"
       app:layout_constraintEnd_toStartOf="@id/togglePinIcon"
       app:layout_constraintStart_toEndOf="@id/personImageView"
@@ -165,12 +166,28 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:textColor="?attr/colorOnBackgroundVariant"
-      app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@id/scheduleButton"
       app:layout_constraintEnd_toStartOf="@id/endGuideline"
       app:layout_constraintStart_toStartOf="@id/titleTextView"
       app:layout_constraintTop_toBottomOf="@id/titleTextView"
       tools:maxLines="4"
       tools:text="@tools:sample/lorem/random" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/scheduleButton"
+      style="@style/Widget.Pinnit.ScheduleIndicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+      app:layout_constraintEnd_toStartOf="@id/endGuideline"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toEndOf="@id/startGuideline"
+      app:layout_constraintTop_toBottomOf="@id/contentTextView"
+      tools:text="Today - 9:00 PM"
+      tools:visibility="visible" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

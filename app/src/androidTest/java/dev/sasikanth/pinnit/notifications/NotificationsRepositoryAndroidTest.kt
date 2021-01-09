@@ -285,4 +285,23 @@ class NotificationsRepositoryAndroidTest {
         )
       )
   }
+
+  @Test
+  fun removing_a_schedule_from_notification_should_work_correctly() = runBlocking {
+    // given
+    val notification = TestData.notification(
+      uuid = UUID.fromString("bd5e429c-d8cb-4e48-b2bf-784c38abea08"),
+      schedule = TestData.schedule()
+    )
+
+    notificationRepository.save(listOf(notification))
+
+    // when
+    notificationRepository.removeSchedule(notification.uuid)
+
+    // then
+    val expectedNotification = notification.copy(schedule = null)
+    assertThat(notificationRepository.notification(notification.uuid))
+      .isEqualTo(expectedNotification)
+  }
 }
