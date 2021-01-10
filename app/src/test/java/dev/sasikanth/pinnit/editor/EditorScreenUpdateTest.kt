@@ -8,6 +8,7 @@ import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import org.junit.Test
 import java.time.LocalDate
 import java.time.LocalTime
@@ -524,6 +525,29 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(CancelNotificationSchedule(notificationUuid), CloseEditor)
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule is validated, then update the ui`() {
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00"),
+      scheduleType = null
+    )
+
+    val scheduleLoadedModel = defaultModel
+      .titleChanged("Sample")
+      .addSchedule(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleValidated(Valid))
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.scheduleValidated(Valid)),
+          hasNoEffects()
         )
       )
   }

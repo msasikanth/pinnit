@@ -3,7 +3,6 @@ package dev.sasikanth.pinnit.editor
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
-import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 import dev.sasikanth.pinnit.data.PinnitNotification
 
@@ -48,7 +47,7 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       is NotificationUpdated -> notificationUpdated(model, event.updatedNotification)
 
-      is ScheduleValidated -> noChange()
+      is ScheduleValidated -> next(model.scheduleValidated(event.result))
     }
   }
 

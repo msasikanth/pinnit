@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -13,7 +14,7 @@ data class EditorScreenModel(
   val title: String?,
   val content: String?,
   val schedule: Schedule?,
-  val scheduleValidationResult: ScheduleValidator.Result?
+  val scheduleValidationResult: Result?
 ) {
 
   companion object {
@@ -92,5 +93,9 @@ data class EditorScreenModel(
 
   fun scheduleTypeChanged(scheduleType: ScheduleType): EditorScreenModel {
     return copy(schedule = schedule?.scheduleTypeChanged(scheduleType))
+  }
+
+  fun scheduleValidated(result: Result): EditorScreenModel {
+    return copy(scheduleValidationResult = result)
   }
 }
