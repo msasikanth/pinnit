@@ -15,6 +15,7 @@ class EditorScreenEffectHandler @AssistedInject constructor(
   dispatcherProvider: DispatcherProvider,
   private val notificationUtil: NotificationUtil,
   private val pinnitNotificationScheduler: PinnitNotificationScheduler,
+  private val scheduleValidator: ScheduleValidator,
   @Assisted private val viewEffectConsumer: Consumer<EditorScreenViewEffect>
 ) : CoroutineConnectable<EditorScreenEffect, EditorScreenEvent>(dispatcherProvider.main) {
 
@@ -50,6 +51,8 @@ class EditorScreenEffectHandler @AssistedInject constructor(
       is ScheduleNotification -> scheduleNotification(effect)
 
       is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
+
+      is ValidateSchedule -> validateSchedule(effect, dispatchEvent)
     }
   }
 
@@ -110,5 +113,10 @@ class EditorScreenEffectHandler @AssistedInject constructor(
 
   private fun cancelNotificationSchedule(effect: CancelNotificationSchedule) {
     pinnitNotificationScheduler.cancel(effect.notificationId)
+  }
+
+  private fun validateSchedule(effect: ValidateSchedule, dispatchEvent: (EditorScreenEvent) -> Unit) {
+    val result = scheduleValidator.validate(effect.scheduleDate, effect.scheduleTime)
+    dispatchEvent(ScheduleValidated(result))
   }
 }
