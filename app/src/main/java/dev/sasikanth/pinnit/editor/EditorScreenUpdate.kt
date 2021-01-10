@@ -42,7 +42,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
         setOf(ValidateSchedule(scheduleDate = event.date, scheduleTime = model.schedule!!.scheduleTime!!))
       )
 
-      is ScheduleTimeChanged -> next(model.scheduleTimeChanged(event.time))
+      is ScheduleTimeChanged -> next(
+        model.scheduleTimeChanged(event.time),
+        setOf(ValidateSchedule(scheduleDate = model.schedule!!.scheduleDate!!, scheduleTime = event.time))
+      )
 
       is ScheduleTypeChanged -> next(model.scheduleTypeChanged(event.scheduleType))
 

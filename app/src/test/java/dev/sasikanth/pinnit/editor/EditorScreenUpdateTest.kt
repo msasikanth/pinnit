@@ -359,7 +359,10 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule time is changed, then update the model`() {
-    val schedule = TestData.schedule(scheduleTime = LocalTime.parse("09:00:00"))
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00")
+    )
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
     val updatedLocalTime = LocalTime.parse("09:00:00")
 
@@ -369,7 +372,12 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasModel(scheduleLoadedModel.scheduleTimeChanged(updatedLocalTime)),
-          hasNoEffects()
+          hasEffects(
+            ValidateSchedule(
+              scheduleDate = LocalDate.parse("2020-01-01"),
+              scheduleTime = LocalTime.parse("09:00:00")
+            )
+          )
         )
       )
   }
