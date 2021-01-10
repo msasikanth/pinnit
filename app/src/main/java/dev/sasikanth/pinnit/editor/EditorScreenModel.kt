@@ -12,7 +12,8 @@ data class EditorScreenModel(
   val notification: PinnitNotification?,
   val title: String?,
   val content: String?,
-  val schedule: Schedule?
+  val schedule: Schedule?,
+  val scheduleValidationResult: ScheduleValidator.Result?
 ) {
 
   companion object {
@@ -21,7 +22,8 @@ data class EditorScreenModel(
       notification = null,
       title = title,
       content = content,
-      schedule = null
+      schedule = null,
+      scheduleValidationResult = null
     )
   }
 
@@ -65,11 +67,11 @@ data class EditorScreenModel(
   }
 
   fun addSchedule(schedule: Schedule): EditorScreenModel {
-    return copy(schedule = schedule)
+    return copy(schedule = schedule, scheduleValidationResult = null)
   }
 
   fun removeSchedule(): EditorScreenModel {
-    return copy(schedule = null)
+    return copy(schedule = null, scheduleValidationResult = null)
   }
 
   fun removeScheduleRepeat(): EditorScreenModel {
