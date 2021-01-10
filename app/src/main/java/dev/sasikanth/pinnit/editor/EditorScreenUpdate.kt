@@ -37,7 +37,10 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       ScheduleTimeClicked -> dispatch(setOf(ShowTimePicker(model.schedule!!.scheduleTime!!)))
 
-      is ScheduleDateChanged -> next(model.scheduleDateChanged(event.date))
+      is ScheduleDateChanged -> next(
+        model.scheduleDateChanged(event.date),
+        setOf(ValidateSchedule(scheduleDate = event.date, scheduleTime = model.schedule!!.scheduleTime!!))
+      )
 
       is ScheduleTimeChanged -> next(model.scheduleTimeChanged(event.time))
 
