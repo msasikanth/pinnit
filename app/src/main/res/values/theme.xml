@@ -28,6 +28,9 @@
     <item name="colorOnBackground">@color/colorOnBackground</item>
     <item name="colorOnBackgroundVariant">@color/colorOnBackgroundVariant</item>
 
+    <item name="colorError">@color/colorError</item>
+    <item name="colorOnError">@color/colorOnError</item>
+
     <!-- Background underneath notifications -->
     <item name="colorRowBackground">@color/colorRowBackground</item>
 

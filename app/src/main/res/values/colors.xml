@@ -27,6 +27,9 @@
   <color name="colorBackground">@android:color/white</color>
   <color name="colorOnBackground">@color/maroon_900</color>
 
+  <color name="colorError">#9C1664</color>
+  <color name="colorOnError">@android:color/white</color>
+
   <color name="statusBarColor">#B3FFFFFF</color>
 
   <!-- Color of our ToggleButtonGroup used for dark mode selections -->
