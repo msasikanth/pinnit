@@ -10,8 +10,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDeepLinkBuilder
-import com.spotify.mobius.Mobius.loop
+import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
+import com.spotify.mobius.functions.Consumer
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.data.PinnitNotification
@@ -54,16 +55,16 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
   private val uiRender = QsPopupUiRenderer(this)
 
   private val viewModel: MobiusLoopViewModel<QsPopupModel, QsPopupEvent, QsPopupEffect, QsPopupViewEffect> by viewModels {
+    fun loop(viewEffectConsumer: Consumer<QsPopupViewEffect>) = Mobius.loop(
+      QsPopupUpdate(),
+      effectHandler.create(viewEffectConsumer)
+    )
+
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create<QsPopupModel, QsPopupEvent, QsPopupEffect, QsPopupViewEffect>(
-          { viewEffectConsumer ->
-            loop(
-              QsPopupUpdate(),
-              effectHandler.create(viewEffectConsumer)
-            )
-          },
+        return MobiusLoopViewModel.create(
+          ::loop,
           QsPopupModel.default(),
           QsPopupInit()
         ) as T

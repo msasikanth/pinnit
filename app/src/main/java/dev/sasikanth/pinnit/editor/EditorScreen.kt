@@ -27,6 +27,7 @@ import com.google.android.material.transition.MaterialContainerTransform.FADE_MO
 import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
+import com.spotify.mobius.functions.Consumer
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.Schedule
@@ -81,22 +82,28 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   private val uiRender = EditorScreenUiRender(this)
 
   private val viewModel: MobiusLoopViewModel<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect> by viewModels {
+
+    val notificationUuid = if (args.notificationUuid != null) {
+      UUID.fromString(args.notificationUuid)
+    } else {
+      null
+    }
+
+    fun loop(viewEffectConsumer: Consumer<EditorScreenViewEffect>) = Mobius.loop(
+      EditorScreenUpdate(),
+      effectHandler.create(viewEffectConsumer)
+    )
+
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val notificationUuid = if (args.notificationUuid != null) {
-          UUID.fromString(args.notificationUuid)
-        } else {
-          null
-        }
-        return MobiusLoopViewModel.create<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect>(
-          { viewEffectConsumer ->
-            Mobius.loop(
-              EditorScreenUpdate(),
-              effectHandler.create(viewEffectConsumer)
-            )
-          },
-          EditorScreenModel.default(notificationUuid = notificationUuid, content = args.notificationContent, title = args.notificationTitle),
+        return MobiusLoopViewModel.create(
+          ::loop,
+          EditorScreenModel.default(
+            notificationUuid = notificationUuid,
+            content = args.notificationContent,
+            title = args.notificationTitle
+          ),
           EditorScreenInit()
         ) as T
       }

@@ -18,8 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
-import com.spotify.mobius.Mobius.loop
+import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
+import com.spotify.mobius.functions.Consumer
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.about.AboutBottomSheet
@@ -63,16 +64,17 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   private val uiRender = NotificationsScreenUiRender(this)
 
   private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect> by viewModels {
+
+    fun loop(viewEffectConsumer: Consumer<NotificationScreenViewEffect>) = Mobius.loop(
+      NotificationsScreenUpdate(),
+      effectHandler.create(viewEffectConsumer)
+    )
+
     object : ViewModelProvider.Factory {
       @Suppress("UNCHECKED_CAST")
       override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect>(
-          { viewEffectConsumer ->
-            loop(
-              NotificationsScreenUpdate(),
-              effectHandler.create(viewEffectConsumer)
-            )
-          },
+        return MobiusLoopViewModel.create(
+          ::loop,
           NotificationsScreenModel.default(),
           NotificationsScreenInit()
         ) as T
