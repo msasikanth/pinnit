@@ -16,7 +16,6 @@ import dev.sasikanth.pinnit.utils.UtcClock
 @Module(
   includes = [
     NotificationModule::class,
-    AssistedInjectModule::class,
     PreferencesModule::class
   ]
 )

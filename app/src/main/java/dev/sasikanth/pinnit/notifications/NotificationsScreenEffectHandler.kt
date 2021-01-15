@@ -1,8 +1,9 @@
 package dev.sasikanth.pinnit.notifications
 
 import com.spotify.mobius.functions.Consumer
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dev.sasikanth.pinnit.mobius.CoroutineConnectable
 import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.DispatcherProvider
@@ -19,7 +20,7 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
   @Assisted private val viewEffectConsumer: Consumer<NotificationScreenViewEffect>
 ) : CoroutineConnectable<NotificationsScreenEffect, NotificationsScreenEvent>(dispatcherProvider.main) {
 
-  @AssistedInject.Factory
+  @AssistedFactory
   interface Factory {
     fun create(viewEffectConsumer: Consumer<NotificationScreenViewEffect>): NotificationsScreenEffectHandler
   }

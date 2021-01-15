@@ -20,7 +20,6 @@ import java.time.ZoneId
 @Module(
   includes = [
     NotificationModule::class,
-    AssistedInjectModule::class,
     PreferencesModule::class
   ]
 )
