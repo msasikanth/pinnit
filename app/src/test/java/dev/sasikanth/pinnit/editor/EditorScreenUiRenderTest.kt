@@ -123,7 +123,7 @@ class EditorScreenUiRenderTest {
     verify(ui).renderSaveActionButtonText()
     verify(ui).showScheduleView()
     verify(ui).renderScheduleDateTime(scheduleDate, scheduleTime)
-    verify(ui).renderScheduleRepeat(scheduleType, false)
+    verify(ui).renderScheduleRepeat(scheduleType, hasValidScheduleResult = true)
     verifyNoMoreInteractions(ui)
   }
 
@@ -140,6 +140,34 @@ class EditorScreenUiRenderTest {
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
     verify(ui).hideScheduleView()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when schedule validation result is not present, then enable the save button`() {
+    // given
+    val scheduleDate = LocalDate.parse("2020-01-01")
+    val scheduleTime = LocalTime.parse("09:00:00")
+    val scheduleType = ScheduleType.Daily
+    val schedule = TestData.schedule(
+      scheduleDate = scheduleDate,
+      scheduleTime = scheduleTime,
+      scheduleType = scheduleType
+    )
+
+    val model = EditorScreenModel.default(notificationUuid, "Sample", null)
+      .scheduleLoaded(schedule)
+
+    // when
+    uiRender.render(model)
+
+    // then
+    verify(ui).enableSave()
+    verify(ui).hideDeleteButton()
+    verify(ui).renderSaveActionButtonText()
+    verify(ui).showScheduleView()
+    verify(ui).renderScheduleDateTime(scheduleDate, scheduleTime)
+    verify(ui).renderScheduleRepeat(scheduleType, hasValidScheduleResult = true)
     verifyNoMoreInteractions(ui)
   }
 }
