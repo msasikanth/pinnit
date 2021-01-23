@@ -11,6 +11,7 @@ interface EditorScreenUi {
   fun renderSaveAndPinActionButtonText()
   fun showDeleteButton()
   fun hideDeleteButton()
-  fun showScheduleView(scheduleDate: LocalDate, scheduleTime: LocalTime, scheduleType: ScheduleType?)
+  fun showScheduleView(scheduleType: ScheduleType?)
   fun hideScheduleView()
+  fun renderScheduleDateTime(scheduleDate: LocalDate, scheduleTime: LocalTime)
 }

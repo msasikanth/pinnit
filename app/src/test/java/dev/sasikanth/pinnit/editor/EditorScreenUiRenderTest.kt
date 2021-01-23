@@ -121,11 +121,8 @@ class EditorScreenUiRenderTest {
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveActionButtonText()
-    verify(ui).showScheduleView(
-      scheduleDate = scheduleDate,
-      scheduleTime = scheduleTime,
-      scheduleType = scheduleType
-    )
+    verify(ui).showScheduleView(scheduleType = scheduleType)
+    verify(ui).renderScheduleDateTime(scheduleDate, scheduleTime)
     verifyNoMoreInteractions(ui)
   }
 

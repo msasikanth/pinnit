@@ -298,7 +298,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().bottomBar.setActionIcon(null)
   }
 
-  override fun showScheduleView(scheduleDate: LocalDate, scheduleTime: LocalTime, scheduleType: ScheduleType?) {
+  override fun showScheduleView(scheduleType: ScheduleType?) {
     if (seekableAvd.isRunning.not()) {
       // Go to the end state of the AVD, in this case we will be showing delete icon at end
       seekableAvd.currentPlayTime = seekableAvd.totalDuration
@@ -314,6 +314,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleTimeButton.isVisible = true
     scheduleView.repeatEveryCheckBox.isVisible = true
 
+    renderScheduleRepeat(scheduleType)
+  }
+
+  override fun renderScheduleDateTime(scheduleDate: LocalDate, scheduleTime: LocalTime) {
     scheduleDateButton.text = scheduleDateFormatter.format(scheduleDate)
     scheduleTimeButton.text = scheduleTimeFormatter.format(scheduleTime)
 
@@ -324,8 +328,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleTimeButton.setOnClickListener {
       viewModel.dispatchEvent(ScheduleTimeClicked)
     }
-
-    renderScheduleRepeat(scheduleType)
   }
 
   private fun renderScheduleRepeat(scheduleType: ScheduleType?) {
