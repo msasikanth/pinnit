@@ -383,6 +383,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleDateButton.isGone = true
     scheduleView.scheduleTimeButton.isGone = true
 
+    scheduleView.scheduleWarningContainer.isGone = true
+
     scheduleView.repeatEveryCheckBox.isGone = true
     scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener(null)
 
