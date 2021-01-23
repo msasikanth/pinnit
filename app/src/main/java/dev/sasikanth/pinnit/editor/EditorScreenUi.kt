@@ -15,4 +15,5 @@ interface EditorScreenUi {
   fun renderScheduleDateTime(scheduleDate: LocalDate, scheduleTime: LocalTime)
   fun renderScheduleRepeat(scheduleType: ScheduleType?, hasValidScheduleResult: Boolean)
   fun hideScheduleView()
+  fun showScheduleWarning()
 }
