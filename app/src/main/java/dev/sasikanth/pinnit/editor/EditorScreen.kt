@@ -367,6 +367,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleWarningTextView.text = requireContext().getString(R.string.editor_schedule_past_warning)
   }
 
+  override fun hideScheduleWarning() {
+    scheduleView.scheduleWarningContainer.isGone = true
+  }
+
   override fun hideScheduleView() {
     scheduleView.addRemoveScheduleButton.setOnClickListener {
       // Start animating the add icon to delete icon

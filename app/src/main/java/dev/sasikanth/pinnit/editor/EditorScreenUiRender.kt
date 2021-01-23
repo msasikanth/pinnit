@@ -40,6 +40,8 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
 
       if (!model.hasValidScheduleResult) {
         ui.showScheduleWarning()
+      } else {
+        ui.hideScheduleWarning()
       }
     } else {
       ui.hideScheduleView()

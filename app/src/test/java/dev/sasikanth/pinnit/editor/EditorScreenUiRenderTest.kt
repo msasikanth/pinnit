@@ -124,6 +124,7 @@ class EditorScreenUiRenderTest {
     verify(ui).showScheduleView()
     verify(ui).renderScheduleDateTime(scheduleDate, scheduleTime)
     verify(ui).renderScheduleRepeat(scheduleType, hasValidScheduleResult = true)
+    verify(ui).hideScheduleWarning()
     verifyNoMoreInteractions(ui)
   }
 
@@ -168,6 +169,7 @@ class EditorScreenUiRenderTest {
     verify(ui).showScheduleView()
     verify(ui).renderScheduleDateTime(scheduleDate, scheduleTime)
     verify(ui).renderScheduleRepeat(scheduleType, hasValidScheduleResult = true)
+    verify(ui).hideScheduleWarning()
     verifyNoMoreInteractions(ui)
   }
 }

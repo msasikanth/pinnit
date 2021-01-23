@@ -16,4 +16,5 @@ interface EditorScreenUi {
   fun renderScheduleRepeat(scheduleType: ScheduleType?, hasValidScheduleResult: Boolean)
   fun hideScheduleView()
   fun showScheduleWarning()
+  fun hideScheduleWarning()
 }
