@@ -313,6 +313,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleDateButton.isVisible = true
     scheduleView.scheduleTimeButton.isVisible = true
     scheduleView.repeatEveryCheckBox.isVisible = true
+    scheduleView.repeatEveryButtonGroup.isVisible = true
   }
 
   override fun renderScheduleDateTime(scheduleDate: LocalDate, scheduleTime: LocalTime) {
@@ -328,19 +329,21 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     }
   }
 
-  override fun renderScheduleRepeat(scheduleType: ScheduleType?) {
-    scheduleView.repeatEveryCheckBox.isChecked = scheduleType != null
-
-    scheduleView.repeatEveryButtonGroup.isVisible = true
+  override fun renderScheduleRepeat(scheduleType: ScheduleType?, hasValidScheduleResult: Boolean) {
     scheduleView.repeatEveryButtonGroup.clearChecked()
     // To avoid any un-necessary even triggers of schedule type change
     // when schedule repeat is not set. so we are removing listeners on every model changes
     // and resetting it if schedule type is available.
     scheduleView.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
 
-    scheduleView.repeatDailyButton.isEnabled = scheduleType != null
-    scheduleView.repeatWeeklyButton.isEnabled = scheduleType != null
-    scheduleView.repeatMonthlyButton.isEnabled = scheduleType != null
+    val hasScheduleType = scheduleType != null
+
+    scheduleView.repeatEveryCheckBox.isChecked = hasScheduleType
+
+    scheduleView.repeatEveryCheckBox.isEnabled = hasValidScheduleResult
+    scheduleView.repeatDailyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleView.repeatWeeklyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleView.repeatMonthlyButton.isEnabled = hasScheduleType && hasValidScheduleResult
 
     scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener { _, isChecked ->
       if (isChecked.not())

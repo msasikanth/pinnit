@@ -123,7 +123,7 @@ class EditorScreenUiRenderTest {
     verify(ui).renderSaveActionButtonText()
     verify(ui).showScheduleView()
     verify(ui).renderScheduleDateTime(scheduleDate, scheduleTime)
-    verify(ui).renderScheduleRepeat(scheduleType)
+    verify(ui).renderScheduleRepeat(scheduleType, false)
     verifyNoMoreInteractions(ui)
   }
 

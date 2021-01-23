@@ -4,6 +4,7 @@ import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -50,6 +51,9 @@ data class EditorScreenModel(
 
   val hasSchedule: Boolean
     get() = schedule != null
+
+  val hasValidScheduleResult: Boolean
+    get() = scheduleValidationResult == null || scheduleValidationResult == Valid
 
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
