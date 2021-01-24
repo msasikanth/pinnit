@@ -68,7 +68,18 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       .contentChanged(event.notification.content)
       .scheduleLoaded(event.notification.schedule)
 
-    return next(updatedModel, setOf(SetTitleAndContent(event.notification.title, event.notification.content)))
+    val effects = mutableSetOf<EditorScreenEffect>(
+      SetTitleAndContent(event.notification.title, event.notification.content)
+    )
+
+    if (event.notification.hasSchedule) {
+      val schedule = event.notification.schedule!!
+      effects.add(
+        ValidateSchedule(scheduleDate = schedule.scheduleDate!!, scheduleTime = schedule.scheduleTime!!)
+      )
+    }
+
+    return next(updatedModel, effects)
   }
 
   private fun saveClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {

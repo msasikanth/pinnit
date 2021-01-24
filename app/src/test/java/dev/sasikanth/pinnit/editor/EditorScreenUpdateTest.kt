@@ -25,6 +25,11 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when notification is loaded, then update the ui`() {
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      schedule = null
+    )
+
     updateSpec
       .given(defaultModel)
       .whenEvent(NotificationLoaded(notification))
@@ -38,6 +43,38 @@ class EditorScreenUpdateTest {
               .scheduleLoaded(notification.schedule)
           ),
           hasEffects(SetTitleAndContent(notification.title, notification.content) as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is loaded and schedule is present, then set title and content and validate schedule`() {
+    val scheduleDate = LocalDate.parse("2018-01-01")
+    val scheduleTime = LocalTime.parse("10:00:00")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      schedule = TestData.schedule(
+        scheduleDate = scheduleDate,
+        scheduleTime = scheduleTime
+      )
+    )
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(NotificationLoaded(notification))
+      .then(
+        assertThatNext(
+          hasModel(
+            defaultModel
+              .notificationLoaded(notification)
+              .titleChanged(notification.title)
+              .contentChanged(notification.content)
+              .scheduleLoaded(notification.schedule)
+          ),
+          hasEffects(
+            SetTitleAndContent(notification.title, notification.content),
+            ValidateSchedule(scheduleDate, scheduleTime)
+          )
         )
       )
   }
