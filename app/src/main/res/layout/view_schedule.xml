@@ -73,6 +73,48 @@
     tools:text="9:30 PM"
     tools:visibility="visible" />
 
+  <com.google.android.material.card.MaterialCardView
+    android:id="@+id/scheduleWarningContainer"
+    style="@style/Widget.Pinnit.ScheduleWarning"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="16dp"
+    android:visibility="gone"
+    app:contentPaddingBottom="12dp"
+    app:contentPaddingLeft="16dp"
+    app:contentPaddingRight="16dp"
+    app:contentPaddingTop="12dp"
+    app:layout_constraintBottom_toTopOf="@id/repeatEveryCheckBox"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/addRemoveScheduleButton"
+    app:layout_constraintVertical_bias="0"
+    app:layout_constraintVertical_chainStyle="packed"
+    tools:visibility="visible">
+
+    <ImageView
+      android:id="@+id/scheduleWarningIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:contentDescription="@null"
+      app:srcCompat="@drawable/ic_pinnit_warning"
+      app:tint="?attr/colorOnError" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/scheduleWarningTextView"
+      style="@style/TextStyle.Pinnit.Body2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:layout_marginStart="40dp"
+      android:textColor="?attr/colorOnError"
+      tools:text="@string/editor_schedule_past_warning" />
+
+  </com.google.android.material.card.MaterialCardView>
+
   <com.google.android.material.checkbox.MaterialCheckBox
     android:id="@+id/repeatEveryCheckBox"
     android:layout_width="match_parent"
@@ -87,7 +129,7 @@
     app:buttonTint="@color/schedule_checkbox_state"
     app:layout_constraintBottom_toTopOf="@id/scheduleBottomBarrier"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/addRemoveScheduleButton"
+    app:layout_constraintTop_toBottomOf="@id/scheduleWarningContainer"
     app:layout_constraintVertical_bias="0"
     tools:visibility="visible" />
 

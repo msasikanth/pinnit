@@ -3,6 +3,8 @@ package dev.sasikanth.pinnit.editor
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -12,7 +14,8 @@ data class EditorScreenModel(
   val notification: PinnitNotification?,
   val title: String?,
   val content: String?,
-  val schedule: Schedule?
+  val schedule: Schedule?,
+  val scheduleValidationResult: Result?
 ) {
 
   companion object {
@@ -21,7 +24,8 @@ data class EditorScreenModel(
       notification = null,
       title = title,
       content = content,
-      schedule = null
+      schedule = null,
+      scheduleValidationResult = null
     )
   }
 
@@ -48,6 +52,9 @@ data class EditorScreenModel(
   val hasSchedule: Boolean
     get() = schedule != null
 
+  val hasValidScheduleResult: Boolean
+    get() = scheduleValidationResult == null || scheduleValidationResult == Valid
+
   fun titleChanged(title: String?): EditorScreenModel {
     return copy(title = title)
   }
@@ -65,11 +72,11 @@ data class EditorScreenModel(
   }
 
   fun addSchedule(schedule: Schedule): EditorScreenModel {
-    return copy(schedule = schedule)
+    return copy(schedule = schedule, scheduleValidationResult = null)
   }
 
   fun removeSchedule(): EditorScreenModel {
-    return copy(schedule = null)
+    return copy(schedule = null, scheduleValidationResult = null)
   }
 
   fun removeScheduleRepeat(): EditorScreenModel {
@@ -90,5 +97,9 @@ data class EditorScreenModel(
 
   fun scheduleTypeChanged(scheduleType: ScheduleType): EditorScreenModel {
     return copy(schedule = schedule?.scheduleTypeChanged(scheduleType))
+  }
+
+  fun scheduleValidated(result: Result): EditorScreenModel {
+    return copy(scheduleValidationResult = result)
   }
 }

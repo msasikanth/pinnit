@@ -298,7 +298,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().bottomBar.setActionIcon(null)
   }
 
-  override fun showScheduleView(scheduleDate: LocalDate, scheduleTime: LocalTime, scheduleType: ScheduleType?) {
+  override fun showScheduleView() {
     if (seekableAvd.isRunning.not()) {
       // Go to the end state of the AVD, in this case we will be showing delete icon at end
       seekableAvd.currentPlayTime = seekableAvd.totalDuration
@@ -313,7 +313,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleDateButton.isVisible = true
     scheduleView.scheduleTimeButton.isVisible = true
     scheduleView.repeatEveryCheckBox.isVisible = true
+    scheduleView.repeatEveryButtonGroup.isVisible = true
+  }
 
+  override fun renderScheduleDateTime(scheduleDate: LocalDate, scheduleTime: LocalTime) {
     scheduleDateButton.text = scheduleDateFormatter.format(scheduleDate)
     scheduleTimeButton.text = scheduleTimeFormatter.format(scheduleTime)
 
@@ -324,23 +327,23 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     scheduleView.scheduleTimeButton.setOnClickListener {
       viewModel.dispatchEvent(ScheduleTimeClicked)
     }
-
-    renderScheduleRepeat(scheduleType)
   }
 
-  private fun renderScheduleRepeat(scheduleType: ScheduleType?) {
-    scheduleView.repeatEveryCheckBox.isChecked = scheduleType != null
-
-    scheduleView.repeatEveryButtonGroup.isVisible = true
+  override fun renderScheduleRepeat(scheduleType: ScheduleType?, hasValidScheduleResult: Boolean) {
     scheduleView.repeatEveryButtonGroup.clearChecked()
     // To avoid any un-necessary even triggers of schedule type change
     // when schedule repeat is not set. so we are removing listeners on every model changes
     // and resetting it if schedule type is available.
     scheduleView.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
 
-    scheduleView.repeatDailyButton.isEnabled = scheduleType != null
-    scheduleView.repeatWeeklyButton.isEnabled = scheduleType != null
-    scheduleView.repeatMonthlyButton.isEnabled = scheduleType != null
+    val hasScheduleType = scheduleType != null
+
+    scheduleView.repeatEveryCheckBox.isChecked = hasScheduleType
+
+    scheduleView.repeatEveryCheckBox.isEnabled = hasValidScheduleResult
+    scheduleView.repeatDailyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleView.repeatWeeklyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleView.repeatMonthlyButton.isEnabled = hasScheduleType && hasValidScheduleResult
 
     scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener { _, isChecked ->
       if (isChecked.not())
@@ -359,6 +362,15 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     }
   }
 
+  override fun showScheduleWarning() {
+    scheduleView.scheduleWarningContainer.isVisible = true
+    scheduleView.scheduleWarningTextView.text = requireContext().getString(R.string.editor_schedule_past_warning)
+  }
+
+  override fun hideScheduleWarning() {
+    scheduleView.scheduleWarningContainer.isGone = true
+  }
+
   override fun hideScheduleView() {
     scheduleView.addRemoveScheduleButton.setOnClickListener {
       // Start animating the add icon to delete icon
@@ -370,6 +382,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     scheduleView.scheduleDateButton.isGone = true
     scheduleView.scheduleTimeButton.isGone = true
+
+    scheduleView.scheduleWarningContainer.isGone = true
 
     scheduleView.repeatEveryCheckBox.isGone = true
     scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener(null)
@@ -424,7 +438,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     datePicker.addOnPositiveButtonClickListener { selectedDate ->
       val instant = Instant.ofEpochMilli(selectedDate)
-      val localDate = instant.atZone(userClock.zone).toLocalDate()
+      val localDate = instant.atZone(utcClock.zone).toLocalDate()
 
       viewModel.dispatchEvent(ScheduleDateChanged(localDate))
     }

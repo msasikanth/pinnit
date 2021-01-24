@@ -12,6 +12,7 @@ import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
@@ -34,11 +35,13 @@ class EditorScreenEffectHandlerTest {
   private val dispatcherProvider = TestDispatcherProvider()
   private val notificationUtil = mock<NotificationUtil>()
   private val pinnitNotificationScheduler = mock<PinnitNotificationScheduler>()
+  private val scheduleValidator = mock<ScheduleValidator>()
   private val effectHandler = EditorScreenEffectHandler(
     repository,
     dispatcherProvider,
     notificationUtil,
     pinnitNotificationScheduler,
+    scheduleValidator,
     viewEffectConsumer
   )
 
@@ -320,5 +323,21 @@ class EditorScreenEffectHandlerTest {
 
     verify(pinnitNotificationScheduler).cancel(notificationId)
     verifyNoMoreInteractions(pinnitNotificationScheduler)
+  }
+
+  @Test
+  fun `when validate schedule effect is received, then validate schedule`() {
+    // given
+    val scheduleDate = LocalDate.parse("2020-01-01")
+    val scheduleTime = LocalTime.parse("09:00:00")
+
+    whenever(scheduleValidator.validate(scheduleDate, scheduleTime)) doReturn Valid
+
+    // when
+    connection.accept(ValidateSchedule(scheduleDate, scheduleTime))
+
+    // then
+    consumer.assertValues(ScheduleValidated(Valid))
+    viewEffectConsumer.assertValues()
   }
 }

@@ -8,6 +8,7 @@ import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import org.junit.Test
 import java.time.LocalDate
 import java.time.LocalTime
@@ -24,6 +25,11 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when notification is loaded, then update the ui`() {
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      schedule = null
+    )
+
     updateSpec
       .given(defaultModel)
       .whenEvent(NotificationLoaded(notification))
@@ -37,6 +43,38 @@ class EditorScreenUpdateTest {
               .scheduleLoaded(notification.schedule)
           ),
           hasEffects(SetTitleAndContent(notification.title, notification.content) as EditorScreenEffect)
+        )
+      )
+  }
+
+  @Test
+  fun `when notification is loaded and schedule is present, then set title and content and validate schedule`() {
+    val scheduleDate = LocalDate.parse("2018-01-01")
+    val scheduleTime = LocalTime.parse("10:00:00")
+    val notification = TestData.notification(
+      uuid = notificationUuid,
+      schedule = TestData.schedule(
+        scheduleDate = scheduleDate,
+        scheduleTime = scheduleTime
+      )
+    )
+
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(NotificationLoaded(notification))
+      .then(
+        assertThatNext(
+          hasModel(
+            defaultModel
+              .notificationLoaded(notification)
+              .titleChanged(notification.title)
+              .contentChanged(notification.content)
+              .scheduleLoaded(notification.schedule)
+          ),
+          hasEffects(
+            SetTitleAndContent(notification.title, notification.content),
+            ValidateSchedule(scheduleDate, scheduleTime)
+          )
         )
       )
   }
@@ -333,7 +371,10 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule date is changed, then update the model`() {
-    val schedule = TestData.schedule(scheduleDate = LocalDate.parse("2020-01-01"))
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00")
+    )
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
     val updatedLocalDate = LocalDate.parse("2020-01-05")
 
@@ -343,14 +384,22 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasModel(scheduleLoadedModel.scheduleDateChanged(updatedLocalDate)),
-          hasNoEffects()
+          hasEffects(
+            ValidateSchedule(
+              scheduleDate = LocalDate.parse("2020-01-05"),
+              scheduleTime = LocalTime.parse("09:00:00")
+            )
+          )
         )
       )
   }
 
   @Test
   fun `when schedule time is changed, then update the model`() {
-    val schedule = TestData.schedule(scheduleTime = LocalTime.parse("09:00:00"))
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00")
+    )
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
     val updatedLocalTime = LocalTime.parse("09:00:00")
 
@@ -360,7 +409,12 @@ class EditorScreenUpdateTest {
       .then(
         assertThatNext(
           hasModel(scheduleLoadedModel.scheduleTimeChanged(updatedLocalTime)),
-          hasNoEffects()
+          hasEffects(
+            ValidateSchedule(
+              scheduleDate = LocalDate.parse("2020-01-01"),
+              scheduleTime = LocalTime.parse("09:00:00")
+            )
+          )
         )
       )
   }
@@ -524,6 +578,29 @@ class EditorScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(CancelNotificationSchedule(notificationUuid), CloseEditor)
+        )
+      )
+  }
+
+  @Test
+  fun `when schedule is validated, then update the ui`() {
+    val schedule = TestData.schedule(
+      scheduleDate = LocalDate.parse("2020-01-01"),
+      scheduleTime = LocalTime.parse("09:00:00"),
+      scheduleType = null
+    )
+
+    val scheduleLoadedModel = defaultModel
+      .titleChanged("Sample")
+      .addSchedule(schedule)
+
+    updateSpec
+      .given(scheduleLoadedModel)
+      .whenEvent(ScheduleValidated(Valid))
+      .then(
+        assertThatNext(
+          hasModel(scheduleLoadedModel.scheduleValidated(Valid)),
+          hasNoEffects()
         )
       )
   }

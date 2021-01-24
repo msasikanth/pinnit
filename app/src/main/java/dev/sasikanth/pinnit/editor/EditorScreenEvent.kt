@@ -45,3 +45,5 @@ data class ScheduleTypeChanged(val scheduleType: ScheduleType) : EditorScreenEve
 data class NotificationSaved(val notification: PinnitNotification) : EditorScreenEvent()
 
 data class NotificationUpdated(val updatedNotification: PinnitNotification) : EditorScreenEvent()
+
+data class ScheduleValidated(val result: ScheduleValidator.Result) : EditorScreenEvent()

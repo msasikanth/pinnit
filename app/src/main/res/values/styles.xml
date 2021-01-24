@@ -207,4 +207,11 @@
     <item name="strokeWidth">1.5dp</item>
     <item name="strokeColor">@color/button_group_stroke_state</item>
   </style>
+
+  <style name="Widget.Pinnit.ScheduleWarning" parent="Widget.MaterialComponents.CardView">
+    <item name="cardUseCompatPadding">false</item>
+    <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
+    <item name="cardElevation">0dp</item>
+    <item name="cardBackgroundColor">?attr/colorError</item>
+  </style>
 </resources>

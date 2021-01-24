@@ -11,7 +11,9 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
       ui.hideDeleteButton()
     }
 
-    if (model.hasNotificationTitle && (model.hasTitleAndContentChanged || model.hasScheduleChanged)) {
+    if (model.hasNotificationTitle && model.hasValidScheduleResult &&
+      (model.hasTitleAndContentChanged || model.hasScheduleChanged)
+    ) {
       ui.enableSave()
     } else {
       ui.disableSave()
@@ -32,11 +34,15 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
     if (model.hasSchedule) {
       val schedule = model.schedule!!
 
-      ui.showScheduleView(
-        scheduleDate = schedule.scheduleDate!!,
-        scheduleTime = schedule.scheduleTime!!,
-        scheduleType = schedule.scheduleType
-      )
+      ui.showScheduleView()
+      ui.renderScheduleDateTime(scheduleDate = schedule.scheduleDate!!, scheduleTime = schedule.scheduleTime!!)
+      ui.renderScheduleRepeat(scheduleType = schedule.scheduleType, hasValidScheduleResult = model.hasValidScheduleResult)
+
+      if (!model.hasValidScheduleResult) {
+        ui.showScheduleWarning()
+      } else {
+        ui.hideScheduleWarning()
+      }
     } else {
       ui.hideScheduleView()
     }

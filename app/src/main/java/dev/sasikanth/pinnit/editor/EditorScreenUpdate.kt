@@ -37,15 +37,23 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
 
       ScheduleTimeClicked -> dispatch(setOf(ShowTimePicker(model.schedule!!.scheduleTime!!)))
 
-      is ScheduleDateChanged -> next(model.scheduleDateChanged(event.date))
+      is ScheduleDateChanged -> next(
+        model.scheduleDateChanged(event.date),
+        setOf(ValidateSchedule(scheduleDate = event.date, scheduleTime = model.schedule!!.scheduleTime!!))
+      )
 
-      is ScheduleTimeChanged -> next(model.scheduleTimeChanged(event.time))
+      is ScheduleTimeChanged -> next(
+        model.scheduleTimeChanged(event.time),
+        setOf(ValidateSchedule(scheduleDate = model.schedule!!.scheduleDate!!, scheduleTime = event.time))
+      )
 
       is ScheduleTypeChanged -> next(model.scheduleTypeChanged(event.scheduleType))
 
       is NotificationSaved -> notificationSaved(event.notification)
 
       is NotificationUpdated -> notificationUpdated(model, event.updatedNotification)
+
+      is ScheduleValidated -> next(model.scheduleValidated(event.result))
     }
   }
 
@@ -60,7 +68,18 @@ class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorSc
       .contentChanged(event.notification.content)
       .scheduleLoaded(event.notification.schedule)
 
-    return next(updatedModel, setOf(SetTitleAndContent(event.notification.title, event.notification.content)))
+    val effects = mutableSetOf<EditorScreenEffect>(
+      SetTitleAndContent(event.notification.title, event.notification.content)
+    )
+
+    if (event.notification.hasSchedule) {
+      val schedule = event.notification.schedule!!
+      effects.add(
+        ValidateSchedule(scheduleDate = schedule.scheduleDate!!, scheduleTime = schedule.scheduleTime!!)
+      )
+    }
+
+    return next(updatedModel, effects)
   }
 
   private fun saveClicked(model: EditorScreenModel): Next<EditorScreenModel, EditorScreenEffect> {

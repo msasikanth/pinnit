@@ -43,3 +43,5 @@ data class ShowNotification(val notification: PinnitNotification) : EditorScreen
 data class ScheduleNotification(val notification: PinnitNotification) : EditorScreenEffect()
 
 data class CancelNotificationSchedule(val notificationId: UUID) : EditorScreenEffect()
+
+data class ValidateSchedule(val scheduleDate: LocalDate, val scheduleTime: LocalTime) : EditorScreenEffect()
