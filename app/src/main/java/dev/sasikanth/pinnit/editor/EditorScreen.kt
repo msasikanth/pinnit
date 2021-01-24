@@ -438,7 +438,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     datePicker.addOnPositiveButtonClickListener { selectedDate ->
       val instant = Instant.ofEpochMilli(selectedDate)
-      val localDate = instant.atZone(userClock.zone).toLocalDate()
+      val localDate = instant.atZone(utcClock.zone).toLocalDate()
 
       viewModel.dispatchEvent(ScheduleDateChanged(localDate))
     }
