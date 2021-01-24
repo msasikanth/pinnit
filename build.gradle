@@ -25,7 +25,6 @@ buildscript {
       insetter             : '0.3.1',
       coreLibraryDesugaring: '1.1.1',
       betterLinkMovement   : '2.2.0',
-      turbine              : '0.2.1',
       workManager          : '2.4.0',
       seekableAVD          : '1.0.0-alpha02'
   ]

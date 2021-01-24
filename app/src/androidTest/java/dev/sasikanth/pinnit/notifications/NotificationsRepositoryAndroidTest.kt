@@ -2,12 +2,12 @@ package dev.sasikanth.pinnit.notifications
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.TestPinnitApp
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.utils.TestUtcClock
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -166,19 +166,18 @@ class NotificationsRepositoryAndroidTest {
     )
 
     // then
-    val notifications = notificationRepository.notifications()
+    val notifications = notificationRepository.notifications().first()
+    val expectedNotifications = listOf(
+      pinnedNotification2,
+      pinnedNotification1,
+      notificationNow,
+      notificationUpdatedInPast5Min,
+      notificationInPast10Min
+    )
 
     // First it should be pinned notifications in DESC order based on updatedAt
     // Then it should be rest of the notifications excluding deleted ones in DESC order based on updatedAt
-    notifications.test {
-      listOf(
-        pinnedNotification2,
-        pinnedNotification1,
-        notificationNow,
-        notificationUpdatedInPast5Min,
-        notificationInPast10Min
-      )
-    }
+    assertThat(notifications).isEqualTo(expectedNotifications)
   }
 
   @Test
