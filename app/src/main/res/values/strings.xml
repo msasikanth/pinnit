@@ -85,5 +85,5 @@
   <string name="notification_schedule_button_tomorrow">Tomorrow - %1$s</string>
   <string name="notification_menu_edit_schedule">Edit schedule</string>
   <string name="notification_menu_remove_schedule">Remove schedule</string>
-  <string name="editor_schedule_past_warning">We haven\'t implemented time travel just yet. Please schedule your notification in the future.</string>
+  <string name="editor_schedule_past_warning">This schedule is in the past. Please delete or edit your schedule to a future date</string>
 </resources>
