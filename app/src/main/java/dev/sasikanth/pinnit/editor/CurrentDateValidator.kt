@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import android.os.Parcel
 import com.google.android.material.datepicker.CalendarConstraints
 import dev.sasikanth.pinnit.utils.UserClock
+import dev.sasikanth.pinnit.utils.UtcClock
 import java.time.Instant
 import java.time.LocalDate
 import javax.inject.Inject
@@ -12,7 +13,8 @@ import javax.inject.Inject
  * when the date is greater or equal to the current date.
  */
 class CurrentDateValidator @Inject constructor(
-  private val userClock: UserClock
+  userClock: UserClock,
+  private val utcClock: UtcClock
 ) : CalendarConstraints.DateValidator {
 
   private val currentDate = LocalDate.now(userClock)
@@ -27,7 +29,7 @@ class CurrentDateValidator @Inject constructor(
 
   override fun isValid(date: Long): Boolean {
     val instant = Instant.ofEpochMilli(date)
-    val localDate = instant.atZone(userClock.zone).toLocalDate()
+    val localDate = instant.atZone(utcClock.zone).toLocalDate()
 
     return localDate >= currentDate
   }
