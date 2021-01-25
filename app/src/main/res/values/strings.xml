@@ -1,6 +1,6 @@
 <resources>
   <string name="app_name" translatable="false">Pinnit</string>
-  <string name="app_version" translatable="false">VERSION %1$s</string>
+  <string name="app_version">VERSION %1$s</string>
 
   <string name="toolbar_title_notifications">Notifications</string>
   <string name="no_notifications">No notifications</string>
@@ -22,6 +22,14 @@
   <string name="repeat_day">Day</string>
   <string name="repeat_week">Week</string>
   <string name="repeat_month">Month</string>
+
+  <string name="notification_schedule_button">%1$s - %2$s</string>
+  <string name="notification_schedule_button_today">Today - %1$s</string>
+  <string name="notification_schedule_button_yesterday">Yesterday - %1$s</string>
+  <string name="notification_schedule_button_tomorrow">Tomorrow - %1$s</string>
+  <string name="notification_menu_edit_schedule">Edit schedule</string>
+  <string name="notification_menu_remove_schedule">Remove schedule</string>
+  <string name="editor_schedule_past_warning">This schedule is in the past. Please delete or edit your schedule to a future date.</string>
 
   <string name="option_item_dark_mode">Dark mode</string>
 
@@ -78,12 +86,4 @@
     \nTo avoid this, visit the link below and follow the instructions.
   </string>
   <string name="oem_warning_show_instructions">show instructions</string>
-
-  <string name="notification_schedule_button">%1$s - %2$s</string>
-  <string name="notification_schedule_button_today">Today - %1$s</string>
-  <string name="notification_schedule_button_yesterday">Yesterday - %1$s</string>
-  <string name="notification_schedule_button_tomorrow">Tomorrow - %1$s</string>
-  <string name="notification_menu_edit_schedule">Edit schedule</string>
-  <string name="notification_menu_remove_schedule">Remove schedule</string>
-  <string name="editor_schedule_past_warning">This schedule is in the past. Please delete or edit your schedule to a future date</string>
 </resources>

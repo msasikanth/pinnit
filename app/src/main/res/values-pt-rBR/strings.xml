@@ -14,6 +14,20 @@
   <string name="save_and_pin">Salvar e fixar</string>
   <string name="save">Salvar</string>
 
+  <string name="schedule">Lembrete</string>
+  <string name="repeat_every">Repetir a cada…</string>
+  <string name="repeat_day">Dia</string>
+  <string name="repeat_week">Semana</string>
+  <string name="repeat_month">Mês</string>
+
+  <string name="notification_schedule_button">%1$s - %2$s</string>
+  <string name="notification_schedule_button_today">Hoje - %1$s</string>
+  <string name="notification_schedule_button_yesterday">Ontem - %1$s</string>
+  <string name="notification_schedule_button_tomorrow">Amanhã - %1$s</string>
+  <string name="notification_menu_edit_schedule">Editar lembrete</string>
+  <string name="notification_menu_remove_schedule">Remover lembrete</string>
+  <string name="editor_schedule_past_warning">Este lembrete está no passado. Delete ou edite-o para uma data futura.</string>
+
   <string name="option_item_dark_mode">Modo noturno</string>
 
   <!-- Preferences -->
@@ -31,7 +45,10 @@
   <string name="yes">Sim</string>
   <string name="no">Não</string>
   <string name="undo">Desfazer</string>
+
+  <!-- Notification Actions -->
   <string name="unpin">Desafixar</string>
+  <string name="delete">Deletar</string>
 
   <!-- Confirm Editor Exit-->
   <string name="confirm_editor_exit_title">Descartar mudanças?</string>
@@ -53,4 +70,5 @@
     \nPara evitar isto, visite o link abaixo e siga as instruções.
   </string>
   <string name="oem_warning_show_instructions">MOSTRAR INSTRUÇÕES</string>
+  <string name="app_version" translatable="false">VERSÃO %1$s</string>
 </resources>
