@@ -136,7 +136,15 @@ class NotificationsListAdapter(
       val isPinned = notification.isPinned
       val scheduleIsRepeatable = schedule.scheduleType != null
 
+      // Had to use `state_selected` for CSL instaed of `state_enabled`
+      // because of weird issues when pinning and un-pinning. Need to resolve
+      // it later.
+
+      // Reproducing steps: Pin a past note with schedule, close the app, open the app, unpin note
+      // with `state_enabled` in CSL the icon color is not set to disabled color.
+      scheduleButton.isSelected = isInFuture
       scheduleButton.isEnabled = isInFuture
+
       if (isPinned && !scheduleIsRepeatable) {
         scheduleButton.isVisible = false
       }
