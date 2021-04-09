@@ -1,3 +1,7 @@
+plugins {
+  id "com.google.protobuf" version "0.8.12"
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -66,6 +70,25 @@ android {
   }
 }
 
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:3.10.0"
+  }
+
+  // Generates the java Protobuf-lite code for the Protobufs in this project. See
+  // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+  // for more information.
+  generateProtoTasks {
+    all().each { task ->
+      task.builtins {
+        java {
+          option 'lite'
+        }
+      }
+    }
+  }
+}
+
 dependencies {
   coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$versions.coreLibraryDesugaring"
 
@@ -112,6 +135,9 @@ dependencies {
   implementation "me.saket:better-link-movement-method:$versions.betterLinkMovement"
 
   implementation "androidx.vectordrawable:vectordrawable-seekable:$versions.seekableAVD"
+
+  implementation "androidx.datastore:datastore:$versions.dataStore"
+  implementation  "com.google.protobuf:protobuf-javalite:$versions.javaLite"
 
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
