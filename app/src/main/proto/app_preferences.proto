@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "dev.sasikanth.pinnit.data.preferences";
+option java_multiple_files = true;
+
+message AppPreferences {
+  enum Theme {
+    UNSPECIFIED = 0;
+    AUTO = 1;
+    LIGHT = 2;
+    DARK = 3;
+  }
+
+  // User selected app theme
+  Theme theme = 1;
+
+  bool oem_warning_dialog = 2;
+}
