@@ -139,6 +139,8 @@ dependencies {
   implementation "androidx.datastore:datastore:$versions.dataStore"
   implementation  "com.google.protobuf:protobuf-javalite:$versions.javaLite"
 
+  implementation "io.github.reactivecircus.flowbinding:flowbinding-material:$versions.flowBinding"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"

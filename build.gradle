@@ -28,7 +28,8 @@ buildscript {
       workManager          : '2.5.0',
       seekableAVD          : '1.0.0-alpha02',
       dataStore            : '1.0.0-alpha08',
-      javaLite             : '3.11.0'
+      javaLite             : '3.11.0',
+      flowBinding          : '1.0.0'
   ]
   repositories {
     google()
