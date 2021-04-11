@@ -5,30 +5,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.datastore.core.DataStore
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.PinnitPreferences
+import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.di.injector
+import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.android.synthetic.main.theme_selection_sheet.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import reactivecircus.flowbinding.material.buttonCheckedChanges
 import javax.inject.Inject
 
 class OptionsBottomSheet : BottomSheetDialogFragment() {
 
   @Inject
-  lateinit var preferences: PinnitPreferences
+  lateinit var appPreferencesStore: DataStore<AppPreferences>
 
-  private val themeButtonCheckedListener = MaterialButtonToggleGroup.OnButtonCheckedListener { _, checkedId, isChecked ->
-    if (isChecked) {
-      when (checkedId) {
-        R.id.darkModeOn -> preferences.changeTheme(PinnitPreferences.Theme.DARK)
-        R.id.darkModeOff -> preferences.changeTheme(PinnitPreferences.Theme.LIGHT)
-        R.id.darkModeAuto -> preferences.changeTheme(PinnitPreferences.Theme.AUTO)
-      }
-      dismiss()
-    }
-  }
+  @Inject
+  lateinit var dispatcherProvider: DispatcherProvider
 
   companion object {
     private const val TAG = "OptionsBottomSheet"
@@ -51,16 +52,43 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    when (preferences.theme) {
-      PinnitPreferences.Theme.AUTO -> themeButtonGroup.check(R.id.darkModeAuto)
-      PinnitPreferences.Theme.LIGHT -> themeButtonGroup.check(R.id.darkModeOff)
-      PinnitPreferences.Theme.DARK -> themeButtonGroup.check(R.id.darkModeOn)
+    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+      val theme = withContext(dispatcherProvider.io) {
+        appPreferencesStore.data.first().theme
+      }
+      checkThemeSelection(theme)
+
+      themeButtonGroup
+        .buttonCheckedChanges()
+        .filter { it.checked }
+        .map { it.checkedId }
+        .collect { updateTheme(it) }
     }
-    themeButtonGroup.addOnButtonCheckedListener(themeButtonCheckedListener)
   }
 
-  override fun onDestroyView() {
-    themeButtonGroup.removeOnButtonCheckedListener(themeButtonCheckedListener)
-    super.onDestroyView()
+  private fun checkThemeSelection(theme: AppPreferences.Theme) {
+    when (theme) {
+      AppPreferences.Theme.AUTO -> themeButtonGroup.check(R.id.darkModeAuto)
+      AppPreferences.Theme.LIGHT -> themeButtonGroup.check(R.id.darkModeOff)
+      AppPreferences.Theme.DARK -> themeButtonGroup.check(R.id.darkModeOn)
+      else -> themeButtonGroup.check(R.id.darkModeAuto)
+    }
+  }
+
+  private suspend fun updateTheme(@IdRes checkedId: Int) {
+    val theme = when (checkedId) {
+      R.id.darkModeOn -> AppPreferences.Theme.DARK
+      R.id.darkModeOff -> AppPreferences.Theme.LIGHT
+      R.id.darkModeAuto -> AppPreferences.Theme.AUTO
+      else -> throw IllegalArgumentException("Unknown theme selection")
+    }
+
+    appPreferencesStore.updateData { currentData ->
+      currentData.toBuilder()
+        .setTheme(theme)
+        .build()
+    }
+
+    dismiss()
   }
 }
