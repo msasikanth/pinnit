@@ -3,24 +3,32 @@ package dev.sasikanth.pinnit.activity
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.R
-import dev.sasikanth.pinnit.data.PinnitPreferences
+import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
+import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
   @Inject
-  lateinit var pinnitPreferences: PinnitPreferences
+  lateinit var appPreferencesStore: DataStore<AppPreferences>
+
+  @Inject
+  lateinit var dispatcherProvider: DispatcherProvider
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
@@ -57,13 +65,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     navController = navHostFragment.navController
     navController?.addOnDestinationChangedListener(onNavDestinationChangeListener)
 
-    showOemWarningDialog()
+    lifecycleScope.launchWhenResumed {
+      val isOemWarningDialogShown = withContext(dispatcherProvider.io) {
+        appPreferencesStore.data.first().oemWarningDialog
+      }
+      showOemWarningDialog(isOemWarningDialogShown)
+    }
   }
 
-  private fun showOemWarningDialog() {
+  private suspend fun showOemWarningDialog(isOemWarningDialogShown: Boolean) {
     val brandName = Build.BRAND.toLowerCase(Locale.getDefault())
-    if (pinnitPreferences.isOemWarningDialogShown.not() && shouldShowWarningForOEM(brandName)) {
-      pinnitPreferences.isOemWarningDialogShown = true
+    if (isOemWarningDialogShown.not() && shouldShowWarningForOEM(brandName)) {
+      appPreferencesStore.updateData { currentData ->
+        currentData.toBuilder()
+          .setOemWarningDialog(true)
+          .build()
+      }
+
       OemWarningDialog.show(supportFragmentManager)
     }
   }
