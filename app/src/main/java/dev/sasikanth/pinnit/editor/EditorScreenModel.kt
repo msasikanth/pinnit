@@ -37,7 +37,8 @@ data class EditorScreenModel(
    */
   val hasTitleAndContentChanged: Boolean
     get() {
-      return notification?.equalsTitleAndContent(title, content)?.not() ?: (!title.isNullOrBlank() || !content.isNullOrBlank())
+      return notification?.equalsTitleAndContent(title, content)?.not()
+        ?: (hasNotificationTitle || hasNotificationContent)
     }
 
   val hasScheduleChanged: Boolean
@@ -48,6 +49,9 @@ data class EditorScreenModel(
 
   val hasNotificationTitle: Boolean
     get() = title.isNullOrBlank().not()
+
+  private val hasNotificationContent: Boolean
+    get() = content.isNullOrBlank().not()
 
   val hasSchedule: Boolean
     get() = schedule != null

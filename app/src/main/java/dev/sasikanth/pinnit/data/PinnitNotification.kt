@@ -32,8 +32,8 @@ data class PinnitNotification(
   val hasSchedule: Boolean
     get() = schedule != null
 
-  fun equalsTitleAndContent(title: String?, content: String?) =
-    this.title == title.orEmpty() && this.content.orEmpty() == content.orEmpty()
+  fun equalsTitleAndContent(otherTitle: String?, otherContent: String?) =
+    title == otherTitle.orEmpty() && content.orEmpty() == otherContent.orEmpty()
 
   @Dao
   interface RoomDao {
