@@ -2,7 +2,7 @@
 
 buildscript {
   ext.versions = [
-      kotlin               : '1.4.32',
+      kotlin               : '1.5.0',
       appCompat            : '1.2.0',
       coreKtx              : '1.3.2',
       constraintLayout     : '2.0.4',
@@ -12,10 +12,10 @@ buildscript {
       espressoCore         : '3.3.0',
       navigation           : '2.3.4',
       leakCanary           : '2.6',
-      room                 : '2.2.6',
+      room                 : '2.3.0',
       coroutines           : '1.4.3',
       truth                : '1.1.2',
-      dagger               : '2.33',
+      dagger               : '2.35.1',
       lifecycle            : '2.3.1',
       arch                 : '2.1.0',
       mockito              : '2.2.0',
@@ -36,7 +36,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:4.1.3'
+    classpath 'com.android.tools.build:gradle:7.0.0-beta03'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
     classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
   }
