@@ -7,9 +7,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -18,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
-import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Consumer
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.about.AboutBottomSheet
@@ -35,6 +30,7 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import dev.sasikanth.pinnit.utils.pinnitViewModels
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.time.format.DateTimeFormatter
@@ -63,24 +59,13 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   private val uiRender = NotificationsScreenUiRender(this)
 
-  private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect> by viewModels {
+  private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect> by pinnitViewModels(
+    { NotificationsScreenModel.default() },
+    { NotificationsScreenInit() },
+    { NotificationsScreenUpdate() },
+    { viewEffectConsumer -> effectHandler.create(viewEffectConsumer) }
+  )
 
-    fun loop(viewEffectConsumer: Consumer<NotificationScreenViewEffect>) = Mobius.loop(
-      NotificationsScreenUpdate(),
-      effectHandler.create(viewEffectConsumer)
-    )
-
-    object : ViewModelProvider.Factory {
-      @Suppress("UNCHECKED_CAST")
-      override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create(
-          ::loop,
-          NotificationsScreenModel.default(),
-          NotificationsScreenInit()
-        ) as T
-      }
-    }
-  }
   private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
       notificationsRecyclerView.smoothScrollToPosition(0)
