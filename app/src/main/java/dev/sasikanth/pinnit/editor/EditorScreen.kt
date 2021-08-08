@@ -87,7 +87,7 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     },
     { EditorScreenInit() },
     { EditorScreenUpdate() },
-    { effectHandler.create(it) }
+    { viewEffectConsumer -> effectHandler.create(viewEffectConsumer) }
   )
 
   private val scheduleTypeToButtonId = mapOf(
