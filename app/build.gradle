@@ -97,6 +97,8 @@ dependencies {
   implementation "androidx.appcompat:appcompat:$versions.appCompat"
   implementation "androidx.core:core-ktx:$versions.coreKtx"
 
+  implementation "androidx.activity:activity-compose:$versions.activity"
+
   implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
 
   implementation "com.google.android.material:material:$versions.material"

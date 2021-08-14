@@ -29,7 +29,8 @@ buildscript {
       seekableAVD          : '1.0.0-alpha02',
       dataStore            : '1.0.0-alpha08',
       javaLite             : '3.11.0',
-      flowBinding          : '1.0.0'
+      flowBinding          : '1.0.0',
+      activity             : '1.3.1'
   ]
   repositories {
     google()
