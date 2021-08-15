@@ -55,10 +55,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:animateLayoutChanges="true"
     android:background="?attr/colorSurface"
+    android:visibility="gone"
     app:actionIcon="@drawable/ic_pinnit_about"
     app:contentActionText="@string/create"
     app:navigationIcon="@drawable/ic_pinnit_dark_mode" />
+
+  <androidx.compose.ui.platform.ComposeView
+    android:id="@+id/bottomBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:translationZ="4dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

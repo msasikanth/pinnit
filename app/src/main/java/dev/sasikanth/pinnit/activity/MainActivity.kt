@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     mainRoot.setEdgeToEdgeSystemUiFlags()
     toolbar.applySystemWindowInsetsToPadding(top = true, right = true, left = true)
+    bottomBar.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
     setSupportActionBar(toolbar)
 
     val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
