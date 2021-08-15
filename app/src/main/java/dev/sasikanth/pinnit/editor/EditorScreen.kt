@@ -186,37 +186,41 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       uiRender.render(model)
     })
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
-      when (viewEffect) {
-        is SetTitle -> {
-          setTitleText(viewEffect.title)
-        }
-
-        is SetContent -> {
-          setContentText(viewEffect.content)
-        }
-
-        CloseEditorView -> {
-          closeEditor()
-        }
-
-        ShowConfirmExitEditorDialog -> {
-          showConfirmExitDialog()
-        }
-
-        ShowConfirmDeleteDialog -> {
-          showConfirmDeleteDialog()
-        }
-
-        is ShowDatePickerDialog -> {
-          showDatePickerDialog(viewEffect.date)
-        }
-
-        is ShowTimePickerDialog -> {
-          showTimePickerDialog(viewEffect.time)
-        }
-      }
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, ::viewEffectsHandler, { pausedViewEffects ->
+      pausedViewEffects.forEach(::viewEffectsHandler)
     })
+  }
+
+  private fun viewEffectsHandler(viewEffect: EditorScreenViewEffect?) {
+    when (viewEffect) {
+      is SetTitle -> {
+        setTitleText(viewEffect.title)
+      }
+
+      is SetContent -> {
+        setContentText(viewEffect.content)
+      }
+
+      CloseEditorView -> {
+        closeEditor()
+      }
+
+      ShowConfirmExitEditorDialog -> {
+        showConfirmExitDialog()
+      }
+
+      ShowConfirmDeleteDialog -> {
+        showConfirmDeleteDialog()
+      }
+
+      is ShowDatePickerDialog -> {
+        showDatePickerDialog(viewEffect.date)
+      }
+
+      is ShowTimePickerDialog -> {
+        showTimePickerDialog(viewEffect.time)
+      }
+    }
   }
 
   private fun configBottomBar() {
