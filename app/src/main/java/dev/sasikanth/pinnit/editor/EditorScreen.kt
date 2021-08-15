@@ -225,18 +225,18 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun configBottomBar() {
-    requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
-    requireActivity().bottomBar.setContentActionEnabled(false)
-    requireActivity().bottomBar.setContentActionText(contentActionText = null)
-    requireActivity().bottomBar.setActionIcon(null)
+    requireActivity().bottomBarOld.setNavigationIcon(R.drawable.ic_arrow_back)
+    requireActivity().bottomBarOld.setContentActionEnabled(false)
+    requireActivity().bottomBarOld.setContentActionText(contentActionText = null)
+    requireActivity().bottomBarOld.setActionIcon(null)
 
-    requireActivity().bottomBar.setNavigationOnClickListener {
+    requireActivity().bottomBarOld.setNavigationOnClickListener {
       viewModel.dispatchEvent(BackClicked)
     }
-    requireActivity().bottomBar.setContentActionOnClickListener {
+    requireActivity().bottomBarOld.setContentActionOnClickListener {
       viewModel.dispatchEvent(SaveClicked)
     }
-    requireActivity().bottomBar.setActionOnClickListener {
+    requireActivity().bottomBarOld.setActionOnClickListener {
       viewModel.dispatchEvent(DeleteNotificationClicked)
     }
   }
@@ -280,27 +280,27 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   override fun enableSave() {
-    requireActivity().bottomBar.setContentActionEnabled(true)
+    requireActivity().bottomBarOld.setContentActionEnabled(true)
   }
 
   override fun disableSave() {
-    requireActivity().bottomBar.setContentActionEnabled(false)
+    requireActivity().bottomBarOld.setContentActionEnabled(false)
   }
 
   override fun renderSaveActionButtonText() {
-    requireActivity().bottomBar.setContentActionText(R.string.save)
+    requireActivity().bottomBarOld.setContentActionText(R.string.save)
   }
 
   override fun renderSaveAndPinActionButtonText() {
-    requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
+    requireActivity().bottomBarOld.setContentActionText(R.string.save_and_pin)
   }
 
   override fun showDeleteButton() {
-    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
+    requireActivity().bottomBarOld.setActionIcon(R.drawable.ic_pinnit_delete)
   }
 
   override fun hideDeleteButton() {
-    requireActivity().bottomBar.setActionIcon(null)
+    requireActivity().bottomBarOld.setActionIcon(null)
   }
 
   override fun showScheduleView() {

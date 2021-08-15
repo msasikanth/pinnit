@@ -125,22 +125,22 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       ::viewEffectsHandler,
       { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
 
-    requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_pinnit_dark_mode)
-    requireActivity().bottomBar.setContentActionEnabled(true)
-    requireActivity().bottomBar.setContentActionText(R.string.create)
-    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_about)
+    requireActivity().bottomBarOld.setNavigationIcon(R.drawable.ic_pinnit_dark_mode)
+    requireActivity().bottomBarOld.setContentActionEnabled(true)
+    requireActivity().bottomBarOld.setContentActionText(R.string.create)
+    requireActivity().bottomBarOld.setActionIcon(R.drawable.ic_pinnit_about)
 
-    requireActivity().bottomBar.setNavigationOnClickListener {
+    requireActivity().bottomBarOld.setNavigationOnClickListener {
       OptionsBottomSheet.show(requireActivity().supportFragmentManager)
     }
-    requireActivity().bottomBar.setContentActionOnClickListener {
+    requireActivity().bottomBarOld.setContentActionOnClickListener {
       openNotificationEditor(
         notification = null,
         navigatorExtras = null,
         editorTransition = SharedAxis
       )
     }
-    requireActivity().bottomBar.setActionOnClickListener {
+    requireActivity().bottomBarOld.setActionOnClickListener {
       showAbout()
     }
   }
@@ -149,7 +149,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     when (viewEffect) {
       is UndoNotificationDeleteViewEffect -> {
         Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
-          .setAnchorView(requireActivity().bottomBar)
+          .setAnchorView(requireActivity().bottomBarOld)
           .setAction(R.string.undo) {
             viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
           }

@@ -14,7 +14,7 @@ import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.utils.dp
 import kotlinx.android.synthetic.main.pinnit_bottom_bar.view.*
 
-class PinnitBottomBar @JvmOverloads
+class PinnitBottomBar_Old @JvmOverloads
 constructor(
   context: Context,
   attrs: AttributeSet? = null,
@@ -24,10 +24,10 @@ constructor(
   init {
     inflate(context, R.layout.pinnit_bottom_bar, this)
 
-    context.theme.obtainStyledAttributes(attrs, R.styleable.PinnitBottomBar, defStyleAttr, 0).apply {
-      val mNavigationIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_navigationIcon)
-      val mContentActionText = getResourceIdOrThrow(R.styleable.PinnitBottomBar_contentActionText)
-      val mActionIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_actionIcon)
+    context.theme.obtainStyledAttributes(attrs, R.styleable.PinnitBottomBar_Old, defStyleAttr, 0).apply {
+      val mNavigationIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_Old_navigationIcon)
+      val mContentActionText = getResourceIdOrThrow(R.styleable.PinnitBottomBar_Old_contentActionText)
+      val mActionIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_Old_actionIcon)
 
       setNavigationIcon(mNavigationIcon)
       setContentActionText(mContentActionText)

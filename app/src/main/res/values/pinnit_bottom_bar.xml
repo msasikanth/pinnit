@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="PinnitBottomBar">
+  <declare-styleable name="PinnitBottomBar_Old">
     <attr name="navigationIcon" format="reference" />
     <attr name="contentActionText" format="reference" />
     <attr name="actionIcon" format="reference" />

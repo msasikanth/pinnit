@@ -50,8 +50,8 @@
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
     app:navGraph="@navigation/main_nav_graph" />
 
-  <dev.sasikanth.pinnit.widgets.PinnitBottomBar
-    android:id="@+id/bottomBar"
+  <dev.sasikanth.pinnit.widgets.PinnitBottomBar_Old
+    android:id="@+id/bottomBarOld"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
