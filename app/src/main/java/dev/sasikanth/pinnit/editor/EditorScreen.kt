@@ -11,6 +11,7 @@ import androidx.activity.addCallback
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -281,31 +282,16 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
         }
 
         PinnitBottomBar(
-          navigationIcon = {
-            PinnitBottomBarIconButton(
-              onClick = { viewModel.dispatchEvent(BackClicked) }
-            ) {
-              Icon(painterResource(id = R.drawable.ic_arrow_back), contentDescription = null)
-            }
-          },
+          navigationIcon = { BackIconButton() },
           content = {
-            PinnitButton(
-              modifier = Modifier.fillMaxWidth(),
+            SaveButton(
+              text = contentButtonText,
               enabled = model.hasNotificationTitle && model.hasValidScheduleResult &&
-                  (model.hasTitleAndContentChanged || model.hasScheduleChanged),
-              onClick = { viewModel.dispatchEvent(SaveClicked) }
-            ) {
-              Text(text = contentButtonText.uppercase())
-            }
+                  (model.hasTitleAndContentChanged || model.hasScheduleChanged)
+            )
           },
           actionIcon = if (model.isNotificationLoaded) {
-            {
-              PinnitBottomBarIconButton(
-                onClick = { viewModel.dispatchEvent(DeleteNotificationClicked) }
-              ) {
-                Icon(painterResource(id = R.drawable.ic_pinnit_delete), contentDescription = null)
-              }
-            }
+            { DeleteIconButton() }
           } else null
         )
       }
@@ -474,5 +460,37 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     }
 
     timePicker.show(parentFragmentManager, "ScheduleTimePickerDialog")
+  }
+
+  @Composable
+  private fun BackIconButton() {
+    PinnitBottomBarIconButton(
+      onClick = { viewModel.dispatchEvent(BackClicked) }
+    ) {
+      Icon(painterResource(id = R.drawable.ic_arrow_back), contentDescription = null)
+    }
+  }
+
+  @Composable
+  private fun SaveButton(
+    text: String,
+    enabled: Boolean
+  ) {
+    PinnitButton(
+      modifier = Modifier.fillMaxWidth(),
+      enabled = enabled,
+      onClick = { viewModel.dispatchEvent(SaveClicked) }
+    ) {
+      Text(text = text.uppercase())
+    }
+  }
+
+  @Composable
+  private fun DeleteIconButton() {
+    PinnitBottomBarIconButton(
+      onClick = { viewModel.dispatchEvent(DeleteNotificationClicked) }
+    ) {
+      Icon(painterResource(id = R.drawable.ic_pinnit_delete), contentDescription = null)
+    }
   }
 }
