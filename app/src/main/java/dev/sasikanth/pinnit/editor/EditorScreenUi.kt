@@ -17,4 +17,5 @@ interface EditorScreenUi {
   fun hideScheduleView()
   fun showScheduleWarning()
   fun hideScheduleWarning()
+  fun renderPinnitBottomBar(model: EditorScreenModel)
 }

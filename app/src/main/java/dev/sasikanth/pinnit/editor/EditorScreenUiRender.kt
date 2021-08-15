@@ -19,6 +19,7 @@ class EditorScreenUiRender(private val ui: EditorScreenUi) {
       ui.disableSave()
     }
 
+    ui.renderPinnitBottomBar(model)
     renderScheduleView(model)
   }
 

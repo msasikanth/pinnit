@@ -8,6 +8,12 @@ import android.view.View.NO_ID
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -18,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.vectordrawable.graphics.drawable.SeekableAnimatedVectorDrawable
+import com.google.android.material.composethemeadapter.MdcTheme
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -43,6 +50,9 @@ import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
 import dev.sasikanth.pinnit.utils.reverse
+import dev.sasikanth.pinnit.widgets.PinnitBottomBar
+import dev.sasikanth.pinnit.widgets.PinnitBottomBarIconButton
+import dev.sasikanth.pinnit.widgets.PinnitButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import kotlinx.android.synthetic.main.view_schedule.*
@@ -225,8 +235,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun configBottomBar() {
-    requireActivity().bottomBar.isGone = true
-    requireActivity().bottomBarOld.isVisible = true
+    requireActivity().bottomBar.isVisible = true
+    requireActivity().bottomBarOld.isGone = true
 
     requireActivity().bottomBarOld.setNavigationIcon(R.drawable.ic_arrow_back)
     requireActivity().bottomBarOld.setContentActionEnabled(false)
@@ -279,6 +289,47 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       imm?.hideSoftInputFromWindow(titleEditText.windowToken, 0)
 
       findNavController().navigateUp()
+    }
+  }
+
+  override fun renderPinnitBottomBar(model: EditorScreenModel) {
+    requireActivity().bottomBar.setContent {
+      MdcTheme {
+        val contentButtonText = if (model.isNotificationLoaded || model.hasSchedule) {
+          stringResource(id = R.string.save)
+        } else {
+          stringResource(id = R.string.save_and_pin)
+        }
+
+        PinnitBottomBar(
+          navigationIcon = {
+            PinnitBottomBarIconButton(
+              onClick = { viewModel.dispatchEvent(BackClicked) }
+            ) {
+              Icon(painterResource(id = R.drawable.ic_arrow_back), contentDescription = null)
+            }
+          },
+          content = {
+            PinnitButton(
+              modifier = Modifier.fillMaxWidth(),
+              enabled = model.hasNotificationTitle && model.hasValidScheduleResult &&
+                  (model.hasTitleAndContentChanged || model.hasScheduleChanged),
+              onClick = { viewModel.dispatchEvent(SaveClicked) }
+            ) {
+              Text(text = contentButtonText.uppercase())
+            }
+          },
+          actionIcon = if (model.isNotificationLoaded) {
+            {
+              PinnitBottomBarIconButton(
+                onClick = { viewModel.dispatchEvent(DeleteNotificationClicked) }
+              ) {
+                Icon(painterResource(id = R.drawable.ic_pinnit_delete), contentDescription = null)
+              }
+            }
+          } else null
+        )
+      }
     }
   }
 

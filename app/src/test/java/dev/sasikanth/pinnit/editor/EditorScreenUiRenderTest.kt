@@ -27,6 +27,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).renderSaveAndPinActionButtonText()
     verify(ui).hideDeleteButton()
     verify(ui).disableSave()
@@ -50,6 +51,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).renderSaveActionButtonText()
     verify(ui).showDeleteButton()
     verify(ui).disableSave()
@@ -74,6 +76,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).enableSave()
     verify(ui).showDeleteButton()
     verify(ui).renderSaveActionButtonText()
@@ -92,6 +95,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
@@ -118,6 +122,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveActionButtonText()
@@ -137,6 +142,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).disableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveAndPinActionButtonText()
@@ -163,6 +169,7 @@ class EditorScreenUiRenderTest {
     uiRender.render(model)
 
     // then
+    verify(ui).renderPinnitBottomBar(model = model)
     verify(ui).enableSave()
     verify(ui).hideDeleteButton()
     verify(ui).renderSaveActionButtonText()
