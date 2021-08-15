@@ -49,8 +49,8 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
     return inflater.inflate(R.layout.theme_selection_sheet, container, false)
   }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
     viewLifecycleOwner.lifecycleScope.launchWhenResumed {
       val theme = withContext(dispatcherProvider.io) {

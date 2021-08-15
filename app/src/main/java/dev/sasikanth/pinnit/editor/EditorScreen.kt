@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import android.content.Context
 import android.os.Bundle
 import android.text.util.Linkify
+import android.view.View
 import android.view.View.NO_ID
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -164,8 +165,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     returnTransition = backward
   }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
     configBottomBar()
     configTitleEditText()
