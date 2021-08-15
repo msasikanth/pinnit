@@ -6,6 +6,7 @@ import android.view.View
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -138,34 +139,9 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     requireActivity().bottomBar.setContent {
       MdcTheme {
         PinnitBottomBar(
-          navigationIcon = {
-            PinnitBottomBarIconButton(
-              onClick = { OptionsBottomSheet.show(requireActivity().supportFragmentManager) }
-            ) {
-              Icon(painterResource(id = R.drawable.ic_pinnit_dark_mode), contentDescription = null)
-            }
-          },
-          content = {
-            PinnitButton(
-              modifier = Modifier.fillMaxWidth(),
-              onClick = {
-                openNotificationEditor(
-                  notification = null,
-                  navigatorExtras = null,
-                  editorTransition = SharedAxis
-                )
-              }
-            ) {
-              Text(text = stringResource(id = R.string.create).uppercase())
-            }
-          },
-          actionIcon = {
-            PinnitBottomBarIconButton(
-              onClick = { showAbout() }
-            ) {
-              Icon(painterResource(id = R.drawable.ic_pinnit_about), contentDescription = null)
-            }
-          }
+          navigationIcon = { OptionsIconButton() },
+          content = { CreateButton() },
+          actionIcon = { AboutIconButton() }
         )
       }
     }
@@ -272,5 +248,39 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   private fun showAbout() {
     AboutBottomSheet.show(requireActivity().supportFragmentManager)
+  }
+
+  @Composable
+  private fun OptionsIconButton() {
+    PinnitBottomBarIconButton(
+      onClick = { OptionsBottomSheet.show(requireActivity().supportFragmentManager) }
+    ) {
+      Icon(painterResource(id = R.drawable.ic_pinnit_dark_mode), contentDescription = null)
+    }
+  }
+
+  @Composable
+  private fun CreateButton() {
+    PinnitButton(
+      modifier = Modifier.fillMaxWidth(),
+      onClick = {
+        openNotificationEditor(
+          notification = null,
+          navigatorExtras = null,
+          editorTransition = SharedAxis
+        )
+      }
+    ) {
+      Text(text = stringResource(id = R.string.create).uppercase())
+    }
+  }
+
+  @Composable
+  private fun AboutIconButton() {
+    PinnitBottomBarIconButton(
+      onClick = { showAbout() }
+    ) {
+      Icon(painterResource(id = R.drawable.ic_pinnit_about), contentDescription = null)
+    }
   }
 }
