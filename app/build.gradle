@@ -104,6 +104,7 @@ dependencies {
   implementation "androidx.core:core-ktx:$versions.coreKtx"
 
   implementation "androidx.activity:activity-compose:$versions.activity"
+  implementation "androidx.fragment:fragment-ktx:$versions.fragment"
 
   implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
 
