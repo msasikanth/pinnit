@@ -333,30 +333,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     }
   }
 
-  override fun enableSave() {
-    requireActivity().bottomBarOld.setContentActionEnabled(true)
-  }
-
-  override fun disableSave() {
-    requireActivity().bottomBarOld.setContentActionEnabled(false)
-  }
-
-  override fun renderSaveActionButtonText() {
-    requireActivity().bottomBarOld.setContentActionText(R.string.save)
-  }
-
-  override fun renderSaveAndPinActionButtonText() {
-    requireActivity().bottomBarOld.setContentActionText(R.string.save_and_pin)
-  }
-
-  override fun showDeleteButton() {
-    requireActivity().bottomBarOld.setActionIcon(R.drawable.ic_pinnit_delete)
-  }
-
-  override fun hideDeleteButton() {
-    requireActivity().bottomBarOld.setActionIcon(null)
-  }
-
   override fun showScheduleView() {
     if (seekableAvd.isRunning.not()) {
       // Go to the end state of the AVD, in this case we will be showing delete icon at end

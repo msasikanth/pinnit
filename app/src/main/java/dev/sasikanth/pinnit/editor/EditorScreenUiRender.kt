@@ -3,32 +3,8 @@ package dev.sasikanth.pinnit.editor
 class EditorScreenUiRender(private val ui: EditorScreenUi) {
 
   fun render(model: EditorScreenModel) {
-    if (model.isNotificationLoaded) {
-      ui.renderSaveActionButtonText()
-      ui.showDeleteButton()
-    } else {
-      renderSaveButton(model)
-      ui.hideDeleteButton()
-    }
-
-    if (model.hasNotificationTitle && model.hasValidScheduleResult &&
-      (model.hasTitleAndContentChanged || model.hasScheduleChanged)
-    ) {
-      ui.enableSave()
-    } else {
-      ui.disableSave()
-    }
-
     ui.renderPinnitBottomBar(model)
     renderScheduleView(model)
-  }
-
-  private fun renderSaveButton(model: EditorScreenModel) {
-    if (model.hasSchedule) {
-      ui.renderSaveActionButtonText()
-    } else {
-      ui.renderSaveAndPinActionButtonText()
-    }
   }
 
   private fun renderScheduleView(model: EditorScreenModel) {
