@@ -178,7 +178,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    configBottomBar()
     configTitleEditText()
     configContentEditText()
 
@@ -231,26 +230,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       is ShowTimePickerDialog -> {
         showTimePickerDialog(viewEffect.time)
       }
-    }
-  }
-
-  private fun configBottomBar() {
-    requireActivity().bottomBar.isVisible = true
-    requireActivity().bottomBarOld.isGone = true
-
-    requireActivity().bottomBarOld.setNavigationIcon(R.drawable.ic_arrow_back)
-    requireActivity().bottomBarOld.setContentActionEnabled(false)
-    requireActivity().bottomBarOld.setContentActionText(contentActionText = null)
-    requireActivity().bottomBarOld.setActionIcon(null)
-
-    requireActivity().bottomBarOld.setNavigationOnClickListener {
-      viewModel.dispatchEvent(BackClicked)
-    }
-    requireActivity().bottomBarOld.setContentActionOnClickListener {
-      viewModel.dispatchEvent(SaveClicked)
-    }
-    requireActivity().bottomBarOld.setActionOnClickListener {
-      viewModel.dispatchEvent(DeleteNotificationClicked)
     }
   }
 

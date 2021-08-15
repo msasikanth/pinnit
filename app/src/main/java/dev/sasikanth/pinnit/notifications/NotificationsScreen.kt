@@ -135,9 +135,6 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       ::viewEffectsHandler,
       { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
 
-    requireActivity().bottomBar.isVisible = true
-    requireActivity().bottomBarOld.isGone = true
-
     requireActivity().bottomBar.setContent {
       MdcTheme {
         PinnitBottomBar(

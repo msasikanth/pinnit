@@ -50,17 +50,6 @@
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
     app:navGraph="@navigation/main_nav_graph" />
 
-  <dev.sasikanth.pinnit.widgets.PinnitBottomBar_Old
-    android:id="@+id/bottomBarOld"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:background="?attr/colorSurface"
-    android:visibility="gone"
-    app:actionIcon="@drawable/ic_pinnit_about"
-    app:contentActionText="@string/create"
-    app:navigationIcon="@drawable/ic_pinnit_dark_mode" />
-
   <androidx.compose.ui.platform.ComposeView
     android:id="@+id/bottomBar"
     android:layout_width="match_parent"
