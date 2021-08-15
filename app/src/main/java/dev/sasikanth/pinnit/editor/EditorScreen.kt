@@ -225,6 +225,9 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun configBottomBar() {
+    requireActivity().bottomBar.isGone = true
+    requireActivity().bottomBarOld.isVisible = true
+
     requireActivity().bottomBarOld.setNavigationIcon(R.drawable.ic_arrow_back)
     requireActivity().bottomBarOld.setContentActionEnabled(false)
     requireActivity().bottomBarOld.setContentActionText(contentActionText = null)

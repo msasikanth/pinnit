@@ -3,6 +3,12 @@ package dev.sasikanth.pinnit.notifications
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -15,6 +21,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.composethemeadapter.MdcTheme
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
@@ -35,6 +42,9 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import dev.sasikanth.pinnit.widgets.PinnitBottomBar
+import dev.sasikanth.pinnit.widgets.PinnitBottomBarIconButton
+import dev.sasikanth.pinnit.widgets.PinnitButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.time.format.DateTimeFormatter
@@ -125,23 +135,42 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       ::viewEffectsHandler,
       { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
 
-    requireActivity().bottomBarOld.setNavigationIcon(R.drawable.ic_pinnit_dark_mode)
-    requireActivity().bottomBarOld.setContentActionEnabled(true)
-    requireActivity().bottomBarOld.setContentActionText(R.string.create)
-    requireActivity().bottomBarOld.setActionIcon(R.drawable.ic_pinnit_about)
+    requireActivity().bottomBar.isVisible = true
+    requireActivity().bottomBarOld.isGone = true
 
-    requireActivity().bottomBarOld.setNavigationOnClickListener {
-      OptionsBottomSheet.show(requireActivity().supportFragmentManager)
-    }
-    requireActivity().bottomBarOld.setContentActionOnClickListener {
-      openNotificationEditor(
-        notification = null,
-        navigatorExtras = null,
-        editorTransition = SharedAxis
-      )
-    }
-    requireActivity().bottomBarOld.setActionOnClickListener {
-      showAbout()
+    requireActivity().bottomBar.setContent {
+      MdcTheme {
+        PinnitBottomBar(
+          navigationIcon = {
+            PinnitBottomBarIconButton(
+              onClick = { OptionsBottomSheet.show(requireActivity().supportFragmentManager) }
+            ) {
+              Icon(painterResource(id = R.drawable.ic_pinnit_dark_mode), contentDescription = null)
+            }
+          },
+          content = {
+            PinnitButton(
+              modifier = Modifier.fillMaxWidth(),
+              onClick = {
+                openNotificationEditor(
+                  notification = null,
+                  navigatorExtras = null,
+                  editorTransition = SharedAxis
+                )
+              }
+            ) {
+              Text(text = stringResource(id = R.string.create).uppercase())
+            }
+          },
+          actionIcon = {
+            PinnitBottomBarIconButton(
+              onClick = { showAbout() }
+            ) {
+              Icon(painterResource(id = R.drawable.ic_pinnit_about), contentDescription = null)
+            }
+          }
+        )
+      }
     }
   }
 
@@ -149,7 +178,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     when (viewEffect) {
       is UndoNotificationDeleteViewEffect -> {
         Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
-          .setAnchorView(requireActivity().bottomBarOld)
+          .setAnchorView(requireActivity().bottomBar)
           .setAction(R.string.undo) {
             viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
           }
