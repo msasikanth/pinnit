@@ -77,8 +77,8 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     injector.inject(this)
   }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
     postponeEnterTransition()
 
@@ -105,18 +105,10 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
     viewModel.models.observe(viewLifecycleOwner, uiRender::render)
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
-      when (viewEffect) {
-        is UndoNotificationDeleteViewEffect -> {
-          Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
-            .setAnchorView(requireActivity().bottomBar)
-            .setAction(R.string.undo) {
-              viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
-            }
-            .show()
-        }
-      }
-    })
+    viewModel.viewEffects.setObserver(
+      viewLifecycleOwner,
+      ::viewEffectsHandler,
+      { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
 
     requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_pinnit_dark_mode)
     requireActivity().bottomBar.setContentActionEnabled(true)
@@ -135,6 +127,19 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     }
     requireActivity().bottomBar.setActionOnClickListener {
       showAbout()
+    }
+  }
+
+  private fun viewEffectsHandler(viewEffect: NotificationScreenViewEffect?) {
+    when (viewEffect) {
+      is UndoNotificationDeleteViewEffect -> {
+        Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
+          .setAnchorView(requireActivity().bottomBar)
+          .setAction(R.string.undo) {
+            viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
+          }
+          .show()
+      }
     }
   }
 

@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.editor
 import android.content.Context
 import android.os.Bundle
 import android.text.util.Linkify
+import android.view.View
 import android.view.View.NO_ID
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -144,8 +145,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     returnTransition = backward
   }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
     configBottomBar()
     configTitleEditText()
@@ -166,37 +167,41 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       uiRender.render(model)
     })
 
-    viewModel.viewEffects.setObserver(viewLifecycleOwner, { viewEffect ->
-      when (viewEffect) {
-        is SetTitle -> {
-          setTitleText(viewEffect.title)
-        }
-
-        is SetContent -> {
-          setContentText(viewEffect.content)
-        }
-
-        CloseEditorView -> {
-          closeEditor()
-        }
-
-        ShowConfirmExitEditorDialog -> {
-          showConfirmExitDialog()
-        }
-
-        ShowConfirmDeleteDialog -> {
-          showConfirmDeleteDialog()
-        }
-
-        is ShowDatePickerDialog -> {
-          showDatePickerDialog(viewEffect.date)
-        }
-
-        is ShowTimePickerDialog -> {
-          showTimePickerDialog(viewEffect.time)
-        }
-      }
+    viewModel.viewEffects.setObserver(viewLifecycleOwner, ::viewEffectsHandler, { pausedViewEffects ->
+      pausedViewEffects.forEach(::viewEffectsHandler)
     })
+  }
+
+  private fun viewEffectsHandler(viewEffect: EditorScreenViewEffect?) {
+    when (viewEffect) {
+      is SetTitle -> {
+        setTitleText(viewEffect.title)
+      }
+
+      is SetContent -> {
+        setContentText(viewEffect.content)
+      }
+
+      CloseEditorView -> {
+        closeEditor()
+      }
+
+      ShowConfirmExitEditorDialog -> {
+        showConfirmExitDialog()
+      }
+
+      ShowConfirmDeleteDialog -> {
+        showConfirmDeleteDialog()
+      }
+
+      is ShowDatePickerDialog -> {
+        showDatePickerDialog(viewEffect.date)
+      }
+
+      is ShowTimePickerDialog -> {
+        showTimePickerDialog(viewEffect.time)
+      }
+    }
   }
 
   private fun configBottomBar() {

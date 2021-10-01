@@ -52,11 +52,17 @@ android {
       applicationIdSuffix = '.debug'
     }
   }
+  buildFeatures {
+    compose true
+  }
   compileOptions {
     coreLibraryDesugaringEnabled true
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+  }
+  composeOptions {
+    kotlinCompilerExtensionVersion "$versions.compose"
   }
   kotlinOptions {
     jvmTarget = 1.8
@@ -96,6 +102,9 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
   implementation "androidx.appcompat:appcompat:$versions.appCompat"
   implementation "androidx.core:core-ktx:$versions.coreKtx"
+
+  implementation "androidx.activity:activity-compose:$versions.activity"
+  implementation "androidx.fragment:fragment-ktx:$versions.fragment"
 
   implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
 
@@ -140,6 +149,11 @@ dependencies {
   implementation  "com.google.protobuf:protobuf-javalite:$versions.javaLite"
 
   implementation "io.github.reactivecircus.flowbinding:flowbinding-material:$versions.flowBinding"
+
+  implementation "androidx.compose.material:material:$versions.compose"
+  implementation "androidx.compose.animation:animation:$versions.compose"
+  implementation "androidx.compose.ui:ui-tooling:$versions.compose"
+  implementation "com.google.android.material:compose-theme-adapter:$versions.compose"
 
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
