@@ -11,18 +11,18 @@ import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
+import dev.sasikanth.pinnit.databinding.ActivityMainBinding
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
 import dev.sasikanth.pinnit.utils.DispatcherProvider
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
 
   @Inject
   lateinit var appPreferencesStore: DataStore<AppPreferences>
@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
   private var navController: NavController? = null
   private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
-    appBarLayout.setExpanded(true, true)
+    binding.appBarLayout.setExpanded(true, true)
     when (destination.id) {
       R.id.notificationsScreen -> {
-        toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
+        binding.toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
       }
       R.id.editorScreen -> {
         if (arguments != null) {
@@ -43,23 +43,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
           // we will be showing the edit title or else we show
           // create title
           val editorScreenArgs = EditorScreenArgs.fromBundle(arguments)
-          if (editorScreenArgs.notificationUuid == null) {
-            toolbarTitleTextView.text = getString(R.string.toolbar_title_create)
+          val toolbarTitle = if (editorScreenArgs.notificationUuid == null) {
+            getString(R.string.toolbar_title_create)
           } else {
-            toolbarTitleTextView.text = getString(R.string.toolbar_title_edit)
+            getString(R.string.toolbar_title_edit)
           }
+          binding.toolbarTitleTextView.text = toolbarTitle
         }
       }
     }
   }
 
+  private lateinit var binding: ActivityMainBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     injector.inject(this)
     super.onCreate(savedInstanceState)
 
-    mainRoot.setEdgeToEdgeSystemUiFlags()
-    toolbar.applySystemWindowInsetsToPadding(top = true, right = true, left = true)
-    setSupportActionBar(toolbar)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    binding.mainRoot.setEdgeToEdgeSystemUiFlags()
+    binding.toolbar.apply {
+      applySystemWindowInsetsToPadding(top = true, right = true, left = true)
+      setSupportActionBar(this)
+    }
 
     val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
     navController = navHostFragment.navController
@@ -74,7 +82,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
   }
 
   private suspend fun showOemWarningDialog(isOemWarningDialogShown: Boolean) {
-    val brandName = Build.BRAND.toLowerCase(Locale.getDefault())
+    val brandName = Build.BRAND.lowercase(Locale.getDefault())
     if (isOemWarningDialogShown.not() && shouldShowWarningForOEM(brandName)) {
       appPreferencesStore.updateData { currentData ->
         currentData.toBuilder()
