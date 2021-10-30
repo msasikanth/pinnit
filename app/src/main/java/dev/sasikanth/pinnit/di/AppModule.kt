@@ -49,20 +49,4 @@ object AppModule {
   @Singleton
   @Provides
   fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
-
-  @Singleton
-  @Provides
-  fun providesWorkManager(
-    @ApplicationContext context: Context
-  ): WorkManager = WorkManager.getInstance(context)
-
-  @Singleton
-  @Provides
-  fun providesWorkManagerConfiguration(
-    workerFactory: HiltWorkerFactory
-  ): Configuration {
-    return Configuration.Builder()
-      .setWorkerFactory(workerFactory)
-      .build()
-  }
 }
