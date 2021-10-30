@@ -41,10 +41,6 @@ class MainActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     binding.mainRoot.setEdgeToEdgeSystemUiFlags()
-    binding.toolbar.apply {
-      applySystemWindowInsetsToPadding(top = true, right = true, left = true)
-      setSupportActionBar(this)
-    }
 
     val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
     navController = navHostFragment.navController
