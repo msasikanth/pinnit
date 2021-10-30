@@ -1,26 +1,28 @@
 package dev.sasikanth.pinnit.notifications
 
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import dev.sasikanth.pinnit.TestData
-import dev.sasikanth.pinnit.TestPinnitApp
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.time.Instant
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.UUID
 import javax.inject.Inject
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class NotificationsRepositoryAndroidTest {
+
+  @get:Rule
+  var hiltRule = HiltAndroidRule(this)
 
   @Inject
   lateinit var notificationRepository: NotificationRepository
@@ -33,10 +35,7 @@ class NotificationsRepositoryAndroidTest {
 
   @Before
   fun setup() {
-    ApplicationProvider.getApplicationContext<TestPinnitApp>()
-      .component
-      .also { it.inject(this) }
-
+    hiltRule.inject()
     clock.setDate(LocalDate.parse("2020-02-14"))
   }
 
