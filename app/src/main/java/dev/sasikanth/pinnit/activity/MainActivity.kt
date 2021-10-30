@@ -13,7 +13,6 @@ import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.databinding.ActivityMainBinding
 import dev.sasikanth.pinnit.di.injector
-import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
 import dev.sasikanth.pinnit.utils.DispatcherProvider
@@ -31,28 +30,6 @@ class MainActivity : AppCompatActivity() {
   lateinit var dispatcherProvider: DispatcherProvider
 
   private var navController: NavController? = null
-  private val onNavDestinationChangeListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
-    binding.appBarLayout.setExpanded(true, true)
-    when (destination.id) {
-      R.id.notificationsScreen -> {
-        binding.toolbarTitleTextView.text = getString(R.string.toolbar_title_notifications)
-      }
-      R.id.editorScreen -> {
-        if (arguments != null) {
-          // If there is a notification present
-          // we will be showing the edit title or else we show
-          // create title
-          val editorScreenArgs = EditorScreenArgs.fromBundle(arguments)
-          val toolbarTitle = if (editorScreenArgs.notificationUuid == null) {
-            getString(R.string.toolbar_title_create)
-          } else {
-            getString(R.string.toolbar_title_edit)
-          }
-          binding.toolbarTitleTextView.text = toolbarTitle
-        }
-      }
-    }
-  }
 
   private lateinit var binding: ActivityMainBinding
 
@@ -71,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
     val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
     navController = navHostFragment.navController
-    navController?.addOnDestinationChangedListener(onNavDestinationChangeListener)
 
     lifecycleScope.launchWhenResumed {
       val isOemWarningDialogShown = withContext(dispatcherProvider.io) {
@@ -95,7 +71,6 @@ class MainActivity : AppCompatActivity() {
   }
 
   override fun onDestroy() {
-    navController?.removeOnDestinationChangedListener(onNavDestinationChangeListener)
     navController = null
     super.onDestroy()
   }
