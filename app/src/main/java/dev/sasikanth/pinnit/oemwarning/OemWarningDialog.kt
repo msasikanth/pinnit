@@ -12,8 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dev.sasikanth.pinnit.R
-import kotlinx.android.synthetic.main.pinnit_oem_warning_dialog.*
+import dev.sasikanth.pinnit.databinding.PinnitOemWarningDialogBinding
 
 class OemWarningDialog : DialogFragment() {
 
@@ -27,30 +26,33 @@ class OemWarningDialog : DialogFragment() {
     }
   }
 
-  private var dialogLayout: View? = null
+  private var _binding: PinnitOemWarningDialogBinding? = null
+  private val binding get() = _binding!!
 
   @SuppressLint("InflateParams")
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-    dialogLayout = LayoutInflater.from(requireContext()).inflate(R.layout.pinnit_oem_warning_dialog, null)
+    val layoutInflater = LayoutInflater.from(requireContext())
+    _binding = PinnitOemWarningDialogBinding.inflate(layoutInflater, null, false)
+
     return MaterialAlertDialogBuilder(requireContext())
-      .setView(dialogLayout)
+      .setView(binding.root)
       .create()
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return dialogLayout
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    showInstructionsButton?.setOnClickListener {
+    binding.showInstructionsButton.setOnClickListener {
       showInstructions()
       dismiss()
     }
   }
 
   override fun onDestroyView() {
-    dialogLayout = null
+    _binding = null
     super.onDestroyView()
   }
 
