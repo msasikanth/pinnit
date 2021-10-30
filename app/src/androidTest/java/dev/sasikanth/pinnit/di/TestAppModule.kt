@@ -14,6 +14,7 @@ import dev.sasikanth.pinnit.utils.TestUserClock
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import javax.inject.Singleton
 
 @TestInstallIn(
   components = [SingletonComponent::class],
@@ -27,7 +28,7 @@ import dev.sasikanth.pinnit.utils.UtcClock
 )
 object TestAppModule {
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesTestAppDatabase(
     application: Application
@@ -36,23 +37,25 @@ object TestAppModule {
       .build()
   }
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesTestUtcClock(): TestUtcClock = TestUtcClock()
 
+  @Singleton
   @Provides
   fun providesUtcClock(testUtcClock: TestUtcClock): UtcClock = testUtcClock
 
-  @AppScope
+  @Singleton
   @Provides
   fun testUserClock(): TestUserClock {
     return TestUserClock()
   }
 
+  @Singleton
   @Provides
   fun userClock(testUserClock: TestUserClock): UserClock = testUserClock
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
 }
