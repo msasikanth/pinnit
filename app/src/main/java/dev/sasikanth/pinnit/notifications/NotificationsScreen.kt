@@ -2,7 +2,9 @@ package dev.sasikanth.pinnit.notifications
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -25,6 +27,7 @@ import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.about.AboutBottomSheet
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.databinding.FragmentNotificationsBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition
@@ -35,11 +38,10 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
-import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class NotificationsScreen : Fragment(R.layout.fragment_notifications), NotificationsScreenUi {
+class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
   @Inject
   lateinit var utcClock: UtcClock
@@ -82,13 +84,21 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   }
   private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-      notificationsRecyclerView.smoothScrollToPosition(0)
+      binding.notificationsRecyclerView.smoothScrollToPosition(0)
     }
   }
+
+  private var _binding: FragmentNotificationsBinding? = null
+  private val binding get() = _binding!!
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
     injector.inject(this)
+  }
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+    return _binding?.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,7 +106,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
     postponeEnterTransition()
 
-    toolbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
+    binding.toolbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
 
     adapter = NotificationsListAdapter(
       utcClock = utcClock,
@@ -109,15 +119,15 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       onRemoveNotificationScheduleClicked = ::onRemoveNotificationScheduleClicked
     )
     adapter.registerAdapterDataObserver(adapterDataObserver)
-    notificationsRecyclerView.adapter = adapter
-    notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
-    notificationsRecyclerView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
-    notificationsRecyclerView.doOnPreDraw { startPostponedEnterTransition() }
+    binding.notificationsRecyclerView.adapter = adapter
+    binding.notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
+    binding.notificationsRecyclerView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
+    binding.notificationsRecyclerView.doOnPreDraw { startPostponedEnterTransition() }
 
     val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {
       viewModel.dispatchEvent(NotificationSwiped(it))
     }
-    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(notificationsRecyclerView)
+    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notificationsRecyclerView)
 
     viewModel.models.observe(viewLifecycleOwner, uiRender::render)
 
@@ -126,17 +136,17 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       ::viewEffectsHandler,
       { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
 
-    bottomBar.setNavigationOnClickListener {
+    binding.bottomBar.setNavigationOnClickListener {
       OptionsBottomSheet.show(requireActivity().supportFragmentManager)
     }
-    bottomBar.setContentActionOnClickListener {
+    binding.bottomBar.setContentActionOnClickListener {
       openNotificationEditor(
         notification = null,
         navigatorExtras = null,
         editorTransition = SharedAxis
       )
     }
-    bottomBar.setActionOnClickListener {
+    binding.bottomBar.setActionOnClickListener {
       showAbout()
     }
   }
@@ -144,8 +154,8 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
   private fun viewEffectsHandler(viewEffect: NotificationScreenViewEffect?) {
     when (viewEffect) {
       is UndoNotificationDeleteViewEffect -> {
-        Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
-          .setAnchorView(bottomBar)
+        Snackbar.make(binding.notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
+          .setAnchorView(binding.bottomBar)
           .setAction(R.string.undo) {
             viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
           }
@@ -156,28 +166,28 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
   override fun onDestroyView() {
     adapter.unregisterAdapterDataObserver(adapterDataObserver)
-    notificationsRecyclerView.adapter = null
-    notificationsRecyclerView.itemAnimator = null
+    binding.notificationsRecyclerView.adapter = null
+    binding.notificationsRecyclerView.itemAnimator = null
     super.onDestroyView()
   }
 
   override fun showNotifications(notifications: List<PinnitNotification>) {
-    notificationsRecyclerView.isVisible = true
+    binding.notificationsRecyclerView.isVisible = true
     adapter.submitList(notifications)
   }
 
   override fun showNotificationsEmptyError() {
-    noNotificationsTextView.isVisible = true
-    noNotificationsImageView.isVisible = true
+    binding.noNotificationsTextView.isVisible = true
+    binding.noNotificationsImageView.isVisible = true
   }
 
   override fun hideNotificationsEmptyError() {
-    noNotificationsTextView.isGone = true
-    noNotificationsImageView.isGone = true
+    binding.noNotificationsTextView.isGone = true
+    binding.noNotificationsImageView.isGone = true
   }
 
   override fun hideNotifications() {
-    notificationsRecyclerView.isGone = true
+    binding.notificationsRecyclerView.isGone = true
     adapter.submitList(null)
   }
 
