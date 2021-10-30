@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Qualifier
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
 annotation class DateTimeFormat(val value: Type) {
 
   enum class Type {
