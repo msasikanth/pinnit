@@ -3,8 +3,9 @@ package dev.sasikanth.pinnit.notifications
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init
+import javax.inject.Inject
 
-class NotificationsScreenInit : Init<NotificationsScreenModel, NotificationsScreenEffect> {
+class NotificationsScreenInit @Inject constructor() : Init<NotificationsScreenModel, NotificationsScreenEffect> {
   override fun init(model: NotificationsScreenModel): First<NotificationsScreenModel, NotificationsScreenEffect> {
     val effects = if (model.notificationsQueried.not()) {
       // We are only checking for notifications visibility during

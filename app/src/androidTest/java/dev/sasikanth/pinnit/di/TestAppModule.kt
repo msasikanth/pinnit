@@ -2,6 +2,8 @@ package dev.sasikanth.pinnit.di
 
 import android.content.Context
 import androidx.room.Room
+import com.spotify.mobius.runners.ImmediateWorkRunner
+import com.spotify.mobius.runners.WorkRunner
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -58,4 +60,8 @@ object TestAppModule {
   @Singleton
   @Provides
   fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
+
+  @Singleton
+  @Provides
+  fun providesWorkRunner(): WorkRunner = ImmediateWorkRunner()
 }

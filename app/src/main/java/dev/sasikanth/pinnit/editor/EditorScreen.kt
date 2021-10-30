@@ -15,8 +15,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.vectordrawable.graphics.drawable.SeekableAnimatedVectorDrawable
@@ -28,9 +26,6 @@ import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialContainerTransform.FADE_MODE_OUT
 import com.google.android.material.transition.MaterialSharedAxis
-import com.spotify.mobius.Mobius
-import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Consumer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
@@ -51,7 +46,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -77,39 +71,12 @@ class EditorScreen : Fragment(), EditorScreenUi {
   @DateTimeFormat(ScheduleTimeFormat)
   lateinit var scheduleTimeFormatter: DateTimeFormatter
 
+  private val viewModel: EditorScreenViewModel by viewModels()
+
   private val args by navArgs<EditorScreenArgs>()
   private val editorTransition by lazy { args.editorTransition }
 
   private val uiRender = EditorScreenUiRender(this)
-
-  private val viewModel: MobiusLoopViewModel<EditorScreenModel, EditorScreenEvent, EditorScreenEffect, EditorScreenViewEffect> by viewModels {
-
-    val notificationUuid = if (args.notificationUuid != null) {
-      UUID.fromString(args.notificationUuid)
-    } else {
-      null
-    }
-
-    fun loop(viewEffectConsumer: Consumer<EditorScreenViewEffect>) = Mobius.loop(
-      EditorScreenUpdate(),
-      effectHandler.create(viewEffectConsumer)
-    )
-
-    object : ViewModelProvider.Factory {
-      @Suppress("UNCHECKED_CAST")
-      override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create(
-          ::loop,
-          EditorScreenModel.default(
-            notificationUuid = notificationUuid,
-            content = args.notificationContent,
-            title = args.notificationTitle
-          ),
-          EditorScreenInit()
-        ) as T
-      }
-    }
-  }
 
   private val scheduleTypeToButtonId = mapOf(
     ScheduleType.Daily to R.id.repeatDailyButton,

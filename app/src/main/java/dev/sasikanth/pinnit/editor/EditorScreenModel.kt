@@ -1,14 +1,17 @@
 package dev.sasikanth.pinnit.editor
 
+import android.os.Parcelable
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
 
+@Parcelize
 data class EditorScreenModel(
   val notificationUuid: UUID?,
   val notification: PinnitNotification?,
@@ -16,7 +19,7 @@ data class EditorScreenModel(
   val content: String?,
   val schedule: Schedule?,
   val scheduleValidationResult: Result?
-) {
+) : Parcelable {
 
   companion object {
     fun default(notificationUuid: UUID?, title: String?, content: String?) = EditorScreenModel(

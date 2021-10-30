@@ -9,8 +9,6 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -19,9 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
-import com.spotify.mobius.Mobius
-import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Consumer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
@@ -60,28 +55,10 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
   @DateTimeFormat(DateTimeFormat.Type.ScheduleTimeFormat)
   lateinit var scheduleTimeFormatter: DateTimeFormatter
 
-  private lateinit var adapter: NotificationsListAdapter
+  private val viewModel: NotificationsScreenViewModel by viewModels()
 
   private val uiRender = NotificationsScreenUiRender(this)
 
-  private val viewModel: MobiusLoopViewModel<NotificationsScreenModel, NotificationsScreenEvent, NotificationsScreenEffect, NotificationScreenViewEffect> by viewModels {
-
-    fun loop(viewEffectConsumer: Consumer<NotificationScreenViewEffect>) = Mobius.loop(
-      NotificationsScreenUpdate(),
-      effectHandler.create(viewEffectConsumer)
-    )
-
-    object : ViewModelProvider.Factory {
-      @Suppress("UNCHECKED_CAST")
-      override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create(
-          ::loop,
-          NotificationsScreenModel.default(),
-          NotificationsScreenInit()
-        ) as T
-      }
-    }
-  }
   private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
       binding.notificationsRecyclerView.smoothScrollToPosition(0)
@@ -90,6 +67,8 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
   private var _binding: FragmentNotificationsBinding? = null
   private val binding get() = _binding!!
+
+  private lateinit var adapter: NotificationsListAdapter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
