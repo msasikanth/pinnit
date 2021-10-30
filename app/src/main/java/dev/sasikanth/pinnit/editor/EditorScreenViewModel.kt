@@ -31,14 +31,9 @@ class EditorScreenViewModel @Inject constructor(
 
     private fun editorScreenModel(savedStateHandle: SavedStateHandle): EditorScreenModel {
       val args = EditorScreenArgs.fromSavedStateHandle(savedStateHandle)
-      val uuid = if (args.notificationUuid != null) {
-        UUID.fromString(args.notificationUuid)
-      } else {
-        null
-      }
 
       return savedStateHandle.get<EditorScreenModel>(MODEL_KEY) ?: EditorScreenModel.default(
-        notificationUuid = uuid,
+        notificationUuid = args.notificationUuid,
         title = args.notificationTitle,
         content = args.notificationContent
       )

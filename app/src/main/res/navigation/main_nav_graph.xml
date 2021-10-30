@@ -20,9 +20,9 @@
     tools:layout="@layout/fragment_notification_editor">
     <argument
       android:name="notificationUuid"
-      android:defaultValue="@null"
-      app:argType="string"
-      app:nullable="true" />
+      app:argType="java.util.UUID"
+      app:nullable="true"
+      android:defaultValue="@null" />
     <argument
       android:name="notificationContent"
       android:defaultValue="@null"

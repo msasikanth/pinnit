@@ -196,7 +196,7 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
   ) {
     val navDirections = NotificationsScreenDirections
       .actionNotificationsScreenToEditorScreen(
-        notificationUuid = notification?.uuid?.toString(),
+        notificationUuid = notification?.uuid,
         editorTransition = editorTransition
       )
 

@@ -80,7 +80,7 @@ class NotificationUtil @Inject constructor(
   private fun buildSystemNotification(notification: PinnitNotification): Notification {
     val content = notification.content.orEmpty()
     val editorScreenArgs = EditorScreenArgs(
-      notificationUuid = notification.uuid.toString(),
+      notificationUuid = notification.uuid,
       editorTransition = SharedAxis
     ).toBundle()
 

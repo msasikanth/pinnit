@@ -106,7 +106,7 @@ class QsPopupActivity : AppCompatActivity(), QsPopupUi {
       .setDestination(R.id.editorScreen)
       .setArguments(
         EditorScreenArgs(
-          notificationUuid = notification?.uuid?.toString(),
+          notificationUuid = notification?.uuid,
           editorTransition = SharedAxis
         ).toBundle()
       )
