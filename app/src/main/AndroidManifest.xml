@@ -15,7 +15,9 @@
     android:theme="@style/Theme.Pinnit"
     tools:ignore="AllowBackup">
 
-    <activity android:name=".SplashActivity">
+    <activity
+      android:name=".SplashActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +34,9 @@
       android:theme="@style/Theme.Pinnit.Main"
       android:windowSoftInputMode="adjustResize" />
 
-    <activity android:name=".ShortcutReceiverActivity">
+    <activity
+      android:name=".ShortcutReceiverActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
         <category android:name="android.intent.category.DEFAULT" />
@@ -45,20 +49,23 @@
       android:taskAffinity=""
       android:theme="@style/Theme.Pinnit.QsPopup" />
 
-    <activity android:name=".AppActionsReceiverActivity">
+    <activity
+      android:name=".AppActionsReceiverActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
 
-        <data android:host="pinnit.app"
+        <data
+          android:host="pinnit.app"
           android:path="/"
-          android:scheme="app"/>
+          android:scheme="app" />
       </intent-filter>
     </activity>
 
     <service
       android:name=".background.services.NotificationsListener"
-      android:exported="false"
+      android:exported="true"
       android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
       <intent-filter>
         <action android:name="android.service.notification.NotificationListenerService" />
@@ -67,6 +74,7 @@
 
     <service
       android:name=".background.services.QsPopupService"
+      android:exported="true"
       android:icon="@drawable/ic_qs_app_icon"
       android:label="@string/app_name"
       android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -93,13 +101,17 @@
       </intent-filter>
     </receiver>
 
-    <receiver android:name=".background.receivers.BootCompletedReceiver">
+    <receiver
+      android:name=".background.receivers.BootCompletedReceiver"
+      android:exported="false">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
       </intent-filter>
     </receiver>
 
-    <receiver android:name=".background.receivers.AppUpdateReceiver">
+    <receiver
+      android:name=".background.receivers.AppUpdateReceiver"
+      android:exported="false">
       <intent-filter>
         <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
       </intent-filter>
@@ -110,9 +122,15 @@
       android:resource="@xml/actions" />
 
     <provider
-      android:name="androidx.work.impl.WorkManagerInitializer"
-      android:authorities="${applicationId}.workmanager-init"
-      tools:node="remove" />
+      android:name="androidx.startup.InitializationProvider"
+      android:authorities="${applicationId}.androidx-startup"
+      android:exported="false"
+      tools:node="merge">
+      <meta-data
+        android:name="androidx.work.WorkManagerInitializer"
+        android:value="androidx.startup"
+        tools:node="remove" />
+    </provider>
 
   </application>
 

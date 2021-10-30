@@ -99,7 +99,7 @@ class NotificationUtil @Inject constructor(
       context,
       notification.uuid.hashCode(),
       unpinIntent,
-      PendingIntent.FLAG_UPDATE_CURRENT
+      PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     val deleteIntent = Intent(context, DeleteNotificationReceiver::class.java).apply {
@@ -110,7 +110,7 @@ class NotificationUtil @Inject constructor(
       context,
       notification.uuid.hashCode(),
       deleteIntent,
-      PendingIntent.FLAG_UPDATE_CURRENT
+      PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)
