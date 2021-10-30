@@ -1,12 +1,14 @@
 package dev.sasikanth.pinnit.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.data.migrations.Migration_1_2
@@ -31,8 +33,10 @@ object AppModule {
 
   @Singleton
   @Provides
-  fun providesAppDatabase(application: Application): AppDatabase {
-    return Room.databaseBuilder(application, AppDatabase::class.java, "pinnit-db")
+  fun providesAppDatabase(
+    @ApplicationContext context: Context
+  ): AppDatabase {
+    return Room.databaseBuilder(context, AppDatabase::class.java, "pinnit-db")
       .addMigrations(Migration_1_2)
       .build()
   }
