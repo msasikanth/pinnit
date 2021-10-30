@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import dev.sasikanth.pinnit.di.injector
+import dagger.hilt.android.AndroidEntryPoint
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DeleteNotificationReceiver : BroadcastReceiver() {
 
   companion object {
@@ -45,7 +46,6 @@ class DeleteNotificationReceiver : BroadcastReceiver() {
     val notificationUuid = intent?.getStringExtra(EXTRA_NOTIFICATION_UUID)
 
     if (context != null && intent != null && intent.action == ACTION_DELETE && notificationUuid != null) {
-      context.injector.inject(this)
       val asyncResult = goAsync()
 
       mainScope.launch {

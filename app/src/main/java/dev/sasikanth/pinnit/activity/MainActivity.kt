@@ -7,12 +7,11 @@ import androidx.datastore.core.DataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.databinding.ActivityMainBinding
-import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
 import dev.sasikanth.pinnit.utils.DispatcherProvider
@@ -21,6 +20,7 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
   @Inject
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    injector.inject(this)
     super.onCreate(savedInstanceState)
 
     binding = ActivityMainBinding.inflate(layoutInflater)

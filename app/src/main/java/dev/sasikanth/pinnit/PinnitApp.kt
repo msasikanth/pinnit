@@ -38,7 +38,6 @@ class PinnitApp : Application(), ComponentProvider, Configuration.Provider {
 
   override fun onCreate() {
     super.onCreate()
-    component.inject(this)
 
     appPreferencesStore
       .data

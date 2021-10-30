@@ -13,12 +13,12 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Consumer
+import dagger.hilt.android.AndroidEntryPoint
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.databinding.ActivityQsPopupBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
-import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
@@ -33,6 +33,7 @@ import javax.inject.Inject
  * clicked. The reason why I didn't use an actual dialog is because it's not
  * properly following the app theme (day/night).
  */
+@AndroidEntryPoint
 class QsPopupActivity : AppCompatActivity(), QsPopupUi {
 
   @Inject
@@ -77,7 +78,6 @@ class QsPopupActivity : AppCompatActivity(), QsPopupUi {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    injector.inject(this)
 
     binding = ActivityQsPopupBinding.inflate(layoutInflater)
     setContentView(binding.root)
