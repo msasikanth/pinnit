@@ -9,15 +9,6 @@ import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleTimeFormat
 import java.time.format.DateTimeFormatter
 import javax.inject.Qualifier
 
-@Qualifier
-annotation class DateTimeFormat(val value: Type) {
-
-  enum class Type {
-    ScheduleDateFormat,
-    ScheduleTimeFormat
-  }
-}
-
 @InstallIn(SingletonComponent::class)
 @Module
 object DateTimeFormatterModule {
