@@ -1,6 +1,5 @@
 package dev.sasikanth.pinnit.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import androidx.work.Configuration
@@ -59,7 +58,9 @@ object AppModule {
 
   @Singleton
   @Provides
-  fun providesWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
+  fun providesWorkManager(
+    @ApplicationContext context: Context
+  ): WorkManager = WorkManager.getInstance(context)
 
   @Singleton
   @Provides
