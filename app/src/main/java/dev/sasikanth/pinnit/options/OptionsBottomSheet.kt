@@ -12,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
+import dev.sasikanth.pinnit.databinding.ThemeSelectionSheetBinding
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.utils.DispatcherProvider
-import kotlinx.android.synthetic.main.theme_selection_sheet.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
@@ -40,13 +40,17 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
     }
   }
 
+  private var _binding: ThemeSelectionSheetBinding? = null
+  private val binding get() = _binding!!
+
   override fun onAttach(context: Context) {
     super.onAttach(context)
     injector.inject(this)
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.theme_selection_sheet, container, false)
+    _binding = ThemeSelectionSheetBinding.inflate(layoutInflater, container, false)
+    return _binding?.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +62,7 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
       }
       checkThemeSelection(theme)
 
-      themeButtonGroup
+      binding.themeButtonGroup
         .buttonCheckedChanges()
         .filter { it.checked }
         .map { it.checkedId }
@@ -66,13 +70,20 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
     }
   }
 
+  override fun onDestroyView() {
+    _binding = null
+    super.onDestroyView()
+  }
+
   private fun checkThemeSelection(theme: AppPreferences.Theme) {
-    when (theme) {
-      AppPreferences.Theme.AUTO -> themeButtonGroup.check(R.id.darkModeAuto)
-      AppPreferences.Theme.LIGHT -> themeButtonGroup.check(R.id.darkModeOff)
-      AppPreferences.Theme.DARK -> themeButtonGroup.check(R.id.darkModeOn)
-      else -> themeButtonGroup.check(R.id.darkModeAuto)
+    val id = when (theme) {
+      AppPreferences.Theme.AUTO -> R.id.darkModeAuto
+      AppPreferences.Theme.LIGHT -> R.id.darkModeOff
+      AppPreferences.Theme.DARK -> R.id.darkModeOn
+      else -> R.id.darkModeAuto
     }
+
+    binding.themeButtonGroup.check(id)
   }
 
   private suspend fun updateTheme(@IdRes checkedId: Int) {
