@@ -3,8 +3,10 @@ package dev.sasikanth.pinnit.editor
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init
+import javax.inject.Inject
 
-class EditorScreenInit : Init<EditorScreenModel, EditorScreenEffect> {
+class EditorScreenInit @Inject constructor() : Init<EditorScreenModel, EditorScreenEffect> {
+
   override fun init(model: EditorScreenModel): First<EditorScreenModel, EditorScreenEffect> {
     if (model.notificationUuid != null) {
       // We are only loading notification if it's not already been loaded

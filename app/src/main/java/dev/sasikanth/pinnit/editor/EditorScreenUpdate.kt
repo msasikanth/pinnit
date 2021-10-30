@@ -5,8 +5,10 @@ import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
 import com.spotify.mobius.Update
 import dev.sasikanth.pinnit.data.PinnitNotification
+import javax.inject.Inject
 
-class EditorScreenUpdate : Update<EditorScreenModel, EditorScreenEvent, EditorScreenEffect> {
+class EditorScreenUpdate @Inject constructor() : Update<EditorScreenModel, EditorScreenEvent, EditorScreenEffect> {
+
   override fun update(model: EditorScreenModel, event: EditorScreenEvent): Next<EditorScreenModel, EditorScreenEffect> {
     return when (event) {
       is NotificationLoaded -> notificationLoaded(model, event)
