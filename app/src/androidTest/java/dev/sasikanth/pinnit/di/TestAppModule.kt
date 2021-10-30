@@ -1,9 +1,10 @@
 package dev.sasikanth.pinnit.di
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import dev.sasikanth.pinnit.data.AppDatabase
@@ -31,9 +32,9 @@ object TestAppModule {
   @Singleton
   @Provides
   fun providesTestAppDatabase(
-    application: Application
+    @ApplicationContext context: Context
   ): AppDatabase {
-    return Room.inMemoryDatabaseBuilder(application, AppDatabase::class.java)
+    return Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
       .build()
   }
 
