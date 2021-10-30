@@ -6,11 +6,12 @@ import dagger.Module
 import dagger.Provides
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.data.preferences.appPreferencesStore
+import javax.inject.Singleton
 
 @Module
 object PreferencesModule {
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesAppPreferencesStore(application: Application): DataStore<AppPreferences> {
     return application.appPreferencesStore

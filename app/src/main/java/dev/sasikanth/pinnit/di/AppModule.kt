@@ -18,6 +18,7 @@ import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.worker.PinnitWorkerFactory
 import java.time.ZoneId
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module(
@@ -28,7 +29,7 @@ import java.time.ZoneId
 )
 object AppModule {
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesAppDatabase(application: Application): AppDatabase {
     return Room.databaseBuilder(application, AppDatabase::class.java, "pinnit-db")
@@ -36,27 +37,27 @@ object AppModule {
       .build()
   }
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesUtcClock(): UtcClock = UtcClock()
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesUserClock(userTimeZone: ZoneId): UserClock = RealUserClock(userTimeZone)
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesWorkManager(application: Application): WorkManager = WorkManager.getInstance(application)
 
-  @AppScope
+  @Singleton
   @Provides
   fun providesWorkManagerConfiguration(
     pinnitWorkerFactory: PinnitWorkerFactory

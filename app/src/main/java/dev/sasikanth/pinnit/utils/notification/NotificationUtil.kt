@@ -18,12 +18,12 @@ import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.background.receivers.DeleteNotificationReceiver
 import dev.sasikanth.pinnit.background.receivers.UnpinNotificationReceiver
 import dev.sasikanth.pinnit.data.PinnitNotification
-import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AppScope
+@Singleton
 class NotificationUtil @Inject constructor(
   private val context: Application
 ) {
