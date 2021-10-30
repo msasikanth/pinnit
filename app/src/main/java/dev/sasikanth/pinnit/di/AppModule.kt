@@ -1,10 +1,9 @@
 package dev.sasikanth.pinnit.di
 
 import android.content.Context
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
-import androidx.work.Configuration
-import androidx.work.WorkManager
+import com.spotify.mobius.android.runners.MainThreadWorkRunner
+import com.spotify.mobius.runners.WorkRunner
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,4 +48,8 @@ object AppModule {
   @Singleton
   @Provides
   fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
+
+  @Singleton
+  @Provides
+  fun providesWorkRunner(): WorkRunner = MainThreadWorkRunner.create()
 }
