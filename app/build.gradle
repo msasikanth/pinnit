@@ -16,12 +16,12 @@ kapt {
 }
 
 android {
-  compileSdkVersion 30
+  compileSdkVersion 31
 
   defaultConfig {
     applicationId "dev.sasikanth.pinnit"
     minSdkVersion 23
-    targetSdkVersion 30
+    targetSdkVersion 31
     versionCode rootProject.gitCommitCount
     versionName "1.2.0"
 
