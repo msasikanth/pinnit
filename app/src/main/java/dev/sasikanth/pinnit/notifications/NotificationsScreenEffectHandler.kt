@@ -35,13 +35,15 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
 
       is DeleteNotification -> deleteNotification(effect, dispatchEvent)
 
-      is UndoDeletedNotification -> undoDeleteNotification(effect)
+      is UndoDeletedNotification -> undoDeleteNotification(effect, dispatchEvent)
 
       is ShowUndoDeleteNotification -> showUndoDeleteNotification(effect)
 
       is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
 
       is RemoveSchedule -> removeSchedule(effect, dispatchEvent)
+
+      is ScheduleNotification -> pinnitNotificationScheduler.scheduleNotification(effect.notification)
     }
   }
 
@@ -77,13 +79,11 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
     viewEffectConsumer.accept(UndoNotificationDeleteViewEffect(effect.notification.uuid))
   }
 
-  private suspend fun undoDeleteNotification(effect: UndoDeletedNotification) {
+  private suspend fun undoDeleteNotification(effect: UndoDeletedNotification, dispatchEvent: (NotificationsScreenEvent) -> Unit) {
     val notification = notificationRepository.notification(effect.notificationUuid)
     notificationRepository.undoNotificationDelete(notification)
 
-    // TODO: Move this check to Update function
-    if (notification.hasSchedule)
-      pinnitNotificationScheduler.scheduleNotification(notification)
+    dispatchEvent(RestoredDeletedNotification(notification))
   }
 
   /**

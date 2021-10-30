@@ -16,6 +16,7 @@ class NotificationsScreenUpdate @Inject constructor() : Update<NotificationsScre
       is NotificationDeleted -> notificationDeleted(event)
       is RemovedNotificationSchedule -> dispatch(setOf(CancelNotificationSchedule(event.notificationId)))
       is RemoveNotificationScheduleClicked -> dispatch(setOf(RemoveSchedule(event.notificationId)))
+      is RestoredDeletedNotification -> dispatch(setOf(ScheduleNotification(event.notification)))
     }
   }
 

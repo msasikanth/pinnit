@@ -18,3 +18,5 @@ data class NotificationDeleted(val notification: PinnitNotification) : Notificat
 data class RemovedNotificationSchedule(val notificationId: UUID) : NotificationsScreenEvent()
 
 data class RemoveNotificationScheduleClicked(val notificationId: UUID) : NotificationsScreenEvent()
+
+data class RestoredDeletedNotification(val notification: PinnitNotification) : NotificationsScreenEvent()
