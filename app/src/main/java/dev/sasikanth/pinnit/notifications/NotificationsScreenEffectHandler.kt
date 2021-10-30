@@ -42,6 +42,8 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is CancelNotificationSchedule -> cancelNotificationSchedule(effect)
 
       is RemoveSchedule -> removeSchedule(effect, dispatchEvent)
+
+      is ScheduleNotification -> pinnitNotificationScheduler.scheduleNotification(effect.notification)
     }
   }
 

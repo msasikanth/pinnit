@@ -287,4 +287,20 @@ class NotificationsScreenEffectHandlerTest {
     verify(notificationRepository).removeSchedule(notificationId)
     verifyNoMoreInteractions(notificationRepository)
   }
+
+  @Test
+  fun `when schedule notification effect is received, then schedule the notification`() {
+    // given
+    val notificationId = UUID.fromString("813b97a8-b323-4fcf-ac44-f8a543ae3c52")
+    val notification = TestData.notification(notificationId)
+
+    // when
+    connection.accept(ScheduleNotification(notification))
+
+    // then
+    consumer.assertValues()
+
+    verify(pinnitNotificationScheduler).scheduleNotification(notification)
+    verifyNoMoreInteractions(pinnitNotificationScheduler)
+  }
 }
