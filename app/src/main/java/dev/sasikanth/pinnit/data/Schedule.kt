@@ -3,7 +3,7 @@ package dev.sasikanth.pinnit.data
 import android.os.Parcelable
 import androidx.room.TypeConverter
 import dev.sasikanth.pinnit.utils.UserClock
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
