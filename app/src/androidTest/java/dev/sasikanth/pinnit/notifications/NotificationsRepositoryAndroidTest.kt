@@ -41,10 +41,6 @@ class NotificationsRepositoryAndroidTest {
 
   @After
   fun teardown() {
-    // TODO(SM-29 APR): Clear individual table
-    // Since it's just one table right now, we can directly
-    // clear the database tables. But it's better to clear
-    // individual table in tests
     appDatabase.clearAllTables()
   }
 
