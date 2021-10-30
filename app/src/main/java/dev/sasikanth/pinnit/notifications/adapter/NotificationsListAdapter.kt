@@ -18,11 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.circularreveal.CircularRevealCompat
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.databinding.NotificationsListItemBinding
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.notifications_list_item.*
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -43,13 +42,15 @@ class NotificationsListAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     val context = parent.context
-    val view = LayoutInflater.from(context).inflate(R.layout.notifications_list_item, parent, false)
-    return NotificationViewHolder(view).apply {
-      togglePinIcon.setOnClickListener {
+    val layoutInflater = LayoutInflater.from(context)
+    val binding = NotificationsListItemBinding.inflate(layoutInflater, parent, false)
+
+    return NotificationViewHolder(binding).apply {
+      binding.togglePinIcon.setOnClickListener {
         onToggleNotificationPinClicked(currentList[adapterPosition])
       }
 
-      scheduleButton.setOnClickListener {
+      binding.scheduleButton.setOnClickListener {
         val popupMenu = PopupMenu(context, it, Gravity.START)
         popupMenu.inflate(R.menu.notification_schedule)
         popupMenu.setOnMenuItemClickListener { item ->
@@ -88,7 +89,9 @@ class NotificationsListAdapter(
     return currentList[position].uuid.hashCode().toLong()
   }
 
-  inner class NotificationViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+  inner class NotificationViewHolder(
+    private val binding: NotificationsListItemBinding
+  ) : RecyclerView.ViewHolder(binding.root) {
 
     private val context = itemView.context
 
@@ -98,25 +101,25 @@ class NotificationsListAdapter(
     fun bind(notification: PinnitNotification) {
       itemView.tag = notification
 
-      titleTextView.text = notification.title
-      contentTextView.text = notification.content
-      contentTextView.isVisible = notification.content.isNullOrBlank().not()
+      binding.titleTextView.text = notification.title
+      binding.contentTextView.text = notification.content
+      binding.contentTextView.isVisible = notification.content.isNullOrBlank().not()
 
-      timeStamp.text = DateUtils.getRelativeTimeSpanString(
+      binding.timeStamp.text = DateUtils.getRelativeTimeSpanString(
         notification.updatedAt.toEpochMilli(),
         now.toEpochMilli(),
         SECOND_IN_MILLIS,
         FORMAT_ABBREV_RELATIVE
       )
 
-      togglePinIcon.isChecked = notification.isPinned
-      notificationRevealLayout.isVisible = notification.isPinned
+      binding.togglePinIcon.isChecked = notification.isPinned
+      binding.notificationRevealLayout.isVisible = notification.isPinned
       if (notification.isPinned) {
         colorsForNotificationPinned()
       } else {
         colorsForNotificationUnPinned()
       }
-      divider.isSelected = notification.isPinned
+      binding.divider.isSelected = notification.isPinned
 
       renderScheduleButton(notification)
 
@@ -127,7 +130,7 @@ class NotificationsListAdapter(
       val userCurrentDateTime = LocalDateTime.now(userClock)
       val schedule = notification.schedule
 
-      scheduleButton.isVisible = schedule != null
+      binding.scheduleButton.isVisible = schedule != null
       if (schedule == null) return
 
       val scheduleDateTime = schedule.scheduleDate!!.atTime(schedule.scheduleTime!!)
@@ -142,14 +145,14 @@ class NotificationsListAdapter(
 
       // Reproducing steps: Pin a past note with schedule, close the app, open the app, unpin note
       // with `state_enabled` in CSL the icon color is not set to disabled color.
-      scheduleButton.isSelected = isInFuture
-      scheduleButton.isEnabled = isInFuture
+      binding.scheduleButton.isSelected = isInFuture
+      binding.scheduleButton.isEnabled = isInFuture
 
       if (isPinned && !scheduleIsRepeatable) {
-        scheduleButton.isVisible = false
+        binding.scheduleButton.isVisible = false
       }
 
-      scheduleButton.text = scheduleButtonText(scheduleDateTime, userCurrentDateTime)
+      binding.scheduleButton.text = scheduleButtonText(scheduleDateTime, userCurrentDateTime)
     }
 
     private fun scheduleButtonText(
@@ -189,39 +192,39 @@ class NotificationsListAdapter(
     }
 
     private fun getRevealCx(): Float {
-      return (togglePinIcon.left + togglePinIcon.right) / 2f
+      return (binding.togglePinIcon.left + binding.togglePinIcon.right) / 2f
     }
 
     private fun getRevealCy(): Float {
-      return (togglePinIcon.top + togglePinIcon.bottom) / 2f
+      return (binding.togglePinIcon.top + binding.togglePinIcon.bottom) / 2f
     }
 
     private fun colorsForNotificationUnPinned() {
-      appIcon.imageTintList = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorSecondary))
-      appName.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
-      infoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
-      timeStamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      binding.appIcon.imageTintList = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorSecondary))
+      binding.appName.setTextColor(context.resolveColor(attrRes = R.attr.colorSecondary))
+      binding.infoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      binding.timeStamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
 
-      titleTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackground))
-      contentTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
+      binding.titleTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackground))
+      binding.contentTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnBackgroundVariant))
 
-      scheduleButton.strokeColor = ContextCompat.getColorStateList(context, R.color.schedule_indicator_stroke_state)
-      scheduleButton.setTextColor(ContextCompat.getColorStateList(context, R.color.schedule_indicator_text_state))
-      scheduleButton.iconTint = ContextCompat.getColorStateList(context, R.color.schedule_indicator_icon_state)
+      binding.scheduleButton.strokeColor = ContextCompat.getColorStateList(context, R.color.schedule_indicator_stroke_state)
+      binding.scheduleButton.setTextColor(ContextCompat.getColorStateList(context, R.color.schedule_indicator_text_state))
+      binding.scheduleButton.iconTint = ContextCompat.getColorStateList(context, R.color.schedule_indicator_icon_state)
     }
 
     private fun colorsForNotificationPinned() {
-      appIcon.imageTintList = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-      appName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-      infoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
-      timeStamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      binding.appIcon.imageTintList = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      binding.appName.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      binding.infoSeparator.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      binding.timeStamp.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
 
-      titleTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
-      contentTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
+      binding.titleTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
+      binding.contentTextView.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimaryVariant))
 
-      scheduleButton.strokeColor = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimary))
-      scheduleButton.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
-      scheduleButton.iconTint = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimary))
+      binding.scheduleButton.strokeColor = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimary))
+      binding.scheduleButton.setTextColor(context.resolveColor(attrRes = R.attr.colorOnPrimary))
+      binding.scheduleButton.iconTint = ColorStateList.valueOf(context.resolveColor(attrRes = R.attr.colorOnPrimary))
     }
 
     fun animateReveal(
@@ -241,7 +244,7 @@ class NotificationsListAdapter(
       val endRadius = if (newPinStatus) viewRadius else 0f
 
       val anim = CircularRevealCompat.createCircularReveal(
-        notificationRevealLayout,
+        binding.notificationRevealLayout,
         cx,
         cy,
         startRadius,
@@ -253,8 +256,8 @@ class NotificationsListAdapter(
         anim.interpolator = fastOutSlowInInterpolator
         anim.addListener(
           onStart = {
-            togglePinIcon.isChecked = true
-            notificationRevealLayout.isVisible = true
+            binding.togglePinIcon.isChecked = true
+            binding.notificationRevealLayout.isVisible = true
           },
           onEnd = {
             colorsForNotificationPinned()
@@ -266,11 +269,11 @@ class NotificationsListAdapter(
         anim.interpolator = accelerateInterpolator
         anim.addListener(
           onStart = {
-            notificationRevealLayout.isVisible = true
+            binding.notificationRevealLayout.isVisible = true
           },
           onEnd = {
-            notificationRevealLayout.isVisible = false
-            togglePinIcon.isChecked = false
+            binding.notificationRevealLayout.isVisible = false
+            binding.togglePinIcon.isChecked = false
             colorsForNotificationUnPinned()
             dispatchAnimationFinished()
           }
