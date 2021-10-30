@@ -6,6 +6,8 @@ import androidx.work.Configuration
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.data.migrations.Migration_1_2
 import dev.sasikanth.pinnit.notifications.NotificationModule
@@ -17,6 +19,7 @@ import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.worker.PinnitWorkerFactory
 import java.time.ZoneId
 
+@InstallIn(SingletonComponent::class)
 @Module(
   includes = [
     NotificationModule::class,
