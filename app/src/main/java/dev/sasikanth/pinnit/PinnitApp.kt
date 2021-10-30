@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.work.Configuration
+import dagger.hilt.android.HiltAndroidApp
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.di.AppComponent
 import dev.sasikanth.pinnit.di.ComponentProvider
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@HiltAndroidApp
 class PinnitApp : Application(), ComponentProvider, Configuration.Provider {
 
   @Inject
