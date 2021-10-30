@@ -1,6 +1,5 @@
 package dev.sasikanth.pinnit.utils.notification
 
-import android.app.Application
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +12,7 @@ import androidx.core.app.NotificationCompat.Action
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import androidx.navigation.NavDeepLinkBuilder
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.background.receivers.DeleteNotificationReceiver
@@ -25,7 +25,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationUtil @Inject constructor(
-  private val context: Application
+  @ApplicationContext private val context: Context
 ) {
 
   companion object {
