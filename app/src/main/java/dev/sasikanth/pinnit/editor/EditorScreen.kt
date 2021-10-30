@@ -43,7 +43,6 @@ import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
 import dev.sasikanth.pinnit.utils.reverse
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_editor.*
 import kotlinx.android.synthetic.main.view_schedule.*
 import kotlinx.android.synthetic.main.view_schedule.view.*
@@ -174,6 +173,15 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
 
     viewModelObservers()
 
+    toolbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
+
+    val toolbarTitle = if (args.notificationUuid == null) {
+      getString(R.string.toolbar_title_create)
+    } else {
+      getString(R.string.toolbar_title_edit)
+    }
+    toolbarTitleTextView.text = toolbarTitle
+
     if (editorTransition is ContainerTransform) {
       editorRoot.transitionName = (editorTransition as ContainerTransform).transitionName
     }
@@ -225,18 +233,18 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun configBottomBar() {
-    requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
-    requireActivity().bottomBar.setContentActionEnabled(false)
-    requireActivity().bottomBar.setContentActionText(contentActionText = null)
-    requireActivity().bottomBar.setActionIcon(null)
+    bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
+    bottomBar.setContentActionEnabled(false)
+    bottomBar.setContentActionText(contentActionText = null)
+    bottomBar.setActionIcon(null)
 
-    requireActivity().bottomBar.setNavigationOnClickListener {
+    bottomBar.setNavigationOnClickListener {
       viewModel.dispatchEvent(BackClicked)
     }
-    requireActivity().bottomBar.setContentActionOnClickListener {
+    bottomBar.setContentActionOnClickListener {
       viewModel.dispatchEvent(SaveClicked)
     }
-    requireActivity().bottomBar.setActionOnClickListener {
+    bottomBar.setActionOnClickListener {
       viewModel.dispatchEvent(DeleteNotificationClicked)
     }
   }
@@ -280,27 +288,27 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   override fun enableSave() {
-    requireActivity().bottomBar.setContentActionEnabled(true)
+    bottomBar.setContentActionEnabled(true)
   }
 
   override fun disableSave() {
-    requireActivity().bottomBar.setContentActionEnabled(false)
+    bottomBar.setContentActionEnabled(false)
   }
 
   override fun renderSaveActionButtonText() {
-    requireActivity().bottomBar.setContentActionText(R.string.save)
+    bottomBar.setContentActionText(R.string.save)
   }
 
   override fun renderSaveAndPinActionButtonText() {
-    requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
+    bottomBar.setContentActionText(R.string.save_and_pin)
   }
 
   override fun showDeleteButton() {
-    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
+    bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
   }
 
   override fun hideDeleteButton() {
-    requireActivity().bottomBar.setActionIcon(null)
+    bottomBar.setActionIcon(null)
   }
 
   override fun showScheduleView() {
