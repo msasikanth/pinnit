@@ -14,6 +14,7 @@ import dev.sasikanth.pinnit.utils.TestUserClock
 import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import java.time.ZoneId
 import javax.inject.Singleton
 
 @TestInstallIn(
@@ -53,4 +54,8 @@ object TestAppModule {
   @Singleton
   @Provides
   fun providesDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
+
+  @Singleton
+  @Provides
+  fun providesSystemDefaultZone(): ZoneId = ZoneId.systemDefault()
 }
