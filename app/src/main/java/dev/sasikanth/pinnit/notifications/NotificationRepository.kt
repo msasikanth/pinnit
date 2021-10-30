@@ -2,14 +2,14 @@ package dev.sasikanth.pinnit.notifications
 
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
-import dev.sasikanth.pinnit.di.AppScope
 import dev.sasikanth.pinnit.utils.UtcClock
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AppScope
+@Singleton
 class NotificationRepository @Inject constructor(
   private val notificationDao: PinnitNotification.RoomDao,
   private val utcClock: UtcClock

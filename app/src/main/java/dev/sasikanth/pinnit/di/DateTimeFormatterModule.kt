@@ -2,21 +2,14 @@ package dev.sasikanth.pinnit.di
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleDateFormat
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleTimeFormat
 import java.time.format.DateTimeFormatter
 import javax.inject.Qualifier
 
-@Qualifier
-@Retention(AnnotationRetention.SOURCE)
-annotation class DateTimeFormat(val value: Type) {
-
-  enum class Type {
-    ScheduleDateFormat,
-    ScheduleTimeFormat
-  }
-}
-
+@InstallIn(SingletonComponent::class)
 @Module
 object DateTimeFormatterModule {
 

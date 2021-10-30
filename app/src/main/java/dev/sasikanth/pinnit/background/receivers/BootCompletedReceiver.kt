@@ -3,7 +3,7 @@ package dev.sasikanth.pinnit.background.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import dev.sasikanth.pinnit.di.injector
+import dagger.hilt.android.AndroidEntryPoint
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class BootCompletedReceiver : BroadcastReceiver() {
 
   @Inject
@@ -30,7 +31,6 @@ class BootCompletedReceiver : BroadcastReceiver() {
 
   override fun onReceive(context: Context?, intent: Intent?) {
     if (context != null && intent != null && intent.action == Intent.ACTION_BOOT_COMPLETED) {
-      context.injector.inject(this)
       val asyncResult = goAsync()
 
       mainScope.launch {

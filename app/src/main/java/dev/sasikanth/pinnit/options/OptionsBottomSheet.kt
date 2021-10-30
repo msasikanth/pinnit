@@ -1,6 +1,5 @@
 package dev.sasikanth.pinnit.options
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +9,10 @@ import androidx.datastore.core.DataStore
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.databinding.ThemeSelectionSheetBinding
-import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
@@ -23,6 +22,7 @@ import kotlinx.coroutines.withContext
 import reactivecircus.flowbinding.material.buttonCheckedChanges
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class OptionsBottomSheet : BottomSheetDialogFragment() {
 
   @Inject
@@ -42,11 +42,6 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
 
   private var _binding: ThemeSelectionSheetBinding? = null
   private val binding get() = _binding!!
-
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    injector.inject(this)
-  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     _binding = ThemeSelectionSheetBinding.inflate(layoutInflater, container, false)

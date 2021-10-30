@@ -1,6 +1,5 @@
 package dev.sasikanth.pinnit.notifications
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,13 +22,13 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Consumer
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.about.AboutBottomSheet
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.databinding.FragmentNotificationsBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
-import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
@@ -41,6 +40,7 @@ import dev.sasikanth.pinnit.utils.UtcClock
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
   @Inject
@@ -90,11 +90,6 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
   private var _binding: FragmentNotificationsBinding? = null
   private val binding get() = _binding!!
-
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    injector.inject(this)
-  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     _binding = FragmentNotificationsBinding.inflate(inflater, container, false)

@@ -4,10 +4,8 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.work.Configuration
+import dagger.hilt.android.HiltAndroidApp
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
-import dev.sasikanth.pinnit.di.AppComponent
-import dev.sasikanth.pinnit.di.ComponentProvider
-import dev.sasikanth.pinnit.di.DaggerAppComponent
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +13,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class PinnitApp : Application(), ComponentProvider, Configuration.Provider {
+@HiltAndroidApp
+class PinnitApp : Application(), Configuration.Provider {
 
   @Inject
   lateinit var appPreferencesStore: DataStore<AppPreferences>
@@ -30,13 +29,8 @@ class PinnitApp : Application(), ComponentProvider, Configuration.Provider {
     CoroutineScope(dispatcherProvider.main)
   }
 
-  override val component: AppComponent by lazy {
-    DaggerAppComponent.factory().create(this)
-  }
-
   override fun onCreate() {
     super.onCreate()
-    component.inject(this)
 
     appPreferencesStore
       .data

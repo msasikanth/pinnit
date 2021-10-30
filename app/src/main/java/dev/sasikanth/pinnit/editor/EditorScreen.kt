@@ -31,6 +31,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.functions.Consumer
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.Schedule
@@ -39,7 +40,6 @@ import dev.sasikanth.pinnit.databinding.FragmentNotificationEditorBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleDateFormat
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleTimeFormat
-import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorTransition.ContainerTransform
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
 import dev.sasikanth.pinnit.utils.UserClock
@@ -54,6 +54,7 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class EditorScreen : Fragment(), EditorScreenUi {
 
   @Inject
@@ -129,11 +130,6 @@ class EditorScreen : Fragment(), EditorScreenUi {
   private var _binding: FragmentNotificationEditorBinding? = null
   private val binding get() = _binding!!
   private val scheduleViewBinding get() = binding.scheduleView
-
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    injector.inject(this)
-  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
