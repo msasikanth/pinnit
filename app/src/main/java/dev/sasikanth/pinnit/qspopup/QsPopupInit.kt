@@ -3,8 +3,9 @@ package dev.sasikanth.pinnit.qspopup
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init
+import javax.inject.Inject
 
-class QsPopupInit : Init<QsPopupModel, QsPopupEffect> {
+class QsPopupInit @Inject constructor() : Init<QsPopupModel, QsPopupEffect> {
   override fun init(model: QsPopupModel): First<QsPopupModel, QsPopupEffect> {
     val effect = if (model.notificationsQueried.not()) {
       setOf(LoadNotifications)

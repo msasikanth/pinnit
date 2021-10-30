@@ -7,12 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDeepLinkBuilder
-import com.spotify.mobius.Mobius
-import com.spotify.mobius.android.MobiusLoopViewModel
-import com.spotify.mobius.functions.Consumer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
@@ -37,9 +32,6 @@ import javax.inject.Inject
 class QsPopupActivity : AppCompatActivity(), QsPopupUi {
 
   @Inject
-  lateinit var effectHandler: QsPopupEffectHandler.Factory
-
-  @Inject
   lateinit var utcClock: UtcClock
 
   @Inject
@@ -53,25 +45,9 @@ class QsPopupActivity : AppCompatActivity(), QsPopupUi {
   @DateTimeFormat(DateTimeFormat.Type.ScheduleTimeFormat)
   lateinit var scheduleTimeFormatter: DateTimeFormatter
 
+  private val viewModel: QsPopupViewModel by viewModels()
+
   private val uiRender = QsPopupUiRenderer(this)
-
-  private val viewModel: MobiusLoopViewModel<QsPopupModel, QsPopupEvent, QsPopupEffect, QsPopupViewEffect> by viewModels {
-    fun loop(viewEffectConsumer: Consumer<QsPopupViewEffect>) = Mobius.loop(
-      QsPopupUpdate(),
-      effectHandler.create(viewEffectConsumer)
-    )
-
-    object : ViewModelProvider.Factory {
-      @Suppress("UNCHECKED_CAST")
-      override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MobiusLoopViewModel.create(
-          ::loop,
-          QsPopupModel.default(),
-          QsPopupInit()
-        ) as T
-      }
-    }
-  }
 
   private lateinit var adapter: NotificationsListAdapter
   private lateinit var binding: ActivityQsPopupBinding

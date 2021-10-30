@@ -4,8 +4,10 @@ import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
 import com.spotify.mobius.Update
+import javax.inject.Inject
 
-class QsPopupUpdate : Update<QsPopupModel, QsPopupEvent, QsPopupEffect> {
+class QsPopupUpdate @Inject constructor() : Update<QsPopupModel, QsPopupEvent, QsPopupEffect> {
+
   override fun update(model: QsPopupModel, event: QsPopupEvent): Next<QsPopupModel, QsPopupEffect> {
     return when (event) {
       is NotificationsLoaded -> next(model.onNotificationsLoaded(notifications = event.notifications))
