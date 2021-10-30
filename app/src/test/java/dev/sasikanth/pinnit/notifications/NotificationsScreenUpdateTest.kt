@@ -169,4 +169,23 @@ class NotificationsScreenUpdateTest {
         )
       )
   }
+
+  @Test
+  fun `when deleted notification is restored, then schedule the notification`() {
+    val notification = TestData.notification(
+      uuid = UUID.fromString("6f991dba-bca1-41fe-bdb6-8f241e964398")
+    )
+    val notificationsModel = defaultModel
+      .onNotificationsLoaded(listOf(notification))
+
+    updateSpec
+      .given(notificationsModel)
+      .whenEvent(RestoredDeletedNotification(notification))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(ScheduleNotification(notification))
+        )
+      )
+  }
 }
