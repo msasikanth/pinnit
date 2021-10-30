@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.sasikanth.pinnit.BuildConfig
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.databinding.SheetAboutBinding
 import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
-import kotlinx.android.synthetic.main.sheet_about.*
 
 class AboutBottomSheet : BottomSheetDialogFragment() {
 
@@ -27,8 +27,12 @@ class AboutBottomSheet : BottomSheetDialogFragment() {
     }
   }
 
+  private var _binding: SheetAboutBinding? = null
+  private val binding get() = _binding!!
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.sheet_about, container, false)
+    _binding = SheetAboutBinding.inflate(layoutInflater, container, false)
+    return _binding?.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,19 +40,24 @@ class AboutBottomSheet : BottomSheetDialogFragment() {
 
     setAppVersion()
 
-    contactSupportButton.setOnClickListener { sendSupportEmail() }
-    sourceCodeButton.setOnClickListener { openGitHubProject() }
+    binding.contactSupportButton.setOnClickListener { sendSupportEmail() }
+    binding.sourceCodeButton.setOnClickListener { openGitHubProject() }
 
     setupShowOemWarning()
+  }
+
+  override fun onDestroyView() {
+    _binding = null
+    super.onDestroyView()
   }
 
   private fun setupShowOemWarning() {
     val brandName = Build.BRAND
     val shouldShowOemWarning = shouldShowWarningForOEM(brandName)
-    dividerView.isVisible = shouldShowOemWarning
-    oemWarningButton.isVisible = shouldShowOemWarning
+    binding.dividerView.isVisible = shouldShowOemWarning
+    binding.oemWarningButton.isVisible = shouldShowOemWarning
 
-    oemWarningButton.setOnClickListener {
+    binding.oemWarningButton.setOnClickListener {
       dismiss()
       OemWarningDialog.show(requireActivity().supportFragmentManager)
     }
@@ -56,7 +65,7 @@ class AboutBottomSheet : BottomSheetDialogFragment() {
 
   private fun setAppVersion() {
     val versionName = BuildConfig.VERSION_NAME
-    appVersionTextView.text = getString(R.string.app_version, versionName)
+    binding.appVersionTextView.text = getString(R.string.app_version, versionName)
   }
 
   private fun sendSupportEmail() {
