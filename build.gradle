@@ -36,10 +36,11 @@ buildscript {
   ]
   repositories {
     google()
-    jcenter()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:7.0.2'
+    classpath 'com.android.tools.build:gradle:7.0.3'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
     classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
   }
@@ -48,7 +49,8 @@ buildscript {
 allprojects {
   repositories {
     google()
-    jcenter()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
   }
 }
 
