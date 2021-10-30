@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.notifications.NotificationModule
 import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
@@ -13,6 +15,10 @@ import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 
+@TestInstallIn(
+  components = [SingletonComponent::class],
+  replaces = [AppModule::class]
+)
 @Module(
   includes = [
     NotificationModule::class,
