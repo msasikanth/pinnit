@@ -12,7 +12,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.data.migrations.Migration_1_2
-import dev.sasikanth.pinnit.notifications.NotificationModule
 import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.RealUserClock
@@ -22,12 +21,7 @@ import java.time.ZoneId
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
-@Module(
-  includes = [
-    NotificationModule::class,
-    PreferencesModule::class
-  ]
-)
+@Module
 object AppModule {
 
   @Singleton

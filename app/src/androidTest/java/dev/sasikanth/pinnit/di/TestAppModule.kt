@@ -8,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import dev.sasikanth.pinnit.data.AppDatabase
-import dev.sasikanth.pinnit.notifications.NotificationModule
 import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.TestUserClock
@@ -21,12 +20,7 @@ import javax.inject.Singleton
   components = [SingletonComponent::class],
   replaces = [AppModule::class]
 )
-@Module(
-  includes = [
-    NotificationModule::class,
-    PreferencesModule::class
-  ]
-)
+@Module
 object TestAppModule {
 
   @Singleton
