@@ -9,7 +9,7 @@ import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.activity.MainActivity
-import kotlinx.android.synthetic.main.activity_splash.*
+import dev.sasikanth.pinnit.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
 
@@ -24,18 +24,23 @@ class SplashActivity : AppCompatActivity() {
 
   private var animatedWelcomeImage: AnimatedVectorDrawableCompat? = null
 
+  private lateinit var binding: ActivitySplashBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_splash)
+    binding = ActivitySplashBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    rootView.setEdgeToEdgeSystemUiFlags()
+    binding.rootView.setEdgeToEdgeSystemUiFlags()
 
     animatedWelcomeImage = AnimatedVectorDrawableCompat.create(this, R.drawable.avd_pin_welcome)
 
-    welcomeImage.setImageDrawable(animatedWelcomeImage)
-    welcomeImage.doOnLayout {
-      animatedWelcomeImage?.start()
-      animatedWelcomeImage?.registerAnimationCallback(animationCallback)
+    binding.welcomeImage.apply {
+      setImageDrawable(animatedWelcomeImage)
+      doOnLayout {
+        animatedWelcomeImage?.start()
+        animatedWelcomeImage?.registerAnimationCallback(animationCallback)
+      }
     }
   }
 

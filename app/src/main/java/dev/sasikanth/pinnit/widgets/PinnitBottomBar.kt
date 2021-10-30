@@ -2,38 +2,41 @@ package dev.sasikanth.pinnit.widgets
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.getResourceIdOrThrow
+import androidx.core.content.res.use
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.databinding.PinnitBottomBarBinding
 import dev.sasikanth.pinnit.utils.dp
-import kotlinx.android.synthetic.main.pinnit_bottom_bar.view.*
 
-class PinnitBottomBar @JvmOverloads
-constructor(
+class PinnitBottomBar @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-  init {
-    inflate(context, R.layout.pinnit_bottom_bar, this)
+  private var _binding: PinnitBottomBarBinding? = null
+  private val binding get() = _binding!!
 
-    context.theme.obtainStyledAttributes(attrs, R.styleable.PinnitBottomBar, defStyleAttr, 0).apply {
-      val mNavigationIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_navigationIcon)
-      val mContentActionText = getResourceIdOrThrow(R.styleable.PinnitBottomBar_contentActionText)
-      val mActionIcon = getResourceIdOrThrow(R.styleable.PinnitBottomBar_actionIcon)
+  init {
+    val layoutInflater = LayoutInflater.from(context)
+    _binding = PinnitBottomBarBinding.inflate(layoutInflater, this)
+
+    context.theme.obtainStyledAttributes(attrs, R.styleable.PinnitBottomBar, defStyleAttr, 0).use { typedArray ->
+      val mNavigationIcon = typedArray.getResourceIdOrThrow(R.styleable.PinnitBottomBar_navigationIcon)
+      val mContentActionText = typedArray.getResourceIdOrThrow(R.styleable.PinnitBottomBar_contentActionText)
+      val mActionIcon = typedArray.getResourceIdOrThrow(R.styleable.PinnitBottomBar_actionIcon)
 
       setNavigationIcon(mNavigationIcon)
       setContentActionText(mContentActionText)
       setActionIcon(mActionIcon)
-
-      recycle()
     }
 
     // Adding Z-axis so that the snackbar will start
@@ -42,55 +45,60 @@ constructor(
     applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
   }
 
+  override fun onDetachedFromWindow() {
+    _binding = null
+    super.onDetachedFromWindow()
+  }
+
   fun setNavigationIcon(@DrawableRes navigationIcon: Int?) {
     if (navigationIcon != null) {
-      this.navigationIcon.isVisible = true
-      this.navigationIcon.setImageResource(navigationIcon)
+      binding.navigationIcon.isVisible = true
+      binding.navigationIcon.setImageResource(navigationIcon)
     } else {
-      this.navigationIcon.isGone = true
+      binding.navigationIcon.isGone = true
     }
   }
 
   fun setContentActionText(@StringRes contentActionTextRes: Int?) {
     if (contentActionTextRes != null) {
-      this.contentActionButton.isVisible = true
-      this.contentActionButton.setText(contentActionTextRes)
+      binding.contentActionButton.isVisible = true
+      binding.contentActionButton.setText(contentActionTextRes)
     } else {
-      this.contentActionButton.isGone = true
+      binding.contentActionButton.isGone = true
     }
   }
 
   fun setContentActionText(contentActionText: String?) {
     if (contentActionText != null) {
-      this.contentActionButton.isVisible = true
-      this.contentActionButton.text = contentActionText
+      binding.contentActionButton.isVisible = true
+      binding.contentActionButton.text = contentActionText
     } else {
-      this.contentActionButton.isGone = true
+      binding.contentActionButton.isGone = true
     }
   }
 
   fun setActionIcon(@DrawableRes actionIcon: Int?) {
     if (actionIcon != null) {
-      this.actionIcon.isVisible = true
-      this.actionIcon.setImageResource(actionIcon)
+      binding.actionIcon.isVisible = true
+      binding.actionIcon.setImageResource(actionIcon)
     } else {
-      this.actionIcon.isGone = true
+      binding.actionIcon.isGone = true
     }
   }
 
   fun setContentActionEnabled(isEnabled: Boolean) {
-    contentActionButton.isEnabled = isEnabled
+    binding.contentActionButton.isEnabled = isEnabled
   }
 
   fun setNavigationOnClickListener(listener: ((View) -> Unit)?) {
-    navigationIcon.setOnClickListener(listener)
+    binding.navigationIcon.setOnClickListener(listener)
   }
 
   fun setContentActionOnClickListener(listener: ((View) -> Unit)?) {
-    contentActionButton.setOnClickListener(listener)
+    binding.contentActionButton.setOnClickListener(listener)
   }
 
   fun setActionOnClickListener(listener: ((View) -> Unit)?) {
-    actionIcon.setOnClickListener(listener)
+    binding.actionIcon.setOnClickListener(listener)
   }
 }

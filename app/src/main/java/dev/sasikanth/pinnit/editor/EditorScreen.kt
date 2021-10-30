@@ -3,8 +3,10 @@ package dev.sasikanth.pinnit.editor
 import android.content.Context
 import android.os.Bundle
 import android.text.util.Linkify
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.NO_ID
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
@@ -33,6 +35,7 @@ import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
+import dev.sasikanth.pinnit.databinding.FragmentNotificationEditorBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleDateFormat
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleTimeFormat
@@ -43,10 +46,6 @@ import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import dev.sasikanth.pinnit.utils.resolveColor
 import dev.sasikanth.pinnit.utils.reverse
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_notification_editor.*
-import kotlinx.android.synthetic.main.view_schedule.*
-import kotlinx.android.synthetic.main.view_schedule.view.*
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.time.Instant
 import java.time.LocalDate
@@ -55,7 +54,7 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 import javax.inject.Inject
 
-class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScreenUi {
+class EditorScreen : Fragment(), EditorScreenUi {
 
   @Inject
   lateinit var effectHandler: EditorScreenEffectHandler.Factory
@@ -127,6 +126,10 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     SeekableAnimatedVectorDrawable.create(requireContext(), R.drawable.avd_add_to_delete)!!
   }
 
+  private var _binding: FragmentNotificationEditorBinding? = null
+  private val binding get() = _binding!!
+  private val scheduleViewBinding get() = binding.scheduleView
+
   override fun onAttach(context: Context) {
     super.onAttach(context)
     injector.inject(this)
@@ -143,6 +146,42 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     requireActivity().onBackPressedDispatcher.addCallback(this) {
       viewModel.dispatchEvent(BackClicked)
     }
+  }
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    _binding = FragmentNotificationEditorBinding.inflate(layoutInflater, container, false)
+    return _binding?.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    configBottomBar()
+    configTitleEditText()
+    configContentEditText()
+
+    viewModelObservers()
+
+    binding.toolbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
+
+    val toolbarTitle = if (args.notificationUuid == null) {
+      getString(R.string.toolbar_title_create)
+    } else {
+      getString(R.string.toolbar_title_edit)
+    }
+    binding.toolbarTitleTextView.text = toolbarTitle
+
+    if (editorTransition is ContainerTransform) {
+      binding.editorRoot.transitionName = (editorTransition as ContainerTransform).transitionName
+    }
+    binding.editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
+
+    scheduleViewBinding.addRemoveScheduleButton.setImageDrawable(seekableAvd)
+  }
+
+  override fun onDestroyView() {
+    _binding = null
+    super.onDestroyView()
   }
 
   private fun containerTransformTransition() {
@@ -163,23 +202,6 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       duration = 300
     }
     returnTransition = backward
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    configBottomBar()
-    configTitleEditText()
-    configContentEditText()
-
-    viewModelObservers()
-
-    if (editorTransition is ContainerTransform) {
-      editorRoot.transitionName = (editorTransition as ContainerTransform).transitionName
-    }
-    editorScrollView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
-
-    scheduleView.addRemoveScheduleButton.setImageDrawable(seekableAvd)
   }
 
   private fun viewModelObservers() {
@@ -225,82 +247,82 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   private fun configBottomBar() {
-    requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
-    requireActivity().bottomBar.setContentActionEnabled(false)
-    requireActivity().bottomBar.setContentActionText(contentActionText = null)
-    requireActivity().bottomBar.setActionIcon(null)
+    binding.bottomBar.setNavigationIcon(R.drawable.ic_arrow_back)
+    binding.bottomBar.setContentActionEnabled(false)
+    binding.bottomBar.setContentActionText(contentActionText = null)
+    binding.bottomBar.setActionIcon(null)
 
-    requireActivity().bottomBar.setNavigationOnClickListener {
+    binding.bottomBar.setNavigationOnClickListener {
       viewModel.dispatchEvent(BackClicked)
     }
-    requireActivity().bottomBar.setContentActionOnClickListener {
+    binding.bottomBar.setContentActionOnClickListener {
       viewModel.dispatchEvent(SaveClicked)
     }
-    requireActivity().bottomBar.setActionOnClickListener {
+    binding.bottomBar.setActionOnClickListener {
       viewModel.dispatchEvent(DeleteNotificationClicked)
     }
   }
 
   private fun configTitleEditText() {
-    titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
-    titleEditText.imeOptions = EditorInfo.IME_ACTION_NEXT
-    titleEditText.inputType = EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES or EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE
-    titleEditText.setHorizontallyScrolling(false)
-    titleEditText.maxLines = 5
+    binding.titleEditText.doAfterTextChanged { viewModel.dispatchEvent(TitleChanged(it?.toString().orEmpty())) }
+    binding.titleEditText.imeOptions = EditorInfo.IME_ACTION_NEXT
+    binding.titleEditText.inputType = EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES or EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE
+    binding.titleEditText.setHorizontallyScrolling(false)
+    binding.titleEditText.maxLines = 5
   }
 
   private fun configContentEditText() {
-    contentEditText.movementMethod = BetterLinkMovementMethod.getInstance()
-    contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
+    binding.contentEditText.movementMethod = BetterLinkMovementMethod.getInstance()
+    binding.contentEditText.doAfterTextChanged { viewModel.dispatchEvent(ContentChanged(it?.toString())) }
   }
 
   private fun setTitleText(title: String?) {
-    titleEditText.setText(title)
-    titleEditText.requestFocus()
-    titleEditText.setSelection(title?.length ?: 0)
+    binding.titleEditText.setText(title)
+    binding.titleEditText.requestFocus()
+    binding.titleEditText.setSelection(title?.length ?: 0)
 
-    titleEditText.postDelayed({
+    binding.titleEditText.postDelayed({
       val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-      imm?.showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT)
+      imm?.showSoftInput(binding.titleEditText, InputMethodManager.SHOW_IMPLICIT)
     }, 250)
   }
 
   private fun setContentText(content: String?) {
-    contentEditText.setText(content)
-    Linkify.addLinks(contentEditText, Linkify.WEB_URLS)
+    binding.contentEditText.setText(content)
+    Linkify.addLinks(binding.contentEditText, Linkify.WEB_URLS)
   }
 
   private fun closeEditor() {
     if (findNavController().currentDestination?.id == R.id.editorScreen) {
       val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-      imm?.hideSoftInputFromWindow(titleEditText.windowToken, 0)
+      imm?.hideSoftInputFromWindow(binding.titleEditText.windowToken, 0)
 
       findNavController().navigateUp()
     }
   }
 
   override fun enableSave() {
-    requireActivity().bottomBar.setContentActionEnabled(true)
+    binding.bottomBar.setContentActionEnabled(true)
   }
 
   override fun disableSave() {
-    requireActivity().bottomBar.setContentActionEnabled(false)
+    binding.bottomBar.setContentActionEnabled(false)
   }
 
   override fun renderSaveActionButtonText() {
-    requireActivity().bottomBar.setContentActionText(R.string.save)
+    binding.bottomBar.setContentActionText(R.string.save)
   }
 
   override fun renderSaveAndPinActionButtonText() {
-    requireActivity().bottomBar.setContentActionText(R.string.save_and_pin)
+    binding.bottomBar.setContentActionText(R.string.save_and_pin)
   }
 
   override fun showDeleteButton() {
-    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
+    binding.bottomBar.setActionIcon(R.drawable.ic_pinnit_delete)
   }
 
   override fun hideDeleteButton() {
-    requireActivity().bottomBar.setActionIcon(null)
+    binding.bottomBar.setActionIcon(null)
   }
 
   override fun showScheduleView() {
@@ -309,48 +331,48 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       seekableAvd.currentPlayTime = seekableAvd.totalDuration
     }
 
-    scheduleView.addRemoveScheduleButton.setOnClickListener {
+    scheduleViewBinding.addRemoveScheduleButton.setOnClickListener {
       seekableAvd.reverse()
       viewModel.dispatchEvent(RemoveScheduleClicked)
     }
 
-    scheduleView.scheduleHeadingTextView.isGone = true
-    scheduleView.scheduleDateButton.isVisible = true
-    scheduleView.scheduleTimeButton.isVisible = true
-    scheduleView.repeatEveryCheckBox.isVisible = true
-    scheduleView.repeatEveryButtonGroup.isVisible = true
+    scheduleViewBinding.scheduleHeadingTextView.isGone = true
+    scheduleViewBinding.scheduleDateButton.isVisible = true
+    scheduleViewBinding.scheduleTimeButton.isVisible = true
+    scheduleViewBinding.repeatEveryCheckBox.isVisible = true
+    scheduleViewBinding.repeatEveryButtonGroup.isVisible = true
   }
 
   override fun renderScheduleDateTime(scheduleDate: LocalDate, scheduleTime: LocalTime) {
-    scheduleDateButton.text = scheduleDateFormatter.format(scheduleDate)
-    scheduleTimeButton.text = scheduleTimeFormatter.format(scheduleTime)
+    scheduleViewBinding.scheduleDateButton.text = scheduleDateFormatter.format(scheduleDate)
+    scheduleViewBinding.scheduleTimeButton.text = scheduleTimeFormatter.format(scheduleTime)
 
-    scheduleView.scheduleDateButton.setOnClickListener {
+    scheduleViewBinding.scheduleDateButton.setOnClickListener {
       viewModel.dispatchEvent(ScheduleDateClicked)
     }
 
-    scheduleView.scheduleTimeButton.setOnClickListener {
+    scheduleViewBinding.scheduleTimeButton.setOnClickListener {
       viewModel.dispatchEvent(ScheduleTimeClicked)
     }
   }
 
   override fun renderScheduleRepeat(scheduleType: ScheduleType?, hasValidScheduleResult: Boolean) {
-    scheduleView.repeatEveryButtonGroup.clearChecked()
+    scheduleViewBinding.repeatEveryButtonGroup.clearChecked()
     // To avoid any un-necessary even triggers of schedule type change
     // when schedule repeat is not set. so we are removing listeners on every model changes
     // and resetting it if schedule type is available.
-    scheduleView.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
+    scheduleViewBinding.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
 
     val hasScheduleType = scheduleType != null
 
-    scheduleView.repeatEveryCheckBox.isChecked = hasScheduleType
+    scheduleViewBinding.repeatEveryCheckBox.isChecked = hasScheduleType
 
-    scheduleView.repeatEveryCheckBox.isEnabled = hasValidScheduleResult
-    scheduleView.repeatDailyButton.isEnabled = hasScheduleType && hasValidScheduleResult
-    scheduleView.repeatWeeklyButton.isEnabled = hasScheduleType && hasValidScheduleResult
-    scheduleView.repeatMonthlyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleViewBinding.repeatEveryCheckBox.isEnabled = hasValidScheduleResult
+    scheduleViewBinding.repeatDailyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleViewBinding.repeatWeeklyButton.isEnabled = hasScheduleType && hasValidScheduleResult
+    scheduleViewBinding.repeatMonthlyButton.isEnabled = hasScheduleType && hasValidScheduleResult
 
-    scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener { _, isChecked ->
+    scheduleViewBinding.repeatEveryCheckBox.setOnCheckedChangeListener { _, isChecked ->
       if (isChecked.not())
         viewModel.dispatchEvent(ScheduleRepeatUnchecked)
       else
@@ -358,8 +380,8 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
     }
 
     if (scheduleType != null) {
-      scheduleView.repeatEveryButtonGroup.check(scheduleTypeToButtonId.getValue(scheduleType))
-      scheduleView.repeatEveryButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+      scheduleViewBinding.repeatEveryButtonGroup.check(scheduleTypeToButtonId.getValue(scheduleType))
+      scheduleViewBinding.repeatEveryButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
         if (checkedId != NO_ID && isChecked) {
           viewModel.dispatchEvent(ScheduleTypeChanged(buttonIdToScheduleType.getValue(checkedId)))
         }
@@ -368,16 +390,16 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
   }
 
   override fun showScheduleWarning() {
-    scheduleView.scheduleWarningContainer.isVisible = true
-    scheduleView.scheduleWarningTextView.text = requireContext().getString(R.string.editor_schedule_past_warning)
+    scheduleViewBinding.scheduleWarningContainer.isVisible = true
+    scheduleViewBinding.scheduleWarningTextView.text = requireContext().getString(R.string.editor_schedule_past_warning)
   }
 
   override fun hideScheduleWarning() {
-    scheduleView.scheduleWarningContainer.isGone = true
+    scheduleViewBinding.scheduleWarningContainer.isGone = true
   }
 
   override fun hideScheduleView() {
-    scheduleView.addRemoveScheduleButton.setOnClickListener {
+    scheduleViewBinding.addRemoveScheduleButton.setOnClickListener {
       // Start animating the add icon to delete icon
       seekableAvd.start()
 
@@ -385,18 +407,18 @@ class EditorScreen : Fragment(R.layout.fragment_notification_editor), EditorScre
       viewModel.dispatchEvent(AddScheduleClicked(schedule))
     }
 
-    scheduleView.scheduleDateButton.isGone = true
-    scheduleView.scheduleTimeButton.isGone = true
+    scheduleViewBinding.scheduleDateButton.isGone = true
+    scheduleViewBinding.scheduleTimeButton.isGone = true
 
-    scheduleView.scheduleWarningContainer.isGone = true
+    scheduleViewBinding.scheduleWarningContainer.isGone = true
 
-    scheduleView.repeatEveryCheckBox.isGone = true
-    scheduleView.repeatEveryCheckBox.setOnCheckedChangeListener(null)
+    scheduleViewBinding.repeatEveryCheckBox.isGone = true
+    scheduleViewBinding.repeatEveryCheckBox.setOnCheckedChangeListener(null)
 
-    scheduleView.repeatEveryButtonGroup.isGone = true
-    scheduleView.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
+    scheduleViewBinding.repeatEveryButtonGroup.isGone = true
+    scheduleViewBinding.repeatEveryButtonGroup.clearOnButtonCheckedListeners()
 
-    scheduleView.scheduleHeadingTextView.isVisible = true
+    scheduleViewBinding.scheduleHeadingTextView.isVisible = true
   }
 
   private fun showConfirmExitDialog() {

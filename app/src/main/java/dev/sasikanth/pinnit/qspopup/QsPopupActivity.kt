@@ -16,6 +16,7 @@ import com.spotify.mobius.functions.Consumer
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.activity.MainActivity
 import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.databinding.ActivityQsPopupBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.di.injector
 import dev.sasikanth.pinnit.editor.EditorScreenArgs
@@ -24,7 +25,6 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
-import kotlinx.android.synthetic.main.activity_qs_popup.*
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ import javax.inject.Inject
  * clicked. The reason why I didn't use an actual dialog is because it's not
  * properly following the app theme (day/night).
  */
-class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi {
+class QsPopupActivity : AppCompatActivity(), QsPopupUi {
 
   @Inject
   lateinit var effectHandler: QsPopupEffectHandler.Factory
@@ -73,10 +73,14 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
   }
 
   private lateinit var adapter: NotificationsListAdapter
+  private lateinit var binding: ActivityQsPopupBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     injector.inject(this)
+
+    binding = ActivityQsPopupBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     adapter = NotificationsListAdapter(
       utcClock = utcClock,
@@ -88,8 +92,8 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
       onEditNotificationScheduleClicked = ::onEditNotificationScheduleClicked,
       onRemoveNotificationScheduleClicked = ::onRemoveNotificationScheduleClicked
     )
-    qsPopupNotificationsRecyclerView.adapter = adapter
-    qsPopupNotificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
+    binding.qsPopupNotificationsRecyclerView.adapter = adapter
+    binding.qsPopupNotificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
 
     viewModel.models.observe(this, { model ->
       uiRender.render(model)
@@ -103,16 +107,16 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
       }
     })
 
-    backgroundRoot.setOnClickListener { finish() }
+    binding.backgroundRoot.setOnClickListener { finish() }
 
-    openAppButton.setOnClickListener {
+    binding.openAppButton.setOnClickListener {
       Intent(this, MainActivity::class.java).also {
         it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(it)
       }
     }
 
-    createNotificationButton.setOnClickListener {
+    binding.createNotificationButton.setOnClickListener {
       openNotificationEditorView(notification = null)
     }
   }
@@ -136,22 +140,22 @@ class QsPopupActivity : AppCompatActivity(R.layout.activity_qs_popup), QsPopupUi
 
   override fun showNotifications(notifications: List<PinnitNotification>) {
     adapter.submitList(notifications)
-    qsPopupNotificationsRecyclerView.isVisible = true
+    binding.qsPopupNotificationsRecyclerView.isVisible = true
   }
 
   override fun hideNotifications() {
     adapter.submitList(null)
-    qsPopupNotificationsRecyclerView.isGone = true
+    binding.qsPopupNotificationsRecyclerView.isGone = true
   }
 
   override fun showNotificationsEmptyError() {
-    noNotificationsTextView.isVisible = true
-    noNotificationsImageView.isVisible = true
+    binding.noNotificationsTextView.isVisible = true
+    binding.noNotificationsImageView.isVisible = true
   }
 
   override fun hideNotificationsEmptyError() {
-    noNotificationsTextView.isGone = true
-    noNotificationsImageView.isGone = true
+    binding.noNotificationsTextView.isGone = true
+    binding.noNotificationsImageView.isGone = true
   }
 
   private fun onToggleNotificationPinClicked(notification: PinnitNotification) {
