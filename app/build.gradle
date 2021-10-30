@@ -4,9 +4,9 @@ plugins {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 kapt {
   arguments {
@@ -71,9 +71,6 @@ android {
     // Enabling experimental coroutines APIs
     freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
     freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
-  }
-  androidExtensions {
-    experimental = true
   }
 }
 
