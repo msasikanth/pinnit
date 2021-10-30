@@ -35,7 +35,6 @@ import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -97,6 +96,8 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
 
     postponeEnterTransition()
 
+    toolbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
+
     adapter = NotificationsListAdapter(
       utcClock = utcClock,
       userClock = userClock,
@@ -125,22 +126,17 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
       ::viewEffectsHandler,
       { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
 
-    requireActivity().bottomBar.setNavigationIcon(R.drawable.ic_pinnit_dark_mode)
-    requireActivity().bottomBar.setContentActionEnabled(true)
-    requireActivity().bottomBar.setContentActionText(R.string.create)
-    requireActivity().bottomBar.setActionIcon(R.drawable.ic_pinnit_about)
-
-    requireActivity().bottomBar.setNavigationOnClickListener {
+    bottomBar.setNavigationOnClickListener {
       OptionsBottomSheet.show(requireActivity().supportFragmentManager)
     }
-    requireActivity().bottomBar.setContentActionOnClickListener {
+    bottomBar.setContentActionOnClickListener {
       openNotificationEditor(
         notification = null,
         navigatorExtras = null,
         editorTransition = SharedAxis
       )
     }
-    requireActivity().bottomBar.setActionOnClickListener {
+    bottomBar.setActionOnClickListener {
       showAbout()
     }
   }
@@ -149,7 +145,7 @@ class NotificationsScreen : Fragment(R.layout.fragment_notifications), Notificat
     when (viewEffect) {
       is UndoNotificationDeleteViewEffect -> {
         Snackbar.make(notificationsRoot, R.string.notification_deleted, Snackbar.LENGTH_LONG)
-          .setAnchorView(requireActivity().bottomBar)
+          .setAnchorView(bottomBar)
           .setAction(R.string.undo) {
             viewModel.dispatchEvent(UndoNotificationDelete(viewEffect.notificationUuid))
           }
