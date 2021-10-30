@@ -1,6 +1,7 @@
 package dev.sasikanth.pinnit.di
 
 import android.content.Context
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
 import androidx.work.Configuration
 import androidx.work.WorkManager
@@ -17,7 +18,6 @@ import dev.sasikanth.pinnit.utils.DispatcherProvider
 import dev.sasikanth.pinnit.utils.RealUserClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
-import dev.sasikanth.pinnit.worker.PinnitWorkerFactory
 import java.time.ZoneId
 import javax.inject.Singleton
 
@@ -65,10 +65,10 @@ object AppModule {
   @Singleton
   @Provides
   fun providesWorkManagerConfiguration(
-    pinnitWorkerFactory: PinnitWorkerFactory
+    workerFactory: HiltWorkerFactory
   ): Configuration {
     return Configuration.Builder()
-      .setWorkerFactory(pinnitWorkerFactory)
+      .setWorkerFactory(workerFactory)
       .build()
   }
 }

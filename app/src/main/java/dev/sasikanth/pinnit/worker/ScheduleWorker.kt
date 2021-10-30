@@ -1,11 +1,14 @@
 package dev.sasikanth.pinnit.worker
 
 import android.content.Context
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.data.ScheduleType
@@ -19,9 +22,10 @@ import java.time.LocalDateTime
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-class ScheduleWorker(
-  context: Context,
-  parameters: WorkerParameters,
+@HiltWorker
+class ScheduleWorker @AssistedInject constructor(
+  @Assisted context: Context,
+  @Assisted parameters: WorkerParameters,
   private val repository: NotificationRepository,
   private val notificationUtil: NotificationUtil,
   private val userClock: UserClock,
