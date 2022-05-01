@@ -20,7 +20,7 @@ buildscript {
       lifecycle            : '2.3.1',
       arch                 : '2.1.0',
       mockito              : '2.2.0',
-      mobius               : '1.5.5',
+      mobius               : '1.5.8',
       circleImageView      : '3.1.0',
       preference           : '1.1.1',
       insetter             : '0.3.1',
