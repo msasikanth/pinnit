@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="preloaded_fonts" translatable="false">
+    <item>@font/bai_jam_bold</item>
+    <item>@font/bai_jam_medium</item>
+    <item>@font/bai_jam_regular</item>
+    <item>@font/bai_jam_semibold</item>
+    <item>@font/jura_bold</item>
+    <item>@font/jura_semibold</item>
+  </array>
+</resources>
