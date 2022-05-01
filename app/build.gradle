@@ -121,8 +121,6 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
   implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
 
-  implementation "androidx.preference:preference-ktx:$versions.preference"
-
   implementation "androidx.work:work-runtime-ktx:$versions.workManager"
 
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"

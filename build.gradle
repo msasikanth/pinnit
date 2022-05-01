@@ -22,7 +22,6 @@ buildscript {
       mockito              : '2.2.0',
       mobius               : '1.5.8',
       circleImageView      : '3.1.0',
-      preference           : '1.1.1',
       insetter             : '0.3.1',
       coreLibraryDesugaring: '1.1.1',
       betterLinkMovement   : '2.2.0',
