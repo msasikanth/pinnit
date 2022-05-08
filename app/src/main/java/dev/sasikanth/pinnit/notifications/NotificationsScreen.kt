@@ -4,7 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.DismissDirection.EndToStart
+import androidx.compose.material.DismissValue
+import androidx.compose.material.DismissValue.DismissedToStart
+import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.SwipeToDismiss
+import androidx.compose.material.rememberDismissState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -12,7 +28,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
@@ -26,10 +41,11 @@ import dev.sasikanth.pinnit.databinding.FragmentNotificationsBinding
 import dev.sasikanth.pinnit.di.DateTimeFormat
 import dev.sasikanth.pinnit.editor.EditorTransition
 import dev.sasikanth.pinnit.editor.EditorTransition.SharedAxis
-import dev.sasikanth.pinnit.notifications.adapter.NotificationPinItemAnimator
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsItemTouchHelper
 import dev.sasikanth.pinnit.notifications.adapter.NotificationsListAdapter
 import dev.sasikanth.pinnit.options.OptionsBottomSheet
+import dev.sasikanth.pinnit.theme.PinnitTheme
+import dev.sasikanth.pinnit.utils.PinnitDateTimeFormatter
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import java.time.format.DateTimeFormatter
@@ -55,13 +71,16 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
   @DateTimeFormat(DateTimeFormat.Type.ScheduleTimeFormat)
   lateinit var scheduleTimeFormatter: DateTimeFormatter
 
+  @Inject
+  lateinit var dateTimeFormat: PinnitDateTimeFormatter
+
   private val viewModel: NotificationsScreenViewModel by viewModels()
 
   private val uiRender = NotificationsScreenUiRender(this)
 
   private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-      binding.notificationsRecyclerView.smoothScrollToPosition(0)
+      //      binding.notificationsRecyclerView.smoothScrollToPosition(0)
     }
   }
 
@@ -75,6 +94,7 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
     return _binding?.root
   }
 
+  @OptIn(ExperimentalMaterialApi::class)
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
@@ -93,17 +113,80 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
       onRemoveNotificationScheduleClicked = ::onRemoveNotificationScheduleClicked
     )
     adapter.registerAdapterDataObserver(adapterDataObserver)
-    binding.notificationsRecyclerView.adapter = adapter
-    binding.notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
-    binding.notificationsRecyclerView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
-    binding.notificationsRecyclerView.doOnPreDraw { startPostponedEnterTransition() }
+    //    binding.notificationsRecyclerView.adapter = adapter
+    //    binding.notificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
+    //    binding.notificationsRecyclerView.applySystemWindowInsetsToPadding(bottom = true, left = true, right = true)
+    //    binding.notificationsRecyclerView.doOnPreDraw { startPostponedEnterTransition() }
 
     val itemTouchHelperCallback = NotificationsItemTouchHelper(requireContext(), adapter) {
       viewModel.dispatchEvent(NotificationSwiped(it))
     }
-    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notificationsRecyclerView)
+    //    ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.notificationsRecyclerView)
 
-    viewModel.models.observe(viewLifecycleOwner, uiRender::render)
+    viewModel.models.observe(viewLifecycleOwner) { model ->
+      binding.notificationsRecyclerView.setContent {
+        PinnitTheme {
+          LazyColumn {
+            items(model.notifications.orEmpty()) { notification ->
+              val dismissState = rememberDismissState(
+                confirmStateChange = {
+                  if (it == DismissedToStart) viewModel.dispatchEvent(NotificationSwiped(notification))
+                  it != DismissedToStart
+                }
+              )
+
+              SwipeToDismiss(
+                state = dismissState,
+                directions = setOf(EndToStart),
+                background = {
+                  Box(
+                    modifier = Modifier
+                      .fillParentMaxSize()
+                      .background(PinnitTheme.colors.rowBackground),
+                  ) {
+                    Icon(
+                      modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(24.dp),
+                      painter = painterResource(id = R.drawable.ic_pinnit_delete),
+                      contentDescription = null,
+                      tint = PinnitTheme.colors.onPrimary
+                    )
+                  }
+                }
+              ) {
+                NotificationCard(
+                  notification = notification,
+                  pinnitDateTimeFormatter = dateTimeFormat,
+                  onClick = {
+                    val navDirections = NotificationsScreenDirections.actionNotificationsScreenToEditorScreen(
+                      notificationUuid = notification.uuid,
+                      notificationContent = notification.content,
+                      notificationTitle = notification.title,
+                      editorTransition = SharedAxis
+                    )
+                    findNavController().navigate(navDirections)
+                  },
+                  onTogglePinClick = {
+                    onToggleNotificationPinClicked(notification = notification)
+                  },
+                  onEditScheduleClick = {
+                    onEditNotificationScheduleClicked(notification)
+                  },
+                  onRemoveScheduleClick = {
+                    onRemoveNotificationScheduleClicked(notification)
+                  }
+                )
+              }
+
+              Divider(
+                color = PinnitTheme.colors.divider
+              )
+            }
+          }
+        }
+      }
+    }
 
     viewModel.viewEffects.setObserver(
       viewLifecycleOwner,
@@ -140,8 +223,8 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
   override fun onDestroyView() {
     adapter.unregisterAdapterDataObserver(adapterDataObserver)
-    binding.notificationsRecyclerView.adapter = null
-    binding.notificationsRecyclerView.itemAnimator = null
+    //    binding.notificationsRecyclerView.adapter = null
+    //    binding.notificationsRecyclerView.itemAnimator = null
     super.onDestroyView()
   }
 

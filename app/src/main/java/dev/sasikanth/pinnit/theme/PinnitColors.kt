@@ -31,7 +31,7 @@ fun lightColors(): PinnitColors {
     onSurface = Color.Black,
     background = Color.White,
     onBackground = Color.Black,
-    rowBackground = Color(0xFFFFE5F6),
+    rowBackground = Color(0xFF9C1664),
     outlineButtonGroup = Color(0xFF4D0033)
   )
 }
@@ -46,7 +46,7 @@ fun darkColors(): PinnitColors {
     onSurface = Color.White,
     background = Color(0xFF14000E),
     onBackground = Color.White,
-    rowBackground = Color.Black,
+    rowBackground = Color(0xFF9C1664),
     outlineButtonGroup = Color(0xFFF5D0E9)
   )
 }

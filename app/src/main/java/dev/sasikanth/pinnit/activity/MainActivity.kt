@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.activity
 
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.lifecycleScope
@@ -10,14 +11,23 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 import dev.sasikanth.pinnit.R
+import dev.sasikanth.pinnit.data.PinnitNotification
+import dev.sasikanth.pinnit.data.Schedule
+import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.databinding.ActivityMainBinding
+import dev.sasikanth.pinnit.notifications.NotificationCard
 import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
+import dev.sasikanth.pinnit.theme.PinnitTheme
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.Locale
+import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint

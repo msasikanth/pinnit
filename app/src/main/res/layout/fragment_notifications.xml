@@ -77,14 +77,13 @@
       app:layout_constraintTop_toBottomOf="@id/noNotificationsImageView"
       tools:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.compose.ui.platform.ComposeView
       android:id="@+id/notificationsRecyclerView"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:clipToPadding="false"
       android:paddingBottom="88dp"
-      android:visibility="gone"
-      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      android:visibility="visible"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       tools:listitem="@layout/notifications_list_item"
