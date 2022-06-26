@@ -410,10 +410,15 @@ class EditorScreen : Fragment(), EditorScreenUi {
   }
 
   private fun showDatePickerDialog(date: LocalDate) {
-    val currentDate = LocalDate.now(userClock)
+    val currentDate = LocalDate.now(userClock).atStartOfDay(utcClock.zone)
+    val dateToOpen = date.atStartOfDay(utcClock.zone)
 
-    val initialDate = date.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
-    val startAt = currentDate.atStartOfDay(utcClock.zone).toInstant().toEpochMilli()
+    val startAt = currentDate.toInstant().toEpochMilli()
+    val initialDate = if (dateToOpen.isAfter(currentDate)) {
+      dateToOpen.toInstant().toEpochMilli()
+    } else {
+      startAt
+    }
 
     val calendarConstraints = CalendarConstraints.Builder()
       .setStart(startAt)
