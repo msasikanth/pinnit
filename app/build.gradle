@@ -24,7 +24,7 @@ android {
     minSdkVersion 23
     targetSdkVersion 31
     versionCode rootProject.gitCommitCount
-    versionName "1.2.0"
+    versionName "1.2.1"
 
     testInstrumentationRunner "dev.sasikanth.pinnit.AndroidTestRunner"
 
