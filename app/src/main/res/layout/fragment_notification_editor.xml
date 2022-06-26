@@ -153,6 +153,7 @@
           android:layout_height="wrap_content"
           android:hint="@string/editor_content_hint"
           android:inputType="textCapSentences|textMultiLine"
+          android:imeOptions="actionNone"
           android:maxLength="400"
           android:paddingStart="0dp"
           android:paddingEnd="0dp"
