@@ -17,6 +17,8 @@ kapt {
 }
 
 android {
+  namespace 'dev.sasikanth.pinnit'
+
   compileSdkVersion 31
 
   defaultConfig {
@@ -144,7 +146,7 @@ dependencies {
   implementation "androidx.vectordrawable:vectordrawable-seekable:$versions.seekableAVD"
 
   implementation "androidx.datastore:datastore:$versions.dataStore"
-  implementation  "com.google.protobuf:protobuf-javalite:$versions.javaLite"
+  implementation "com.google.protobuf:protobuf-javalite:$versions.javaLite"
 
   implementation "io.github.reactivecircus.flowbinding:flowbinding-material:$versions.flowBinding"
 
