@@ -48,35 +48,35 @@
 
     </LinearLayout>
 
-    <LinearLayout
-      android:id="@+id/contactSupportButton"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/about_item_ripple"
-      android:clickable="true"
-      android:focusable="true"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingStart="0dp"
-      android:paddingEnd="16dp">
+<!--    <LinearLayout-->
+<!--      android:id="@+id/contactSupportButton"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:background="@drawable/about_item_ripple"-->
+<!--      android:clickable="true"-->
+<!--      android:focusable="true"-->
+<!--      android:gravity="center_vertical"-->
+<!--      android:orientation="horizontal"-->
+<!--      android:paddingStart="0dp"-->
+<!--      android:paddingEnd="16dp">-->
 
-      <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@null"
-        android:padding="16dp"
-        app:srcCompat="@drawable/ic_pinnit_email"
-        app:tint="@color/about_item" />
+<!--      <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="@null"-->
+<!--        android:padding="16dp"-->
+<!--        app:srcCompat="@drawable/ic_pinnit_email"-->
+<!--        app:tint="@color/about_item" />-->
 
-      <com.google.android.material.textview.MaterialTextView
-        style="@style/TextStyle.Pinnit.Subtitle1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/contact_support"
-        android:textColor="@color/about_item" />
+<!--      <com.google.android.material.textview.MaterialTextView-->
+<!--        style="@style/TextStyle.Pinnit.Subtitle1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:text="@string/contact_support"-->
+<!--        android:textColor="@color/about_item" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
     <LinearLayout
       android:id="@+id/sourceCodeButton"

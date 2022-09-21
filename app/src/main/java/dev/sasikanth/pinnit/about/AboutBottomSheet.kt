@@ -40,7 +40,7 @@ class AboutBottomSheet : BottomSheetDialogFragment() {
 
     setAppVersion()
 
-    binding.contactSupportButton.setOnClickListener { sendSupportEmail() }
+    //    binding.contactSupportButton.setOnClickListener { sendSupportEmail() }
     binding.sourceCodeButton.setOnClickListener { openGitHubProject() }
 
     setupShowOemWarning()
