@@ -135,6 +135,7 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
           }
           .show()
       }
+      else -> throw IllegalArgumentException("Unknown view effect: $viewEffect")
     }
   }
 

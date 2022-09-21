@@ -206,6 +206,8 @@ class EditorScreen : Fragment(), EditorScreenUi {
       is ShowTimePickerDialog -> {
         showTimePickerDialog(viewEffect.time)
       }
+
+      else -> throw IllegalArgumentException("Unknown view effect: $viewEffect")
     }
   }
 

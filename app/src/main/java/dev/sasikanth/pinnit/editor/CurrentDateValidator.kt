@@ -23,8 +23,8 @@ class CurrentDateValidator @Inject constructor(
     return 0
   }
 
-  override fun writeToParcel(parcel: Parcel?, flags: Int) {
-    parcel?.writeInt(flags)
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    parcel.writeInt(flags)
   }
 
   override fun isValid(date: Long): Boolean {
