@@ -1,0 +1,89 @@
+<resources>
+  <string name="app_name" translatable="false">Pinnit</string>
+  <string name="app_version">VERSIÓN %1$s</string>
+
+  <string name="toolbar_title_notifications">Notificaciones</string>
+  <string name="no_notifications">Sin notificaciones</string>
+  <string name="dot_separator" translatable="false">•</string>
+  <string name="editor_title_hint">Título</string>
+  <string name="editor_content_hint">Descripción</string>
+  <string name="channel_name">Notificaciones fijadas</string>
+  <string name="notification_deleted">Notificación eliminada</string>
+
+  <string name="toolbar_title_create">Crear</string>
+  <string name="toolbar_title_edit">Editar</string>
+
+  <string name="create">Crear</string>
+  <string name="save_and_pin">Guardar y fijar</string>
+  <string name="save">Guardar</string>
+
+  <string name="schedule">Programar</string>
+  <string name="repeat_every">Repetir cada…</string>
+  <string name="repeat_day">Día</string>
+  <string name="repeat_week">Semana</string>
+  <string name="repeat_month">Mes</string>
+
+  <string name="notification_schedule_button">%1$s - %2$s</string>
+  <string name="notification_schedule_button_today">Hoy - %1$s</string>
+  <string name="notification_schedule_button_yesterday">Ayer - %1$s</string>
+  <string name="notification_schedule_button_tomorrow">Mañana - %1$s</string>
+  <string name="notification_menu_edit_schedule">Editar programación</string>
+  <string name="notification_menu_remove_schedule">Eliminar programación</string>
+  <string name="editor_schedule_past_warning">Esta hora ya ha pasado. Por favor, borre o edite su horario a una fecha futura.</string>
+
+  <string name="option_item_dark_mode">Modo oscuro</string>
+
+  <string name="dev_email_address" translatable="false">contact@sasikanth.dev</string>
+
+  <!-- Preferences -->
+  <string name="pref_theme_light" translatable="false">pref_notif_light</string>
+  <string name="pref_theme_dark" translatable="false">pref_notif_dark</string>
+  <string name="pref_theme_auto" translatable="false">pref_notif_auto</string>
+  <string name="option_dark_mode_on">Encendido</string>
+  <string name="option_dark_mode_auto">Automático</string>
+  <string name="option_dark_mode_off">Apagado</string>
+
+  <!-- About -->
+  <string name="about">Acerca de</string>
+  <string name="privacy_policy">Política de privacidad</string>
+  <string name="questions_or_bugs">¿Preguntas o informes de errores?</string>
+  <string name="contact_support">Contactar asistencia</string>
+  <string name="source_code" translatable="false">Código fuente</string>
+  <string name="warning_about_oem">Advertencia sobre tu dispositivo</string>
+  <string name="support_subject" translatable="false">Soporte de Pinnit : %1$s</string>
+  <string name="support_content" translatable="false">-- Información sobre el dispositivo --\n
+    Fabricante: %1$s\n
+    Modelo: %2$s\n
+    SDK: %3$s\n
+    \n
+  </string>
+  <string name="send_email">Envíar correo</string>
+  <string name="yes">Sí</string>
+  <string name="no">No</string>
+  <string name="undo">Deshacer</string>
+
+  <!-- Notification Actions -->
+  <string name="unpin">Desfijar</string>
+  <string name="delete">Eliminar</string>
+
+  <!-- Confirm Editor Exit-->
+  <string name="confirm_editor_exit_title">¿Descartar cambios?</string>
+  <string name="confirm_editor_exit_positive_action">Sí</string>
+  <string name="confirm_editor_exit_negative_action">No</string>
+  <string name="confirm_delete_notification_title">¿Eliminar notificación?</string>
+  <string name="confirm_delete_notification_desc">Esta acción no podrá deshacerse.</string>
+  <string name="confirm_delete_notification_positive_action">Sí</string>
+  <string name="confirm_delete_notification_negative_action">No</string>
+
+  <!-- QS Popup -->
+  <string name="qs_popup_open_app">Abrir aplicación</string>
+
+  <!-- OEM Warning Dialog -->
+  <string name="oem_warning_title">Advertencia sobre el fabricante de su dispositivo</string>
+  <string name="oem_warning_subtitle">
+    Algunos fabricantes son conocidos por cerrar agresivamente las aplicaciones en segundo plano. Aunque Pinnit no se ejecuta en segundo plano, si la aplicación se cierra a la fuerza, las notificaciones de Pinnit se eliminarán del panel y solo volverán a aparecer cuando se inicie la aplicación de nuevo.
+    \n
+    \nPara evitarlo, visite el siguiente enlace y siga las instrucciones.
+  </string>
+  <string name="oem_warning_show_instructions">Mostrar instrucciones</string>
+</resources>
