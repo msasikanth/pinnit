@@ -32,6 +32,7 @@ buildscript {
       javaLite             : '3.19.2',
       flowBinding          : '1.0.0',
       fragment             : '1.5.2',
+      openCsv              : '5.7.0'
   ]
   repositories {
     google()

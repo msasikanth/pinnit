@@ -165,6 +165,8 @@ dependencies {
 
   implementation "io.github.reactivecircus.flowbinding:flowbinding-material:$versions.flowBinding"
 
+  implementation "com.opencsv:opencsv:$versions.openCsv"
+
   testImplementation "junit:junit:$versions.junit"
   testImplementation "androidx.room:room-testing:$versions.room"
   testImplementation "com.google.truth:truth:$versions.truth"
