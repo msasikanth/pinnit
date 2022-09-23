@@ -3,7 +3,7 @@ package dev.sasikanth.pinnit.editor
 import com.google.common.truth.Truth.assertThat
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.ScheduleInPastError
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
-import dev.sasikanth.pinnit.utils.TestUserClock
+import dev.sasikanth.sharedtestcode.utils.TestUserClock
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDate
@@ -11,7 +11,7 @@ import java.time.LocalTime
 
 class ScheduleValidatorTest {
 
-  private val userClock = TestUserClock(Instant.parse("2020-01-01T00:00:00.00Z"))
+  private val userClock = dev.sasikanth.sharedtestcode.utils.TestUserClock(Instant.parse("2020-01-01T00:00:00.00Z"))
   private val validator = ScheduleValidator(userClock)
 
   @Test

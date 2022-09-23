@@ -3,9 +3,9 @@ package dev.sasikanth.pinnit.notifications
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dev.sasikanth.pinnit.TestData
 import dev.sasikanth.pinnit.data.AppDatabase
-import dev.sasikanth.pinnit.utils.TestUtcClock
+import dev.sasikanth.sharedtestcode.TestData
+import dev.sasikanth.sharedtestcode.utils.TestUtcClock
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After

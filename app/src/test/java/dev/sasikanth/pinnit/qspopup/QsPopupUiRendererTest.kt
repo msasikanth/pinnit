@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import org.junit.Test
 import java.util.UUID
 
@@ -26,7 +26,7 @@ class QsPopupUiRendererTest {
   fun `show notifications and hide notification error if notifications are not empty`() {
     // given
     val notifications = listOf(
-      TestData.notification(
+      dev.sasikanth.sharedtestcode.TestData.notification(
         uuid = UUID.fromString("29238d40-c5c8-44e6-94f3-9b40fd0314b3")
       )
     )

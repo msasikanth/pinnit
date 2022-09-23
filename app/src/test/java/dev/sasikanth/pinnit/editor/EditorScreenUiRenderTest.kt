@@ -3,7 +3,7 @@ package dev.sasikanth.pinnit.editor
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import org.junit.Test
 import java.time.LocalDate
@@ -37,7 +37,7 @@ class EditorScreenUiRenderTest {
   @Test
   fun `when notification is present, then update ui`() {
     // given
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       schedule = null
     )
@@ -63,7 +63,7 @@ class EditorScreenUiRenderTest {
 
     val model = EditorScreenModel.default(notificationUuid, null, null)
       .notificationLoaded(
-        TestData.notification(
+        dev.sasikanth.sharedtestcode.TestData.notification(
           uuid = notificationUuid,
           title = "Original Notification Title"
         )
@@ -105,7 +105,7 @@ class EditorScreenUiRenderTest {
     val scheduleDate = LocalDate.parse("2020-01-01")
     val scheduleTime = LocalTime.parse("09:00:00")
     val scheduleType = ScheduleType.Daily
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = scheduleDate,
       scheduleTime = scheduleTime,
       scheduleType = scheduleType
@@ -150,7 +150,7 @@ class EditorScreenUiRenderTest {
     val scheduleDate = LocalDate.parse("2020-01-01")
     val scheduleTime = LocalTime.parse("09:00:00")
     val scheduleType = ScheduleType.Daily
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = scheduleDate,
       scheduleTime = scheduleTime,
       scheduleType = scheduleType

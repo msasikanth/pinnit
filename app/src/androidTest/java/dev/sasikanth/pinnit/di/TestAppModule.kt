@@ -12,10 +12,10 @@ import dagger.hilt.testing.TestInstallIn
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.pinnit.utils.CoroutineDispatcherProvider
 import dev.sasikanth.pinnit.utils.DispatcherProvider
-import dev.sasikanth.pinnit.utils.TestUserClock
-import dev.sasikanth.pinnit.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
+import dev.sasikanth.sharedtestcode.utils.TestUserClock
+import dev.sasikanth.sharedtestcode.utils.TestUtcClock
 import java.time.ZoneId
 import javax.inject.Singleton
 

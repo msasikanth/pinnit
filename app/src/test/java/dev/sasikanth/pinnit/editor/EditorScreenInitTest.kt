@@ -5,7 +5,7 @@ import com.spotify.mobius.test.FirstMatchers.hasModel
 import com.spotify.mobius.test.FirstMatchers.hasNoEffects
 import com.spotify.mobius.test.InitSpec
 import com.spotify.mobius.test.InitSpec.assertThatFirst
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import org.junit.Test
 import java.util.UUID
 
@@ -44,7 +44,7 @@ class EditorScreenInitTest {
 
   @Test
   fun `when screen is restored and notification is already loaded, then do nothing`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Notification Title"
     )

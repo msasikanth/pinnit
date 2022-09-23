@@ -5,7 +5,7 @@ import com.spotify.mobius.test.FirstMatchers.hasModel
 import com.spotify.mobius.test.FirstMatchers.hasNoEffects
 import com.spotify.mobius.test.InitSpec
 import com.spotify.mobius.test.InitSpec.assertThatFirst
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import org.junit.Test
 import java.util.UUID
 
@@ -29,7 +29,7 @@ class NotificationsScreenInitTest {
   @Test
   fun `when screen is restored, then don't load notifications`() {
     val notifications = listOf(
-      TestData.notification(
+      dev.sasikanth.sharedtestcode.TestData.notification(
         uuid = UUID.fromString("c59f2db1-2cfc-476c-9fa2-1fac99bd7336")
       )
     )

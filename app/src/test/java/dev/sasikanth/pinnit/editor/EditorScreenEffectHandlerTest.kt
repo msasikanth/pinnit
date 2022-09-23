@@ -10,7 +10,7 @@ import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import dev.sasikanth.pinnit.notifications.NotificationRepository
@@ -62,7 +62,7 @@ class EditorScreenEffectHandlerTest {
   fun `when load notification effect is received, then load the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("b44624c8-0535-4743-a97b-d0350fd446c2")
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("999f6f57-8ddd-41c2-886d-78d2e1c9b0b8")
     )
 
@@ -84,13 +84,13 @@ class EditorScreenEffectHandlerTest {
     val notificationUuid = UUID.fromString("9610e5b7-6894-4da9-965a-048abf568247")
     val title = "Notification Title"
     val content = "This is content"
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = LocalDate.parse("2020-01-01"),
       scheduleTime = LocalTime.parse("09:00:00"),
       scheduleType = ScheduleType.Daily
     )
 
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = title,
       content = content,
@@ -128,12 +128,12 @@ class EditorScreenEffectHandlerTest {
   fun `when update notification effect is received, then update the notification`() = testScope.runBlockingTest {
     // given
     val notificationUuid = UUID.fromString("4e91382a-d5c3-44a7-8ee3-fa15a4ec69b4")
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Notification Title"
     )
 
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = LocalDate.parse("2020-01-01"),
       scheduleTime = LocalTime.parse("09:00:00"),
       scheduleType = ScheduleType.Daily
@@ -194,7 +194,7 @@ class EditorScreenEffectHandlerTest {
   @Test
   fun `when delete notification effect is received, then delete the notification`() = testScope.runBlockingTest {
     // give
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("0e51b71a-2bec-49eb-bbec-1e5d1b74e643")
     )
 
@@ -278,7 +278,7 @@ class EditorScreenEffectHandlerTest {
   @Test
   fun `when show notification effect is received, then show android notification`() {
     // given
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("e3848c84-afe9-45a6-ba90-d7f0ad3de193")
     )
 
@@ -296,7 +296,7 @@ class EditorScreenEffectHandlerTest {
   @Test
   fun `when schedule notification effect is received, then schedule a notification`() {
     // given
-    val notification = TestData.notification()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification()
 
     // when
     connection.accept(ScheduleNotification(notification))

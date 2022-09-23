@@ -6,8 +6,8 @@ import com.spotify.mobius.test.NextMatchers.hasNoEffects
 import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
-import dev.sasikanth.pinnit.TestData
-import dev.sasikanth.pinnit.utils.TestUtcClock
+import dev.sasikanth.sharedtestcode.TestData
+import dev.sasikanth.sharedtestcode.utils.TestUtcClock
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDate
@@ -15,7 +15,7 @@ import java.util.UUID
 
 class NotificationsScreenUpdateTest {
 
-  private val utcClock = TestUtcClock().apply {
+  private val utcClock = dev.sasikanth.sharedtestcode.utils.TestUtcClock().apply {
     setDate(LocalDate.parse("2020-01-01"))
   }
   private val updateSpec = UpdateSpec(NotificationsScreenUpdate())
@@ -24,7 +24,7 @@ class NotificationsScreenUpdateTest {
   @Test
   fun `when notifications are loaded, then update show notifications`() {
     val notifications = listOf(
-      TestData.notification(
+      dev.sasikanth.sharedtestcode.TestData.notification(
         uuid = UUID.fromString("54651e1b-5de8-460a-8e3b-64e2e5aa70ac"),
         createdAt = Instant.now(utcClock),
         updatedAt = Instant.now(utcClock)
@@ -44,7 +44,7 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when notification is swiped, then delete the notification`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("0fdb4088-a12e-47e6-8d42-d5b553edd3b1"),
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock)
@@ -65,7 +65,7 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when toggle notification pin status is clicked, then change the pin status`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("0fdb4088-a12e-47e6-8d42-d5b553edd3b1"),
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock)
@@ -86,7 +86,7 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when undo delete is clicked, then undo deleted notification`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("0fdb4088-a12e-47e6-8d42-d5b553edd3b1"),
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock),
@@ -108,7 +108,7 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when notification is deleted, then show undo delete notification`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       schedule = null
     )
     updateSpec
@@ -124,8 +124,8 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when notification is deleted and has schedule, then cancel the schedule`() {
-    val notification = TestData.notification(
-      schedule = TestData.schedule()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
+      schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
     )
     updateSpec
       .given(defaultModel)
@@ -140,8 +140,8 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when notification schedule is removed, then cancel the notification schedule`() {
-    val notification = TestData.notification(
-      schedule = TestData.schedule()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
+      schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
     )
     updateSpec
       .given(defaultModel)
@@ -156,8 +156,8 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when remove notification schedule is clicked, then remove notification schedule`() {
-    val notification = TestData.notification(
-      schedule = TestData.schedule()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
+      schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
     )
     updateSpec
       .given(defaultModel)
@@ -172,7 +172,7 @@ class NotificationsScreenUpdateTest {
 
   @Test
   fun `when deleted notification is restored, then schedule the notification`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("6f991dba-bca1-41fe-bdb6-8f241e964398")
     )
     val notificationsModel = defaultModel

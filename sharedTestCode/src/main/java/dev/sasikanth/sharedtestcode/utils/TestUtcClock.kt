@@ -1,5 +1,6 @@
-package dev.sasikanth.pinnit.utils
+package dev.sasikanth.sharedtestcode.utils
 
+import dev.sasikanth.pinnit.utils.UtcClock
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant

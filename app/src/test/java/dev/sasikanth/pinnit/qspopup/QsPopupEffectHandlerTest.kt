@@ -9,11 +9,11 @@ import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.pinnit.notifications.NotificationRepository
 import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
-import dev.sasikanth.pinnit.utils.TestUtcClock
+import dev.sasikanth.sharedtestcode.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -28,7 +28,7 @@ import java.util.UUID
 class QsPopupEffectHandlerTest {
 
   private val testScope = TestCoroutineScope()
-  private val utcClock = TestUtcClock()
+  private val utcClock = dev.sasikanth.sharedtestcode.utils.TestUtcClock()
   private val consumer = RecordingConsumer<QsPopupEvent>()
   private val viewEffectConsumer = RecordingConsumer<QsPopupViewEffect>()
 
@@ -59,12 +59,12 @@ class QsPopupEffectHandlerTest {
   @Test
   fun `when load notifications effect is received, then load notifications`() {
     // given
-    val notification1 = TestData.notification(
+    val notification1 = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("5d9e67ff-44ad-48c7-9ff8-69d7b927c175"),
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock)
     )
-    val notification2 = TestData.notification(
+    val notification2 = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("f5570d1f-9054-4770-ae0a-6aacdb4c95b0"),
       createdAt = Instant.now(utcClock).minus(1, ChronoUnit.DAYS),
       updatedAt = Instant.now(utcClock)
@@ -89,7 +89,7 @@ class QsPopupEffectHandlerTest {
   fun `when open edit screen effect is received, then open the edit page`() {
     // given
     val notificationUuid = UUID.fromString("220c2037-94ba-44ef-8f83-5c232f01288f")
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       createdAt = Instant.now(utcClock),
       updatedAt = Instant.now(utcClock)
@@ -108,7 +108,7 @@ class QsPopupEffectHandlerTest {
   @Test
   fun `when toggle pin status effect is received, then update the notification pin status`() = testScope.runBlockingTest {
     // given
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("ff73fd70-852f-4833-bc9c-a6f67b2e66f0"),
       isPinned = true,
       createdAt = Instant.now(utcClock),
@@ -132,8 +132,8 @@ class QsPopupEffectHandlerTest {
   @Test
   fun `when cancel notification schedule effect is received, then cancel the notification schedule`() = testScope.runBlockingTest {
     // given
-    val notification = TestData.notification(
-      schedule = TestData.schedule()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
+      schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
     )
 
     // when
@@ -150,8 +150,8 @@ class QsPopupEffectHandlerTest {
   @Test
   fun `when remove notification schedule effect is received, then remove notification schedule`() = testScope.runBlockingTest {
     // given
-    val notification = TestData.notification(
-      schedule = TestData.schedule()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
+      schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
     )
 
     // when

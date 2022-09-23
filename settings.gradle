@@ -1,2 +1,3 @@
 rootProject.name = 'pinnit'
 include ':app'
+include ':sharedTestCode'

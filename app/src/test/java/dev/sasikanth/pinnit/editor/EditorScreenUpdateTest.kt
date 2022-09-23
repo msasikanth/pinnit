@@ -6,7 +6,7 @@ import com.spotify.mobius.test.NextMatchers.hasNoEffects
 import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
-import dev.sasikanth.pinnit.TestData
+import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import org.junit.Test
@@ -18,14 +18,14 @@ class EditorScreenUpdateTest {
 
   private val updateSpec = UpdateSpec(EditorScreenUpdate())
   private val notificationUuid = UUID.fromString("87722f77-865a-4df3-8c82-9d1c7b3fd5bb")
-  private val notification = TestData.notification(
+  private val notification = dev.sasikanth.sharedtestcode.TestData.notification(
     uuid = notificationUuid
   )
   private val defaultModel = EditorScreenModel.default(notificationUuid, null, null)
 
   @Test
   fun `when notification is loaded, then update the ui`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       schedule = null
     )
@@ -51,9 +51,9 @@ class EditorScreenUpdateTest {
   fun `when notification is loaded and schedule is present, then set title and content and validate schedule`() {
     val scheduleDate = LocalDate.parse("2018-01-01")
     val scheduleTime = LocalTime.parse("10:00:00")
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
-      schedule = TestData.schedule(
+      schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
         scheduleDate = scheduleDate,
         scheduleTime = scheduleTime
       )
@@ -130,7 +130,7 @@ class EditorScreenUpdateTest {
   @Test
   fun `when save is clicked and notification is present, then update the notification`() {
     val pinnedNotificationUuid = UUID.fromString("ad9ca7be-55a6-492c-bd5a-4e6d5860e973")
-    val pinnedNotification = TestData.notification(
+    val pinnedNotification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = pinnedNotificationUuid,
       isPinned = true
     )
@@ -161,7 +161,7 @@ class EditorScreenUpdateTest {
   fun `when back is clicked and title and content are not changed, then close editor`() {
     val notificationTitle = "Title"
     val notificationContent = "Content"
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = UUID.fromString("33605259-a4b2-4fc7-b4a6-90cf75215777"),
       title = notificationTitle,
       content = notificationContent,
@@ -201,12 +201,12 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when back is clicked and schedule is changed, then show confirm exit editor`() {
-    val notificationWithoutSchedule = TestData.notification(
+    val notificationWithoutSchedule = dev.sasikanth.sharedtestcode.TestData.notification(
       schedule = null
     )
     val modelWithoutSchedule = defaultModel
       .notificationLoaded(notificationWithoutSchedule)
-      .scheduleLoaded(TestData.schedule())
+      .scheduleLoaded(dev.sasikanth.sharedtestcode.TestData.schedule())
 
     updateSpec
       .given(modelWithoutSchedule)
@@ -274,7 +274,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when add schedule button is clicked, then add schedule`() {
-    val schedule = TestData.schedule()
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
 
     updateSpec
       .given(defaultModel)
@@ -289,7 +289,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when remove schedule button is clicked, then remove schedule`() {
-    val schedule = TestData.schedule()
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
 
     updateSpec
@@ -305,7 +305,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule repeat is unchecked, then remove the schedule repeat type`() {
-    val schedule = TestData.schedule(scheduleType = ScheduleType.Daily)
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(scheduleType = ScheduleType.Daily)
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
 
     updateSpec
@@ -321,7 +321,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule repeat is checked, then add the schedule repeat type`() {
-    val schedule = TestData.schedule(scheduleType = null)
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(scheduleType = null)
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
 
     updateSpec
@@ -338,7 +338,7 @@ class EditorScreenUpdateTest {
   @Test
   fun `when schedule date is clicked, then show date picker`() {
     val scheduleDate = LocalDate.parse("2020-01-01")
-    val schedule = TestData.schedule(scheduleDate = scheduleDate)
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(scheduleDate = scheduleDate)
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
 
     updateSpec
@@ -355,7 +355,7 @@ class EditorScreenUpdateTest {
   @Test
   fun `when schedule time is clicked, then show time picker`() {
     val scheduleTime = LocalTime.parse("09:00:00")
-    val schedule = TestData.schedule(scheduleTime = scheduleTime)
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(scheduleTime = scheduleTime)
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
 
     updateSpec
@@ -371,7 +371,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule date is changed, then update the model`() {
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = LocalDate.parse("2020-01-01"),
       scheduleTime = LocalTime.parse("09:00:00")
     )
@@ -396,7 +396,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule time is changed, then update the model`() {
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = LocalDate.parse("2020-01-01"),
       scheduleTime = LocalTime.parse("09:00:00")
     )
@@ -421,7 +421,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule type is changed, then update the model`() {
-    val schedule = TestData.schedule(scheduleType = ScheduleType.Daily)
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(scheduleType = ScheduleType.Daily)
     val scheduleLoadedModel = defaultModel.scheduleLoaded(schedule)
 
     updateSpec
@@ -437,7 +437,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when notification is saved, then show notification if it's pinned and close editor`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       title = "Sample Title",
       content = "Sample Content",
       isPinned = true
@@ -459,7 +459,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when notification is saved, then close editor if the notification is not pinned`() {
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       title = "Sample Title",
       content = "Sample Content",
       isPinned = false
@@ -482,7 +482,7 @@ class EditorScreenUpdateTest {
   @Test
   fun `when notification is updated, then show notification if the notification is pinned`() {
     val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Sample Title 1",
       content = "Sample Content 1",
@@ -493,7 +493,7 @@ class EditorScreenUpdateTest {
       .titleChanged("Sample Title 2")
       .contentChanged("Sample Content 2")
 
-    val updatedNotification = TestData.notification(
+    val updatedNotification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Sample Title 2",
       content = "Sample Content 2",
@@ -518,7 +518,7 @@ class EditorScreenUpdateTest {
   @Test
   fun `when notification is updated, then close editor if notification is not pinned`() {
     val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
-    val notification = TestData.notification(
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Sample Title 1",
       content = "Sample Content 1",
@@ -529,7 +529,7 @@ class EditorScreenUpdateTest {
       .titleChanged("Sample Title 2")
       .contentChanged("Sample Content 2")
 
-    val updatedNotification = TestData.notification(
+    val updatedNotification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Sample Title 2",
       content = "Sample Content 2",
@@ -550,8 +550,8 @@ class EditorScreenUpdateTest {
   @Test
   fun `when notification is updated and schedule is removed, then cancel the schedule`() {
     val notificationUuid = UUID.fromString("64f32ea4-4497-4956-bce7-eb69f4ef6ae2")
-    val schedule = TestData.schedule()
-    val notification = TestData.notification(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule()
+    val notification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Sample Title 1",
       content = "Sample Content 1",
@@ -563,7 +563,7 @@ class EditorScreenUpdateTest {
       .titleChanged("Sample Title 2")
       .contentChanged("Sample Content 2")
 
-    val updatedNotification = TestData.notification(
+    val updatedNotification = dev.sasikanth.sharedtestcode.TestData.notification(
       uuid = notificationUuid,
       title = "Sample Title 2",
       content = "Sample Content 2",
@@ -584,7 +584,7 @@ class EditorScreenUpdateTest {
 
   @Test
   fun `when schedule is validated, then update the ui`() {
-    val schedule = TestData.schedule(
+    val schedule = dev.sasikanth.sharedtestcode.TestData.schedule(
       scheduleDate = LocalDate.parse("2020-01-01"),
       scheduleTime = LocalTime.parse("09:00:00"),
       scheduleType = null

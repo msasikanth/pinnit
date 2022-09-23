@@ -1,4 +1,4 @@
-package dev.sasikanth.pinnit
+package dev.sasikanth.sharedtestcode
 
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule

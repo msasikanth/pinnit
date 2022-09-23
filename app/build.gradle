@@ -153,6 +153,7 @@ dependencies {
   testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
   testImplementation "com.spotify.mobius:mobius-test:$versions.mobius"
+  testImplementation(project(":sharedTestCode"))
 
   androidTestImplementation "androidx.room:room-testing:$versions.room"
   androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
@@ -161,4 +162,5 @@ dependencies {
   androidTestImplementation "androidx.work:work-testing:$versions.workManager"
   androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.dagger"
   kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.dagger"
+  androidTestImplementation(project(":sharedTestCode"))
 }

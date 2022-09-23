@@ -1,0 +1,43 @@
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+}
+
+android {
+  namespace 'dev.sasikanth.sharedtestcode'
+  compileSdk 33
+
+  defaultConfig {
+    minSdk 23
+    targetSdk 33
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles "consumer-rules.pro"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    coreLibraryDesugaringEnabled true
+
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+}
+
+dependencies {
+  implementation(project(":app"))
+
+  coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$versions.coreLibraryDesugaring"
+
+  testImplementation "junit:junit:$versions.junit"
+  androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
+}
