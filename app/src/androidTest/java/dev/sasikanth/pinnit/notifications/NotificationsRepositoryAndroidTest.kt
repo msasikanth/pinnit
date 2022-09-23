@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.notifications
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dev.sasikanth.pinnit.assertValues
 import dev.sasikanth.pinnit.data.AppDatabase
 import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.sharedtestcode.utils.TestUtcClock
@@ -14,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import java.util.UUID
 import javax.inject.Inject
@@ -297,5 +299,84 @@ class NotificationsRepositoryAndroidTest {
     val expectedNotification = notification.copy(schedule = null)
     assertThat(notificationRepository.notification(notification.uuid))
       .isEqualTo(expectedNotification)
+  }
+
+  @Test
+  fun getting_notifications_cursor_should_work_correctly() = runBlocking {
+    // given
+    val notification1Uuid = UUID.fromString("ad2a0325-e382-4fec-9a85-ef16e8869451")
+    val notification1 = TestData.notification(
+      uuid = notification1Uuid,
+      title = "Scheduled notification",
+      content = "Test content",
+      isPinned = true,
+      createdAt = Instant.parse("2018-01-01T00:00:00Z"),
+      updatedAt = Instant.parse("2018-01-01T00:00:00Z"),
+      deletedAt = null,
+      scheduleDate = LocalDate.parse("2018-01-01"),
+      scheduleTime = LocalTime.of(8, 0),
+      scheduleType = null
+    )
+
+    val notification2Uuid = UUID.fromString("44ffda77-e7db-4e4b-92f1-1a1317666dea")
+    val notification2 = TestData.notification(
+      uuid = notification2Uuid,
+      title = "Deleted notification",
+      content = "Test content",
+      isPinned = false,
+      createdAt = Instant.parse("2018-01-01T00:00:00Z"),
+      updatedAt = Instant.parse("2018-01-01T00:00:00Z"),
+      deletedAt = Instant.parse("2018-01-01T00:00:00Z"),
+      schedule = null
+    )
+
+    notificationRepository.save(
+      listOf(
+        notification1,
+        notification2
+      )
+    )
+
+    // when
+    val cursor = notificationRepository.notificationsCursor()
+
+    // then
+    assertThat(cursor.count).isEqualTo(2)
+    assertThat(cursor.moveToNext()).isTrue()
+
+    cursor.assertValues(
+      mapOf(
+        "uuid" to notification1Uuid,
+        "title" to "Scheduled notification",
+        "content" to "Test content",
+        "isPinned" to true,
+        "createdAt" to Instant.parse("2018-01-01T00:00:00Z"),
+        "updatedAt" to Instant.parse("2018-01-01T00:00:00Z"),
+        "deletedAt" to null,
+        "scheduleDate" to LocalDate.parse("2018-01-01"),
+        "scheduleTime" to LocalTime.of(8, 0),
+        "scheduleType" to null
+      )
+    )
+
+    assertThat(cursor.moveToNext()).isTrue()
+
+    cursor.assertValues(
+      mapOf(
+        "uuid" to notification2Uuid,
+        "title" to "Deleted notification",
+        "content" to "Test content",
+        "isPinned" to false,
+        "createdAt" to Instant.parse("2018-01-01T00:00:00Z"),
+        "updatedAt" to Instant.parse("2018-01-01T00:00:00Z"),
+        "deletedAt" to Instant.parse("2018-01-01T00:00:00Z"),
+        "scheduleDate" to null,
+        "scheduleTime" to null,
+        "scheduleType" to null
+      )
+    )
+
+    assertThat(cursor.moveToNext()).isFalse()
+    cursor.close()
   }
 }

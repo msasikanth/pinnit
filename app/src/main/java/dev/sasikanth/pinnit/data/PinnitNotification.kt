@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.data
 
+import android.database.Cursor
 import android.os.Parcelable
 import androidx.annotation.Keep
 import androidx.room.Dao
@@ -69,5 +70,8 @@ data class PinnitNotification(
 
     @Query("UPDATE PinnitNotification SET scheduleDate = null, scheduleTime = null, scheduleType = null WHERE uuid = :notificationId")
     suspend fun removeSchedule(notificationId: UUID)
+
+    @Query("SELECT * FROM PinnitNotification")
+    fun notificationsCursor(): Cursor
   }
 }

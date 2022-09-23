@@ -6,11 +6,14 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.common.truth.Truth
 import dev.sasikanth.pinnit.utils.room.LocalDateRoomTypeConverter
+import dev.sasikanth.pinnit.utils.room.LocalTimeRoomTypeConverter
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 
 private val dateConverter = LocalDateRoomTypeConverter()
+private val timeConverter = LocalTimeRoomTypeConverter()
 
 fun Cursor.string(column: String): String? = getString(getColumnIndex(column))
 fun Cursor.boolean(column: String): Boolean? = getInt(getColumnIndex(column)) == 1
@@ -21,6 +24,7 @@ fun Cursor.float(columnName: String): Float = getFloat(getColumnIndex(columnName
 fun Cursor.uuid(columnName: String): UUID? = string(columnName)?.let { UUID.fromString(it) }
 fun Cursor.instant(columnName: String): Instant? = string(columnName)?.let { Instant.parse(it) }
 fun Cursor.localDate(columnName: String): LocalDate? = string(columnName).let(dateConverter::toLocalDate)
+fun Cursor.localTime(columnName: String): LocalTime? = string(columnName).let(timeConverter::toLocalTime)
 
 fun SupportSQLiteDatabase.insert(tableName: String, valuesMap: Map<String, Any?>) {
   val contentValues = valuesMap
@@ -37,6 +41,7 @@ fun SupportSQLiteDatabase.insert(tableName: String, valuesMap: Map<String, Any?>
         is UUID -> values.put(key, value.toString())
         is Instant -> values.put(key, value.toString())
         is LocalDate -> values.put(key, dateConverter.fromLocalDate(value))
+        is LocalTime -> values.put(key, timeConverter.fromLocalTime(value))
         else -> throw IllegalArgumentException("Unknown type (${value.javaClass.name}) for key: $key")
       }
 
@@ -62,6 +67,7 @@ fun Cursor.assertValues(valuesMap: Map<String, Any?>) {
         is UUID -> withMessage.that(uuid(key)).isEqualTo(value)
         is Instant -> withMessage.that(instant(key)).isEqualTo(value)
         is LocalDate -> withMessage.that(localDate(key)).isEqualTo(value)
+        is LocalTime -> withMessage.that(localTime(key)).isEqualTo(value)
         else -> throw IllegalArgumentException("Unknown type (${value.javaClass.name}) for key: $key")
       }
     }

@@ -1,5 +1,6 @@
 package dev.sasikanth.pinnit.notifications
 
+import android.database.Cursor
 import dev.sasikanth.pinnit.data.PinnitNotification
 import dev.sasikanth.pinnit.data.Schedule
 import dev.sasikanth.pinnit.utils.UtcClock
@@ -81,5 +82,9 @@ class NotificationRepository @Inject constructor(
 
   suspend fun removeSchedule(notificationId: UUID) {
     notificationDao.removeSchedule(notificationId)
+  }
+
+  fun notificationsCursor(): Cursor {
+    return notificationDao.notificationsCursor()
   }
 }
