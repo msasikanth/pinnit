@@ -17,6 +17,15 @@ kapt {
 }
 
 android {
+  signingConfigs {
+    release {
+      storeFile file("$rootDir/release/app-release.jks")
+      storePassword "${project.properties["PINNIT_KEYSTORE_PASSWORD"]}"
+      keyAlias 'pinnitalias'
+      keyPassword "${project.properties["PINNIT_KEY_PASSWORD"]}"
+    }
+  }
+
   namespace 'dev.sasikanth.pinnit'
 
   compileSdkVersion 33
@@ -25,13 +34,22 @@ android {
     applicationId "dev.sasikanth.pinnit"
     minSdkVersion 23
     targetSdkVersion 33
-    versionCode rootProject.gitCommitCount
-    versionName "1.2.3"
+
+    if (project.properties["VERSION_CODE"] != null) {
+      versionCode = project.properties["VERSION_CODE"] as Integer
+    } else {
+      versionCode = 1
+    }
+
+    if (project.properties["VERSION_NAME"] != null) {
+      versionName = versionName project.properties["VERSION_NAME"]
+    } else {
+      versionName = "1.0.0"
+    }
 
     testInstrumentationRunner "dev.sasikanth.pinnit.AndroidTestRunner"
 
     vectorDrawables.useSupportLibrary = true
-    archivesBaseName = "pinnit-v${versionName}"
   }
 
   sourceSets {
@@ -50,6 +68,7 @@ android {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
     }
     debug {
       applicationIdSuffix = '.debug'

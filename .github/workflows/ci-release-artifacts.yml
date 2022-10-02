@@ -1,0 +1,59 @@
+name: Android Play Store release builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: 'User-facing release version name'
+        required: true
+        default: "1.2.3"
+      versionCode:
+        description: 'versionCode or build number'
+        required: true
+        default: '466'
+
+jobs:
+  tramline:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.inputs.versionCode }} > version.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: version
+          path: version.txt
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TERM: dumb
+      ORG_GRADLE_PROJECT_PINNIT_KEYSTORE_PASSWORD: ${{ secrets.PINNIT_KEYSTORE_PASSWORD }}
+      ORG_GRADLE_PROJECT_PINNIT_KEY_PASSWORD: ${{ secrets.PINNIT_KEY_PASSWORD }}
+      ORG_GRADLE_PROJECT_VERSION_NAME: ${{ github.event.inputs.versionName }}
+      ORG_GRADLE_PROJECT_VERSION_CODE: ${{ github.event.inputs.versionCode }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Decrypt secrets
+        run: gpg --batch --yes --quiet --decrypt --passphrase=${{ secrets.ENCRYPT_KEY }} --output release/app-release.jks release/app-release.gpg
+
+      - name: Build release artifact
+        run: ./gradlew assemble bundle
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload Release Bundle
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-aab
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Clean secrets
+        run: |
+          rm -f release/app-release.jks
