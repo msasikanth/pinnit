@@ -42,7 +42,7 @@ android {
     }
 
     if (project.properties["VERSION_NAME"] != null) {
-      versionName = versionName project.properties["VERSION_NAME"]
+      versionName = project.properties["VERSION_NAME"]
     } else {
       versionName = "1.0.0"
     }
