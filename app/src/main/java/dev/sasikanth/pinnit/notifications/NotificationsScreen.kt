@@ -68,6 +68,11 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
     }
   }
 
+  private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ ->
+    // At the moment we are not handling permission results. Since this is a notification app
+    // expecting users to provide the notification permission for app to work
+  }
+
   private var _binding: FragmentNotificationsBinding? = null
   private val binding get() = _binding!!
 
@@ -174,11 +179,7 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
   @SuppressLint("InlinedApi")
   private fun requestNotificationPermission() {
-    val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ ->
-      // At the moment we are not handling permission results. Since this is a notification app
-      // expecting users to provide the notification permission for app to work
-    }
-    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
   }
 
   private fun onToggleNotificationPinClicked(notification: PinnitNotification) {
