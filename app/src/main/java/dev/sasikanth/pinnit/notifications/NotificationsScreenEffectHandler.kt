@@ -46,6 +46,8 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is ScheduleNotification -> pinnitNotificationScheduler.scheduleNotification(effect.notification)
 
       CheckPermissionToPostNotification -> checkPermissionToPostNotification(dispatchEvent)
+
+      RequestNotificationPermission -> viewEffectConsumer.accept(RequestNotificationPermissionViewEffect)
     }
   }
 

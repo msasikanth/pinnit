@@ -24,3 +24,5 @@ data class RemoveSchedule(val notificationId: UUID) : NotificationsScreenEffect(
 data class ScheduleNotification(val notification: PinnitNotification) : NotificationsScreenEffect()
 
 object CheckPermissionToPostNotification : NotificationsScreenEffect()
+
+object RequestNotificationPermission : NotificationsScreenEffect()

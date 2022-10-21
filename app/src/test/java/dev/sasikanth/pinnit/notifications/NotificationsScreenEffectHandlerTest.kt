@@ -8,10 +8,8 @@ import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
-import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.pinnit.scheduler.PinnitNotificationScheduler
 import dev.sasikanth.pinnit.utils.TestDispatcherProvider
-import dev.sasikanth.sharedtestcode.utils.TestUtcClock
 import dev.sasikanth.pinnit.utils.notification.NotificationUtil
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -287,5 +285,15 @@ class NotificationsScreenEffectHandlerTest {
 
     verify(notificationUtil).hasPermissionToPostNotifications()
     verifyNoMoreInteractions(notificationUtil)
+  }
+
+  @Test
+  fun `when request notification permission effect is received, then request permission to post notifications`() {
+    // when
+    connection.accept(RequestNotificationPermission)
+
+    // then
+    consumer.assertValues()
+    viewActionsConsumer.accept(RequestNotificationPermissionViewEffect)
   }
 }
