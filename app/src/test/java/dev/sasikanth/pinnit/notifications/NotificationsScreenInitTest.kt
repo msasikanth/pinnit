@@ -21,7 +21,7 @@ class NotificationsScreenInitTest {
       .then(
         assertThatFirst(
           hasModel(defaultModel),
-          hasEffects(LoadNotifications, CheckNotificationsVisibility)
+          hasEffects(LoadNotifications, CheckNotificationsVisibility, CheckPermissionToPostNotification)
         )
       )
   }
@@ -41,7 +41,7 @@ class NotificationsScreenInitTest {
       .then(
         assertThatFirst(
           hasModel(restoredModel),
-          hasNoEffects()
+          hasEffects(CheckPermissionToPostNotification)
         )
       )
   }
