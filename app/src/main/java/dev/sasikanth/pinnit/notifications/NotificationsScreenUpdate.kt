@@ -3,6 +3,7 @@ package dev.sasikanth.pinnit.notifications
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
+import com.spotify.mobius.Next.noChange
 import com.spotify.mobius.Update
 import javax.inject.Inject
 
@@ -17,6 +18,7 @@ class NotificationsScreenUpdate @Inject constructor() : Update<NotificationsScre
       is RemovedNotificationSchedule -> dispatch(setOf(CancelNotificationSchedule(event.notificationId)))
       is RemoveNotificationScheduleClicked -> dispatch(setOf(RemoveSchedule(event.notificationId)))
       is RestoredDeletedNotification -> dispatch(setOf(ScheduleNotification(event.notification)))
+      is HasPermissionToPostNotifications -> noChange()
     }
   }
 

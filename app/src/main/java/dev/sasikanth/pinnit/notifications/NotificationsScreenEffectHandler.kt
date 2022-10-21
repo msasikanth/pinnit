@@ -44,7 +44,14 @@ class NotificationsScreenEffectHandler @AssistedInject constructor(
       is RemoveSchedule -> removeSchedule(effect, dispatchEvent)
 
       is ScheduleNotification -> pinnitNotificationScheduler.scheduleNotification(effect.notification)
+
+      CheckPermissionToPostNotification -> checkPermissionToPostNotification(dispatchEvent)
     }
+  }
+
+  private fun checkPermissionToPostNotification(dispatchEvent: (NotificationsScreenEvent) -> Unit) {
+    val canPostNotifications = notificationUtil.hasPermissionToPostNotifications()
+    dispatchEvent(HasPermissionToPostNotifications(canPostNotifications))
   }
 
   private fun loadNotifications(dispatchEvent: (NotificationsScreenEvent) -> Unit) {

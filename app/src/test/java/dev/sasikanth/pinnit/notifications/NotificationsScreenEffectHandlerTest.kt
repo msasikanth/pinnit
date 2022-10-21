@@ -273,4 +273,19 @@ class NotificationsScreenEffectHandlerTest {
     verify(pinnitNotificationScheduler).scheduleNotification(notification)
     verifyNoMoreInteractions(pinnitNotificationScheduler)
   }
+
+  @Test
+  fun `when check notifications permission effect is received, then check the permission`() {
+    // given
+    whenever(notificationUtil.hasPermissionToPostNotifications()) doReturn true
+
+    // when
+    connection.accept(CheckPermissionToPostNotification)
+
+    // then
+    consumer.assertValues(HasPermissionToPostNotifications(canPostNotifications = true))
+
+    verify(notificationUtil).hasPermissionToPostNotifications()
+    verifyNoMoreInteractions(notificationUtil)
+  }
 }
