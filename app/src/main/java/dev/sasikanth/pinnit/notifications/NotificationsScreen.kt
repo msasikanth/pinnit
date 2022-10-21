@@ -1,9 +1,12 @@
 package dev.sasikanth.pinnit.notifications
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -63,6 +66,11 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
     override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
       binding.notificationsRecyclerView.smoothScrollToPosition(0)
     }
+  }
+
+  private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ ->
+    // At the moment we are not handling permission results. Since this is a notification app
+    // expecting users to provide the notification permission for app to work
   }
 
   private var _binding: FragmentNotificationsBinding? = null
@@ -135,7 +143,10 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
           }
           .show()
       }
-      else -> throw IllegalArgumentException("Unknown view effect: $viewEffect")
+
+      RequestNotificationPermissionViewEffect -> requestNotificationPermission()
+
+      null -> throw NullPointerException()
     }
   }
 
@@ -164,6 +175,11 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
   override fun hideNotifications() {
     binding.notificationsRecyclerView.isGone = true
     adapter.submitList(null)
+  }
+
+  @SuppressLint("InlinedApi")
+  private fun requestNotificationPermission() {
+    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
   }
 
   private fun onToggleNotificationPinClicked(notification: PinnitNotification) {
