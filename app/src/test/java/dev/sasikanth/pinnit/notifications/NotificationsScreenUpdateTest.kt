@@ -6,8 +6,6 @@ import com.spotify.mobius.test.NextMatchers.hasNoEffects
 import com.spotify.mobius.test.NextMatchers.hasNoModel
 import com.spotify.mobius.test.UpdateSpec
 import com.spotify.mobius.test.UpdateSpec.assertThatNext
-import dev.sasikanth.sharedtestcode.TestData
-import dev.sasikanth.sharedtestcode.utils.TestUtcClock
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDate
@@ -185,6 +183,32 @@ class NotificationsScreenUpdateTest {
         assertThatNext(
           hasNoModel(),
           hasEffects(ScheduleNotification(notification))
+        )
+      )
+  }
+
+  @Test
+  fun `when notifications permission is not granted, then request notifications permission`() {
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(HasPermissionToPostNotifications(canPostNotifications = false))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasEffects(RequestNotificationPermission)
+        )
+      )
+  }
+
+  @Test
+  fun `when notifications permission is granted, then do nothing`() {
+    updateSpec
+      .given(defaultModel)
+      .whenEvent(HasPermissionToPostNotifications(canPostNotifications = true))
+      .then(
+        assertThatNext(
+          hasNoModel(),
+          hasNoEffects()
         )
       )
   }
