@@ -2,6 +2,7 @@ package dev.sasikanth.pinnit.editor
 
 import android.content.Context
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +71,9 @@ class EditorScreen : Fragment(), EditorScreenUi {
   @Inject
   @DateTimeFormat(ScheduleTimeFormat)
   lateinit var scheduleTimeFormatter: DateTimeFormatter
+
+  @set:Inject
+  var isClock24HourFormat: Boolean = false
 
   private val viewModel: EditorScreenViewModel by viewModels()
 
@@ -444,8 +448,14 @@ class EditorScreen : Fragment(), EditorScreenUi {
   }
 
   private fun showTimePickerDialog(time: LocalTime) {
+    val timeFormat = if (isClock24HourFormat) {
+      TimeFormat.CLOCK_24H
+    } else {
+      TimeFormat.CLOCK_12H
+    }
+
     val timePicker = MaterialTimePicker.Builder()
-      .setTimeFormat(TimeFormat.CLOCK_12H)
+      .setTimeFormat(timeFormat)
       .setHour(time.hour)
       .setMinute(time.minute)
       .build()
