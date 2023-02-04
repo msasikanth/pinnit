@@ -9,7 +9,7 @@ buildscript {
       material             : '1.6.1',
       junit                : '4.13.2',
       extJunit             : '1.1.5',
-      espressoCore         : '3.4.0',
+      espressoCore         : '3.5.1',
       navigation           : '2.5.3',
       leakCanary           : '2.9.1',
       room                 : '2.4.3',
