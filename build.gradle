@@ -10,7 +10,7 @@ buildscript {
       junit                : '4.13.2',
       extJunit             : '1.1.5',
       espressoCore         : '3.4.0',
-      navigation           : '2.5.2',
+      navigation           : '2.5.3',
       leakCanary           : '2.9.1',
       room                 : '2.4.3',
       coroutines           : '1.6.4',
