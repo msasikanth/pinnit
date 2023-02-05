@@ -30,7 +30,7 @@ buildscript {
       seekableAVD          : '1.0.0-beta01',
       dataStore            : '1.0.0',
       javaLite             : '3.21.12',
-      flowBinding          : '1.0.0',
+      flowBinding          : '1.2.0',
       fragment             : '1.5.5',
   ]
   repositories {
