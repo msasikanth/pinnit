@@ -29,7 +29,7 @@ buildscript {
       workManager          : '2.7.1',
       seekableAVD          : '1.0.0-beta01',
       dataStore            : '1.0.0',
-      javaLite             : '3.19.2',
+      javaLite             : '3.21.12',
       flowBinding          : '1.0.0',
       fragment             : '1.5.5',
   ]
