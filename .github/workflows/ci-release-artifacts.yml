@@ -35,6 +35,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: '12.x'
+          distribution: zulu
 
       - name: Decrypt secrets
         run: gpg --batch --yes --quiet --decrypt --passphrase=${{ secrets.ENCRYPT_KEY }} --output release/app-release.jks release/app-release.gpg
