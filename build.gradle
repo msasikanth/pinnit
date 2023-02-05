@@ -24,7 +24,7 @@ buildscript {
       mobius               : '1.5.9',
       circleImageView      : '3.1.0',
       insetter             : '0.3.1',
-      coreLibraryDesugaring: '1.1.5',
+      coreLibraryDesugaring: '1.2.2',
       betterLinkMovement   : '2.2.0',
       workManager          : '2.7.1',
       seekableAVD          : '1.0.0-beta01',
