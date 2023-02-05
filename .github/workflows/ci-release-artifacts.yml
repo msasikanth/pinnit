@@ -32,9 +32,10 @@ jobs:
       ORG_GRADLE_PROJECT_VERSION_CODE: ${{ github.event.inputs.versionCode }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
           java-version: '12.x'
+          distribution: zulu
 
       - name: Decrypt secrets
         run: gpg --batch --yes --quiet --decrypt --passphrase=${{ secrets.ENCRYPT_KEY }} --output release/app-release.jks release/app-release.gpg
