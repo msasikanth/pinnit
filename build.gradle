@@ -26,7 +26,7 @@ buildscript {
       insetter             : '0.3.1',
       coreLibraryDesugaring: '2.0.2',
       betterLinkMovement   : '2.2.0',
-      workManager          : '2.7.1',
+      workManager          : '2.8.0',
       seekableAVD          : '1.0.0-beta01',
       dataStore            : '1.0.0',
       javaLite             : '3.21.12',
