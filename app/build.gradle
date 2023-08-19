@@ -28,12 +28,12 @@ android {
 
   namespace 'dev.sasikanth.pinnit'
 
-  compileSdkVersion 33
+  compileSdk 34
 
   defaultConfig {
     applicationId "dev.sasikanth.pinnit"
-    minSdkVersion 23
-    targetSdkVersion 33
+    minSdk 23
+    targetSdk 34
 
     if (project.properties["VERSION_CODE"] != null) {
       versionCode = project.properties["VERSION_CODE"] as Integer
