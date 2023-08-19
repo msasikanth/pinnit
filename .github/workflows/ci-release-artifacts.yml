@@ -42,13 +42,7 @@ jobs:
         run: gpg --batch --yes --quiet --decrypt --passphrase=${{ secrets.ENCRYPT_KEY }} --output release/app-release.jks release/app-release.gpg
 
       - name: Build release artifact
-        run: ./gradlew assemble bundle
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-apk
-          path: app/build/outputs/apk/release/app-release.apk
+        run: ./gradlew bundle
 
       - name: Upload Release Bundle
         uses: actions/upload-artifact@v3
