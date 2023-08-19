@@ -34,8 +34,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: '12.x'
+          java-version: '17'
           distribution: zulu
+          cache: 'gradle'
 
       - name: Decrypt secrets
         run: gpg --batch --yes --quiet --decrypt --passphrase=${{ secrets.ENCRYPT_KEY }} --output release/app-release.jks release/app-release.gpg
