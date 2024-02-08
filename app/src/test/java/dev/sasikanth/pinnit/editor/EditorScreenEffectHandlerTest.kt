@@ -1,16 +1,15 @@
 package dev.sasikanth.pinnit.editor
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import com.nhaarman.mockitokotlin2.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoMoreInteractions
+import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.whenever
 import com.spotify.mobius.Connection
 import com.spotify.mobius.test.RecordingConsumer
-import dev.sasikanth.sharedtestcode.TestData
 import dev.sasikanth.pinnit.data.ScheduleType
 import dev.sasikanth.pinnit.editor.ScheduleValidator.Result.Valid
 import dev.sasikanth.pinnit.notifications.NotificationRepository
@@ -171,8 +170,8 @@ class EditorScreenEffectHandlerTest {
     connection.accept(CloseEditor)
 
     // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
+    verifyNoInteractions(repository)
+    verifyNoInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(CloseEditorView)
@@ -184,8 +183,8 @@ class EditorScreenEffectHandlerTest {
     connection.accept(ShowConfirmExitEditor)
 
     // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
+    verifyNoInteractions(repository)
+    verifyNoInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowConfirmExitEditorDialog)
@@ -220,8 +219,8 @@ class EditorScreenEffectHandlerTest {
     connection.accept(ShowConfirmDelete)
 
     // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
+    verifyNoInteractions(repository)
+    verifyNoInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowConfirmDeleteDialog)
@@ -236,8 +235,8 @@ class EditorScreenEffectHandlerTest {
     connection.accept(SetTitleAndContent(null, notificationContent))
 
     // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
+    verifyNoInteractions(repository)
+    verifyNoInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(SetTitle(null), SetContent(notificationContent))
@@ -252,8 +251,8 @@ class EditorScreenEffectHandlerTest {
     connection.accept(ShowDatePicker(date))
 
     // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
+    verifyNoInteractions(repository)
+    verifyNoInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowDatePickerDialog(date))
@@ -268,8 +267,8 @@ class EditorScreenEffectHandlerTest {
     connection.accept(ShowTimePicker(time))
 
     // then
-    verifyZeroInteractions(repository)
-    verifyZeroInteractions(notificationUtil)
+    verifyNoInteractions(repository)
+    verifyNoInteractions(notificationUtil)
 
     consumer.assertValues()
     viewEffectConsumer.assertValues(ShowTimePickerDialog(time))

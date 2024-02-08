@@ -20,7 +20,7 @@ buildscript {
       daggerWork           : '1.0.0',
       lifecycle            : '2.5.1',
       arch                 : '2.1.0',
-      mockito              : '2.2.0',
+      mockito              : '5.2.1',
       mobius               : '1.5.9',
       circleImageView      : '3.1.0',
       insetter             : '0.3.1',

@@ -1,9 +1,9 @@
 package dev.sasikanth.pinnit.notifications
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoMoreInteractions
+import org.mockito.kotlin.verifyNoInteractions
 import dev.sasikanth.sharedtestcode.TestData
 import org.junit.Test
 import java.util.UUID
@@ -20,7 +20,7 @@ class NotificationsScreenUiRenderTest {
     uiRender.render(defaultModel)
 
     // then
-    verifyZeroInteractions(ui)
+    verifyNoInteractions(ui)
   }
 
   @Test
