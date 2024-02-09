@@ -12,7 +12,7 @@ buildscript {
       espressoCore         : '3.5.1',
       navigation           : '2.5.3',
       leakCanary           : '2.10',
-      room                 : '2.5.0',
+      room                 : '2.6.1',
       coroutines           : '1.6.4',
       truth                : '1.4.0',
       dagger               : '2.45',
