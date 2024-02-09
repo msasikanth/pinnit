@@ -31,7 +31,7 @@ buildscript {
       dataStore            : '1.0.0',
       javaLite             : '3.25.2',
       flowBinding          : '1.2.0',
-      fragment             : '1.5.5',
+      fragment             : '1.6.2',
   ]
   repositories {
     google()
