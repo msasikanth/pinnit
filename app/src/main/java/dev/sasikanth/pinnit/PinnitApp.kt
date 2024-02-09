@@ -29,6 +29,9 @@ class PinnitApp : Application(), Configuration.Provider {
     CoroutineScope(dispatcherProvider.main)
   }
 
+  override val workManagerConfiguration: Configuration
+    get() = configuration
+
   override fun onCreate() {
     super.onCreate()
 
@@ -37,10 +40,6 @@ class PinnitApp : Application(), Configuration.Provider {
       .map { it.theme }
       .onEach(::setAppTheme)
       .launchIn(mainScope)
-  }
-
-  override fun getWorkManagerConfiguration(): Configuration {
-    return configuration
   }
 
   private fun setAppTheme(theme: AppPreferences.Theme) = when (theme) {
