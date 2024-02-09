@@ -18,7 +18,7 @@ buildscript {
       dagger               : '2.45',
       hiltCompiler         : '1.0.0',
       daggerWork           : '1.0.0',
-      lifecycle            : '2.5.1',
+      lifecycle            : '2.7.0',
       arch                 : '2.2.0',
       mockito              : '5.2.1',
       mobius               : '1.5.9',
