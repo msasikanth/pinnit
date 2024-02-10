@@ -10,7 +10,6 @@ import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Checkable
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.view.accessibility.AccessibilityEventCompat
 import androidx.customview.view.AbsSavedState
 
 /**
@@ -66,19 +65,6 @@ class CheckableImageView(
     isChecked = state.checked
   }
 
-  /** Sets image button to be checkable or not.  */
-  fun setCheckable(checkable: Boolean) {
-    if (this.checkable != checkable) {
-      this.checkable = checkable
-      sendAccessibilityEvent(AccessibilityEventCompat.CONTENT_CHANGE_TYPE_UNDEFINED)
-    }
-  }
-
-  /** Returns whether the image button is checkable.  */
-  fun isCheckable(): Boolean {
-    return checkable
-  }
-
   class SavedState : AbsSavedState {
     constructor(superState: Parcelable?) : super(superState!!)
     constructor(source: Parcel, loader: ClassLoader?) : super(source, loader) {
@@ -94,26 +80,6 @@ class CheckableImageView(
 
     private fun readFromParcel(`in`: Parcel) {
       checked = `in`.readInt() == 1
-    }
-
-    companion object {
-      @JvmField
-      val CREATOR: Creator<SavedState> = object : ClassLoaderCreator<SavedState> {
-        override fun createFromParcel(
-          `in`: Parcel,
-          loader: ClassLoader
-        ): SavedState {
-          return SavedState(`in`, loader)
-        }
-
-        override fun createFromParcel(`in`: Parcel): SavedState {
-          return SavedState(`in`, null)
-        }
-
-        override fun newArray(size: Int): Array<SavedState?> {
-          return arrayOfNulls(size)
-        }
-      }
     }
   }
 }

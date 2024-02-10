@@ -6,7 +6,6 @@ import com.spotify.mobius.android.MobiusLoopViewModel
 import com.spotify.mobius.runners.WorkRunner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.sasikanth.pinnit.utils.MAX_VIEW_EFFECTS_QUEUE_SIZE
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +40,7 @@ class EditorScreenViewModel @Inject constructor(
   }
 
   override fun onClearedInternal() {
-    savedStateHandle.set(MODEL_KEY, model)
+    savedStateHandle[MODEL_KEY] = model
     super.onClearedInternal()
   }
 }

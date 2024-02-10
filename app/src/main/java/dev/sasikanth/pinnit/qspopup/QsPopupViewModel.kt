@@ -30,7 +30,7 @@ class QsPopupViewModel @Inject constructor(
   }
 
   override fun onClearedInternal() {
-    savedStateHandle.set(MODEL_KEY, model)
+    savedStateHandle[MODEL_KEY] = model
     super.onClearedInternal()
   }
 }

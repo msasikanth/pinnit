@@ -115,8 +115,8 @@ class NotificationsScreen : Fragment(), NotificationsScreenUi {
 
     viewModel.viewEffects.setObserver(
       viewLifecycleOwner,
-      ::viewEffectsHandler,
-      { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) })
+      ::viewEffectsHandler
+    ) { pausedViewEffects -> pausedViewEffects.forEach(::viewEffectsHandler) }
 
     binding.bottomBar.setNavigationOnClickListener {
       OptionsBottomSheet.show(requireActivity().supportFragmentManager)

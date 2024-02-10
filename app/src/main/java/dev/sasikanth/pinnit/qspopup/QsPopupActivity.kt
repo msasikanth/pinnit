@@ -2,7 +2,6 @@ package dev.sasikanth.pinnit.qspopup
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -64,24 +63,26 @@ class QsPopupActivity : AppCompatActivity(), QsPopupUi {
       scheduleDateFormatter = scheduleDateFormatter,
       scheduleTimeFormatter = scheduleTimeFormatter,
       onToggleNotificationPinClicked = ::onToggleNotificationPinClicked,
-      onNotificationClicked = ::onNotificationClicked,
+      onNotificationClicked = { _, notification ->
+        onNotificationClicked(notification)
+      },
       onEditNotificationScheduleClicked = ::onEditNotificationScheduleClicked,
       onRemoveNotificationScheduleClicked = ::onRemoveNotificationScheduleClicked
     )
     binding.qsPopupNotificationsRecyclerView.adapter = adapter
     binding.qsPopupNotificationsRecyclerView.itemAnimator = NotificationPinItemAnimator()
 
-    viewModel.models.observe(this, { model ->
+    viewModel.models.observe(this) { model ->
       uiRender.render(model)
-    })
+    }
 
-    viewModel.viewEffects.setObserver(this, { viewEffect ->
+    viewModel.viewEffects.setObserver(this) { viewEffect ->
       when (viewEffect) {
         is OpenNotificationEditorViewEffect -> openNotificationEditorView(
           notification = viewEffect.notification
         )
       }
-    })
+    }
 
     binding.backgroundRoot.setOnClickListener { finish() }
 
@@ -138,7 +139,7 @@ class QsPopupActivity : AppCompatActivity(), QsPopupUi {
     viewModel.dispatchEvent(TogglePinStatusClicked(notification))
   }
 
-  private fun onNotificationClicked(view: View, notification: PinnitNotification) {
+  private fun onNotificationClicked(notification: PinnitNotification) {
     viewModel.dispatchEvent(NotificationClicked(notification))
   }
 

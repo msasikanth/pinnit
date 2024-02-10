@@ -14,27 +14,27 @@ data class TitleChanged(val title: String) : EditorScreenEvent()
 
 data class ContentChanged(val content: String?) : EditorScreenEvent()
 
-object SaveClicked : EditorScreenEvent()
+data object SaveClicked : EditorScreenEvent()
 
-object BackClicked : EditorScreenEvent()
+data object BackClicked : EditorScreenEvent()
 
-object ConfirmedExit : EditorScreenEvent()
+data object ConfirmedExit : EditorScreenEvent()
 
-object DeleteNotificationClicked : EditorScreenEvent()
+data object DeleteNotificationClicked : EditorScreenEvent()
 
-object ConfirmDeleteNotification : EditorScreenEvent()
+data object ConfirmDeleteNotification : EditorScreenEvent()
 
 data class AddScheduleClicked(val schedule: Schedule) : EditorScreenEvent()
 
-object RemoveScheduleClicked : EditorScreenEvent()
+data object RemoveScheduleClicked : EditorScreenEvent()
 
-object ScheduleRepeatUnchecked : EditorScreenEvent()
+data object ScheduleRepeatUnchecked : EditorScreenEvent()
 
-object ScheduleRepeatChecked : EditorScreenEvent()
+data object ScheduleRepeatChecked : EditorScreenEvent()
 
-object ScheduleDateClicked : EditorScreenEvent()
+data object ScheduleDateClicked : EditorScreenEvent()
 
-object ScheduleTimeClicked : EditorScreenEvent()
+data object ScheduleTimeClicked : EditorScreenEvent()
 
 data class ScheduleDateChanged(val date: LocalDate) : EditorScreenEvent()
 

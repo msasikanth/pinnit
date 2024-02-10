@@ -26,13 +26,13 @@ data class UpdateNotification(
   val schedule: Schedule?
 ) : EditorScreenEffect()
 
-object CloseEditor : EditorScreenEffect()
+data object CloseEditor : EditorScreenEffect()
 
-object ShowConfirmExitEditor : EditorScreenEffect()
+data object ShowConfirmExitEditor : EditorScreenEffect()
 
 data class DeleteNotification(val notification: PinnitNotification) : EditorScreenEffect()
 
-object ShowConfirmDelete : EditorScreenEffect()
+data object ShowConfirmDelete : EditorScreenEffect()
 
 data class ShowDatePicker(val date: LocalDate) : EditorScreenEffect()
 

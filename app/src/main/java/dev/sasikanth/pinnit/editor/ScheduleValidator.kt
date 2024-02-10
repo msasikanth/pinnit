@@ -26,9 +26,9 @@ class ScheduleValidator @Inject constructor(val userClock: UserClock) {
   sealed class Result : Parcelable {
 
     @Parcelize
-    object Valid : Result()
+    data object Valid : Result()
 
     @Parcelize
-    object ScheduleInPastError : Result()
+    data object ScheduleInPastError : Result()
   }
 }

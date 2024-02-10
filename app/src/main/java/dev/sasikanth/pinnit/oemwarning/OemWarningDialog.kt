@@ -31,7 +31,6 @@ class OemWarningDialog : DialogFragment() {
 
   @SuppressLint("InflateParams")
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-    val layoutInflater = LayoutInflater.from(requireContext())
     _binding = PinnitOemWarningDialogBinding.inflate(layoutInflater, null, false)
 
     return MaterialAlertDialogBuilder(requireContext())

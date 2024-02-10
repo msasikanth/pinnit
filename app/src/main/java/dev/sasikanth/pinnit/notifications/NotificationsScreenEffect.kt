@@ -5,7 +5,7 @@ import java.util.UUID
 
 sealed class NotificationsScreenEffect
 
-object LoadNotifications : NotificationsScreenEffect()
+data object LoadNotifications : NotificationsScreenEffect()
 
 data class ToggleNotificationPinStatus(val notification: PinnitNotification) : NotificationsScreenEffect()
 
@@ -13,7 +13,7 @@ data class DeleteNotification(val notification: PinnitNotification) : Notificati
 
 data class UndoDeletedNotification(val notificationUuid: UUID) : NotificationsScreenEffect()
 
-object CheckNotificationsVisibility : NotificationsScreenEffect()
+data object CheckNotificationsVisibility : NotificationsScreenEffect()
 
 data class ShowUndoDeleteNotification(val notification: PinnitNotification) : NotificationsScreenEffect()
 
@@ -23,6 +23,6 @@ data class RemoveSchedule(val notificationId: UUID) : NotificationsScreenEffect(
 
 data class ScheduleNotification(val notification: PinnitNotification) : NotificationsScreenEffect()
 
-object CheckPermissionToPostNotification : NotificationsScreenEffect()
+data object CheckPermissionToPostNotification : NotificationsScreenEffect()
 
-object RequestNotificationPermission : NotificationsScreenEffect()
+data object RequestNotificationPermission : NotificationsScreenEffect()

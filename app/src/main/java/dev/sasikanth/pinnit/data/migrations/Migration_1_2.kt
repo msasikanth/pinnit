@@ -7,8 +7,8 @@ import dev.sasikanth.pinnit.utils.inTransaction
 @Suppress("ClassName")
 object Migration_1_2 : Migration(1, 2) {
 
-  override fun migrate(database: SupportSQLiteDatabase) {
-    with(database) {
+  override fun migrate(db: SupportSQLiteDatabase) {
+    with(db) {
       inTransaction {
         execSQL(""" ALTER TABLE PinnitNotification ADD COLUMN scheduleDate TEXT DEFAULT NULL """)
         execSQL(""" ALTER TABLE PinnitNotification ADD COLUMN scheduleTime TEXT DEFAULT NULL """)

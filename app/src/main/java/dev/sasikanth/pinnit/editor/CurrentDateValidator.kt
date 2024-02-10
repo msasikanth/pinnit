@@ -1,11 +1,14 @@
 package dev.sasikanth.pinnit.editor
 
 import android.os.Parcel
+import android.os.Parcelable
 import com.google.android.material.datepicker.CalendarConstraints
+import dev.sasikanth.pinnit.utils.RealUserClock
 import dev.sasikanth.pinnit.utils.UserClock
 import dev.sasikanth.pinnit.utils.UtcClock
 import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
 
 /**
@@ -32,5 +35,19 @@ class CurrentDateValidator @Inject constructor(
     val localDate = instant.atZone(utcClock.zone).toLocalDate()
 
     return localDate >= currentDate
+  }
+
+  companion object CREATOR : Parcelable.Creator<CurrentDateValidator> {
+
+    override fun createFromParcel(parcel: Parcel): CurrentDateValidator {
+      return CurrentDateValidator(
+        userClock = RealUserClock(ZoneId.systemDefault()),
+        utcClock = UtcClock()
+      )
+    }
+
+    override fun newArray(size: Int): Array<CurrentDateValidator?> {
+      return arrayOfNulls(size)
+    }
   }
 }

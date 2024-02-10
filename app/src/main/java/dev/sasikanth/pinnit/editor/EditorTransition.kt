@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 sealed class EditorTransition : Parcelable {
 
   @Parcelize
-  object SharedAxis : EditorTransition()
+  data object SharedAxis : EditorTransition()
 
   @Parcelize
   data class ContainerTransform(val transitionName: String) : EditorTransition()

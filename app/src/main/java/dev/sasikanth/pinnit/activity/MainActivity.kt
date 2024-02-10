@@ -4,7 +4,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +18,7 @@ import dev.sasikanth.pinnit.oemwarning.OemWarningDialog
 import dev.sasikanth.pinnit.oemwarning.shouldShowWarningForOEM
 import dev.sasikanth.pinnit.utils.DispatcherProvider
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
@@ -44,11 +47,13 @@ class MainActivity : AppCompatActivity() {
     val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
     navController = navHostFragment.navController
 
-    lifecycleScope.launchWhenResumed {
-      val isOemWarningDialogShown = withContext(dispatcherProvider.io) {
-        appPreferencesStore.data.first().oemWarningDialog
+    lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        val isOemWarningDialogShown = withContext(dispatcherProvider.io) {
+          appPreferencesStore.data.first().oemWarningDialog
+        }
+        showOemWarningDialog(isOemWarningDialogShown)
       }
-      showOemWarningDialog(isOemWarningDialogShown)
     }
   }
 

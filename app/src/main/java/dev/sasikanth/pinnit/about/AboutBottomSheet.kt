@@ -68,22 +68,6 @@ class AboutBottomSheet : BottomSheetDialogFragment() {
     binding.appVersionTextView.text = getString(R.string.app_version, versionName)
   }
 
-  private fun sendSupportEmail() {
-    val emailAddresses = arrayOf(getString(R.string.dev_email_address))
-    val emailSubject = getString(R.string.support_subject, BuildConfig.VERSION_NAME)
-    val deviceInfo = getString(R.string.support_content, Build.MANUFACTURER, Build.MODEL, Build.VERSION.SDK_INT.toString())
-    val intent = Intent(Intent.ACTION_SENDTO).apply {
-      data = Uri.parse("mailto:")
-      putExtra(Intent.EXTRA_EMAIL, emailAddresses)
-      putExtra(Intent.EXTRA_SUBJECT, emailSubject)
-      putExtra(Intent.EXTRA_TEXT, deviceInfo)
-    }
-
-    startActivity(
-      Intent.createChooser(intent, getString(R.string.send_email))
-    )
-  }
-
   private fun openGitHubProject() {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(PINNIT_PROJECT_URL))
     startActivity(intent)

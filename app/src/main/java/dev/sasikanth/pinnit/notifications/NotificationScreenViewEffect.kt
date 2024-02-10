@@ -6,4 +6,4 @@ sealed class NotificationScreenViewEffect
 
 data class UndoNotificationDeleteViewEffect(val notificationUuid: UUID) : NotificationScreenViewEffect()
 
-object RequestNotificationPermissionViewEffect : NotificationScreenViewEffect()
+data object RequestNotificationPermissionViewEffect : NotificationScreenViewEffect()

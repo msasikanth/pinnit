@@ -10,7 +10,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleDateFormat
 import dev.sasikanth.pinnit.di.DateTimeFormat.Type.ScheduleTimeFormat
 import java.time.format.DateTimeFormatter
-import javax.inject.Qualifier
 
 @InstallIn(SingletonComponent::class)
 @Module

@@ -7,17 +7,19 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.datastore.core.DataStore
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.sasikanth.pinnit.R
 import dev.sasikanth.pinnit.data.preferences.AppPreferences
 import dev.sasikanth.pinnit.databinding.ThemeSelectionSheetBinding
 import dev.sasikanth.pinnit.utils.DispatcherProvider
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import reactivecircus.flowbinding.material.buttonCheckedChanges
 import javax.inject.Inject
@@ -51,17 +53,19 @@ class OptionsBottomSheet : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-      val theme = withContext(dispatcherProvider.io) {
-        appPreferencesStore.data.first().theme
-      }
-      checkThemeSelection(theme)
+    viewLifecycleOwner.lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        val theme = withContext(dispatcherProvider.io) {
+          appPreferencesStore.data.first().theme
+        }
+        checkThemeSelection(theme)
 
-      binding.themeButtonGroup
-        .buttonCheckedChanges()
-        .filter { it.checked }
-        .map { it.checkedId }
-        .collect { updateTheme(it) }
+        binding.themeButtonGroup
+          .buttonCheckedChanges()
+          .filter { it.checked }
+          .map { it.checkedId }
+          .collect { updateTheme(it) }
+      }
     }
   }
 
