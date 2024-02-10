@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-  implementation(project(":app"))
+  implementation(projects.app)
 
   coreLibraryDesugaring(libs.desugar.jdk)
 
