@@ -89,8 +89,10 @@ android {
     jvmTarget = JavaVersion.VERSION_17.toString()
 
     // Enabling experimental coroutines APIs
-    freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
-    freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
+    freeCompilerArgs = freeCompilerArgs + listOf(
+      "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+      "-opt-in=kotlin.time.ExperimentalTime"
+    )
   }
 }
 
