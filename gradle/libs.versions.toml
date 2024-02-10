@@ -1,0 +1,102 @@
+[versions]
+sdk-compile = "34"
+sdk-min = "23"
+sdk-target = "24"
+
+agp = "8.1.4"
+kotlin = "1.9.22"
+hilt = "2.50"
+protobuf = "0.9.0"
+protoc = "3.25.2"
+ksp = "1.9.22-1.0.17"
+androidx-navigation = "2.7.7"
+androidx-appcompat = "1.6.1"
+androidx-corektx = "1.12.0"
+androidx-fragmentktx = "1.6.2"
+androidx-constraintlayout = "2.1.4"
+androidx-room = "2.6.1"
+androidx-lifecycle = "2.7.0"
+androidx-work = "2.9.0"
+androidx-core-testing = "2.2.0"
+material = "1.11.0"
+leakcanary = "2.10"
+coroutines = "1.7.3"
+hilt-work = "1.1.0"
+hilt-compiler = "1.1.0"
+mobius = "1.5.9"
+circleImageView = "3.1.0"
+insetter = "0.3.1"
+betterLinkMovement = "2.2.0"
+seekableVD = "1.0.0-beta01"
+datstore = "1.0.0"
+javalite = "3.25.2"
+flowBinding = "1.2.0"
+junit = "4.13.2"
+androidx-junit = "1.1.5"
+truth = "1.4.0"
+mockito = "5.2.1"
+espresso = "3.5.1"
+desugarJDK = "2.0.4"
+
+[libraries]
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-corektx = { module = "androidx.core:core-ktx", version.ref = "androidx-corektx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-core-testing" }
+androidx-fragmentktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragmentktx" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-navigation = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidx-room" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidx-lifecycle" }
+androidx-work  = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
+androidx-work-testing  = { module = "androidx.work:work-testing", version.ref = "androidx-work" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datstore" }
+androidx-seekableVD = { module = "androidx.vectordrawable:vectordrawable-seekable", version.ref = "seekableVD" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hilt-work" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
+hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+mobius = { module = "com.spotify.mobius:mobius-core", version.ref = "mobius" }
+mobius-android = { module = "com.spotify.mobius:mobius-android", version.ref = "mobius" }
+mobius-test = { module = "com.spotify.mobius:mobius-test", version.ref = "mobius" }
+circleImageView = { module = "de.hdodenhof:circleimageview", version.ref = "circleImageView" }
+insetterktx = { module = "dev.chrisbanes:insetter-ktx", version.ref = "insetter" }
+betterLinkMovement = { module = "me.saket:better-link-movement-method", version.ref = "betterLinkMovement" }
+javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "javalite" }
+flowBinding = { module = "io.github.reactivecircus.flowbinding:flowbinding-material", version.ref = "flowBinding" }
+desugar-JDK = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJDK" }
+junit = { module = "junit:junit", version.ref = "junit" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+mockito = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito" }
+espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+androidx-navigation = { id = "androidx.navigation.safeargs.kotlin",version.ref = "androidx-navigation" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+[bundles]
+androidx-room = [ "androidx-room-runtime", "androidx-room" ]
+androidx-navigation = [ "androidx-navigation", "androidx-navigation-ui" ]
+androidx-lifecycle = [ "androidx-lifecycle-viewmodel", "androidx-lifecycle-viewmodel-savedstate", "androidx-lifecycle-livedata", "androidx-lifecycle-common" ]
+coroutines = [ "kotlin-coroutines-core", "kotlin-coroutines-android" ]
+mobius = [ "mobius", "mobius-android" ]

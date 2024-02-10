@@ -1,62 +1,18 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-  ext.versions = [
-      kotlin               : '1.9.22',
-      appCompat            : '1.6.1',
-      coreKtx              : '1.12.0',
-      constraintLayout     : '2.1.4',
-      material             : '1.11.0',
-      junit                : '4.13.2',
-      extJunit             : '1.1.5',
-      espressoCore         : '3.5.1',
-      navigation           : '2.7.7',
-      leakCanary           : '2.10',
-      room                 : '2.6.1',
-      coroutines           : '1.7.3',
-      truth                : '1.4.0',
-      dagger               : '2.45',
-      hilt                 : '2.50',
-      androidXhiltCompiler : '1.0.0',
-      hiltWork             : '1.1.0',
-      lifecycle            : '2.7.0',
-      arch                 : '2.2.0',
-      mockito              : '5.2.1',
-      mobius               : '1.5.9',
-      circleImageView      : '3.1.0',
-      insetter             : '0.3.1',
-      coreLibraryDesugaring: '2.0.4',
-      betterLinkMovement   : '2.2.0',
-      workManager          : '2.9.0',
-      seekableAVD          : '1.0.0-beta01',
-      dataStore            : '1.0.0',
-      javaLite             : '3.25.2',
-      flowBinding          : '1.2.0',
-      fragment             : '1.6.2',
-  ]
-  repositories {
-    google()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:8.1.4'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-    classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
-    classpath "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
-  }
-}
-
-allprojects {
-  repositories {
-    google()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-  }
+plugins {
+  // this is necessary to avoid the plugins to be loaded multiple times
+  // in each subproject's classloader
+  alias(libs.plugins.android.application).apply(false)
+  alias(libs.plugins.android.library).apply(false)
+  alias(libs.plugins.kotlin.android).apply(false)
+  alias(libs.plugins.kotlin.parcelize).apply(false)
+  alias(libs.plugins.androidx.navigation).apply(false)
+  alias(libs.plugins.hilt).apply(false)
+  alias(libs.plugins.protobuf).apply(false)
+  alias(libs.plugins.ksp).apply(false)
 }
 
 task clean(type: Delete) {
-  delete rootProject.buildDir
+  delete rootProject.layout.buildDirectory
 }
 
 ext {

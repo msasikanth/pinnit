@@ -1,20 +1,11 @@
 plugins {
-  id "com.google.protobuf" version '0.9.0'
-}
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'dagger.hilt.android.plugin'
-
-kapt {
-  correctErrorTypes true
-  arguments {
-    arg("room.schemaLocation", "$projectDir/schemas".toString())
-    arg("room.incremental", "true")
-  }
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.kotlin.parcelize)
+  alias(libs.plugins.androidx.navigation)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.protobuf)
+  alias(libs.plugins.ksp)
 }
 
 android {
@@ -29,12 +20,12 @@ android {
 
   namespace 'dev.sasikanth.pinnit'
 
-  compileSdk 34
+  compileSdk libs.versions.sdk.compile.get().toInteger()
 
   defaultConfig {
     applicationId "dev.sasikanth.pinnit"
-    minSdk 23
-    targetSdk 34
+    minSdk libs.versions.sdk.min.get().toInteger()
+    targetSdk libs.versions.sdk.target.get().toInteger()
 
     if (project.properties["VERSION_CODE"] != null) {
       versionCode = project.properties["VERSION_CODE"] as Integer
@@ -51,6 +42,11 @@ android {
     testInstrumentationRunner "dev.sasikanth.pinnit.AndroidTestRunner"
 
     vectorDrawables.useSupportLibrary = true
+
+    ksp {
+      arg("room.schemaLocation", "$projectDir/schemas".toString())
+      arg("room.incremental", "true")
+    }
   }
 
   sourceSets {
@@ -95,7 +91,7 @@ android {
 
 protobuf {
   protoc {
-    artifact = "com.google.protobuf:protoc:3.25.2"
+    artifact = "com.google.protobuf:protoc:${libs.versions.protoc.get()}"
   }
 
   // Generates the java Protobuf-lite code for the Protobufs in this project. See
@@ -112,75 +108,63 @@ protobuf {
   }
 }
 
+androidComponents {
+  onVariants(selector().all(), { variant ->
+    afterEvaluate {
+      def capName = variant.name.capitalize()
+      tasks.getByName("ksp${capName}Kotlin") {
+        setSource(tasks.getByName("generate${capName}Proto").outputs)
+      }
+    }
+  })
+}
+
 dependencies {
-  coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$versions.coreLibraryDesugaring"
-
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
-  implementation "androidx.appcompat:appcompat:$versions.appCompat"
-  implementation "androidx.core:core-ktx:$versions.coreKtx"
+  coreLibraryDesugaring libs.desugar.JDK
+  implementation libs.kotlin.stdlib
+  implementation libs.androidx.appcompat
+  implementation libs.androidx.corektx
+  implementation libs.androidx.fragmentktx
+  implementation libs.androidx.constraintlayout
+  implementation libs.bundles.androidx.navigation
+  implementation libs.bundles.androidx.room
+  ksp libs.androidx.room.compiler
+  implementation libs.bundles.androidx.lifecycle
+  implementation libs.androidx.work
+  implementation libs.material
+  debugImplementation libs.leakcanary
+  implementation libs.bundles.coroutines
+  implementation libs.hilt.android
+  implementation libs.hilt.work
+  ksp libs.hilt.android.compiler
+  ksp libs.hilt.compiler
+  implementation libs.bundles.mobius
+  implementation libs.circleImageView
+  implementation libs.insetterktx
+  implementation libs.betterLinkMovement
+  implementation libs.androidx.seekableVD
+  implementation libs.androidx.datastore
+  implementation libs.javalite
+  implementation libs.flowBinding
 
-  implementation "androidx.fragment:fragment-ktx:$versions.fragment"
-
-  implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
-
-  implementation "com.google.android.material:material:$versions.material"
-
-  implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
-  implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
-
-  implementation "androidx.room:room-runtime:$versions.room"
-  implementation "androidx.room:room-ktx:$versions.room"
-  kapt "androidx.room:room-compiler:$versions.room"
-
-  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-  implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
-  implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
-  implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
-
-  implementation "androidx.work:work-runtime-ktx:$versions.workManager"
-
-  debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
-
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
-
-  implementation "com.google.dagger:hilt-android:$versions.hilt"
-  implementation "androidx.hilt:hilt-work:$versions.hiltWork"
-  kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
-  kapt "androidx.hilt:hilt-compiler:$versions.androidXhiltCompiler"
-
-  implementation "com.spotify.mobius:mobius-core:$versions.mobius"
-  implementation "com.spotify.mobius:mobius-android:$versions.mobius"
-
-  implementation "de.hdodenhof:circleimageview:$versions.circleImageView"
-
-  implementation "dev.chrisbanes:insetter-ktx:$versions.insetter"
-
-  implementation "me.saket:better-link-movement-method:$versions.betterLinkMovement"
-
-  implementation "androidx.vectordrawable:vectordrawable-seekable:$versions.seekableAVD"
-
-  implementation "androidx.datastore:datastore:$versions.dataStore"
-  implementation "com.google.protobuf:protobuf-javalite:$versions.javaLite"
-
-  implementation "io.github.reactivecircus.flowbinding:flowbinding-material:$versions.flowBinding"
-
-  testImplementation "junit:junit:$versions.junit"
-  testImplementation "androidx.room:room-testing:$versions.room"
-  testImplementation "com.google.truth:truth:$versions.truth"
-  testImplementation "androidx.arch.core:core-testing:$versions.arch"
-  testImplementation "org.mockito.kotlin:mockito-kotlin:$versions.mockito"
-  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
-  testImplementation "com.spotify.mobius:mobius-test:$versions.mobius"
+  testImplementation libs.junit
+  testImplementation libs.truth
+  testImplementation libs.androidx.room.testing
+  testImplementation libs.androidx.core.testing
+  testImplementation libs.mockito
+  testImplementation libs.kotlin.coroutines.test
+  testImplementation libs.mobius.test
+  testImplementation libs.androidx.datastore
   testImplementation(project(":sharedTestCode"))
 
-  androidTestImplementation "androidx.room:room-testing:$versions.room"
-  androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
-  androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
-  androidTestImplementation "com.google.truth:truth:$versions.truth"
-  androidTestImplementation "androidx.work:work-testing:$versions.workManager"
-  androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.dagger"
-  kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.dagger"
+  androidTestImplementation libs.androidx.room.testing
+  androidTestImplementation libs.androidx.junit
+  androidTestImplementation libs.espresso
+  androidTestImplementation libs.truth
+  androidTestImplementation libs.androidx.work.testing
+  androidTestImplementation libs.hilt.testing
+  kspAndroidTest libs.hilt.android.compiler
+  androidTestImplementation libs.androidx.datastore
   androidTestImplementation(project(":sharedTestCode"))
 }

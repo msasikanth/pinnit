@@ -5,11 +5,11 @@ plugins {
 
 android {
   namespace 'dev.sasikanth.sharedtestcode'
-  compileSdk 34
+  compileSdk libs.versions.sdk.compile.get().toInteger()
 
   defaultConfig {
-    minSdk 23
-    targetSdk 34
+    minSdk libs.versions.sdk.min.get().toInteger()
+    targetSdk libs.versions.sdk.target.get().toInteger()
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles "consumer-rules.pro"
@@ -35,9 +35,9 @@ android {
 dependencies {
   implementation(project(":app"))
 
-  coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$versions.coreLibraryDesugaring"
+  coreLibraryDesugaring libs.desugar.JDK
 
-  testImplementation "junit:junit:$versions.junit"
-  androidTestImplementation "androidx.test.ext:junit:$versions.extJunit"
-  androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
+  testImplementation libs.junit
+  androidTestImplementation libs.androidx.junit
+  androidTestImplementation libs.espresso
 }
