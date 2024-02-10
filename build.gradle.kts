@@ -10,14 +10,3 @@ plugins {
   alias(libs.plugins.protobuf).apply(false)
   alias(libs.plugins.ksp).apply(false)
 }
-
-task clean(type: Delete) {
-  delete rootProject.layout.buildDirectory
-}
-
-ext {
-  // source: github.com/android/plaid
-  // query git for the commit count to automate versioning.
-  gitCommitCount = 100 +
-      Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
-}
