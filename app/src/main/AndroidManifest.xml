@@ -45,11 +45,6 @@
     </activity>
 
     <activity
-      android:name=".qspopup.QsPopupActivity"
-      android:taskAffinity=""
-      android:theme="@style/Theme.Pinnit.QsPopup" />
-
-    <activity
       android:name=".AppActionsReceiverActivity"
       android:exported="true">
       <intent-filter>
@@ -69,17 +64,6 @@
       android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
       <intent-filter>
         <action android:name="android.service.notification.NotificationListenerService" />
-      </intent-filter>
-    </service>
-
-    <service
-      android:name=".background.services.QsPopupService"
-      android:exported="true"
-      android:icon="@drawable/ic_qs_app_icon"
-      android:label="@string/app_name"
-      android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-      <intent-filter>
-        <action android:name="android.service.quicksettings.action.QS_TILE" />
       </intent-filter>
     </service>
 
