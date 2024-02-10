@@ -1,7 +1,7 @@
 [versions]
 sdk-compile = "34"
 sdk-min = "23"
-sdk-target = "24"
+sdk-target = "34"
 
 agp = "8.1.4"
 kotlin = "1.9.22"
