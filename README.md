@@ -2,7 +2,7 @@
 
 Notification history and pinning
 
-![CI](https://github.com/msasikanth/pinnit/workflows/CI/badge.svg?branch=trunk)
+[![CI](https://github.com/msasikanth/pinnit/actions/workflows/android_ci.yml/badge.svg?branch=trunk)](https://github.com/msasikanth/pinnit/actions/workflows/android_ci.yml)
 
 ## Development
 Pinnit is written entirely in Kotlin & uses latest Android libraries like
